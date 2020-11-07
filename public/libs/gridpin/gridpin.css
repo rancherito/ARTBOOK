@@ -1,0 +1,18 @@
+.cg.grid {
+	overflow: hidden;
+	margin: 0 auto;
+	width: 100%;
+	position: relative;
+	height: 100%;
+}
+.cg.grid-img {
+	width: 100%;
+	border-radius: 10px;
+}
+.cg.grid-wrapper-img {
+	position: absolute;
+	float: left;
+	padding: 5px;
+	transition: all 200ms ease-in-out;
+
+}

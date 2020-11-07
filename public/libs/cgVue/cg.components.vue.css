@@ -1,0 +1,196 @@
+:root{
+		--cg-error: #ff5252;
+		--cg-error-hover: #ffdada;
+		--cg-error-dark: #bf1212;
+		--cg-error-light: #ffe7e7;
+	}
+	cg-select + cg-select, cg-select + cg-field, cg-field + cg-select, cg-field + cg-field,
+	.cg-select + .cg-select, .cg-select + .cg-field, .cg-field + .cg-select, .cg-field + .cg-field{
+		margin-top: .5rem;
+	}
+	cg-select, cg-field{
+		position: relative;
+		background: #f7f7f7;
+		display: block;
+		height: 56px;
+		overflow: hidden;
+		margin-bottom: 26px;
+	}
+	cg-select::after, cg-field::after{
+		background: linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.3),rgba(255,255,255,0));
+		animation: cg-field-loader 1.5s infinite;
+		width: 100%;
+		content: "";
+		height: 100%;
+		left: -100%;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 1;
+	}
+	cg-select *, cg-field *{
+		display: none;
+	}
+	.cg-grid {
+		overflow: hidden;
+		margin: 0 auto;
+		width: 100%;
+		position: relative;
+		height: 100%;
+	}
+	.cg-grid-img {
+		width: 100%;
+		border-radius: 10px;
+		height: auto;
+	}
+	.cg-grid-wrapper-img {
+		position: absolute;
+		float: left;
+		padding: 5px;
+		transition: all 200ms ease-in-out;
+
+	}
+
+	.cg-disabled{
+		filter: grayscale();
+	}
+	.cg-select, .cg-field{
+		position: relative;
+		height: 82px;
+	}
+	.cg-label{
+		position: absolute;
+		top: 11px;
+		left: 11px;
+		font-size: 1rem;
+		transform: scale(0.8);
+		transform-origin: 0 0;
+		color: #6139ee;
+		overflow: hidden;
+    	text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.cg-select select,
+	.cg-field input,
+	.cg-field input[type=text],
+	.cg-field input[type=password]
+	{
+		background: #f7f7f7;
+		height: 56px;
+		font-size: 1rem;
+		line-height: 20px;
+		padding: 0 8px;
+		transition: linear all .2s;
+		border-radius: 6px 6px 0 0;
+		margin: 0;
+	}
+	.cg-field input[type=text], .cg-field input[type=password]{
+		box-sizing: border-box;
+		padding: 0 12px;
+		border: none;
+		box-shadow: inset 0 -1px 0 0 #9e9e9e;
+		width: 100%;
+		transition: linear all .2s;
+	}
+	.cg-field input[type=text]:focus, .cg-field input[type=password]:focus{
+		box-shadow: inset 0 -2px 0 0 #6139ee;
+	}
+	.cg-field.cg-field-notvalid input[type=text],
+	.cg-field.cg-field-notvalid input[type=text]:focus,
+	.cg-field.cg-field-notvalid input[type=password],
+	.cg-field.cg-field-notvalid input[type=password]:focus
+	{
+		box-shadow: inset 0 -2px 0 0 var(--cg-error);
+	}
+	.cg-select:hover select,
+	.cg-select select:focus,
+	.cg-field input[type=text]:focus,
+	.cg-field input[type=password]:focus,
+	.cg-field input:focus,
+	.cg-field input[type=text]:hover,
+	.cg-field input[type=password]:hover,
+	.cg-field input:hover{
+		background: #f0f0f0;
+	}
+	.cg-label + select, .cg-label + input[type=text], .cg-label + input[type=password]{
+		padding-bottom: 8px;
+		padding-top: 24px;
+	}
+	.cg-select.cg-select-notvalid .cg-label, .cg-field.cg-field-notvalid .cg-label{
+		color: var(--cg-error);
+	}
+	.cg-field-details{
+		display: flex;
+		justify-content: space-between;
+	    max-width: 100%;
+	    min-height: 14px;
+	    overflow: hidden;
+	    font-size: 12px;
+	    line-height: 12px;
+		padding: 3px 12px;
+	}
+	.cg-select-notvalid .cg-field-details-message, .cg-field-notvalid .cg-field-details-message{
+		color: var(--cg-error);
+	}
+	.cg-field-wrap{
+		position: relative;
+		height: 56px;
+		background: #f7f7f7;
+		border-radius: 6px 6px 0 0;
+	}
+	.cg-field-loader{
+		left: 1px;
+		position: absolute;
+		width: calc(100% - 2px);
+		height: 4px;
+		overflow: hidden;
+		border-radius: 6px 6px 0 0;
+		display: none;
+		background: white;
+	}
+	.cg-field-loader::before{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		content: '';
+		background: #6139ee;
+		opacity: .3;
+	}
+	.cg-field-loader::after{
+		position: absolute;
+		left: -100%;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		content: '';
+		background: #6139ee;
+		animation-name: cg-field-loader;
+		animation-duration: 1s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+	}
+	.cg-field-isloading .cg-field-loader{
+		display: block;
+	}
+	.cg-select.cg-select-notvalid.cg-field-isloading .cg-field-loader::after, .cg-select.cg-select-notvalid.cg-field-isloading .cg-field-loader::before{
+		background: var(--cg-error)
+	}
+	.cg-field-loading-message{
+		color: #6139ee;
+		text-transform: lowercase;
+		height: 100%;
+		line-height: 60px;
+		padding-left: 12px;
+		user-select: none;
+	}
+	.cg-select.cg-select-notvalid .cg-field-loading-message, .cg-field.cg-field-notvalid .cg-field-loading-message{
+		color: var(--cg-error-dark);
+		background: var(--cg-error-light)
+	}
+	@keyframes cg-field-loader {
+		0% {left: -100%;}
+		100% {left: 100%;}
+	}
