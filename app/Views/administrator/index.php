@@ -43,13 +43,26 @@ foreach (scandir('./images/others') as $key => $value) {
 		width: 100%;
 		max-width: 460px;
 	}
+	#choise-file{
+		border: 1px solid #f7f7f7;
+		padding: 2rem;
+		border-radius: 10px;
+		transition: linear background .2s;
+		cursor: pointer;
+	}
+	#choise-file:hover{
+		background: #f7f7f7
+	}
 </style>
 <script type="text/x-template" id="app-template">
 	<div style="height: 100%; overflow-y: auto">
 		<div id="edit-image" class="p-4">
-			<div class="f-c">
-				<i class="mdi mdi-camera-outline grey-text" style="font-size: 8rem"></i>
-				<div>SUBIR UNA IMAGEN</div>
+			<div class="f-c grey-text">
+				<div class="f-c" id="choise-file">
+					<i class="mdi mdi-camera-outline" style="font-size: 8rem"></i>
+					<div class="title-1 ">SUBIR UNA IMAGEN</div>
+				</div>
+
 			</div>
 			<div class="red">sda</div>
 		</div>
