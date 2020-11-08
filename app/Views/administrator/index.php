@@ -1,7 +1,7 @@
 <?php
 $images = [];
-foreach (scandir('./images/others') as $key => $value) {
-	if (!is_dir($value) && $value != 'others') $images[] = base_url()."/images/others/$value";
+foreach (scandir('./images/artworks') as $key => $value) {
+	if (!is_dir($value) && $value != 'others') $images[] = base_url()."/images/artworks/$value";
 }
 
 ?>
