@@ -3,27 +3,26 @@
 
 class General
 {
-    public function qry_departamentos_listar()
+    public function qry_images_salvar( $id_image, $accessname, $extension, $height, $width, $autor, $uploaded_user, $name)
     {
-        $sql = "EXEC [General].[spu_tbDepartamento_listar_por]";
+        $sql = "EXEC app.sp_images_salvar
+		@id_image = '$id_image',
+		@accessname = '$accessname',
+		@extension = '$extension',
+		@height = '$height',
+		@width = '$width' ,
+		@autor = '$autor' ,
+		@uploaded_user = '$uploaded_user',
+		@name = '$name'";
         return query_database($sql);
     }
-    public function qry_provincia_listar($departamento){
-        $sql = "EXEC [General].[spu_tbProvincia_Listar] '$departamento'";
-        return query_database($sql);
-    }
-    public function qry_distrito_listar($departamento,$provincia){
-        $sql = "EXEC [General].[spu_tbDistrito_Listar] '$departamento', '$provincia'";
-        return query_database($sql);
-    }
-    public function qry_pais_listar(){
-        $sql = "EXEC [General].[spu_tbPais_listar_por]";
-        return query_database($sql);
-    }
-    public function qry_colegio_listar($departamento,$provincia,$distrito){
-        $sql = "EXEC [Academico].[spu_tbColegio_Listar_por] null, '$departamento','$provincia','$distrito'";
-        return query_database($sql);
-    }
+
+	public function exists_image($id)
+	{
+		$sql = "SELECT accessname+'.'+extension filename FROM app.tb_images WHERE id_image = '$id'";
+		return query_database($sql);
+	}
+
     //
-    
+
 }

@@ -1,12 +1,12 @@
 <?php
 
 $images = [];
-foreach (scandir('./images/others') as $key => $value) {
+foreach (scandir('./images/artworks') as $key => $value) {
 
-	if (!is_dir($value) && $value != 'others') {
-		list($ancho, $alto) = getimagesize("images/others/$value");
+	if (!is_dir($value)) {
+		list($ancho, $alto) = getimagesize("images/artworks/$value");
 		$images[] = [
-			'url' => base_url()."/images/others/$value",
+			'url' => base_url()."/images/artworks/$value",
 			'height' => $alto,
 			'width' => $ancho
 		];

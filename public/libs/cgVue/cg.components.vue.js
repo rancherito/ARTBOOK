@@ -63,20 +63,18 @@ Vue.component('cg-select', {
 		name: {type: String, default: 'cg-input-' + (parseInt(Math.random() * 100000))},
 		label: String,
 		value: [String, Number],
-		novalues: {type: Array, default: []},
+		novalues: [Array, Number, String],
 		required: Boolean,
 		disabled: Boolean,
 		loading: Boolean,
-		isvalid: [Function, Object]
+		isvalid: [Function, Object],
+		watchisvalid: [Boolean, Number],
 	},
 	computed: {
 		validation: function () {
-			let valid = true;
-			for (var v of this.novalues) {
-				if ((v + '').toLowerCase() == 'void') valid &= !(this.value == undefined || this.value == null || this.value == '')
-				else valid &= !((this.value + '').toLowerCase() == (v + '').toLowerCase())
-			}
-			return valid == 1 || !this.required
+			let val = this.caculedvalidation()
+			this.$emit('update:watchisvalid',val)
+			return val
 		}
 	},
 	mounted: function () {
@@ -89,6 +87,28 @@ Vue.component('cg-select', {
 		}
 	},
 	methods: {
+		caculedvalidation: function () {
+			if (this.required) {
+				if (this.empty && this.value == '') return !0
+				return this.validatevoid() && this.validatenotvalus()
+			}
+			return !0
+		},
+		validatenotvalus: function () {
+			if (this.novalues != undefined) {
+				let valid = true;
+
+				this.messageaValidation = 'Selecion no valida'
+				let list = Array.isArray(this.novalues) ? this.novalues : [this.novalues]
+				for (var v of list) valid &= !((this.value + '').toLowerCase() == (v + '').toLowerCase())
+				return valid == 1
+			}
+			return !0
+		},
+		validatevoid: function () {
+			this.messageaValidation = 'Seleccion una opcion'
+			return !(this.value == undefined || this.value == null || this.value == '')
+		},
 		isValid: function () {
 			this.change()
 			return this.validation;
