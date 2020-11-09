@@ -22,6 +22,7 @@ $routes->post('services/getaccess', 'Services::login_validate');
 if (isset($_SESSION['access']) && $_SESSION['access']['accesstype'] == 'ADMINISTRADOR') {
 	$routes->add('/administrator', 'Administrator');
 	$routes->post('/services/artwork/save', 'Services::artwork_save');
+	$routes->get('/services/artwork/list', 'Services::artwork_list');
 }
 
 

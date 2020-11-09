@@ -21,12 +21,24 @@ foreach (scandir('./images/artworks') as $key => $value) {
 	}
 	.box-image{
 		height: 100%;
-		border: 1px solid #ccc;
-		border-radius: 10px;;
-		overflow: hidden;
+		border-radius: 10px;
+		background-color: #f8f8f8;
+	}
+	.box-image-content{
 		background-position: center top;
 		background-repeat: no-repeat;
 		background-size: cover;
+		background-color: gray;
+		border-radius: 10px 10px 0 0;
+	}
+	.box-image-title{
+		color: gray;
+		height: 3rem;
+		text-align: center;
+		font-size: 1.2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	#edit-image{
 		position: absolute;
@@ -53,7 +65,6 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		display: block;
 		position: relative;
 		overflow: hidden;
-		text-shadow: 1px 0 0 lightgray
 	}
 	#choise-file::after{
 		width: 100%;
@@ -80,15 +91,18 @@ foreach (scandir('./images/artworks') as $key => $value) {
 	.loadded-image label{
 		color: white;
 	}
+	.dropdown-content{
+		border-radius: 10px;
+	}
 </style>
 <script type="text/x-template" id="app-template">
 	<div style="height: 100%; overflow-y: auto">
-		<div id="edit-image" class="p-4">
+		<div id="edit-image" class="p-4" v-show="isopeneditor">
 			<div class="f-c"  :class="{'loadded-image': isloadedfile}">
 
 				<canvas ref="imageCanvas" style="display: none"></canvas>
 				<label id="choise-file">
-					<img ref="imagePut" @load="onLoadImage" style="display: block">
+					<img ref="imagePut" @load="onLoadImage" v-show="isloadedfile">
 					<div class="f-c" id="choise-watermark">
 						<i class="mdi mdi-image-outline" style="font-size: 8rem"></i>
 						<div class="title-2 ">{{isloadedfile ? 'CAMBIAR IMAGEN' : 'SUBIR UNA IMAGEN'}}</div>
@@ -107,6 +121,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 						<option value="1">Anonimus</option>
 					</cg-select>
 					<div class="r">
+						<a class="btn bg-white" @click="isopeneditor = false"> <i class="mdi mdi-close right"></i> <span>CANCELAR</span> </a>
 						<button :disabled="!isvalid" class="btn"> <i class="mdi mdi-content-save right"></i> <span>SALVAR</span> </button>
 					</div>
 
@@ -116,12 +131,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		</div>
 		<div class="p-4" id="grid-images">
 			<div class="wrap-grid">
-				<?php foreach ($images as $key => $image): ?>
-					<div class="p-1 white-text" style="float: left; width: 260px; height: 260px">
-						<div class="p-4 grey box-image" style=" background-image: url('<?= $image?>')">
-						</div>
-					</div>
-				<?php endforeach; ?>
+				<card-image :data="image" v-for="(image, index) in images" :item="index" :openeditor="openeditor"></card-image>
 
 			</div>
 		</div>
@@ -129,6 +139,41 @@ foreach (scandir('./images/artworks') as $key => $value) {
 
 </script>
 <script>
+	Vue.component('card-image',{
+		template: `
+		<div class="white-text p-1 " style="float: left; width: 260px;">
+			<div class="box-image">
+				<div class="box-image-content r" :style="{'background-image': image}" style="height: 260px">
+					<a ref="trigger" class="btn btn-floating waves waves-effect waves-light" style="background: transparent;" :data-target='iddrop'>
+						<i class="mdi-24px mdi mdi-dots-vertical"></i>
+					</a>
+					<ul :id='iddrop' class='dropdown-content'>
+					    <li><a @click="edit"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
+					  </ul>
+				</div>
+
+				<div class="box-image-title">{{data.name}}</div>
+			</div>
+		</div>
+		`,
+		props: ['data', 'item', 'openeditor'],
+		mounted: function () {
+			M.Dropdown.init(this.$refs.trigger, {constrainWidth: false, alignment: 'right'});
+		},
+		computed: {
+			image: function () {
+				return `url('<?= base_url()?>/images/artworks/${this.data.accessname}.${this.data.extension}')`
+			},
+			iddrop: function () {
+				return 'dropdown-card-image' + this.item
+			}
+		},
+		methods: {
+			edit: function () {
+				if (typeof this.openeditor == 'function') this.openeditor(this.data);
+			}
+		}
+	})
 	Vue.component('module',{
 		template: '#app-template',
 		data: function () {
@@ -137,11 +182,24 @@ foreach (scandir('./images/artworks') as $key => $value) {
 				nombre: {value: '', isvalid: false},
 				iscanvasload: false,
 				isloadedfile: false,
-				extensionimage: ''
+				extensionimage: '',
+				isopeneditor: false,
+				keyide: '',
+				images: <?= json_encode($images_list) ?>
 			}
 		},
 		mounted: function () {
-			new gridStack($('.wrap-grid'),260,4)
+			new gridStack($('.wrap-grid'),260,1)
+			$('#app-aside').append($(`<a><i class="mdi mdi-plus"></i></a>`).click(() => {
+				this.isopeneditor = true
+				this.autor.value = -1
+				this.nombre.value = ''
+				this.$refs.imagePut.src = ''
+				this.isloadedfile = false
+				this.keyide = ''
+			}));
+
+
 		},
 		computed: {
 			isvalid: function () {
@@ -149,10 +207,22 @@ foreach (scandir('./images/artworks') as $key => $value) {
 			}
 		},
 		methods: {
+			openeditor: function (data) {
+				this.isopeneditor = true
+				const urlimage = `<?= base_url() ?>/images/artworks/${data.accessname}.${data.extension}?v=` + parseInt(Math.random()*1000000)
+				this.autor.value = data.autor
+				this.nombre.value = data.name
+				this.$refs.imagePut.src = urlimage
+				this.keyide = data.id_image
+				console.log(this.keyide);
+			},
 			submit: function () {
-				const data = {author: this.autor.value, workname: this.nombre.value, image: this.$refs.imageCanvas.toDataURL(this.extensionimage, 0.9)}
+				const data = {key: this.keyide, author: this.autor.value, workname: this.nombre.value, image: this.$refs.imageCanvas.toDataURL(this.extensionimage, 0.9)}
 				$.post('<?= base_url() ?>/services/artwork/save', data, res =>{
-					console.log(res);
+					this.isopeneditor = false
+					$.get('<?= base_url() ?>/services/artwork/list', list => {
+						this.images = list
+					})
 				})
 			},
 			onLoadImage: function () {
@@ -183,9 +253,10 @@ foreach (scandir('./images/artworks') as $key => $value) {
 				if (e.target.files[0]) this.loadFile(e.target.files[0])
 			},
 			loadFile: function (file) {
-				console.log(file);
+
 				const reader = new FileReader();
 				this.iscanvasload = false
+
 				reader.addEventListener("load", e => {
 					this.$refs.imagePut.src = reader.result
 					this.extensionimage = file.type

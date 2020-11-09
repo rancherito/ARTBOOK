@@ -33,6 +33,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			flex-direction: column;
 		}
 		#app-aside a{
 			border-radius: 10px;
@@ -46,6 +47,7 @@
 			font-size: 2rem;
 			transition: linear all .2s;
 			cursor: pointer;
+			margin-bottom: 2px;
 		}
 		#app-aside a:hover{
 			background-color: var(--primary)
@@ -62,9 +64,6 @@
 <body>
 	<div id="app-body">
 		<div id="app-aside">
-			<a>
-				<i class="mdi mdi-plus"></i>
-			</a>
 		</div>
 		<div id="app-nav">
 			<div><span class="secondary">ART'S BOOK</span></div>

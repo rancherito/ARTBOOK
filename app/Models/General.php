@@ -23,6 +23,10 @@ class General
 		return query_database($sql);
 	}
 
-    //
+    public function qry_images_list()
+    {
+    	$sql = "SELECT i.*, u.nickname FROM app.tb_images i, app.tb_users u WHERE i.autor = u.id_user";
+		return query_database($sql);
+    }
 
 }

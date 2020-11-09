@@ -21,9 +21,9 @@ class Services extends BaseController
 	}
 	public function artwork_save()
 	{
-		if (!empty($_POST['author']) && !empty($_POST['workname']) && !empty($_POST['image'])) {
+		if (!empty($_POST['author']) && !empty($_POST['workname']) && !empty($_POST['image']) && isset($_POST['key'])) {
 
-			$id_image = '';
+			$id_image = $_POST['key'];
 			$name = trim($_POST['workname']);
 			$extension_change = ['jpeg' => 'jpg', 'jpg' => 'jpg', 'png' => 'png'];
 			$img = $_POST['image'];
@@ -47,9 +47,13 @@ class Services extends BaseController
 
 			General::qry_images_salvar($key_value, md5($key_value.$name), $ext, $ancho, $alto, '1', '2', $name);
 
-			return $this->response->setJSON([$key_value]);
+			return $this->response->setJSON(['key' => $key_value]);
 		}
-
+	}
+	public function artwork_list()
+	{
+		$images = General::qry_images_list();
+		return $this->response->setJSON($images);
 	}
 	//--------------------------------------------------------------------
 
