@@ -41,11 +41,12 @@ class Services extends BaseController
 			$key = General::qry_images_salvar($id_image, '', $ext, 0, 0, '1', '2', $name);
 			$key_value = $key[0]['KeyItem'];
 
-			$file = "images/artworks/".md5($key_value.$name).".$ext";
+			$namefile = md5($key_value.$name.getdate()[0]);
+			$file = "images/artworks/$namefile.$ext";
 			file_put_contents($file, $data);
 			list($ancho, $alto) = getimagesize($file);
 
-			General::qry_images_salvar($key_value, md5($key_value.$name), $ext, $ancho, $alto, '1', '2', $name);
+			General::qry_images_salvar($key_value, $namefile, $ext, $ancho, $alto, '1', '2', $name);
 
 			return $this->response->setJSON(['key' => $key_value]);
 		}
