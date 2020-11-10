@@ -22,23 +22,43 @@ foreach (scandir('./images/artworks') as $key => $value) {
 	.box-image{
 		height: 100%;
 		border-radius: 10px;
-		background-color: #f8f8f8;
+		border: 1px solid #f8f8f8;
+		background: #fcfcfc
 	}
 	.box-image-content{
 		background-position: center top;
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-color: gray;
-		border-radius: 10px 10px 0 0;
 	}
-	.box-image-title{
+	.box-image-title, .box-image-autor{
 		color: gray;
-		height: 3rem;
+		height: 2rem;
 		text-align: center;
-		font-size: 1.2rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		position: relative;
+	}
+	.box-image-options{
+		background: transparent;
+		position: absolute;
+		top: 50%;
+		right: 6px;
+		transform: translateY(-50%);
+	}
+	.box-image-options:hover{
+		background: transparent
+	}
+	.box-image-options i{
+		color: lightgray;
+	}
+	.box-image-title {
+		height: 3.5rem;
+		font-size: 1.2rem;
+	}
+	.box-image-autor{
+		text-transform: lowercase;
 	}
 	#edit-image{
 		position: absolute;
@@ -48,6 +68,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		height: 100%;
 		background: white;
 		display: flex;
+		z-index: 2;
 	}
 	#edit-image > div:nth-child(1){
 		flex-grow: 1;
@@ -141,18 +162,21 @@ foreach (scandir('./images/artworks') as $key => $value) {
 <script>
 	Vue.component('card-image',{
 		template: `
-		<div class="white-text p-1 " style="float: left; width: 260px;">
+		<div class="white-text p-1 pb-4" style="float: left; width: 260px;">
 			<div class="box-image">
+				<div class="box-image-title">
+				{{data.name}}
+				<a ref="trigger" class="box-image-options btn btn-floating waves waves-effect waves-light" style="" :data-target='iddrop'>
+					<i class="mdi-24px mdi mdi-dots-vertical"></i>
+				</a>
+				</div>
 				<div class="box-image-content r" :style="{'background-image': image}" style="height: 260px">
-					<a ref="trigger" class="btn btn-floating waves waves-effect waves-light" style="background: transparent;" :data-target='iddrop'>
-						<i class="mdi-24px mdi mdi-dots-vertical"></i>
-					</a>
+
 					<ul :id='iddrop' class='dropdown-content'>
 					    <li><a @click="edit"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
 					  </ul>
 				</div>
-
-				<div class="box-image-title">{{data.name}}</div>
+				<div class="box-image-autor">by {{data.nickname}}</div>
 			</div>
 		</div>
 		`,

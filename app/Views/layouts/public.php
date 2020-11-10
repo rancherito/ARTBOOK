@@ -32,7 +32,9 @@
 <body>
 	<div id="app-body">
 		<div id="app-nav">
-			<div><span class="primary">A</span><span>RT'S BOOK</span></div>
+			<div>
+				<img src="<?= base_url() ?>/images/logo.png" alt="ARTSBOOK" height="40px">
+			</div>
 			<div>
 				<?php if (empty($_SESSION['access'])): ?>
 					<a href="<?= base_url() ?>/login" class="btn"> <i class="mdi mdi-account left"></i>ACCESO</a>

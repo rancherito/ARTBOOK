@@ -10,11 +10,13 @@ Vue.component('cg-grid',{
 	`,
 	data: function () {
 		return {
-			stack_size: 280,
 			current_stacks: 0
 		}
 	},
-	props: ['images'],
+	props: {
+		'images': Array,
+		stack_size: { type: Number, default: 200}
+	},
 	methods: {
 		calcule: function () {
 			var top_height = 0;

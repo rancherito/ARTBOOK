@@ -14,7 +14,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 }
 ?>
 <div id="app-start">
-	<cg-grid :images="list_img"></cg-grid>
+	<cg-grid :images="list_img" :stack_size="340"></cg-grid>
 </div>
 <script type="text/javascript">
 
