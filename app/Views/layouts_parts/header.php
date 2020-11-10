@@ -16,6 +16,6 @@
 <link rel="stylesheet" href="<?= base_url() ?>/libs/cgVue/cg.components.vue.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js?v=<?= $version ?>"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/css/main.css?v=<?= $version ?>">
-<link rel="stylesheet" href="<?= base_url() ?>/css/colors.css">
+<link rel="stylesheet" href="<?= base_url() ?>/css/colors.css?v=<?= $version ?>">
 <link rel="stylesheet" href="<?= base_url() ?>/css/components.vue.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/js/components.vue.js?v=<?= $version ?>"></script>
