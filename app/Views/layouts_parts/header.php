@@ -16,3 +16,5 @@
 <script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/css/main.css">
 <link rel="stylesheet" href="<?= base_url() ?>/css/colors.css">
+<link rel="stylesheet" href="<?= base_url() ?>/css/components.vue.css">
+<script src="<?= base_url() ?>/js/components.vue.js"></script>

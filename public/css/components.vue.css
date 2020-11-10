@@ -1,0 +1,28 @@
+
+.cg-grid {
+	overflow: hidden;
+	margin: 0 auto;
+	width: 100%;
+	position: relative;
+	height: 100%;
+}
+.cg-grid-img {
+	width: 100%;
+	border-radius: 10px 10px 0 0;
+	height: auto;
+	display: block;
+}
+.cg-grid-wrapper-img {
+	position: absolute;
+	float: left;
+	padding: 5px;
+	transition: all 200ms ease-in-out;
+	color: gray;
+}
+.cg-grid-wrapper-img > div{
+	background: #f9f9f9;
+	border-radius: 10px;
+}
+.cg-grid-info{
+	padding: .8rem 1rem;
+}

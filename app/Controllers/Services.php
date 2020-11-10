@@ -46,7 +46,7 @@ class Services extends BaseController
 			file_put_contents($file, $data);
 			list($ancho, $alto) = getimagesize($file);
 
-			General::qry_images_salvar($key_value, $namefile, $ext, $ancho, $alto, '1', '2', $name);
+			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, '1', '2', $name);
 
 			return $this->response->setJSON(['key' => $key_value]);
 		}

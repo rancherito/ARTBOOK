@@ -1,16 +1,16 @@
 :root {
+	--primary: #876ced;
+	--primary-dark: #563ca5;
+	--secondary: #45bcd4;
+	--light-gray: #f5f5f5;
 	--secondary-hover: #45bcd4;
-	--primary-hover: var(--bg-primary);
+	--primary-hover: #7c62e0;
     --blue: #5c74eb;
     --purple: #5c74eb;
     --turkey: #45bcd4;
-    --bg-primary: linear-gradient(45deg,#5c74eb,#ab65ef);
-    --bg-secondary: linear-gradient(45deg, #39b0e8, #55ccbd);
+    --bg-primary: var(--primary);
+    --bg-secondary: var(--secondary);
     --bg-alert: linear-gradient(45deg, #d65d54, #e01f54) ;
-    --primary: #876ced;
-    --primary-dark: #563ca5;
-    --secondary: #45bcd4;
-	--light-gray: #f5f5f5;
 	--bg-white: white;
 	--bg-lima: linear-gradient(135deg, #acd000, #7a8d1e);
 	--bg-teal: linear-gradient(135deg, #4dcdb6, #037a69);
