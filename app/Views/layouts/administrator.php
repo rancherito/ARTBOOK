@@ -6,7 +6,7 @@
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 	<style media="screen">
 		:root{
-			--width-aside: 80px;
+			--width-aside: 60px;
 		}
 		#app-body{
 			background: #141827;
@@ -28,7 +28,7 @@
 			width: var(--width-aside);
 			position: fixed;
 			height: 100vh;
-			background-color: #131725;
+			background-color: var(--primary);
 			padding: 1rem 0;
 			display: flex;
 			justify-content: center;
@@ -39,8 +39,8 @@
 			border-radius: 10px;
 			background-color: rgba(255,255,255,.05);
 			color: white;
-			height: 60px;
-			width: 60px;
+			height: 50px;
+			width: 50px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -50,7 +50,7 @@
 			margin-bottom: 2px;
 		}
 		#app-aside a:hover{
-			background-color: var(--primary)
+			background-color: rgba(255,255,255,.5);
 		}
 		#app-content{
 			transform: translateX(var(--width-aside));
@@ -66,13 +66,13 @@
 		<div id="app-aside">
 		</div>
 		<div id="app-nav">
-			<div><span class="secondary">ART'S BOOK</span></div>
+			<div></div>
 			<div>
 				<?php if (!empty($_SESSION['access'])): ?>
-					<a href="<?= base_url() ?>/close" class="btn bg-secondary"> <i class="mdi mdi-power-standby"></i></a>
+					<a href="<?= base_url() ?>/close" class="btn"> <i class="mdi-18px mdi mdi-power-standby"></i></a>
 				<?php endif; ?>
 
-				<a href="<?= base_url() ?>" class="btn bg-secondary"> <i class="mdi mdi-home-outline"></i></a>
+				<a href="<?= base_url() ?>" class="btn"> <i class="mdi-18px mdi mdi-home-outline"></i></a>
 			</div>
 		</div>
 		<div id="app-content" class="white">

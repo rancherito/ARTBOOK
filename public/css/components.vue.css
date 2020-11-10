@@ -26,3 +26,7 @@
 .cg-grid-info{
 	padding: .8rem 1rem;
 }
+.cg-grid-autor{
+	display: flex;
+	align-items: center;
+}

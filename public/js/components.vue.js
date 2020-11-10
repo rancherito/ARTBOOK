@@ -6,7 +6,11 @@ Vue.component('cg-grid',{
 				<div>
 					<img loading="lazy" class="cg-grid-img" :height="img.height" :width="img.width" :src="calculeimage(img)">
 					<div class="cg-grid-info">
-						<span>{{img.name}}</span>
+						<span style="font-size: 1.2rem">{{img.name}}</span>
+						<div class="pt-1 cg-grid-autor">
+							<div class="bg-primary" style="height: 16px; width: 16px; border-radius: 50%; display: inline-block"></div>
+							<span class="pl-4 primary">{{img.nickname}}</span>
+						</div>
 					</div>
 
 				</div>

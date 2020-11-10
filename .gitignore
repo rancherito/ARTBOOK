@@ -45,7 +45,8 @@ $RECYCLE.BIN/
 .vagrant
 Vagrantfile.dist
 public/.htaccess
-
+public/images/artworks/*.jpg
+public/images/artworks/*.png
 #-------------------------
 # Temporary Files
 #-------------------------

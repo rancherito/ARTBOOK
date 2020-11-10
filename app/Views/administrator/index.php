@@ -136,10 +136,10 @@ foreach (scandir('./images/artworks') as $key => $value) {
 			<div class="f-c">
 				<h5 class="pb-5 primary">Informacion de la obra</h5>
 				<form class="w100" style="max-width: 360px" @submit.prevent="submit">
-					<cg-field required v-model.trim="nombre.value" :watchisvalid.sync="nombre.isvalid" sizechars="6-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
+					<cg-field required v-model.trim="nombre.value" :watchisvalid.sync="nombre.isvalid" sizechars="4-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
 					<cg-select required v-model="autor.value" :watchisvalid.sync="autor.isvalid" label="Autor" novalues="-1">
 						<option value="-1" disabled>seleccione autor</option>
-						<option value="1">Anonimus</option>
+						<option :value="n.id_user" v-for="n in users">{{n.nickname}}</option>
 					</cg-select>
 					<div class="r">
 						<a class="btn bg-white" @click="isopeneditor = false"> <i class="mdi mdi-close right"></i> <span>CANCELAR</span> </a>
@@ -209,7 +209,8 @@ foreach (scandir('./images/artworks') as $key => $value) {
 				extensionimage: '',
 				isopeneditor: false,
 				keyide: '',
-				images: <?= json_encode($images_list) ?>
+				images: <?= json_encode($images_list) ?>,
+				users: <?= json_encode($users) ?>
 			}
 		},
 		mounted: function () {
