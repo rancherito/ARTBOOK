@@ -1,3 +1,4 @@
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <?php
 $images = [];
 foreach (scandir('./images/artworks') as $key => $value) {
@@ -7,6 +8,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 ?>
 <script src="<?= base_url() ?>/libs/gridStack/gridStack.js" charset="utf-8"></script>
 <style media="screen">
+
 	#app-content{
 		padding: 0;
 	}
@@ -115,6 +117,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 	.dropdown-content{
 		border-radius: 10px;
 	}
+	
 </style>
 <script type="text/x-template" id="app-template">
 	<div style="height: 100%; overflow-y: auto">
@@ -143,7 +146,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 					</cg-select>
 					<div class="r">
 						<a class="btn bg-white" @click="isopeneditor = false"> <i class="mdi mdi-close right"></i> <span>CANCELAR</span> </a>
-						<button :disabled="!isvalid" class="btn"> <i class="mdi mdi-content-save right"></i> <span>SALVAR</span> </button>
+						<cg-button :disabled="!isvalid" :loading="load.isUploading" :advance="load.advance"></cg-button>
 					</div>
 
 				</form>
@@ -153,13 +156,13 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		<div class="p-4" id="grid-images">
 			<div class="wrap-grid">
 				<card-image :data="image" v-for="(image, index) in images" :item="index" :openeditor="openeditor"></card-image>
-
 			</div>
 		</div>
 	</div>
 
 </script>
 <script>
+
 	Vue.component('card-image',{
 		template: `
 		<div class="white-text p-1 pb-4" style="float: left; width: 260px;">
@@ -202,6 +205,10 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		template: '#app-template',
 		data: function () {
 			return {
+				load: {
+					isUploading: false,
+					advance: 0
+				},
 				autor: {value: '-1', isvalid: false},
 				nombre: {value: '', isvalid: false},
 				iscanvasload: false,
@@ -242,13 +249,52 @@ foreach (scandir('./images/artworks') as $key => $value) {
 				console.log(this.keyide);
 			},
 			submit: function () {
-				const data = {key: this.keyide, author: this.autor.value, workname: this.nombre.value, image: this.$refs.imageCanvas.toDataURL(this.extensionimage, 0.9)}
-				$.post('<?= base_url() ?>/services/artwork/save', data, res =>{
-					this.isopeneditor = false
-					$.get('<?= base_url() ?>/services/artwork/list', list => {
-						this.images = list
-					})
-				})
+				const datos = {key: this.keyide, author: this.autor.value, workname: this.nombre.value, image: this.$refs.imageCanvas.toDataURL(this.extensionimage, 0.9)}
+
+
+
+				this.load.advance = 0;
+				this.load.isUploading = true
+				axios.request( {
+		        method: "post",
+		        url: "<?= base_url() ?>/services/artwork/save",
+		        data: datos,
+		        onUploadProgress: (p) => {
+				  this.load.advance = parseInt((p.loaded / p.total) * 100)
+		        }
+		      }).then (data => {
+				  this.isopeneditor = false
+  				$.get('<?= base_url() ?>/services/artwork/list', list => {
+  					this.images = list
+					this.load.isUploading = false
+  				})
+		      })
+
+				/*$.ajax({
+					url: '<?= base_url() ?>/services/artwork/save',
+					type: 'POST',
+					data: datos,
+					xhr: function() {
+						var xhr = new window.XMLHttpRequest();
+					    //Upload progress
+					    xhr.upload.addEventListener("progress", function(evt){
+					      if (evt.lengthComputable) {
+					        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+					        //Do something with upload progress
+					        console.log(percentComplete);
+					      }
+					    }, false);
+					    return xhr;
+					},
+					fail: function (e) {
+						console.log('fallo');
+					},
+					success: function(res) {
+						console.log(res);
+						console.log('paso creo....');
+						/*
+					}
+				});*/
 			},
 			onLoadImage: function () {
 				this.isloadedfile = true

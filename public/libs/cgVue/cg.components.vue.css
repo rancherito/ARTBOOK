@@ -176,3 +176,11 @@
 		0% {left: -100%;}
 		100% {left: 100%;}
 	}
+	.cg-button-preloader{
+		background: var(--primary);
+		height: 100%;
+		width: 60px;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}

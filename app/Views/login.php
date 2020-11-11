@@ -79,7 +79,7 @@
 						if (this.isvalid) {
 							const data = {user: this.user.val, password: this.pass.val}
 							$.post('<?= base_url() ?>/services/getaccess',data ,function (d) {
-								window.location.href = '<?= base_url() ?>/administrator';
+								window.location.href = '<?= base_url() ?>/administrador';
 							})
 						}
 					}

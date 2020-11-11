@@ -21,6 +21,8 @@ class Services extends BaseController
 	}
 	public function artwork_save()
 	{
+		$_POST = json_decode(file_get_contents("php://input"), true);
+
 		if (!empty($_POST['author']) && !empty($_POST['workname']) && !empty($_POST['image']) && isset($_POST['key'])) {
 
 			$id_image = $_POST['key'];
