@@ -9,6 +9,11 @@ class Home extends BaseController
 	}
 	public function access()
 	{
+		if (isset($_SESSION['access'])) {
+			header('Location: '.base_url());
+			die();
+		}
+
 		return view('login');
 	}
 	//--------------------------------------------------------------------
