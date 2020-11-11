@@ -57,7 +57,7 @@
 					<a href="<?= base_url() ?>/login" class="btn-nav-desktop btn"> <i class="mdi mdi-account left mdi-18px"></i>ACCESO</a>
 				<?php endif; ?>
 				<?php if (!empty($_SESSION['access'])): ?>
-					<a href="<?= base_url() ?>/administrator" class="btn-nav-desktop btn"> <i class="mdi mdi-book-minus left mdi-18px"></i>ADMINISTRAR</a>
+					<a href="<?= base_url() ?>/administrador" class="btn-nav-desktop btn"> <i class="mdi mdi-book-minus left mdi-18px"></i>ADMINISTRAR</a>
 					<a href="<?= base_url() ?>/close" class="btn-nav-desktop btn"> <i class="mdi mdi-power-standby mdi-18px"></i></a>
 				<?php endif; ?>
 
@@ -69,7 +69,7 @@
 				    	<li><a href="<?= base_url() ?>/login"><i class="mdi mdi-account mdi-18px"></i>ACCESO</a></li>
 					<?php endif; ?>
 					<?php if (!empty($_SESSION['access'])): ?>
-						<li><a href="<?= base_url() ?>/administrator"><i class="mdi mdi-book-minus mdi-18px"></i>ADMINISTRAR</a></li>
+						<li><a href="<?= base_url() ?>/administrador"><i class="mdi mdi-book-minus mdi-18px"></i>ADMINISTRAR</a></li>
 						<li><a href="<?= base_url() ?>/close"><i class="mdi mdi-power-standby mdi-18px"></i>CERRAR SESION</a></li>
 					<?php endif; ?>
 				  </ul>
