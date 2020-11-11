@@ -76,18 +76,19 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		flex-grow: 1;
 	}
 	#edit-image > div:nth-child(2){
-		width: 100%;
-		max-width: 460px;
+		width: 460px;
 	}
 	#choise-file{
 		border: 1px solid #f7f7f7;
 		min-width: 300px;
 		min-height: 300px;
+		max-width: 600px;
 		border-radius: 10px;
 		cursor: pointer;
 		display: block;
 		position: relative;
 		overflow: hidden;
+		width: 100%;
 	}
 	#choise-file::after{
 		width: 100%;
@@ -102,6 +103,10 @@ foreach (scandir('./images/artworks') as $key => $value) {
 
 		background: #00000010;
 	}
+	#choise-file img{
+		width: 100%;
+		height: auto;
+	}
 	#choise-watermark{
 		position: absolute;
 		left: 50%;
@@ -114,10 +119,20 @@ foreach (scandir('./images/artworks') as $key => $value) {
 	.loadded-image label{
 		color: white;
 	}
-	.dropdown-content{
-		border-radius: 10px;
+	@media (max-width: 992px) {
+		#choise-file{
+			max-width: 400px;
+		}
+		#edit-image{
+			display: block;
+			height: auto;
+		}
+		#edit-image > div:nth-child(2){
+			width: 100%;
+			padding: 1rem 0
+		}
 	}
-	
+
 </style>
 <script type="text/x-template" id="app-template">
 	<div style="height: 100%; overflow-y: auto">
@@ -241,7 +256,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		methods: {
 			openeditor: function (data) {
 				this.isopeneditor = true
-				const urlimage = `<?= base_url() ?>/images/artworks/${data.accessname}.${data.extension}?v=` + parseInt(Math.random()*1000000)
+				const urlimage = `<?= base_url() ?>/images/artworks/${data.accessname}.${data.extension}`
 				this.autor.value = data.autor
 				this.nombre.value = data.name
 				this.$refs.imagePut.src = urlimage
@@ -310,8 +325,8 @@ foreach (scandir('./images/artworks') as $key => $value) {
 					fw = scale_max
 					fh = (h * fw)/ w
 				}
-				img.style.width = fw + 'px'
-				img.style.height = fh + 'px'
+				img.width = fw
+				img.height = fh
 
 				const canvas = this.$refs.imageCanvas
 				let ctx = this.$refs.imageCanvas.getContext('2d')
