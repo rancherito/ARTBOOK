@@ -25,12 +25,12 @@ class General
 
     public function qry_images_list()
     {
-    	$sql = "SELECT i.*, u.nickname FROM app.tb_images i, app.tb_users u WHERE i.autor = u.id_user";
+    	$sql = "SELECT i.*, u.nickname FROM app.tb_images i, user.tb_users u WHERE i.autor = u.id_user";
 		return query_database($sql);
     }
 	public function qry_simpleuser_list()
 	{
-		$sql = "SELECT id_user, nickname FROM app.tb_users;";
+		$sql = "SELECT id_user, nickname FROM user.tb_users;";
 		return query_database($sql);
 	}
 
