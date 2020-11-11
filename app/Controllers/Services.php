@@ -38,7 +38,9 @@ class Services extends BaseController
 			$queryfiename = General::exists_image($id_image);
 			if (count($queryfiename)) {
 				$filename = $queryfiename[0]['filename'];
-				unlink("images/artworks/$filename");
+				if (file_exists("images/artworks/$filename")) {
+					unlink("images/artworks/$filename");
+				}
 			}
 			$key = General::qry_images_salvar($id_image, '', $ext, 0, 0, '1', '2', $name);
 			$key_value = $key[0]['KeyItem'];

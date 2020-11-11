@@ -1,4 +1,3 @@
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <?php
 $images = [];
 foreach (scandir('./images/artworks') as $key => $value) {
@@ -69,13 +68,18 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		width: 100%;
 		height: 100%;
 		background: white;
-		display: flex;
 		z-index: 2;
+		overflow-y: auto;
 	}
-	#edit-image > div:nth-child(1){
+	#edit-image > div{
+		display: flex;
+		height: 100%;
+		padding: 1rem;
+	}
+	#edit-image .edit-image-photo{
 		flex-grow: 1;
 	}
-	#edit-image > div:nth-child(2){
+	#edit-image .edit-image-info{
 		width: 460px;
 	}
 	#choise-file{
@@ -123,11 +127,12 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		#choise-file{
 			max-width: 400px;
 		}
-		#edit-image{
+		#edit-image > div{
 			display: block;
 			height: auto;
+			padding: 2rem 1rem;
 		}
-		#edit-image > div:nth-child(2){
+		#edit-image .edit-image-info{
 			width: 100%;
 			padding: 1rem 0
 		}
@@ -136,37 +141,40 @@ foreach (scandir('./images/artworks') as $key => $value) {
 </style>
 <script type="text/x-template" id="app-template">
 	<div style="height: 100%; overflow-y: auto">
-		<div id="edit-image" class="p-4" v-show="isopeneditor">
-			<div class="f-c"  :class="{'loadded-image': isloadedfile}">
+		<div id="edit-image" v-show="isopeneditor">
+			<div>
+				<div class="edit-image-photo f-c"  :class="{'loadded-image': isloadedfile}">
 
-				<canvas ref="imageCanvas" style="display: none"></canvas>
-				<label id="choise-file">
-					<img ref="imagePut" @load="onLoadImage" v-show="isloadedfile">
-					<div class="f-c" id="choise-watermark">
-						<i class="mdi mdi-image-outline" style="font-size: 8rem"></i>
-						<div class="title-2 ">{{isloadedfile ? 'CAMBIAR IMAGEN' : 'SUBIR UNA IMAGEN'}}</div>
-					</div>
-					<input type="file" style="display: none" accept="image/x-png,image/jpeg" @change="onUploadFile">
-				</label>
+					<canvas ref="imageCanvas" style="display: none"></canvas>
+					<label id="choise-file">
+						<img ref="imagePut" @load="onLoadImage" v-show="isloadedfile">
+						<div class="f-c" id="choise-watermark">
+							<i class="mdi mdi-image-outline" style="font-size: 8rem"></i>
+							<div class="title-2 ">{{isloadedfile ? 'CAMBIAR IMAGEN' : 'SUBIR UNA IMAGEN'}}</div>
+						</div>
+						<input type="file" style="display: none" accept="image/x-png,image/jpeg" @change="onUploadFile">
+					</label>
 
 
+				</div>
+				<div class="f-c edit-image-info">
+					<h5 class="pb-5 primary">Informacion de la obra</h5>
+					<form class="w100" style="max-width: 360px" @submit.prevent="submit">
+						<cg-field required v-model.trim="nombre.value" :watchisvalid.sync="nombre.isvalid" sizechars="4-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
+						<cg-select required v-model="autor.value" :watchisvalid.sync="autor.isvalid" label="Autor" novalues="-1">
+							<option value="-1" disabled>seleccione autor</option>
+							<option :value="n.id_user" v-for="n in users">{{n.nickname}}</option>
+						</cg-select>
+						<div class="r">
+							<a class="btn bg-white" @click="isopeneditor = false"> <i class="mdi mdi-close right"></i> <span>CANCELAR</span> </a>
+							<cg-button :disabled="!isvalid" :loading="load.isUploading" :advance="load.advance"></cg-button>
+						</div>
+
+					</form>
+
+				</div>
 			</div>
-			<div class="f-c">
-				<h5 class="pb-5 primary">Informacion de la obra</h5>
-				<form class="w100" style="max-width: 360px" @submit.prevent="submit">
-					<cg-field required v-model.trim="nombre.value" :watchisvalid.sync="nombre.isvalid" sizechars="4-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
-					<cg-select required v-model="autor.value" :watchisvalid.sync="autor.isvalid" label="Autor" novalues="-1">
-						<option value="-1" disabled>seleccione autor</option>
-						<option :value="n.id_user" v-for="n in users">{{n.nickname}}</option>
-					</cg-select>
-					<div class="r">
-						<a class="btn bg-white" @click="isopeneditor = false"> <i class="mdi mdi-close right"></i> <span>CANCELAR</span> </a>
-						<cg-button :disabled="!isvalid" :loading="load.isUploading" :advance="load.advance"></cg-button>
-					</div>
 
-				</form>
-
-			</div>
 		</div>
 		<div class="p-4" id="grid-images">
 			<div class="wrap-grid">

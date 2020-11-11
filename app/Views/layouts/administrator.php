@@ -34,6 +34,8 @@
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
+			z-index: 3;
+			transition: linear all .1s
 		}
 		#app-aside a{
 			border-radius: 10px;
@@ -58,12 +60,58 @@
 			height: calc(100vh - 64px);
 			overflow: hidden auto;
 		}
+		#app-aside-toggle{
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			left: var(--width-aside);
+			width: 50px;
+			height: 50px;
+			background: var(--primary);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-radius: 0 25px 25px 0;
+			font-size: 1.5rem;
+			color: white;
+			box-shadow: inset 2px 0px 2px 0px #00000008;
+			display: none;
+			transition: linear all .1s
+		}
+		#app-aside-toggle i{
+			transform: translateX(-10%);
+			transition: linear all .1s
+		}
 
+	@media (max-width: 600px) {
+
+		#app-aside-toggle{
+			display: flex;
+		}
+		#app-nav, #app-content{
+			width: 100%;
+			transform: translateX(0);
+		}
+		#app-aside{
+			transform: translateX(-100%);
+			justify-content: flex-start;
+		}
+		#app-aside.app-aside-show{
+			transform: translateX(0);
+		}
+		#app-aside.app-aside-show #app-aside-toggle{
+			width: 35px;
+		}
+	}
 	</style>
 </head>
 <body>
 	<div id="app-body">
-		<div id="app-aside">
+		<div id="app-aside" :class="{'app-aside-show' : show_aside}">
+			<div id="app-aside-toggle" @click="show_aside = !show_aside">
+				<i class="mdi mdi-menu" v-if="!show_aside"></i>
+				<i class="mdi mdi-chevron-left" v-if="show_aside"></i>
+			</div>
 		</div>
 		<div id="app-nav">
 			<div></div>
@@ -82,7 +130,10 @@
 	<?= $body ?>
 	<script type="text/javascript">
 		new Vue({
-			el: '#app-body'
+			el: '#app-body',
+			data: {
+				show_aside: false
+			}
 		})
 	</script>
 </body>

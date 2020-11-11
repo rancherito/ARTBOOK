@@ -12,6 +12,7 @@
 <script src="<?= base_url() ?>/libs/materialize/js/materialize.min.js"></script>
 <script src="<?= base_url() ?>/libs/ResizeSensor/ResizeSensor.js"></script>
 <script src="<?= base_url() ?>/libs/ResizeSensor/ElementQueries.js"></script>
+<script src="<?= base_url() ?>/libs/axios/axios.min.js"></script>
 <script src="<?= base_url() ?>/libs/vue/vue.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/libs/cgVue/cg.components.vue.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js?v=<?= $version ?>"></script>
