@@ -12,6 +12,7 @@ $routes->set404Override();
 $routes->setAutoRoute(true);
 
 session();
+$routes->add('test', 'Utils::test');
 $routes->get('/', 'Home');
 $routes->get('close', 'Utils::close_session');
 $routes->add('login', 'Home::access');

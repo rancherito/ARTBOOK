@@ -1,5 +1,5 @@
-<?php 
-    function query_database($query){
+<?php
+    function query_database($query, $filters = []){
         $result = [];
         $serverName = $_ENV['database.default.hostname'];
         $connectionInfo = [
@@ -16,13 +16,13 @@
             die(print_r(sqlsrv_errors(), true));
         }
 
-        $stmt = sqlsrv_query($conn, $query);
+        $stmt = sqlsrv_query($conn, $query, $filters);
         if ($stmt === false) {
             die(print_r(sqlsrv_errors(), true));
         }
 
         if (gettype($stmt) === 'resource') {
-           $result = getData($stmt);            
+           $result = getData($stmt);
         }
 
         sqlsrv_free_stmt($stmt);
@@ -38,6 +38,6 @@
             if (!sqlsrv_next_result($stmt)) return $result;
             return getData($stmt);
         }
-        
+
     }
 ?>

@@ -5,18 +5,27 @@ class Services extends BaseController
 	public function login_validate()
 	{
 		$access = ['access' => false];
+		$_SESSION = [];
 		if (!empty($_POST['user']) && !empty($_POST['password'])) {
+			$pass = md5($_POST['password']);
+			$res = General::qry_access($_POST['user'],$pass);
+			if (count($res)) {
+				$typeaccess = "UNDEFINIED";
 
-			$access['access'] = strtolower($_POST['user']) == 'dlarico' && $_POST['password'] == '123';
+				$res = $res[0];
+				if ($res['id_role'] == 'admin') $typeaccess = 'ADMINISTRADOR';
+				else if ($res['id_role'] == 'common') $typeaccess = 'COMMON';
 
-			session()->set([
-				'access' => [
-					'nickname' => 'cafeconpato',
-					'accesstype' => 'ADMINISTRADOR'
-				]
-			]);
+				session()->set([
+					'access' => [
+						'nickname' => $res['nickname'],
+						'account' => $res['account'],
+						'accesstype' => $typeaccess
+					]
+				]);
+				$access['access'] = true;
+			}
 		}
-
 		return $this->response->setJSON($access);
 	}
 	public function artwork_save()
