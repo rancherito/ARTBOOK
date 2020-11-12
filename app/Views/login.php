@@ -63,8 +63,8 @@
 			new Vue({
 				el: '#app-login',
 				data: {
-					user: {val: 'dlarico', isvalid: false},
-					pass: {val: '123', isvalid: false}
+					user: {val: '', isvalid: false},
+					pass: {val: '', isvalid: false}
 				},
 				mounted: function () {
 				},
@@ -81,7 +81,7 @@
 							$.post('<?= base_url() ?>/services/getaccess',data ,function (d) {
 								if (d['access']) window.location.href = '<?= base_url() ?>/administrador';
 								else {
-									alert('CONTRASEÑA O USUARIOS INCORRECTO')
+									 M.toast({html: 'CONTRASEÑA O USUARIOS INCORRECTO', classes: 'rounded bg-alert'});
 								}
 
 							})
