@@ -43,7 +43,7 @@
 					<div class="grey-text">Acceso para administradores arts book</div>
 					<div class="w100 pt-6">
 						<form method="post" @submit.prevent="submit">
-							<cg-field :watchisvalid.sync="user.isvalid" required name="user" v-model="user.val" sizechars="0-10" label="Usuario" placeholder="ingrese credenciales"></cg-field>
+							<cg-field :watchisvalid.sync="user.isvalid" required name="user" v-model="user.val" sizechars="0-16" label="Usuario" placeholder="ingrese credenciales"></cg-field>
 							<cg-field :watchisvalid.sync="pass.isvalid" required name="password" v-model="pass.val" sizechars="0-16" label="Contraseña" type="password" placeholder="ingrese clave de acceso secreto"></cg-field>
 							<div class="r">
 								<a href="<?= base_url() ?>" class="btn bg-white"><span>REGRESAR</span> </a>
@@ -79,7 +79,11 @@
 						if (this.isvalid) {
 							const data = {user: this.user.val, password: this.pass.val}
 							$.post('<?= base_url() ?>/services/getaccess',data ,function (d) {
-								window.location.href = '<?= base_url() ?>/administrador';
+								if (d['access']) window.location.href = '<?= base_url() ?>/administrador';
+								else {
+									alert('CONTRASEÑA O USUARIOS INCORRECTO')
+								}
+
 							})
 						}
 					}

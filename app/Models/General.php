@@ -34,4 +34,10 @@ class General
 		return query_database($sql);
 	}
 
+	public function qry_access($user,$pass)
+	{
+		$sql = "SELECT nickname, account, id_role FROM users.tb_users WHERE [user] = ? AND pass = ? AND account != 'Anonimus'";
+		return query_database($sql,[$user, $pass]);
+	}
+
 }
