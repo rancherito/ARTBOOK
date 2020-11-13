@@ -12,7 +12,6 @@ $routes->set404Override();
 $routes->setAutoRoute(true);
 
 session();
-$routes->add('test', 'Utils::test');
 $routes->get('/', 'Home');
 $routes->get('close', 'Utils::close_session');
 $routes->add('login', 'Home::access');
@@ -26,6 +25,7 @@ if (isset($_SESSION['access']) && $_SESSION['access']['accesstype'] == 'ADMINIST
 	$routes->get('/services/artwork/list', 'Services::artwork_list');
 }
 
+$routes->add('/(:alphanum)', 'Users::index/$1');
 
 
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))

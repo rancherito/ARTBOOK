@@ -6,10 +6,10 @@ Vue.component('cg-grid',{
 				<div>
 					<img loading="lazy" class="cg-grid-img" :height="img.height" :width="img.width" :src="calculeimage(img)">
 					<div class="cg-grid-info">
-						<span style="font-size: 1.2rem">{{img.name}}</span>
-						<div class="pt-1 cg-grid-autor">
-							<div class="bg-primary" style="height: 16px; width: 16px; border-radius: 50%; display: inline-block"></div>
-							<span class="pl-4 primary">{{img.nickname}}</span>
+						<span style="font-size: 1.2rem" :class="{primary: !details}">{{img.name}}</span>
+						<div class="pt-1 cg-grid-autor" v-if="details">
+							<div class="bg-primary" style="height: 18px; width: 18px; border-radius: 50%; display: inline-block"></div>
+							<span class="pl-4 grid-images" @click="redirect(img)">{{img.nickname}}</span>
 						</div>
 					</div>
 
@@ -25,9 +25,14 @@ Vue.component('cg-grid',{
 	},
 	props: {
 		'images': Array,
-		stack_size: { type: Number, default: 200}
+		stack_size: { type: Number, default: 200},
+		details: {type: Boolean, default: true},
+		base_url: String
 	},
 	methods: {
+		redirect: function (info) {
+				window.location.href = this.base_url + '/' +info.account
+		},
 		calculeimage: function (image) {
 			return `images/artworks/${image.accessname}.${image.extension}`
 		},

@@ -22,8 +22,6 @@
 			height: calc(100% - 64px);
 			overflow-x: hidden;
 			overflow-y: auto;
-			padding: 1rem;
-			color: white;
 		}
 		.app-nav-left{
 			display: flex;
@@ -76,17 +74,29 @@
 			</div>
 		</div>
 		<div id="app-content">
-			<?= $body ?>
+			<module></module>
 		</div>
 
 	</div>
+	<?= $body ?>
+
 	<script type="text/javascript">
-		let drop = $('.dropdown-trigger').dropdown({constrainWidth: false});
-		window.addEventListener('resize', function (e) {
-			if ($(window).width() < 600) {
-				drop.dropdown('recalculateDimensions');
+
+
+		new Vue({
+			el: '#app-body',
+			mounted: function () {
+				let drop = $('.dropdown-trigger').dropdown({constrainWidth: false});
+				window.addEventListener('resize', function (e) {
+					if ($(window).width() < 600) {
+						drop.dropdown('recalculateDimensions');
+					}
+				});
+			},
+			components: {
+				module: $_module
 			}
-		});
+		})
 	</script>
 </body>
 </html>

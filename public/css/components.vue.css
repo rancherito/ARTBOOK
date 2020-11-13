@@ -30,3 +30,7 @@
 	display: flex;
 	align-items: center;
 }
+.grid-images:hover{
+	color: var(--primary);
+	cursor: pointer;
+}

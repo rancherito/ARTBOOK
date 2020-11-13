@@ -40,4 +40,12 @@
         }
 
     }
+	function template_start()
+	{
+		ob_start();
+	}
+	function template_end()
+	{
+		return ob_get_clean();
+	}
 ?>
