@@ -36,14 +36,14 @@
 			display: inline-block;
 		}
 		.btn-nav-movil{
-			display: none !important;
+			display: none;
 		}
 		@media (max-width: 600px) {
 			.btn-nav-desktop{
 				display: none;
 			}
 			.btn-nav-movil{
-				display: block !important;
+				display: block;
 			}
 		}
 	</style>
@@ -65,7 +65,7 @@
 
 				<a href="<?= base_url() ?>" class="btn btn-nav-desktop"> <i class="mdi mdi-home-outline mdi-18px"></i></a>
 				<a class="btn-nav-movil dropdown-trigger btn" data-target='dropdown_menu_public'> <i class="mdi mdi-menu mdi-18px"></i></a>
-				<ul id='dropdown_menu_public' class='btn-nav-movil dropdown-content'>
+				<ul id='dropdown_menu_public' class=' dropdown-content'>
 				    <li><a><i class="mdi mdi-home-outline  mdi-18px"></i>Inicio</a></li>
 					<?php if (empty($_SESSION['access'])): ?>
 				    	<li><a href="<?= base_url() ?>/login"><i class="mdi mdi-account mdi-18px"></i>ACCESO</a></li>
@@ -92,9 +92,9 @@
 			mounted: function () {
 				let drop = $('.dropdown-trigger').dropdown({constrainWidth: false});
 				window.addEventListener('resize', function (e) {
-					if ($(window).width() < 600) {
-						drop.dropdown('recalculateDimensions');
-					}
+
+					drop.dropdown('close');
+
 				});
 			},
 			components: {

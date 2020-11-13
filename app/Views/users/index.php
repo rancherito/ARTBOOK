@@ -11,6 +11,14 @@
 		top: 0;
 		height: 100%;
 		width: 100%;
+	}
+	#user_header_bg::before{
+		content: '';
+		position: 	absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 100%;
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-position: center;
@@ -19,8 +27,9 @@
 		transform: scale(1.1);
 		filter: blur(10px);
 	}
-	#user_header_bg_shadow{
-		position: 	absolute;
+	#user_header_bg::after{
+		position: absolute;
+		content: '';
 		left: 0;
 		top: 0;
 		height: 100%;
@@ -70,7 +79,6 @@
 <div>
 	<div class="" id="user_header">
 		<div id="user_header_bg"></div>
-		<div id="user_header_bg_shadow"></div>
 		<div id="user_header_bg_content">
 			<div class="user-foto"><?= $info['nickname'][0] ?></div>
 			<h5><?= $info['nickname'] ?></h5>
