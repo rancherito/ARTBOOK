@@ -11,6 +11,7 @@
 		top: 0;
 		height: 100%;
 		width: 100%;
+
 	}
 	#user_header_bg::before{
 		content: '';
@@ -24,8 +25,6 @@
 		background-position: center;
 		background-attachment: fixed;
 		background-image: url('<?= base_url() ?>/images/bg_003.jpg');
-		transform: scale(1.1);
-		filter: blur(10px);
 	}
 	#user_header_bg::after{
 		position: absolute;
@@ -46,6 +45,8 @@
 		align-items: center;
 		flex-direction: column;
 		color: white;
+		backdrop-filter: blur(10px);
+  		-webkit-backdrop-filter: blur(10px);
 	}
 	.user-foto{
 		background: #ffffff55;
