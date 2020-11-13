@@ -28,6 +28,10 @@
 			align-items: center;
 			color: var(--primary)
 		}
+		.app-nav-left a{
+			color: var(--primary);
+			display: flex;
+		}
 		.btn-nav-desktop{
 			display: inline-block;
 		}
@@ -48,7 +52,7 @@
 	<div id="app-body">
 		<div id="app-nav">
 			<div class="app-nav-left">
-				<img src="<?= base_url() ?>/images/icon.svg" alt="ARTSBOOK" height="30px">  <span class="pl-4">ARTSBOOK</span>
+				<a href="<?= base_url() ?>"><img src="<?= base_url() ?>/images/icon.svg" alt="ARTSBOOK" height="30px">  <span class="pl-4">ARTSBOOK</span></a>
 			</div>
 			<div>
 				<?php if (empty($_SESSION['access'])): ?>
