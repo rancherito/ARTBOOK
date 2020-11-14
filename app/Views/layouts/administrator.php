@@ -31,27 +31,31 @@
 			background-color: var(--primary);
 			padding: 1rem 0;
 			display: flex;
-			justify-content: center;
+			justify-content: space-between;
 			align-items: center;
 			flex-direction: column;
 			z-index: 3;
 			transition: linear all .1s
 		}
-		#app-aside a{
+		#app-aside-access a, #app-aside-default-access a{
 			border-radius: 10px;
 			background-color: rgba(255,255,255,.05);
 			color: white;
-			height: 50px;
-			width: 50px;
+			height: 46px;
+			width: 46px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			font-size: 2rem;
 			transition: linear all .2s;
 			cursor: pointer;
-			margin-bottom: 2px;
+			margin-top: 8px;
+
 		}
-		#app-aside a:hover{
+		#app-aside-default-access a{
+			border-radius: 50%;
+		}
+		#app-aside-access a:hover, #app-aside-default-access a:hover{
 			background-color: rgba(255,255,255,.5);
 		}
 		#app-content{
@@ -83,6 +87,10 @@
 			transition: linear all .1s
 		}
 
+		#app-aside-logo img{
+			width: 60%;
+		}
+
 	@media (max-width: 600px) {
 
 		#app-aside-toggle{
@@ -94,7 +102,6 @@
 		}
 		#app-aside{
 			transform: translateX(-100%);
-			justify-content: flex-start;
 		}
 		#app-aside.app-aside-show{
 			transform: translateX(0);
@@ -112,15 +119,21 @@
 				<i class="mdi mdi-menu" v-if="!show_aside"></i>
 				<i class="mdi mdi-chevron-left" v-if="show_aside"></i>
 			</div>
+			<div class="f-c">
+				<a id="app-aside-logo" class="f-c py-4" href="<?= base_url() ?>">
+					<img src="<?= base_url() ?>/images/icon_white.svg" alt="logo arts book">
+				</a>
+				<div id="app-aside-access"></div>
+			</div>
+
+			<div id="app-aside-default-access">
+				<a href="<?= base_url() ?>/close"><i class="mdi mdi-power-standby"></i></a>
+			</div>
 		</div>
 		<div id="app-nav">
 			<div></div>
-			<div>
-				<?php if (!empty($_SESSION['access'])): ?>
-					<a href="<?= base_url() ?>/close" class="btn"> <i class="mdi-18px mdi mdi-power-standby"></i></a>
-				<?php endif; ?>
-
-				<a href="<?= base_url() ?>" class="btn"> <i class="mdi-18px mdi mdi-home-outline"></i></a>
+			<div id="app-nav-access">
+				
 			</div>
 		</div>
 		<div id="app-content" class="white">

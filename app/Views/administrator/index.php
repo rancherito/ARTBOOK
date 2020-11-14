@@ -245,7 +245,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 		},
 		mounted: function () {
 			new gridStack($('.wrap-grid'),260,1)
-			$('#app-aside').append($(`<a><i class="mdi mdi-plus"></i></a>`).click(() => {
+			$('#app-nav-access').append($(`<a class="btn"><i class="mdi-18px mdi mdi-plus left"></i><span>Nuevo</span></a>`).click(() => {
 				this.isopeneditor = true
 				this.autor.value = -1
 				this.nombre.value = ''
@@ -293,31 +293,6 @@ foreach (scandir('./images/artworks') as $key => $value) {
   				})
 		      })
 
-				/*$.ajax({
-					url: '<?= base_url() ?>/services/artwork/save',
-					type: 'POST',
-					data: datos,
-					xhr: function() {
-						var xhr = new window.XMLHttpRequest();
-					    //Upload progress
-					    xhr.upload.addEventListener("progress", function(evt){
-					      if (evt.lengthComputable) {
-					        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-					        //Do something with upload progress
-					        console.log(percentComplete);
-					      }
-					    }, false);
-					    return xhr;
-					},
-					fail: function (e) {
-						console.log('fallo');
-					},
-					success: function(res) {
-						console.log(res);
-						console.log('paso creo....');
-						/*
-					}
-				});*/
 			},
 			onLoadImage: function () {
 				this.isloadedfile = true
