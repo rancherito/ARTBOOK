@@ -45,7 +45,7 @@
 			</div>
 			<div>
 				<?php if (!empty($_SESSION['access'])):?>
-					<a class="btn" href="<?= base_url().'/'.$_SESSION['access']['account'] ?>"> <i class="mdi mdi-account mdi-18px left"></i><?= $_SESSION['access']['nickname'] ?></a>
+					<a class="btn" href="<?= base_url().'/'.$_SESSION['access']['account'] ?>"> <i class="mdi mdi-account mdi-18px"></i></a>
 				<?php endif; ?>
 				<a class="btn-nav-movil dropdown-trigger btn" data-target='dropdown_menu_public'> <i class="mdi mdi-menu mdi-18px"></i></a>
 				<ul id='dropdown_menu_public' class=' dropdown-content'>
