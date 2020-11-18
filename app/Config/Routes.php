@@ -23,6 +23,7 @@ if (isset($_SESSION['access']) && $_SESSION['access']['accesstype'] == 'ADMINIST
 	$routes->add('/administrador', 'Administrator');
 	$routes->post('/services/artwork/save', 'Services::artwork_save');
 	$routes->get('/services/artwork/list', 'Services::artwork_list');
+	$routes->post('/services/artworks/recover', 'Services::artworks_recover');
 }
 
 $routes->add('/(:alphanum)', 'Users::index/$1');

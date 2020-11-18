@@ -167,7 +167,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 						</cg-select>
 						<div class="r">
 							<a class="btn bg-white" @click="isopeneditor = false"> <i class="mdi mdi-close right"></i> <span>CANCELAR</span> </a>
-							<cg-button :disabled="!isvalid" :loading="load.isUploading" :advance="load.advance"></cg-button>
+							<cg-button :disabled="!isvalid" :loading="load.isUploading" :progress="load.progress"></cg-button>
 						</div>
 
 					</form>
@@ -230,7 +230,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 			return {
 				load: {
 					isUploading: false,
-					advance: 0
+					progress: 0
 				},
 				autor: {value: '-1', isvalid: false},
 				nombre: {value: '', isvalid: false},
@@ -276,14 +276,14 @@ foreach (scandir('./images/artworks') as $key => $value) {
 
 
 
-				this.load.advance = 0;
+				this.load.progress = 0;
 				this.load.isUploading = true
 				axios.request( {
 		        method: "post",
 		        url: "<?= base_url() ?>/services/artwork/save",
 		        data: datos,
 		        onUploadProgress: (p) => {
-				  this.load.advance = parseInt((p.loaded / p.total) * 100)
+				  this.load.progress = parseInt((p.loaded / p.total) * 100)
 		        }
 		      }).then (data => {
 				  this.isopeneditor = false

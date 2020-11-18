@@ -3,7 +3,7 @@
 
 class General
 {
-    public static function qry_images_salvar( $id_image, $accessname, $extension, $height, $width, $autor, $uploaded_user, $name)
+    public static function qry_images_salvar( $id_image, $accessname, $extension, $height, $width, $autor, $uploaded_user, $name, $description = '')
     {
         $sql = "EXEC app.sp_images_salvar
 		@id_image = '$id_image',
@@ -13,7 +13,8 @@ class General
 		@width = '$width' ,
 		@autor = '$autor' ,
 		@uploaded_user = '$uploaded_user',
-		@name = '$name'";
+		@name = '$name',
+		@description = '$description';";
         return query_database($sql);
     }
 
@@ -41,7 +42,7 @@ class General
 
 	public static function qry_access($user,$pass)
 	{
-		$sql = "SELECT nickname, account, id_role FROM users.tb_users WHERE [user] = ? AND pass = ? AND account != 'Anonimus'";
+		$sql = "SELECT nickname, account, id_role, id_user FROM users.tb_users WHERE [user] = ? AND pass = ? AND account != 'Anonimus'";
 		return query_database($sql,[$user, $pass]);
 	}
 	public static function qry_account_exists($account)

@@ -23,12 +23,12 @@
 			overflow-x: hidden;
 			overflow-y: auto;
 		}
-		.app-nav-left{
+		#app-nav-left{
 			display: flex;
 			align-items: center;
 			color: var(--primary)
 		}
-		.app-nav-left a{
+		#app-nav-left a{
 			color: var(--primary);
 			display: flex;
 		}
@@ -40,12 +40,12 @@
 <body>
 	<div id="app-body">
 		<div id="app-nav">
-			<div class="app-nav-left">
+			<div id="app-nav-left">
 				<a href="<?= base_url() ?>"><img src="<?= base_url() ?>/images/icon.svg" alt="ARTSBOOK" height="30px">  <span class="pl-4">ARTSBOOK</span></a>
 			</div>
-			<div>
-				<?php if (!empty($_SESSION['access'])):?>
-					<a class="btn" href="<?= base_url().'/'.$_SESSION['access']['account'] ?>"> <i class="mdi mdi-account mdi-18px"></i></a>
+			<div id="app-nav-access">
+				<?php if (isset($_SESSION['access']) && base_url().$_SERVER['REQUEST_URI'] != $_SESSION['access']['account_site']):?>
+					<a class="btn" href="<?= $_SESSION['access']['account_site'] ?>"> <i class="mdi mdi-account mdi-18px"></i></a>
 				<?php endif; ?>
 				<a class="btn-nav-movil dropdown-trigger btn" data-target='dropdown_menu_public'> <i class="mdi mdi-menu mdi-18px"></i></a>
 				<ul id='dropdown_menu_public' class=' dropdown-content'>
@@ -68,7 +68,6 @@
 	<?= $body ?>
 
 	<script type="text/javascript">
-
 
 		new Vue({
 			el: '#app-body',

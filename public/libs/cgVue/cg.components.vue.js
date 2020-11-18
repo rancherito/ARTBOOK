@@ -3,7 +3,7 @@ Vue.component('cg-button',{
 	template: `
 		<button :disabled="disabled || loading" class="btn waves waves-effect waves-light">
 			<i class="mdi mdi-content-save right" v-if="!loading"></i> <span v-if="!loading">SALVAR</span>
-			<div v-if="loading" class="cg-button-preloader" :style="{width: advance + '%'}"></div>
+			<div v-if="loading" class="cg-button-preloader" :style="{width: progress + '%'}"></div>
 			<div v-if="loading">
 				<div class="spinner">
 				  <div class="rect1"></div>
@@ -19,7 +19,7 @@ Vue.component('cg-button',{
 	props: {
 		'disabled': Boolean,
 		loading: {type: Boolean, default: false},
-		advance: {type: Number, default: 0}
+		progress: {type: Number, default: 0}
 	}
 })
 Vue.component('cg-select', {

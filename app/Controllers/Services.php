@@ -18,9 +18,11 @@ class Services extends BaseController
 
 				session()->set([
 					'access' => [
+						'user' => $res['id_user'],
 						'nickname' => $res['nickname'],
 						'account' => $res['account'],
-						'accesstype' => $typeaccess
+						'accesstype' => $typeaccess,
+						'account_site' => base_url().'/'.$res['account']
 					]
 				]);
 				$access['access'] = true;
@@ -34,8 +36,11 @@ class Services extends BaseController
 
 		if (!empty($_POST['author']) && !empty($_POST['workname']) && !empty($_POST['image']) && isset($_POST['key'])) {
 
+			if ($_POST['author'] == 'current') $_POST['author'] = $_SESSION['access']['user'];
+
 			$id_image = $_POST['key'];
 			$name = trim($_POST['workname']);
+			$description = trim($_POST['description']);
 			$extension_change = ['jpeg' => 'jpg', 'jpg' => 'jpg', 'png' => 'png'];
 			$img = $_POST['image'];
 			$ext = substr(str_replace(';base64', '', explode(',',$img)[0]),'11');
@@ -59,7 +64,7 @@ class Services extends BaseController
 			file_put_contents($file, $data);
 			list($ancho, $alto) = getimagesize($file);
 
-			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, $_POST['author'], '2', $name);
+			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, $_POST['author'], '2', $name,$description);
 
 			return $this->response->setJSON(['key' => $key_value]);
 		}
@@ -68,6 +73,13 @@ class Services extends BaseController
 	{
 		$images = General::qry_images_list();
 		return $this->response->setJSON($images);
+	}
+	public function artworks_recover()
+	{
+		if (isset($_POST['account'])) {
+			$images = General::qry_images_recover($_POST['account']);
+			return $this->response->setJSON($images);
+		}
 	}
 	//--------------------------------------------------------------------
 
