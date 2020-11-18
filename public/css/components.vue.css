@@ -12,6 +12,22 @@
 	height: auto;
 	display: block;
 }
+.cg-grid-avatar{
+	background: var(--primary);
+	height: 18px;
+	width: 18px;
+	border-radius: 50%;
+	display: inline-block;
+}
+.cg-grid-image-options{
+	background: white !important;
+    position: absolute;
+	right: 1rem;
+	top: 1rem;
+}
+.cg-grid-image-options i{
+	color: var(--primary)
+}
 .cg-grid-wrapper-img {
 	position: absolute;
 	float: left;
@@ -44,6 +60,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	z-index: 2;
 }
 .upload-editor form{
 	height: 500px;

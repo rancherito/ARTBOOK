@@ -1,3 +1,6 @@
+<?php
+	$access_account = !empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $info['account'];
+?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js" ></script>
 <style media="screen">
 #user_header{
@@ -91,7 +94,7 @@
 		</div>
 	</div>
 	<div class="p-4">
-		<cg-grid :images="list_img" :stack_size="320" :details="false" ></cg-grid>
+		<cg-grid ref='grid' @changeimage="change" :images="list_img" :stack_size="320" :details="false" ></cg-grid>
 	</div>
 	<upload-editor ref="editor" :autors="autoraccess" @onfinish="onfinish"></upload-editor>
 </div>
@@ -215,10 +218,6 @@ Vue.component('upload-editor',{
 				this.close();
 				this.$emit('onfinish', data.data)
 				this.load.isUploading = false
-				/*$.get('<?= base_url() ?>/services/artwork/list', list => {
-					//this.images = list
-					this.load.isUploading = false
-				})*/
 			})
 		},
 		change({coordinates, canvas}) {
@@ -241,8 +240,6 @@ Vue.component('upload-editor',{
 			reader.addEventListener("load", e => {
 				this.img = reader.result
 				this.extensionimage = file.type
-
-				console.log(this.steps);
 			}, false);
 			reader.readAsDataURL(file);
 		},
@@ -264,9 +261,12 @@ const $_module = {
 	template: `<?= $template ?>`,
 	mounted: function () {
 		<?php
-		if (!empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $info['account']) {
-			echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";
-			echo "$('#app-nav-access').prepend($(\"<a class='btn'><i class='mdi-18px mdi mdi-plus'></i></a>\").click(this.openeditor),' ');";
+		if ($access_account) {
+			echo "
+				this.\$refs.grid.setEdit(true);
+				this.autoraccess.push({id_user: 'current', nickname: 'current'});
+				$('#app-nav-access').prepend($(\"<a class='btn'><i class='mdi-18px mdi mdi-plus'></i></a>\").click(this.openeditor),' ');
+			";
 
 		}
 
@@ -280,6 +280,16 @@ const $_module = {
 		}
 	},
 	methods: {
+		change: function (data) {
+			this.$refs.editor.open()
+			this.$refs.editor.setData({
+				author: 'current',
+				description: data.description,
+				name: data.name,
+				id: data.id_image,
+				img: '<?= base_url() ?>/images/artworks/' + data.accessname + '.' + data.extension
+			})
+		},
 		onfinish: function (data) {
 			$.post('<?= base_url() ?>/services/artworks/recover',{account: '<?= $_SESSION['access']['account'] ?>'}, (res) => {
 				this.list_img = res;
@@ -292,7 +302,7 @@ const $_module = {
 				description: '',
 				name: '',
 				id: '',
-				img: '<?= base_url() ?>/images/icon.png'
+				img: null
 			})
 		},
 
