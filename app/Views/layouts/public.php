@@ -10,9 +10,11 @@
 	<meta name="twitter:card" value="summary">
 
 	<!-- Open Graph data -->
-	<meta property="og:title" content="ARTS BOOK SITEWEB" />
+	
 	<meta property="og:type" content="article" />
 	<meta property="og:url" content="<?= base_url() ?>" />
+
+	<meta property="og:description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book 😁" />
 	<style media="screen">
 
 		#app-body{
