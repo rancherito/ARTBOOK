@@ -1,4 +1,4 @@
-<?php $version = 0.01 ?>
+<?php $version = 0.012 ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>ARTS BOOK</title>
@@ -20,3 +20,6 @@
 <link rel="stylesheet" href="<?= base_url() ?>/css/colors.css?v=<?= $version ?>">
 <link rel="stylesheet" href="<?= base_url() ?>/css/components.vue.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/js/components.vue.js?v=<?= $version ?>"></script>
+<script src="<?= base_url() ?>/libs/simplebar/simplebar.min.js"></script>
+<script src="<?= base_url() ?>/libs/simplebar/simplebar.vue.js"></script>
+<link rel="stylesheet" href="<?= base_url() ?>/libs/simplebar/simplebar.css">

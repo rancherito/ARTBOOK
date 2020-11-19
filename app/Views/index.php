@@ -2,7 +2,6 @@
 	.feed-users{
 		display: flex;
 		padding: 1rem;
-		margin: 0 auto;
 	}
 	.feed-users-wrapper-item{
 		height: 80px;
@@ -77,21 +76,27 @@
 </style>
 <?php template_start()?>
 <div>
-	<div class="feed-users">
-		<?php foreach ($feed as $key => $f): ?>
-			<div class="feed-users-item f-c">
-				<div class="feed-users-count f-c"><span><?= $f['total'] ?></span></div>
-				<div class="feed-users-wrapper-item f-c">
-					<div></div>
-					<div class="f-c feed-users-icon">
-						<span><?= $f['nickname'][0] ?></span>
+	<div class="aaaaaa" style="margin: 0 auto">
+		<simplebar>
+			<div class="feed-users">
+				<?php foreach ($feed as $key => $f): ?>
+					<div class="feed-users-item f-c">
+						<div class="feed-users-count f-c"><span><?= $f['total'] ?></span></div>
+						<div class="feed-users-wrapper-item f-c">
+							<div></div>
+							<div class="f-c feed-users-icon">
+								<span><?= $f['nickname'][0] ?></span>
+							</div>
+						</div>
+						<a href="<?= base_url() ?>/<?= $f['account'] ?>" class="pt-2"><?= $f['nickname'] ?></a>
 					</div>
-				</div>
-				<a href="<?= base_url() ?>/<?= $f['account'] ?>" class="pt-2"><?= $f['nickname'] ?></a>
-			</div>
 
-		<?php endforeach; ?>
+				<?php endforeach; ?>
+			</div>
+		</simplebar>
 	</div>
+
+
 	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
 </div>
 
@@ -109,7 +114,7 @@ const $_module = {
 	},
 	methods: {
 		sizewrapper: function (size) {
-			$('.feed-users').width(size)
+			$('.aaaaaa').width(size)
 			console.log(size);
 		}
 	},
