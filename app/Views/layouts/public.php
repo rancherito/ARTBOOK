@@ -1,20 +1,29 @@
 
-<?php use Config\App;?>
+<?php
+	use Config\App;
+	$pre_metas = [
+		'img' => base_url()."/images/meta.png",
+		'title' => 'ARTS BOOK SITEWEB'
+	];
+
+	$metas = array_merge($pre_metas, gettype($metas) == 'NULL' ? [] : $metas);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
-	<meta name="description" content="Descripcion de pagina. No sueperar los 155 caracteres." />
+	<meta name="description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book 😁" />
 
 	<!-- Twitter Card data -->
 	<meta name="twitter:card" value="summary">
 
 	<!-- Open Graph data -->
-
+	<meta property="og:title" content="<?= $metas['title'] ?>" />
 	<meta property="og:type" content="article" />
 	<meta property="og:url" content="<?= base_url() ?>" />
+	<meta property="og:image" content="<?= $metas['img'] ?>" />
+	<meta property="og:description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book 😁" />
+	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 
-	
 	<style media="screen">
 
 		#app-body{

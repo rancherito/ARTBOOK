@@ -8,11 +8,13 @@ class Users extends BaseController
 
 		if (count($account)) {
 			$images = General::qry_images_recover($user);
-			echo $this->layout_view('public','users/index',['images_list' => $images, 'info' => $account[0]]);
+			$title = strtoupper($images[0]['nickname']).' AHORA EN ARTSBOOK-SITE';
+			$metaimage = base_url().'/images/artworks/'.$images[0]['accessname'].'.'.$images[0]['extension'];
+			$metas = ['img' => $metaimage, 'title' => $title];
+			echo $this->layout_view('public','users/index',['images_list' => $images, 'info' => $account[0], 'metas'=> $metas]);
 		}
-		else {
-			throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-		}
+		else throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+
 	}
 
 

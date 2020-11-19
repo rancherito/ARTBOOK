@@ -1,11 +1,8 @@
 
 <?php
-	$metaimage = base_url().'/images/artworks/'.$images_list[0]['accessname'].'.'.$images_list[0]['extension'];
-	$metatitle = strtoupper($images_list[0]['nickname']).' AHORA EN ARTSBOOK-SITE';
+	
+
 ?>
-<meta property="og:title" content="<?= $metatitle ?>" />
-<meta property="og:image" content="<?= $metaimage ?>" />
-<meta property="og:description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book 😁" />
 <?php
 	$access_account = !empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $info['account'];
 ?>
