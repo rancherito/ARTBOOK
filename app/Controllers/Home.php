@@ -4,9 +4,10 @@ class Home extends BaseController
 {
 	public function index()
 	{
+		$agent = $this->request->getUserAgent();
 		$images = General::qry_images_list();
 		$feed = General::qry_feedpage();
-		echo $this->layout_view('public','index',['images_list' => $images, 'feed' => $feed]);
+		echo $this->layout_view('public','index',['images_list' => $images, 'feed' => $feed, 'agent' => $agent]);
 	}
 	public function access()
 	{

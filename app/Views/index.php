@@ -98,13 +98,13 @@
 <?php $template = template_end()?>
 
 <script>
-
+console.log();
 const $_module = {
 	template: `<?= $template ?>`,
 	data: function () {
 		return {
 			list_img: <?= json_encode($images_list) ?>,
-			stack: 320
+			stack: <?= $agent->isMobile() ? 170 : 320 ?>
 		}
 	},
 	methods: {
