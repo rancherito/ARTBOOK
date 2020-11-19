@@ -1,3 +1,5 @@
+<meta property="og:image" content="<?= base_url() ?>/images/meta.png" />
+<meta property="og:description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book 😁" />
 <style media="screen">
 	.feed-users{
 		display: flex;
