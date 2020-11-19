@@ -50,5 +50,10 @@ class General
 		$sql = "SELECT account,nickname FROM users.tb_users WHERE account = ?;";
 		return query_database($sql,[$account]);
 	}
+	public function qry_feedpage()
+	{
+		$sql = "EXEC app.sp_feedpage;";
+		return query_database($sql);
+	}
 
 }

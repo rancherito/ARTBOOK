@@ -234,6 +234,7 @@ Vue.component('cg-grid',{
 
 				let stacks = Array(count_stack).fill(0);
 				this.$refs.menu.style.width = (count_stack * this.stack_size) + 'px'
+				this.$emit('sizewrapper', count_stack * this.stack_size)
 				for (var el of this.$el.querySelectorAll('.cg-grid-wrapper-img')) {
 					var near_index = stacks.findIndex(a => a == Math.min.apply(null, stacks));
 					var img_height = el.offsetHeight;

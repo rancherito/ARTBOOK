@@ -4,7 +4,7 @@
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js" ></script>
 <style media="screen">
 #user_header{
-	height: 300px;
+	height: 260px;
 	background: black;
 	position: relative;
 	overflow: hidden;

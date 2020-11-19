@@ -5,7 +5,8 @@ class Home extends BaseController
 	public function index()
 	{
 		$images = General::qry_images_list();
-		echo $this->layout_view('public','index',['images_list' => $images]);
+		$feed = General::qry_feedpage();
+		echo $this->layout_view('public','index',['images_list' => $images, 'feed' => $feed]);
 	}
 	public function access()
 	{
