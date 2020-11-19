@@ -14,7 +14,6 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:url" content="<?= base_url() ?>" />
 	<meta property="og:image" content="<?= base_url() ?>/images/meta.png" />
-	<meta property="og:description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book" />
 	<meta property="og:description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book 😁" />
 	<style media="screen">
 
