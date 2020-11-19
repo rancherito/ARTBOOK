@@ -4,6 +4,17 @@
 <html lang="en">
 <head>
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
+	<meta name="description" content="Descripcion de pagina. No sueperar los 155 caracteres." />
+
+	<!-- Twitter Card data -->
+	<meta name="twitter:card" value="summary">
+
+	<!-- Open Graph data -->
+	<meta property="og:title" content="Titulo" />
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content="<?= base_url() ?>" />
+	<meta property="og:image" content="<?= base_url() ?>/images/meta.png" />
+	<meta property="og:description" content="Descripcion" />
 	<style media="screen">
 
 		#app-body{
