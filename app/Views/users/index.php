@@ -1,6 +1,6 @@
 
 <?php
-	$metaimage = base_url().'/'.$images_list[0]['accessname'].'.'.$images_list[0]['extension'];
+	$metaimage = base_url().'/images/artworks/'.$images_list[0]['accessname'].'.'.$images_list[0]['extension'];
 	$metatitle = strtoupper($images_list[0]['nickname']).' AHORA EN ARTSBOOK-SITE';
 ?>
 <meta property="og:title" content="<?= $metatitle ?>" />
