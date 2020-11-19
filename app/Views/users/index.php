@@ -8,8 +8,8 @@
 	$access_account = !empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $info['account'];
 ?>
 <script type="text/javascript">
-	$('head').append('<meta property="og:title" content="<?= $metatitle ?>" />');
-	$('head').append('<meta property="og:image" content="<?= $metaimage ?>" />');
+	$('meta[property="og:title"]').attr('content', "<?= $metatitle ?>");
+	$('meta[property="og:image"]').attr('content', "<?= $metaimage ?>");
 </script>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js" ></script>
 <style media="screen">
