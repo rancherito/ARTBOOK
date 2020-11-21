@@ -1,8 +1,7 @@
-
 Vue.component('cg-button',{
 	template: `
 		<button :disabled="disabled || loading" class="btn waves waves-effect waves-light">
-			<i class="mdi mdi-content-save right" v-if="!loading"></i> <span v-if="!loading">SALVAR</span>
+			<i :class="classicon" class="right" v-if="!loading"></i> <span v-if="!loading">{{text}}</span>
 			<div v-if="loading" class="cg-button-preloader" :style="{width: progress + '%'}"></div>
 			<div v-if="loading">
 				<div class="spinner">
@@ -19,7 +18,9 @@ Vue.component('cg-button',{
 	props: {
 		'disabled': Boolean,
 		loading: {type: Boolean, default: false},
-		progress: {type: Number, default: 0}
+		progress: {type: Number, default: 0},
+		classicon: {type: String, default: 'mdi mdi-content-save'},
+		text: {type: String, default: 'ENVIAR'}
 	}
 })
 Vue.component('cg-select', {
@@ -28,11 +29,11 @@ Vue.component('cg-select', {
 		<div class="cg-field-wrap">
 			<div class="cg-field-loader"></div>
 			<label v-if="this.label != undefined && !loading" class="cg-label" :for="name">{{label}}</label>
-			<select v-if="!loading" :disabled="disabled || loading" @blur="change" @input="inputchange" ref="select" :name="name" :value="value" @change="change"> <slot></slot></select>
+			<select class="cg-field-in browser-default" v-if="!loading" :disabled="disabled || loading" @blur="change" @input="inputchange" ref="select" :name="name" :value="value" @change="change"> <slot></slot></select>
 			<div class="cg-field-loading-message" v-if="loading">CARGANDO {{label}}</div>
 		</div>
 		<div class="cg-field-details">
-			<div v-if="required" class="cg-field-details-message">{{(!validation && firstUse) ? 'selección no valida': (firstUse ? 'correcto' : 'obligatorio')}}</div>
+			<div v-if="required" class="cg-field-details-message">{{(!validation && firstUse) ? 'selección no valida': (firstUse ? 'correcto' : 'requerido')}}</div>
 		</div>
 	</div>
 	`,
@@ -107,14 +108,14 @@ Vue.component('cg-field', {
 		<div class="cg-field-wrap">
 			<div class="cg-field-loader"></div>
 			<label v-if="this.label != undefined && !loading" class="cg-label" :for="name">{{label}}</label>
-			<input @keydown="keydown" class="browser-default" :placeholder="placeholder" :type="type" v-if="!loading" :disabled="disabled || loading" @blur="change" @input="inputchange" ref="input" :name="name" :value="value" @change="change">
+			<input @keydown="keydown" class="cg-field-in browser-default" :placeholder="placeholder" :type="type == 'password' ? 'password' : 'text'" v-if="!loading" :disabled="disabled || loading" @blur="change" @input="inputchange" ref="input" :name="name" :value="value" @change="change">
 			<div class="cg-field-loading-message" v-if="loading">CARGANDO {{label}}</div>
 		</div>
 		<div class="cg-field-details">
 			<div class="cg-field-details-message">
-			  	<span v-if="required">{{(!validation && firstUse) ? messageaValidation : ( empty ? 'opcional' : (firstUse ? 'correcto' : 'obligatorio'))}}</span>
+			  	<span v-if="required">{{(!validation && firstUse) ? messageaValidation : ( empty ? 'opcional' : (firstUse ? 'correcto' : 'requerido'))}}</span>
 			</div>
-			<div>{{value.length}}/{{maxchar}}</div>
+			<div>{{internalvalue.length}}/{{maxchar}}</div>
 		</div>
 	</div>
 	`,
@@ -123,7 +124,8 @@ Vue.component('cg-field', {
 			firstUse: false,
 			messageaValidation: 'Entrada no valida',
 			maxchardefault: 50,
-			button: null
+			button: null,
+			internalvalue: '',
 		}
 	},
 	props: {
@@ -158,7 +160,21 @@ Vue.component('cg-field', {
 			}
 			return this.maxchardefault
 		},
-
+		minchar: function () {
+			if (this.sizechars != undefined) {
+				let a = Array.isArray(this.sizechars) ? this.sizechars : [this.sizechars]
+				return Math.min.apply(null,
+					a.map(function (value) {
+						if (typeof value === "number") return value;
+						else if (typeof value === "string") {
+							if (!isNaN(value)) return parseInt(value);
+							else if (value.replaceAll(' ','').match(/^[0-9]+\-[0-9]+$/gi) !== null) return parseInt(value.split('-')[0]);
+						}
+					}).filter(val => typeof val == 'number')
+				)
+			}
+			return 0
+		},
 		validation: function () {
 			let val = this.caculedvalidation()
 			this.$emit('update:watchisvalid',val)
@@ -172,21 +188,32 @@ Vue.component('cg-field', {
 			form.addEventListener('submit', (e) => {
 				if (!this.isValid()) e.preventDefault()
 			});
-
 		}
-
+		this.$refs.input.addEventListener('input', () => {
+			this.internalvalue = this.$refs.input.value;
+		});
 	},
 	methods: {
+		validateEmail: function () {
+			if (this.type == 'email') {
+				this.messageaValidation = 'ingrese un email valido'
+				const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				return re.test(this.value);
+			 }
+			 return !0
+	  	},
 		caculedvalidation: function () {
 			if (this.required) {
 				if (this.empty && this.value == '') return !0
-				return this.validatevoid() && this.validatenotvalus() && this.validatesize()
+				return this.validatevoid() && this.validatenotvalus() && this.validatesize() && this.validateEmail()
 			}
 			return !0
 		},
 		validatesize: function () {
 			if (this.sizechars != undefined) {
-				this.messageaValidation = 'corregir nro de carracteres'
+				const min = this.minchar;
+
+				this.messageaValidation = this.value.length < min ? 'minimo ' + min +' caracteres' : 'caracteres exedidos'
 				var valDim = false;
 				let list = Array.isArray(this.sizechars) ? this.sizechars : [this.sizechars]
 				for (var value of list) {
@@ -226,7 +253,7 @@ Vue.component('cg-field', {
 			this.change()
 			return this.validation;
 		},
-		inputchange: function () {
+		inputchange: function (ff) {
 			this.$emit('input', this.$refs.input.value)
 		},
 		change: function () {
@@ -235,8 +262,9 @@ Vue.component('cg-field', {
 		keydown: function (evt) {
 			var charCode = (evt.which) ? evt.which : evt.keyCode;
 			this.change()
-			if (this.value.length >= this.maxchar && !(charCode == 13 || charCode == 8 || charCode == 9)) evt.preventDefault()
+			if (this.internalvalue.length >= this.maxchar && !(charCode == 13 || charCode == 8 || charCode == 9)) evt.preventDefault()
 			if(this.number) if (!(charCode == 13 || charCode == 8 || charCode == 9 || (charCode >= 96 && charCode <= 105) || (charCode >= 48 && charCode <= 57))) evt.preventDefault();
+
 		}
 	}
 })

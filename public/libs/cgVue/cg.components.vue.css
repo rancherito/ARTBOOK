@@ -53,10 +53,8 @@
 		white-space: nowrap;
 	}
 
-	.cg-select select,
-	.cg-field input,
-	.cg-field input[type=text],
-	.cg-field input[type=password]
+	.cg-select-in,
+	.cg-field input
 	{
 		background: #f7f7f7;
 		height: 56px;
@@ -67,7 +65,7 @@
 		border-radius: 6px 6px 0 0;
 		margin: 0;
 	}
-	.cg-field input[type=text], .cg-field input[type=password]{
+	.cg-field input{
 		box-sizing: border-box;
 		padding: 0 12px;
 		border: none;
@@ -75,27 +73,21 @@
 		width: 100%;
 		transition: linear all .2s;
 	}
-	.cg-field input[type=text]:focus, .cg-field input[type=password]:focus{
+	.cg-field input:focus{
 		box-shadow: inset 0 -2px 0 0 #6139ee;
 	}
-	.cg-field.cg-field-notvalid input[type=text],
-	.cg-field.cg-field-notvalid input[type=text]:focus,
-	.cg-field.cg-field-notvalid input[type=password],
-	.cg-field.cg-field-notvalid input[type=password]:focus
+	.cg-field.cg-field-notvalid input,
+	.cg-field.cg-field-notvalid input:focus
 	{
 		box-shadow: inset 0 -2px 0 0 var(--cg-error);
 	}
 	.cg-select:hover select,
 	.cg-select select:focus,
-	.cg-field input[type=text]:focus,
-	.cg-field input[type=password]:focus,
 	.cg-field input:focus,
-	.cg-field input[type=text]:hover,
-	.cg-field input[type=password]:hover,
 	.cg-field input:hover{
 		background: #f0f0f0;
 	}
-	.cg-label + select, .cg-label + input[type=text], .cg-label + input[type=password]{
+	.cg-label + select, .cg-label + input{
 		padding-bottom: 8px;
 		padding-top: 24px;
 	}

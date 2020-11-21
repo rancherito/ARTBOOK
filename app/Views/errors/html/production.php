@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="robots" content="noindex">
-
+	<link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">
 	<title>Whoops!</title>
 
 	<style type="text/css">
@@ -16,8 +16,8 @@
 
 		<h1 class="headline">Whoops!</h1>
 
-		<p class="lead">We seem to have hit a snag. Please try again later...</p>
-
+		<p class="lead">Parece que tenemos un error con esta pagina, regrese más tarde :c</p>
+		<a href="<?= base_url() ?>">Regresar al inicio</a>
 	</div>
 
 </body>

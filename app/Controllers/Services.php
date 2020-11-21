@@ -1,14 +1,52 @@
 <?php namespace App\Controllers;
 use App\Models\General;
+use App\Models\User;
 class Services extends BaseController
 {
+	public function account_create()
+	{
+		if (isset($_POST['user']) && isset($_POST['password']) && isset($_POST['email'])) {
+
+			$res = [];
+			$valid =
+				preg_match("/^\w{4,16}$/i", $_POST['user']) &&
+				filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) &&
+				preg_match("/.{8,20}/i", $_POST['password'])
+				;
+			if ($valid) {
+				$user = $_POST['user'];
+				$pass = md5($_POST['password']);
+				$email_save = $_POST['email'];
+				$ressql = User::account_create($user, $email_save, $pass);
+				$key_generate = NULL;
+
+				foreach ($ressql as $key => $value) {
+					if($value['type_message'] == 'ERROR') $res[] = $value['message'];
+					else if ($value['type_message'] == 'SUCCESS') $key_generate = $value['message'];
+				}
+				if (!is_null($key_generate)) {
+					$key_validation = md5($key_generate.$user).md5($pass.$key_generate);
+					$email = \Config\Services::email();
+
+					$email->setFrom('davidlive0159@gmail.com', 'ARTS BOOK');
+					$email->setTo($email_save);
+					$email->setSubject('Registros de artistas Art\'s Book');
+					$email->setMessage(view('emailcard',['user' => $user, 'activate' => base_url()."/user/activation/$user/$key_validation"]));
+					$email->send();
+				}
+			}
+			else $res[] = 'Se encontro formatos no validos';
+			print_r($res);
+		}
+
+	}
 	public function login_validate()
 	{
-		$access = ['access' => false];
+		$access = ['access' => false, 'account' => ''];
 		$_SESSION = [];
 		if (!empty($_POST['user']) && !empty($_POST['password'])) {
 			$pass = md5($_POST['password']);
-			$res = General::qry_access($_POST['user'],$pass);
+			$res = User::qry_access($_POST['user'],$pass);
 			if (count($res)) {
 				$typeaccess = "UNDEFINIED";
 
@@ -22,10 +60,13 @@ class Services extends BaseController
 						'nickname' => $res['nickname'],
 						'account' => $res['account'],
 						'accesstype' => $typeaccess,
-						'account_site' => base_url().'/'.$res['account']
+						'account_site' => base_url().'/'.$res['account'],
+						'validate' => $res['validate'],
+						'recreatepass' => $res['recreatepass']
 					]
 				]);
 				$access['access'] = true;
+				$access['account'] = $res['account'];
 			}
 		}
 		return $this->response->setJSON($access);

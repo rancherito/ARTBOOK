@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>404 Page Not Found</title>
-
+	<title>404 Pagina no encontrada</title>
+	<link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">
 	<style>
 	div.logo {
 		height: 200px;
@@ -70,11 +70,13 @@
 </head>
 <body>
 	<div class="wrap">
-		<h1>404 - File Not Found</h1>
+		<h1>404</h1>
 
 		<p>
 			<?php if (! empty($message) && $message !== '(null)') : ?>
 				<?= esc($message) ?>
+				<br><br>
+				<a href="<?= base_url() ?>">Regresar al inicio</a>
 			<?php else : ?>
 				Sorry! Cannot seem to find the page you were looking for.
 			<?php endif ?>

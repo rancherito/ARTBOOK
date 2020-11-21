@@ -1,10 +1,6 @@
-
 <?php
-	
-
-?>
-<?php
-	$access_account = !empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $info['account'];
+	$access = $_SESSION['access'];
+	$access_account = !empty($access['account']) && $access['account'] == $info['account'] && $access['validate'] != 0;
 ?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js" ></script>
 <style media="screen">

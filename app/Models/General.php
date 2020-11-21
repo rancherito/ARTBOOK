@@ -20,8 +20,8 @@ class General
 
 	public static function exists_image($id)
 	{
-		$sql = "SELECT accessname+'.'+extension filename FROM app.tb_images WHERE id_image = '$id'";
-		return query_database($sql);
+		$sql = "SELECT accessname+'.'+extension filename FROM app.tb_images WHERE id_image = ?";
+		return query_database($sql,[$id]);
 	}
 
     public static function qry_images_list()
@@ -40,16 +40,6 @@ class General
 		return query_database($sql);
 	}
 
-	public static function qry_access($user,$pass)
-	{
-		$sql = "SELECT nickname, account, id_role, id_user FROM users.tb_users WHERE [user] = ? AND pass = ? AND account != 'Anonimus'";
-		return query_database($sql,[$user, $pass]);
-	}
-	public static function qry_account_exists($account)
-	{
-		$sql = "SELECT account,nickname FROM users.tb_users WHERE account = ?;";
-		return query_database($sql,[$account]);
-	}
 	public function qry_feedpage()
 	{
 		$sql = "EXEC app.sp_feedpage;";

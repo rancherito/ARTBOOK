@@ -3,15 +3,27 @@
 	use Config\App;
 	$pre_metas = [
 		'img' => base_url()."/images/meta.png",
-		'title' => 'ARTS BOOK SITEWEB'
+		'title' => 'ARTS BOOK SITEWEB',
+		'description' => 'Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art\'s Book 😁'
 	];
 
 	$metas = array_merge($pre_metas, gettype($metas) == 'NULL' ? [] : $metas);
+
+
+	$links = [['classicon' => 'mdi mdi-home-outline', 'text' => 'Inicio', 'url' => base_url()]];
+
+	if (empty($_SESSION['access']))
+		$links[] = ['classicon' => 'mdi mdi-account', 'text' => 'ACCESO', 'url' => base_url().'/user/login'];
+
+	if (isset($_SESSION['access']) && $_SESSION['access']['accesstype'] == 'ADMINISTRADOR')
+		$links[] = ['classicon' => 'mdi mdi-book-minus', 'text' => 'ADMINISTRAR', 'url' => base_url().'/administrador'];
+	if (!empty($_SESSION['access']))
+		$links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', 'url' => base_url().'/user/close'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta name="description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book 😁" />
+	<meta name="description" content="<?= $metas['description'] ?>" />
 
 	<!-- Twitter Card data -->
 	<meta name="twitter:card" value="summary">
@@ -21,7 +33,7 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:url" content="<?= base_url() ?>" />
 	<meta property="og:image" content="<?= $metas['img'] ?>" />
-	<meta property="og:description" content="Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art's Book 😁" />
+	<meta property="og:description" content="<?= $metas['description'] ?>" />
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 
 	<style media="screen">
@@ -69,15 +81,15 @@
 				<?php endif; ?>
 				<a class="btn-nav-movil dropdown-trigger btn" data-target='dropdown_menu_public'> <i class="mdi mdi-menu mdi-18px"></i></a>
 				<ul id='dropdown_menu_public' class=' dropdown-content'>
-				    <li><a><i class="mdi mdi-home-outline  mdi-18px"></i>Inicio</a></li>
-					<?php if (empty($_SESSION['access'])): ?>
-				    	<li><a href="<?= base_url() ?>/login"><i class="mdi mdi-account mdi-18px"></i>ACCESO</a></li>
-					<?php endif; ?>
-					<?php if (!empty($_SESSION['access'])): ?>
-						<li><a href="<?= base_url() ?>/administrador"><i class="mdi mdi-book-minus mdi-18px"></i>ADMINISTRAR</a></li>
-						<li><a href="<?= base_url() ?>/close"><i class="mdi mdi-power-standby mdi-18px"></i>CERRAR SESION</a></li>
-					<?php endif; ?>
-				  </ul>
+				   <?php foreach ($links as $key => $link): ?>
+				   		<li>
+				   			<a href="<?= $link['url'] ?>">
+								<i class="mdi-18px <?= $link['classicon'] ?>"></i>
+								<?= $link['text'] ?>
+							</a>
+				   		</li>
+				   <?php endforeach; ?>
+				</ul>
 			</div>
 		</div>
 		<div id="app-content">

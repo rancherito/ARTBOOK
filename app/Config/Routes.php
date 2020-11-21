@@ -13,26 +13,16 @@ $routes->setAutoRoute(true);
 
 session();
 $routes->get('/', 'Home');
-$routes->get('close', 'Utils::close_session');
-$routes->add('login', 'Home::access');
-$routes->post('services/getaccess', 'Services::login_validate');
-
-$routes->add('test', function ()
-{
-	$email = \Config\Services::email();
-
-	$email->setFrom('davidlive0159@gmail.com', 'ARTS BOOK');
-	$email->setTo('febrero0159@gmail.com');
-	$email->setSubject('Account Activation-GoPHP');
-	$email->setMessage('Testing the email class.');
-	if ($email->send()) {
-		echo "Ni idea si envia :c";
-	}
-	else {
-		$d = $email->printDebugger(['headers']);
-		print_r($d);
-	}
+$routes->get('user/close', 'Utils::close_session');
+$routes->add('user/login', 'Home::access');
+$routes->add('user/activation/(:any)/(:alphanum)', function ($user, $key) {
+	echo "$user $key";
 });
+
+$routes->post('services/getaccess', 'Services::login_validate');
+$routes->post('services/account/create', 'Services::account_create');
+
+$routes->add('recortar', 'Utils::image');
 
 if (isset($_SESSION['access']) && $_SESSION['access']['accesstype'] == 'ADMINISTRADOR') {
 	$routes->add('/administrador', 'Administrator');
