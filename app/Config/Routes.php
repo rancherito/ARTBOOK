@@ -21,7 +21,7 @@ $routes->add('emailview', function () {
 	echo view('emailcard',['user'=>'CAFECONPATO','activate' => 'patarad']);
 });
 
-$routes-add('testemail', function ()
+$routes->add('testemail', function ()
 {
 	$email->setFrom('davidlive0159@gmail.com', 'ARTS BOOK');
 	$email->setTo('evopedro0159@gmail.com');
