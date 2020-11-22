@@ -110,6 +110,7 @@
 							const data = {user: this.new_user.val, password: this.new_pass.val, email: this.email.val};
 							this.loading = true
 							$.post('<?= base_url() ?>/services/account/create',data, (d) => {
+								console.log(d);
 								for (var alert of d) M.toast({html: alert, classes: 'rounded bg-alert'})
 
 								if (d.length == 0) {
