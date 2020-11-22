@@ -21,6 +21,15 @@ $routes->add('emailview', function () {
 	echo view('emailcard',['user'=>'CAFECONPATO','activate' => 'patarad']);
 });
 
+$routes-add('testemail', function ()
+{
+	$email->setFrom('davidlive0159@gmail.com', 'ARTS BOOK');
+	$email->setTo('evopedro0159@gmail.com');
+	$email->setSubject('Registros de artistas Art\'s Book');
+	$email->setMessage('PATRAÑAS POR QUE NEIVAS MENSAJES XD XD XD '.base_url());
+	$email->send();
+});
+
 $routes->post('services/getaccess', 'Services::login_validate');
 $routes->post('services/account/create', 'Services::account_create');
 
