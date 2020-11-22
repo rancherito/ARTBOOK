@@ -33,7 +33,8 @@ $routes->add('testemail', function ()
 		echo "se envio";
 	}
 	else {
-		echo "No se envio";
+		$data = $email->printDebugger(['headers']);
+		print_r($data);
 	}
 });
 
