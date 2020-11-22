@@ -1,4 +1,4 @@
-<?php $version = 0.012 ?>
+<?php $version = 0.013 ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>ARTS BOOK</title>
