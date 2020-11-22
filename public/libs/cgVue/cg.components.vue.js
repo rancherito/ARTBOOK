@@ -115,7 +115,7 @@ Vue.component('cg-field', {
 			<div class="cg-field-details-message">
 			  	<span v-if="required">{{(!validation && firstUse) ? messageaValidation : ( empty ? 'opcional' : (firstUse ? 'correcto' : 'requerido'))}}</span>
 			</div>
-			<div>{{internalvalue.length}}/{{maxchar}}</div>
+			<div>{{value.length}}/{{maxchar}}</div>
 		</div>
 	</div>
 	`,
@@ -124,8 +124,7 @@ Vue.component('cg-field', {
 			firstUse: false,
 			messageaValidation: 'Entrada no valida',
 			maxchardefault: 50,
-			button: null,
-			internalvalue: '',
+			button: null
 		}
 	},
 	props: {
@@ -189,9 +188,7 @@ Vue.component('cg-field', {
 				if (!this.isValid()) e.preventDefault()
 			});
 		}
-		this.$refs.input.addEventListener('input', () => {
-			this.internalvalue = this.$refs.input.value;
-		});
+
 	},
 	methods: {
 		validateEmail: function () {
@@ -262,7 +259,7 @@ Vue.component('cg-field', {
 		keydown: function (evt) {
 			var charCode = (evt.which) ? evt.which : evt.keyCode;
 			this.change()
-			if (this.internalvalue.length >= this.maxchar && !(charCode == 13 || charCode == 8 || charCode == 9)) evt.preventDefault()
+			if (this.value.length >= this.maxchar && !(charCode == 13 || charCode == 8 || charCode == 9)) evt.preventDefault()
 			if(this.number) if (!(charCode == 13 || charCode == 8 || charCode == 9 || (charCode >= 96 && charCode <= 105) || (charCode >= 48 && charCode <= 57))) evt.preventDefault();
 
 		}

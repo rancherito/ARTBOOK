@@ -36,41 +36,19 @@ class Services extends BaseController
 				}
 			}
 			else $res[] = 'Se encontro formatos no validos';
-			print_r($res);
+			return $this->response->setJSON($res);
 		}
 
 	}
 	public function login_validate()
 	{
-		$access = ['access' => false, 'account' => ''];
-		$_SESSION = [];
 		if (!empty($_POST['user']) && !empty($_POST['password'])) {
 			$pass = md5($_POST['password']);
-			$res = User::qry_access($_POST['user'],$pass);
-			if (count($res)) {
-				$typeaccess = "UNDEFINIED";
-
-				$res = $res[0];
-				if ($res['id_role'] == 'admin') $typeaccess = 'ADMINISTRADOR';
-				else if ($res['id_role'] == 'common') $typeaccess = 'COMMON';
-
-				session()->set([
-					'access' => [
-						'user' => $res['id_user'],
-						'nickname' => $res['nickname'],
-						'account' => $res['account'],
-						'accesstype' => $typeaccess,
-						'account_site' => base_url().'/'.$res['account'],
-						'validate' => $res['validate'],
-						'recreatepass' => $res['recreatepass']
-					]
-				]);
-				$access['access'] = true;
-				$access['account'] = $res['account'];
-			}
+			$access = Users::login_validate_internal($_POST['user'], $pass);
+			return $this->response->setJSON($access);
 		}
-		return $this->response->setJSON($access);
 	}
+
 	public function artwork_save()
 	{
 		$_POST = json_decode(file_get_contents("php://input"), true);

@@ -8,7 +8,11 @@ class User
 		$sql = "EXEC app.sp_user_create @user = ?, @email = ?, @pass = ?";
 		return query_database($sql,[$user, $email, $pass]);
 	}
-
+	public static function account_validate($account)
+	{
+		$sql = "SELECT id_user, account, validate,pass FROM users.tb_users WHERE account = ?;";
+		return query_database($sql,[$account]);
+	}
 	public static function qry_access($user,$pass)
 	{
 		$sql = "SELECT nickname, account, id_role, id_user, validate, recreatepass FROM users.tb_users WHERE [user] = ? AND pass = ? AND account != 'Anonimus'";
@@ -18,5 +22,10 @@ class User
 	{
 		$sql = "SELECT account,nickname,validate,recreatepass,email FROM users.tb_users WHERE account = ?;";
 		return query_database($sql,[$account]);
+	}
+	public function account_activate($id_user)
+	{
+		$sql = "UPDATE users.tb_users SET validate = 1 WHERE id_user = ?;";
+		return query_database($sql,[$id_user]);
 	}
 }

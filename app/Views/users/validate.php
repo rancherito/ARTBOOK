@@ -71,9 +71,16 @@
 			<div class="user-foto"><?= $info['account'][0] ?></div>
 			<h5><?= $info['account'] ?></h5>
 			<p>
-				Parece ser que su cuenta no a sido verificada aun.
-				Revise el mensaje de validacion que hemos enviado al siguiente correo.
-				<h5 class="secondary"><?= $info['email'] ?></h5>
+				<?php if (!empty($_SESSION['access']) && $_SESSION['access']['account'] == $info['account']): ?>
+					Parece ser que su cuenta no a sido verificada aun.<br>
+					Revise el mensaje de validacion que hemos enviado al siguiente correo.
+					<h5 class="secondary"><?= $info['email'] ?></h5>
+				<?php else: ?>
+					Este artista aún no a publicado ningun trabajo, vuelva en otra ocación :D
+				<?php endif; ?>
+
+
+
 			</p>
 		</div>
 	</div>

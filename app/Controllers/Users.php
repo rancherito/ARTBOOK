@@ -22,6 +22,56 @@ class Users extends BaseController
 		else throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 
 	}
+	public function account_validate($acount, $validatorcode)
+	{
+		$account = User::account_validate($acount);
+
+		if (count($account)) {
+			$user = $account[0];
+			$validate = md5($user['id_user'].$user['account']).md5($user['pass'].$user['id_user']);
+			if ($validate == $validatorcode) {
+				$access = Users::login_validate_internal($user['account'], $user['pass']);
+				if($access['access'] == 1){
+					User::account_activate($user['id_user']);
+					return redirect()->to(base_url().'/'.$user['account']); 
+				}
+			}
+			else echo "Parece que su llave de activación no es valida";
+
+		}
+		else echo "Lo sentimos parace que su llave de activación ya no es valida";
+
+
+	}
+	public static function login_validate_internal($user, $pass)
+	{
+		$access = ['access' => false, 'account' => ''];
+		$_SESSION = [];
+
+		$res = User::qry_access($user, $pass);
+		if (count($res)) {
+			$typeaccess = "UNDEFINIED";
+
+			$res = $res[0];
+			if ($res['id_role'] == 'admin') $typeaccess = 'ADMINISTRADOR';
+			else if ($res['id_role'] == 'common') $typeaccess = 'COMMON';
+
+			session()->set([
+				'access' => [
+					'user' => $res['id_user'],
+					'nickname' => $res['nickname'],
+					'account' => $res['account'],
+					'accesstype' => $typeaccess,
+					'account_site' => base_url().'/'.$res['account'],
+					'validate' => $res['validate'],
+					'recreatepass' => $res['recreatepass']
+				]
+			]);
+			$access['access'] = true;
+			$access['account'] = $res['account'];
+		}
+		return $access;
+	}
 
 
 }

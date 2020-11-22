@@ -73,6 +73,7 @@
 					</div>
 					<div class="f-c pt-4 ">
 						<a class="simple-link" @click="toogleMode">{{newAccountMode ? 'Acceder con una cuenta' : '¿No tienes una cuenta? Registrate aqui!!'}}</a>
+						<h6 class="c primary" style="display: none" v-show="register_ok">Revise su E-mail para validar registro</h6>
 					</div>
 				</div>
 			</div>
@@ -89,7 +90,8 @@
 					new_pass: {val: '', isvalid: false},
 					email: {val: '', isvalid: false},
 					newAccountMode: false,
-					loading: false
+					loading: false,
+					register_ok: false,
 				},
 				computed:{
 					isvalid: function () {
@@ -101,7 +103,6 @@
 				},
 				methods: {
 					toogleMode: function () {
-
 						this.newAccountMode = !this.newAccountMode;
 					},
 					submit_register: function () {
@@ -109,7 +110,14 @@
 							const data = {user: this.new_user.val, password: this.new_pass.val, email: this.email.val};
 							this.loading = true
 							$.post('<?= base_url() ?>/services/account/create',data, (d) => {
-								console.log(d);
+								for (var alert of d) M.toast({html: alert, classes: 'rounded bg-alert'})
+
+								if (d.length == 0) {
+									M.toast({html: 'Su cuenta ha sido creada', classes: 'rounded'})
+									this.register_ok = true;
+									this.toogleMode();
+								}
+
 								this.loading = false
 							})
 						}
