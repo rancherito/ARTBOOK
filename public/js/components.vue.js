@@ -152,7 +152,8 @@ Vue.component('upload-editor',{
 			    ctx.drawImage(img, cx, cy, cw, ch,  0, 0, w, h);
 
 				ctx.restore();
-
+				ctx.fillStyle = 'rgba(0,0,0,0.3)'
+				ctx.fillRect(0,0,460,460);
 				var scale = Math.min(ctx.canvas.width / img.width, ctx.canvas.height / img.height);
 			    // get the top left position of the image
 			    var x = (ctx.canvas.width / 2) - (img.width / 2) * scale;
