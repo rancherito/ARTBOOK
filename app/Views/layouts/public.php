@@ -70,6 +70,7 @@
 			transition: linear all .2s;
 			align-items: center;
 			justify-content: center;
+			cursor: pointer;
 		}
 		#app-nav-access a:hover{
 			background: #ffffff33;

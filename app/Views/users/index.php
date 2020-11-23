@@ -2,7 +2,7 @@
 	$access = $_SESSION['access'];
 	$access_account = !empty($access['account']) && $access['account'] == $info['account'] && $access['validate'] != 0;
 ?>
-<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js" ></script>
+<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=2" ></script>
 <style media="screen">
 
 #user_header{
@@ -60,8 +60,9 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 4rem;
+	font-size: 3rem;
 	font-family: Calibri;
+	text-transform: uppercase;
 }
 @media (max-width: 600px) {
 	#user_header{

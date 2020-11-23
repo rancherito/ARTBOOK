@@ -3,27 +3,24 @@ Vue.component('upload-editor',{
 	<div class="upload-editor cover" v-show="isOpen">
 		<a class="btn btn-floating upload-editor-close" @click="close"> <i class="mdi-18px mdi mdi-close"></i> </a>
 		<div class="upload-editor-file" v-show="steps < 2">
+			<div class="upload-editor-wrapper-file">
+				<cropper style="" ref="aaaaa" :src="img" @change="change"></cropper>
+				<div class="upload-editor-buttons-upload my-4">
+					<label class="">
+						<a class="btn" v-show="steps >= 0" >
+							<i class="mdi mdi-upload left"></i>
+							<span>{{ steps > 0 ? 'SUBIR OTRA IMAGEN' : 'SUBIR UNA IMAGEN'}}</span>
+						</a>
+						<input v-show="false" type="file" accept="image/x-png,image/jpeg" @change="onUploadFile">
+					</label>
 
-			<cropper style="max-height: 600px;" ref="aaaaa" :src="img" @change="change"></cropper>
-			<div class="upload-editor-buttons-upload my-4">
-				<label class="">
-					<a class="btn" v-show="steps > 0" >
-						<i class="mdi mdi-upload left"></i>
-						<span>SUBIR OTRA IMAGEN</span>
-					</a>
-					<div class="upload-editor-firts-upload" v-show="steps == 0">
-						<i class="mdi mdi-image-outline" style="font-size: 8rem"></i>
-						<div class="title-2 ">SUBIR UNA IMAGEN</div>
-					</div>
-					<input v-show="false" type="file" accept="image/x-png,image/jpeg" @change="onUploadFile">
-				</label>
-
-				<a class="btn ml-1" v-show="steps > 0" @click="steps = 2"> <i class="mdi mdi-arrow-right"></i> </a>
+					<a class="btn ml-1" v-show="steps > 0" @click="steps = 2"> <i class="mdi mdi-arrow-right"></i> </a>
+				</div>
 			</div>
 		</div>
 		<div class="upload-editor-description" v-show="steps == 2">
-			<div class="cover f-c" :style="{'background-image': 'url(' + image + ')'}">
-				<h4>IMAGE</h4>
+			<div class="upload-editor-preview cover f-c">
+				<canvas ref="canvas" height="460" width="460"></canvas>
 			</div>
 			<form class="f-c" @submit.prevent="submit">
 				<div class="w100">
@@ -34,7 +31,7 @@ Vue.component('upload-editor',{
 						<option :value="autor.id_user" v-for="autor in autors">{{autor.nickname}}</option>
 					</cg-select>
 					<div class="r">
-						<a class="btn bg-white" @click="close"> <i class="mdi mdi-close right"></i> <span>CANCELAR</span> </a>
+						<a class="btn" @click="steps = 1"> <i class="mdi mdi-arrow-left"></i></a>
 						<cg-button :disabled="!isvalid" :loading="load.isUploading" :progress="load.progress"></cg-button>
 					</div>
 				</div>
@@ -87,6 +84,10 @@ Vue.component('upload-editor',{
 			this.author = newData.author
 			this.description = newData.description
 			this.name = newData.name
+
+			if (this.image != null) {
+				this.steps = 2
+			}
 		},
 		submit: function () {
 			const datos = {
@@ -113,7 +114,63 @@ Vue.component('upload-editor',{
 			})
 		},
 		change({coordinates, canvas}) {
+			function drawImageProp(ctx, img) {
+
+		        x = y = 0;
+		        w = ctx.canvas.width;
+		        h = ctx.canvas.height;
+			    offsetX = 0;
+			    offsetY = 0;
+
+			    let iw = img.width,
+			        ih = img.height,
+			        r = Math.min(w / iw, h / ih),
+			        nw = iw * r,   // new prop. width
+			        nh = ih * r,   // new prop. height
+			        cx, cy, cw, ch, ar = 1;
+
+			    if (nw < w) ar = w / nw;
+			    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
+			    nw *= ar;
+			    nh *= ar;
+
+			    cw = iw / (nw / w);
+			    ch = ih / (nh / h);
+
+			    cx = (iw - cw) * offsetX;
+			    cy = (ih - ch) * offsetY;
+
+			    if (cx < 0) cx = 0;
+			    if (cy < 0) cy = 0;
+			    if (cw > iw) cw = iw;
+			    if (ch > ih) ch = ih;
+
+				ctx.save();
+
+				ctx.filter = 'blur(10px)';
+				ctx.scale(1.1, 1.1);
+				ctx.translate(-23,-23)
+			    ctx.drawImage(img, cx, cy, cw, ch,  0, 0, w, h);
+
+				ctx.restore();
+
+				var scale = Math.min(ctx.canvas.width / img.width, ctx.canvas.height / img.height);
+			    // get the top left position of the image
+			    var x = (ctx.canvas.width / 2) - (img.width / 2) * scale;
+			    var y = (ctx.canvas.height / 2) - (img.height / 2) * scale;
+			    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+
+			}
 			this.image = canvas.toDataURL(this.extensionimage, 0.9)
+			const ctx = this.$refs.canvas.getContext('2d')
+
+
+			var image = new Image();
+			image.onload = function() {
+			  drawImageProp(ctx, image);
+			};
+			image.src = this.image
+
 			this.steps = 1
 			if (!this.isLoadImage) {
 				this.isLoadImage = true
@@ -183,7 +240,7 @@ Vue.component('cg-grid-image', {
 		edit: Boolean
 	},
 	mounted: function () {
-		M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'right'});
+		M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'left'});
 	}
 })
 Vue.component('cg-grid',{
