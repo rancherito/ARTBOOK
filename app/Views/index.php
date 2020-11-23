@@ -77,7 +77,12 @@
 </style>
 <?php template_start()?>
 <div>
-	<div class="aaaaaa" style="margin: 0 auto">
+	<div class="f-c pt-6 pb-4">
+		<div class="title-2 combo-text-title">Bienvenido a Art's Book</div>
+		<span>Sitio web oficial de la comunidad de artistas art's book</span>
+
+	</div>
+	<div class="content_feed_and_gallery" style="margin: 0 auto">
 		<simplebar>
 			<div class="feed-users">
 				<?php foreach ($feed as $key => $f): ?>
@@ -115,8 +120,7 @@ const $_module = {
 	},
 	methods: {
 		sizewrapper: function (size) {
-			$('.aaaaaa').width(size)
-			console.log(size);
+			$('.content_feed_and_gallery').width(size)
 		}
 	},
 	mounted: function () {

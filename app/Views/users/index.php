@@ -4,6 +4,7 @@
 ?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js" ></script>
 <style media="screen">
+
 #user_header{
 	height: 260px;
 	background: black;
@@ -50,8 +51,6 @@
 	align-items: center;
 	flex-direction: column;
 	color: white;
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
 }
 .user-foto{
 	background: #ffffff55;
@@ -112,7 +111,7 @@ const $_module = {
 			echo "
 				this.\$refs.grid.setEdit(true);
 				this.autoraccess.push({id_user: 'current', nickname: 'current'});
-				$('#app-nav-access').prepend($(\"<a class='btn'><i class='mdi-18px mdi mdi-plus'></i></a>\").click(this.openeditor),' ');
+				$('#app-nav-access').prepend($(\"<a><i class='mdi-24px mdi mdi-plus'></i></a>\").click(this.openeditor),' ');
 			";
 
 		}
