@@ -59,6 +59,7 @@
 			flex-direction: column;
 			border-radius: 40px;
 			background-color: var(--primary);
+			z-index: 4
 		}
 		#app-nav-access a{
 			color: white;
