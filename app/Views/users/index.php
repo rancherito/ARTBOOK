@@ -143,6 +143,7 @@ const $_module = {
 			})
 		},
 		openeditor: function () {
+			console.log('opnee');
 			this.$refs.editor.open()
 			this.$refs.editor.setData({
 				author: 'current',

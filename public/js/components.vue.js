@@ -86,9 +86,7 @@ Vue.component('upload-editor',{
 			this.description = newData.description
 			this.name = newData.name
 
-			if (this.image != null) {
-				this.steps = 2
-			}
+			
 		},
 		submit: function () {
 			const datos = {
