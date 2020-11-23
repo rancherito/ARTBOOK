@@ -2,7 +2,7 @@ Vue.component('upload-editor',{
 	template: `
 	<div class="upload-editor cover" v-show="isOpen">
 		<a class="btn btn-floating upload-editor-close" @click="close"> <i class="mdi-18px mdi mdi-close"></i> </a>
-		<div class="upload-editor-file" v-show="steps < 2">
+		<div class="upload-editor-file">
 			<div class="upload-editor-wrapper-file">
 				<cropper style="" ref="aaaaa" :src="img" @change="change"></cropper>
 				<div class="upload-editor-buttons-upload my-4">
@@ -18,27 +18,28 @@ Vue.component('upload-editor',{
 				</div>
 			</div>
 		</div>
-		<div class="upload-editor-description" v-show="steps == 2">
-			<div class="upload-editor-preview cover f-c">
-				<canvas ref="canvas" height="460" width="460"></canvas>
-			</div>
-			<form class="f-c" @submit.prevent="submit">
-				<div class="w100">
-					<cg-field required v-model.trim="name" :watchisvalid.sync="name_isvalid" sizechars="4-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
-					<cg-field required empty v-model.trim="description" :watchisvalid.sync="description_isvalid" sizechars="0-500" label="Descripcion de la obra" placeholder="descripcion..."></cg-field>
-					<cg-select v-show="author != 'current'" required v-model="author" :watchisvalid.sync="author_isvalid" label="Autor" novalues="-1">
-						<option value="-1" disabled>seleccione autor</option>
-						<option :value="autor.id_user" v-for="autor in autors">{{autor.nickname}}</option>
-					</cg-select>
-					<div class="r">
-						<a class="btn" @click="steps = 1"> <i class="mdi mdi-arrow-left"></i></a>
-						<cg-button :disabled="!isvalid" :loading="load.isUploading" :progress="load.progress"></cg-button>
-					</div>
+		<div class="upload-editor-wrapper-description" style="display: none" v-show="steps == 2">
+			<div class="upload-editor-description">
+				<div class="upload-editor-preview cover f-c">
+					<canvas ref="canvas" height="460" width="460"></canvas>
 				</div>
+				<form class="f-c" @submit.prevent="submit">
+					<div class="w100">
+						<cg-field required v-model.trim="name" :watchisvalid.sync="name_isvalid" sizechars="4-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
+						<cg-field required empty v-model.trim="description" :watchisvalid.sync="description_isvalid" sizechars="0-500" label="Descripcion de la obra" placeholder="descripcion..."></cg-field>
+						<cg-select v-show="author != 'current'" required v-model="author" :watchisvalid.sync="author_isvalid" label="Autor" novalues="-1">
+							<option value="-1" disabled>seleccione autor</option>
+							<option :value="autor.id_user" v-for="autor in autors">{{autor.nickname}}</option>
+						</cg-select>
+						<div class="r">
+							<a class="btn" @click="steps = 1"> <i class="mdi mdi-arrow-left"></i></a>
+							<cg-button :disabled="!isvalid" :loading="load.isUploading" :progress="load.progress"></cg-button>
+						</div>
+					</div>
 
 
-			</form>
-
+				</form>
+			</div>
 		</div>
 
 	</div>
