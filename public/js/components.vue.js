@@ -85,8 +85,8 @@ Vue.component('upload-editor',{
 			this.author = newData.author
 			this.description = newData.description
 			this.name = newData.name
+			this.extensionimage = newData.extension
 
-			
 		},
 		submit: function () {
 			const datos = {
@@ -186,6 +186,7 @@ Vue.component('upload-editor',{
 			const reader = new FileReader();
 			this.isLoadImage = false
 			reader.addEventListener("load", e => {
+				console.log(reader.result);
 				this.img = reader.result
 				this.extensionimage = file.type
 			}, false);
@@ -208,14 +209,14 @@ Vue.component('upload-editor',{
 
 Vue.component('cg-grid-image', {
 	template: `
-	<div>
+	<div class="cg-grid-image">
 		<a v-show="edit" ref="drop" :data-target="info.accessname" class="cg-grid-image-options btn btn-floating waves waves-effect waves-light">
 			<i class="mdi-24px mdi mdi-dots-vertical"></i>
 		</a>
 		<ul :id="info.accessname" class="dropdown-content">
-			<li tabindex="0"><a @click="$emit('changeimage', info)"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
+			<li tabindex="0"><a @click="send"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
 		</ul>
-		<img loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage(info)">
+		<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" style="opacity: 0">
 		<div class="cg-grid-info">
 			<span style="font-size: 1.2rem" :class="{primary: !details}">{{info.name}}</span>
 			<div class="pt-1 cg-grid-autor" v-if="details">
@@ -227,10 +228,32 @@ Vue.component('cg-grid-image', {
 	`,
 	methods: {
 		calculeimage: function () {
-			return `images/artworks/${this.info.accessname}.${this.info.extension}`
+			axios.get(`images/artworks/${this.info.accessname}.${this.info.extension}`, { responseType:"blob" })
+		    .then((response) => {
+
+		        var reader = new FileReader();
+		        reader.readAsDataURL(response.data);
+		        reader.onload = () => {
+					this.$refs.image.style.opacity = 1
+		            this.$refs.image.src = reader.result;
+
+		        }
+		    });
+			 //= getBase64()
+
 		},
 		redirect: function () {
 			window.location.href = this.info.account
+		},
+		send: function () {
+			const info = {
+				description: this.info.description,
+				name: this.info.name,
+				id_image: this.info.id_image,
+				img: this.$refs.image.src,
+				extension: this.info.extension
+			}
+			this.$emit('changeimage', info)
 		}
 	},
 	props: {
@@ -238,7 +261,9 @@ Vue.component('cg-grid-image', {
 		details: {type: Boolean, default: true},
 		edit: Boolean
 	},
+
 	mounted: function () {
+		this.calculeimage()
 		M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'left'});
 	}
 })

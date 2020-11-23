@@ -134,7 +134,8 @@ const $_module = {
 				description: data.description,
 				name: data.name,
 				id: data.id_image,
-				img: '<?= base_url() ?>/images/artworks/' + data.accessname + '.' + data.extension
+				img: data.img,
+				extension: data.extension
 			})
 		},
 		onfinish: function (data) {

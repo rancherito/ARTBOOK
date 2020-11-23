@@ -10,6 +10,7 @@
 	border-radius: 10px 10px 0 0;
 	height: auto;
 	display: block;
+	transition: linear all .2s;
 }
 .cg-grid-avatar{
 	background: var(--primary);
@@ -104,7 +105,7 @@
 	background: #ffffff1a;
 }
 .upload-editor-close:hover{
-	background: transparent;
+	background: #ffffff1f;
 }
 .upload-editor-close i{
 
