@@ -125,9 +125,9 @@ const $_module = {
 	},
 	mounted: function () {
 		const body = $(document.body);
-		this.stack = body.width() > 600 ? 320 : 170;
+		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		window.addEventListener('resize', () => {
-			this.stack = body.width() > 600 ? 320 : 170;
+			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		});
 	}
 }
