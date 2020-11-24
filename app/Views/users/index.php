@@ -118,9 +118,9 @@ const $_module = {
 	mounted: function () {
 
 		const body = $(document.body);
-		this.stack = body.width() > 600 ? 320 : 260;
+		this.stack = body.width() >= 360 ? 320 : 260;
 		window.addEventListener('resize', () => {
-			this.stack = body.width() > 600 ? 320 : 260;
+			this.stack = body.width() >= 360 ? 320 : 260;
 		});
 		<?php
 		if ($access_account) {

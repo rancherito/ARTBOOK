@@ -4,6 +4,7 @@
 		<?php
 			include APPPATH.'Views/layouts_parts/header.php';
 		?>
+
 		<style media="screen">
 			body{
 				height: 100vh;
@@ -61,7 +62,8 @@
 			</div>
 			<div class="p-4 f-c">
 				<div style="max-width: 300px" class="w100 f-c">
-					<h3 class="mb-0">{{newAccountMode ? 'REGISTRO' :'LOG-IN'}}</h3>
+					<div id="logger"></div>
+					<h3 class="mb-0">{{newAccountMode ? 'REGISTRO' :'ACCESSO'}}</h3>
 					<div class="grey-text">Acceso para usuarios Art's Book</div>
 					<div class="w100 pt-6">
 						<form method="post" @submit.prevent="submit" v-show="!newAccountMode">
@@ -152,6 +154,28 @@
 					}
 				}
 			})
+
 		</script>
+		<script type="text/javascript">
+
+            // Overriding console object
+            let console = {};
+
+            // Getting div to insert logs
+            let logger = document.getElementById("logger");
+
+            // Adding log method from our console object
+            console.log = text =>
+            {
+                let element = document.createElement("div");
+				$(element).css({'font-size': '.8rem', 'font-family': 'monospace'})
+                let txt = document.createTextNode(text);
+
+                element.appendChild(txt);
+                logger.appendChild(element);
+            }
+
+            console.log("enviar a cafeconpato una captura");
+        </script>
 	</body>
 </html>
