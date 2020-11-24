@@ -103,8 +103,8 @@
 			<h5><?= $info['nickname'] ?></h5>
 		</div>
 	</div>
-	<div class="p-4 content-grid">
-		<cg-grid ref='grid' @changeimage="change" :images="list_img" :stack_size="320" :details="false" ></cg-grid>
+	<div class="py-4 px-2 content-grid">
+		<cg-grid ref='grid' @changeimage="change" :images="list_img" :stack_size="stack" :details="false" ></cg-grid>
 	</div>
 	<upload-editor base_url="<?=base_url()?>" ref="editor" :autors="autoraccess" @onfinish="onfinish"></upload-editor>
 </div>
@@ -116,6 +116,12 @@
 const $_module = {
 	template: `<?= $template ?>`,
 	mounted: function () {
+
+		const body = $(document.body);
+		this.stack = body.width() > 600 ? 320 : 260;
+		window.addEventListener('resize', () => {
+			this.stack = body.width() > 600 ? 320 : 260;
+		});
 		<?php
 		if ($access_account) {
 			echo "
@@ -132,7 +138,8 @@ const $_module = {
 	data: function () {
 		return {
 			list_img: <?= json_encode($images_list) ?>,
-			autoraccess: []
+			autoraccess: [],
+			stack: 260
 		}
 	},
 	methods: {
@@ -153,7 +160,6 @@ const $_module = {
 			})
 		},
 		openeditor: function () {
-			console.log('opnee');
 			this.$refs.editor.open()
 			this.$refs.editor.setData({
 				author: 'current',
