@@ -152,7 +152,7 @@ Vue.component('cg-field', {
 						if (typeof value === "number") return value;
 						else if (typeof value === "string") {
 							if (!isNaN(value)) return parseInt(value);
-							else if (value.replaceAll(' ','').match(/^[0-9]+\-[0-9]+$/gi) !== null) return parseInt(value.split('-')[1]);
+							else if (value.replace(' ','').match(/^[0-9]+\-[0-9]+$/gi) !== null) return parseInt(value.split('-')[1]);
 						}
 					}).filter(val => typeof val == 'number')
 				)
@@ -167,7 +167,7 @@ Vue.component('cg-field', {
 						if (typeof value === "number") return value;
 						else if (typeof value === "string") {
 							if (!isNaN(value)) return parseInt(value);
-							else if (value.replaceAll(' ','').match(/^[0-9]+\-[0-9]+$/gi) !== null) return parseInt(value.split('-')[0]);
+							else if (value.replace(' ','').match(/^[0-9]+\-[0-9]+$/gi) !== null) return parseInt(value.split('-')[0]);
 						}
 					}).filter(val => typeof val == 'number')
 				)
