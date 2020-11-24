@@ -63,7 +63,7 @@
 						<form method="post" style="display: none" @submit.prevent="submit_register" v-show="newAccountMode">
 							<cg-field :watchisvalid.sync="new_user.isvalid" required name="user" v-model="new_user.val" sizechars="4-16" label="Usuario" placeholder="ingrese credenciales"></cg-field>
 							<cg-field :watchisvalid.sync="new_pass.isvalid" required name="password" v-model="new_pass.val" sizechars="8-20" label="Contraseña" type="password" placeholder="ingrese clave de acceso secreto"></cg-field>
-							<cg-field :watchisvalid.sync="email.isvalid" required name="email" v-model="email.val" label="Email" sizechars="0-24" type="email" placeholder="ingrese clave de acceso secreto"></cg-field>
+							<cg-field :watchisvalid.sync="email.isvalid" required name="email" v-model="email.val" label="Email" sizechars="0-50" type="email" placeholder="ingrese clave de acceso secreto"></cg-field>
 							<div class="r">
 								<a href="<?= base_url() ?>" class="btn bg-white"><span>REGRESAR</span> </a>
 								<cg-button :loading="loading" :disabled="!isvalid_register" classicon="mdi mdi-account-plus" text="CREAR"></cg-button>
