@@ -160,11 +160,7 @@ Vue.component('upload-editor',{
 			    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
 
 			}
-			this.image = canvas.toDataURL(this.extensionimage, 0.9)
-
-
-
-
+			this.image = canvas.toDataURL('image/jpeg', 0.8)
 
 			if (this.isLoadImage) {
 				const ctx = this.$refs.canvas.getContext('2d')
@@ -174,8 +170,6 @@ Vue.component('upload-editor',{
 				};
 				image.src = this.image
 			}
-
-			console.log(coordinates);
 			this.steps = 1
 			if (!this.isLoadImage) {
 				this.isLoadImage = true
@@ -251,15 +245,6 @@ Vue.component('cg-grid-image', {
 				extension: this.info.extension
 			}
 			this.$emit('changeimage', info)
-		},
-		createbase64: function () {
-			const canvas = document.createElement('canvas'),
-		    ctx = canvas.getContext('2d');
-
-			canvas.height = this.$refs.image.naturalHeight;
-			canvas.width = this.$refs.image.naturalWidth;
-			ctx.drawImage(this.$refs.image, 0, 0);
-			this.base64 = canvas.toDataURL('image/png')
 		}
 	},
 	props: {
@@ -269,8 +254,6 @@ Vue.component('cg-grid-image', {
 	},
 
 	mounted: function () {
-		//if (this.$refs.image.complete) this.createbase64()
-		//else this.$refs.image.onload = this.createbase64
 		M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'left'});
 	}
 })
