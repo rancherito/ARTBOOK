@@ -247,7 +247,7 @@ Vue.component('cg-grid-image', {
 				description: this.info.description,
 				name: this.info.name,
 				id_image: this.info.id_image,
-				img: this.base64,
+				img: this.$refs.image.src,
 				extension: this.info.extension
 			}
 			this.$emit('changeimage', info)
@@ -269,8 +269,8 @@ Vue.component('cg-grid-image', {
 	},
 
 	mounted: function () {
-		if (this.$refs.image.complete) this.createbase64()
-		else this.$refs.image.onload = this.createbase64
+		//if (this.$refs.image.complete) this.createbase64()
+		//else this.$refs.image.onload = this.createbase64
 		M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'left'});
 	}
 })
