@@ -35,6 +35,21 @@
 				text-decoration: underline;
 				cursor: pointer;
 			}
+			@media (max-width: 992px) {
+				#app-login > div:nth-child(1){
+					display: none;
+				}
+				#app-login{
+					width: 480px;
+				}
+			}
+			@media (max-width: 600px) {
+
+
+				#app-login > div:nth-child(2){
+					width: 100%;
+				}
+			}
 		</style>
 	</head>
 	<body>
@@ -45,7 +60,7 @@
 				</div>
 			</div>
 			<div class="p-4 f-c">
-				<div style="width: 300px" class="f-c">
+				<div style="max-width: 300px" class="w100 f-c">
 					<h3 class="mb-0">{{newAccountMode ? 'REGISTRO' :'LOG-IN'}}</h3>
 					<div class="grey-text">Acceso para usuarios Art's Book</div>
 					<div class="w100 pt-6">
