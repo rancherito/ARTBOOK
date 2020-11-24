@@ -23,7 +23,6 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	background-attachment: fixed;
 	background-image: url('<?= base_url() ?>/images/bg_003.jpg');
 }
 #user_header_bg::after{

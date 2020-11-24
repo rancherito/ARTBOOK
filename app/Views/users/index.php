@@ -6,7 +6,7 @@
 <style media="screen">
 
 #user_header{
-	height: 260px;
+	height: 500px;
 	background: black;
 	position: relative;
 	overflow: hidden;
@@ -29,7 +29,6 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
-	background-attachment: fixed;
 	background-image: url('<?= base_url() ?>/images/bg_003.jpg');
 }
 #user_header_bg::after{
@@ -39,11 +38,10 @@
 	top: 0;
 	height: 100%;
 	width: 100%;
-	background-color: black;
-	opacity: .4;
+	background: linear-gradient(0deg, white, transparent);
 }
 #user_header_bg_content{
-	height: 100%;
+	height: 260px;
 	position: relative;
 	padding: 1rem;
 	display: flex;
@@ -52,8 +50,14 @@
 	flex-direction: column;
 	color: white;
 }
+#user_header_bg_content h5{
+	background-color: #444444;
+    padding: .5rem 1rem;
+    border-radius: 50px;
+	color: white;
+}
 .user-foto{
-	background: #ffffff55;
+	background: white;
 	height: 140px;
 	width: 140px;
 	border-radius: 50%;
@@ -63,20 +67,25 @@
 	font-size: 3rem;
 	font-family: Calibri;
 	text-transform: uppercase;
+	color: gray;
+}
+.content-grid{
+	margin-top: -240px;
 }
 @media (max-width: 600px) {
-	#user_header{
-		height: 160px;
+	.content-grid{
+		margin-top: -340px;
 	}
 	#user_header_bg_content{
 		flex-direction: row;
+		height: 160px;
 	}
 	.user-foto{
 		height: 80px;
 		width: 80px;
 	}
 	#user_header_bg_content h5{
-		padding-left: 1rem;
+		margin-left: 1rem;
 	}
 }
 </style>
@@ -94,7 +103,7 @@
 			<h5><?= $info['nickname'] ?></h5>
 		</div>
 	</div>
-	<div class="p-4">
+	<div class="p-4 content-grid">
 		<cg-grid ref='grid' @changeimage="change" :images="list_img" :stack_size="320" :details="false" ></cg-grid>
 	</div>
 	<upload-editor base_url="<?=base_url()?>" ref="editor" :autors="autoraccess" @onfinish="onfinish"></upload-editor>
