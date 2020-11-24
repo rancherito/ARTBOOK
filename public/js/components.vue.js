@@ -152,7 +152,7 @@ Vue.component('upload-editor',{
 			    ctx.drawImage(img, cx, cy, cw, ch,  0, 0, w, h);
 
 				ctx.restore();
-				ctx.fillStyle = 'rgba(0,0,0,0.3)'
+				ctx.fillStyle = 'rgba(0,0,0,0.4)'
 				ctx.fillRect(0,0,460,460);
 				var scale = Math.min(ctx.canvas.width / img.width, ctx.canvas.height / img.height);
 			    // get the top left position of the image
@@ -217,7 +217,7 @@ Vue.component('cg-grid-image', {
 		<ul :id="info.accessname" class="dropdown-content">
 			<li tabindex="0"><a @click="send"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
 		</ul>
-		<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" style="opacity: 0">
+		<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
 		<div class="cg-grid-info">
 			<span style="font-size: 1.2rem" :class="{primary: !details}">{{info.name}}</span>
 			<div class="pt-1 cg-grid-autor" v-if="details">
@@ -227,9 +227,14 @@ Vue.component('cg-grid-image', {
 		</div>
 	</div>
 	`,
+	data: function () {
+		return {
+			base64: null
+		}
+	},
 	methods: {
 		calculeimage: function () {
-			axios.get(`images/artworks/${this.info.accessname}.${this.info.extension}`, { responseType:"blob" })
+			/*axios.get(, { responseType:"blob" })
 		    .then((response) => {
 
 		        var reader = new FileReader();
@@ -239,9 +244,8 @@ Vue.component('cg-grid-image', {
 		            this.$refs.image.src = reader.result;
 
 		        }
-		    });
-			 //= getBase64()
-
+		    });*/
+			return `images/artworks/${this.info.accessname}.${this.info.extension}`;
 		},
 		redirect: function () {
 			window.location.href = this.info.account
@@ -251,10 +255,19 @@ Vue.component('cg-grid-image', {
 				description: this.info.description,
 				name: this.info.name,
 				id_image: this.info.id_image,
-				img: this.$refs.image.src,
+				img: this.base64,
 				extension: this.info.extension
 			}
 			this.$emit('changeimage', info)
+		},
+		createbase64: function () {
+			const canvas = document.createElement('canvas'),
+		    ctx = canvas.getContext('2d');
+
+			canvas.height = this.$refs.image.naturalHeight;
+			canvas.width = this.$refs.image.naturalWidth;
+			ctx.drawImage(this.$refs.image, 0, 0);
+			this.base64 = canvas.toDataURL('image/png')
 		}
 	},
 	props: {
@@ -264,7 +277,8 @@ Vue.component('cg-grid-image', {
 	},
 
 	mounted: function () {
-		this.calculeimage()
+		if (this.$refs.image.complete) this.createbase64()
+		else this.$refs.image.onload = this.createbase64
 		M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'left'});
 	}
 })
