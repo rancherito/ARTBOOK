@@ -62,7 +62,7 @@ Vue.component('cg-select', {
 	},
 	mounted: function () {
 		this.$emit('update:isvalid', this.isValid)
-		let form = this.$el.closest('form');
+		let form = $(this.$el).parents('from:first')[0];
 		if (form) {
 			form.addEventListener('submit', (e) => {
 				if (!this.isValid()) e.preventDefault()
@@ -182,7 +182,7 @@ Vue.component('cg-field', {
 	},
 	mounted: function () {
 		this.$emit('update:isvalid', this.isValid)
-		let form = this.$el.closest('form');
+		let form = $(this.$el).parents('from:first')[0];
 		if (form) {
 			form.addEventListener('submit', (e) => {
 				if (!this.isValid()) e.preventDefault()

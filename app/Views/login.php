@@ -158,7 +158,7 @@
 		</script>
 		<script type="text/javascript">
 
-            // Overriding console object
+            /*// Overriding console object
             let console = {};
 
             // Getting div to insert logs
@@ -175,7 +175,7 @@
                 logger.appendChild(element);
             }
 
-            console.log("enviar a cafeconpato una captura");
+            console.log("enviar a cafeconpato una captura");*/
         </script>
 	</body>
 </html>
