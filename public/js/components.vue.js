@@ -114,7 +114,6 @@ Vue.component('upload-editor',{
 		},
 		change({coordinates, canvas}) {
 			function drawImageProp(ctx, img) {
-
 		        x = y = 0;
 		        w = ctx.canvas.width;
 		        h = ctx.canvas.height;
@@ -127,7 +126,7 @@ Vue.component('upload-editor',{
 			        nw = iw * r,   // new prop. width
 			        nh = ih * r,   // new prop. height
 			        cx, cy, cw, ch, ar = 1;
-
+				console.log(iw + ' ' + ih);
 			    if (nw < w) ar = w / nw;
 			    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
 			    nw *= ar;
@@ -162,22 +161,26 @@ Vue.component('upload-editor',{
 
 			}
 			this.image = canvas.toDataURL(this.extensionimage, 0.9)
-			const ctx = this.$refs.canvas.getContext('2d')
 
 
-			var image = new Image();
-			image.onload = function() {
-			  drawImageProp(ctx, image);
-			};
-			image.src = this.image
 
+
+
+			if (this.isLoadImage) {
+				const ctx = this.$refs.canvas.getContext('2d')
+				var image = new Image();
+				image.onload = function() {
+				  drawImageProp(ctx, image);
+				};
+				image.src = this.image
+			}
+
+			console.log(coordinates);
 			this.steps = 1
 			if (!this.isLoadImage) {
 				this.isLoadImage = true
 				this.$refs.aaaaa.setCoordinates((coordinates, imageSize) => ({width: imageSize.width,height: imageSize.height}))
 			}
-
-			this.current_coordinates = coordinates
 		},
 		onUploadFile: function (e) {
 			if (e.target.files[0]) this.loadFile(e.target.files[0])
@@ -234,17 +237,6 @@ Vue.component('cg-grid-image', {
 	},
 	methods: {
 		calculeimage: function () {
-			/*axios.get(, { responseType:"blob" })
-		    .then((response) => {
-
-		        var reader = new FileReader();
-		        reader.readAsDataURL(response.data);
-		        reader.onload = () => {
-					this.$refs.image.style.opacity = 1
-		            this.$refs.image.src = reader.result;
-
-		        }
-		    });*/
 			return `images/artworks/${this.info.accessname}.${this.info.extension}`;
 		},
 		redirect: function () {

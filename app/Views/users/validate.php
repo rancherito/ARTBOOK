@@ -76,7 +76,7 @@
 					Revise el mensaje de validacion que hemos enviado al siguiente correo.
 					<h5 class="secondary"><?= $info['email'] ?></h5>
 				<?php else: ?>
-					La cuenta de este artista esta pendiente de verificacion, sentimos no poderte mostrar sus trabajos.
+					La cuenta de este artista esta pendiente de verificación, sentimos no poder mostrar sus trabajos.
 				<?php endif; ?>
 
 
