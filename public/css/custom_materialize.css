@@ -4,6 +4,9 @@ a{
 .dropdown-content{
 	z-index: 3;
 }
+.fixed-action-btn{
+	z-index: 3;
+}
 [type="checkbox"]:checked+span:not(.lever):before{
 	border-right: 2px solid var(--primary);
 	border-bottom: 2px solid var(--primary);

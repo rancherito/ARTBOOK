@@ -213,6 +213,7 @@ Vue.component('cg-grid-image', {
 		</a>
 		<ul :id="info.accessname" class="dropdown-content">
 			<li tabindex="0"><a @click="send"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
+			<li tabindex="0"><a @click="send"><i class="mdi mdi-eye-off-outline"></i>Ocultar</a></li>
 		</ul>
 		<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
 		<div class="cg-grid-info">

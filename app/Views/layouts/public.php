@@ -152,7 +152,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 			</g>
 		</svg>
 	</a>
-	<ul>
+	<ul id="nav-movil">
 		<li>
 			<a href="<?= base_url() ?>" class="btn-floating"> <i class="mdi mdi-home mdi-24px"></i></a>
 		</li>

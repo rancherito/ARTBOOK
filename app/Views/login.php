@@ -156,26 +156,5 @@
 			})
 
 		</script>
-		<script type="text/javascript">
-
-            /*// Overriding console object
-            let console = {};
-
-            // Getting div to insert logs
-            let logger = document.getElementById("logger");
-
-            // Adding log method from our console object
-            console.log = text =>
-            {
-                let element = document.createElement("div");
-				$(element).css({'font-size': '.8rem', 'font-family': 'monospace'})
-                let txt = document.createTextNode(text);
-
-                element.appendChild(txt);
-                logger.appendChild(element);
-            }
-
-            console.log("enviar a cafeconpato una captura");*/
-        </script>
 	</body>
 </html>
