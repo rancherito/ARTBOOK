@@ -134,6 +134,7 @@ Vue.component('cg-field', {
 		value: {type: String, default: ''},
 		novalues: [Array, Number, String],
 		sizechars: [Array, Number, String],
+		chars: [Object, String],
 		required: Boolean,
 		disabled: Boolean,
 		loading: Boolean,

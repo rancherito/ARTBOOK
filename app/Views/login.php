@@ -78,7 +78,7 @@
 							</div>
 						</form>
 						<form method="post" style="display: none" @submit.prevent="submit_register" v-show="newAccountMode">
-							<cg-field :watchisvalid.sync="new_user.isvalid" required name="user" v-model="new_user.val" sizechars="4-16" label="Usuario" placeholder="ingrese credenciales"></cg-field>
+							<cg-field :watchisvalid.sync="new_user.isvalid" required name="user" v-model="new_user.val" sizechars="4-16" label="Usuario (solo letras, numeros ó subguiones)" placeholder="ingrese credenciales"></cg-field>
 							<cg-field :watchisvalid.sync="new_pass.isvalid" required name="password" v-model="new_pass.val" sizechars="8-20" label="Contraseña" type="password" placeholder="ingrese clave de acceso secreto"></cg-field>
 							<cg-field :watchisvalid.sync="email.isvalid" required name="email" v-model="email.val" label="Email" sizechars="0-50" type="email" placeholder="ingrese clave de acceso secreto"></cg-field>
 							<div class="r">
@@ -90,7 +90,7 @@
 					</div>
 					<div class="f-c pt-4 ">
 						<a class="simple-link" @click="toogleMode">{{newAccountMode ? 'Acceder con una cuenta' : '¿No tienes una cuenta? Registrate aqui!!'}}</a>
-						<h6 class="c primary" style="display: none" v-show="register_ok">Revise su E-mail para validar registro</h6>
+						<h6 class="c primary" style="display: none" v-show="register_ok">Revise su E-mail para validar su registro</h6>
 					</div>
 				</div>
 			</div>
@@ -127,7 +127,6 @@
 							const data = {user: this.new_user.val, password: this.new_pass.val, email: this.email.val};
 							this.loading = true
 							$.post('<?= base_url() ?>/services/account/create',data, (d) => {
-								console.log(d);
 								for (var alert of d) M.toast({html: alert, classes: 'rounded bg-alert'})
 
 								if (d.length == 0) {

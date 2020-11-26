@@ -23,6 +23,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
 }
 .cg-grid-image-options{
 	background: white !important;
@@ -52,6 +53,7 @@
 .grid-images:hover{
 	color: var(--primary);
 	cursor: pointer;
+	text-decoration: underline;
 }
 .upload-editor{
 	background: #1e1e2b;

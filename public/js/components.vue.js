@@ -217,7 +217,7 @@ Vue.component('cg-grid-image', {
 		</ul>
 		<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
 		<div class="cg-grid-info">
-			<div  v-if="details" class="cg-grid-avatar">{{info.nickname[0]}}</div>
+			<div  v-if="details" class="cg-grid-avatar" @click="redirect">{{info.nickname[0]}}</div>
 			<div class="cg-grid-autor">
 				<div style="font-size: 1.2rem" class="combo-text-title">{{info.name}}</div>
 				<span  v-if="details" class="grid-images" @click="redirect">{{info.nickname}}</span>
