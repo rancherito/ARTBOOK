@@ -6,6 +6,7 @@ class Users extends BaseController
 	public function index($user)
 	{
 		$account = User::qry_account_exists($user);
+		$agent = $this->request->getUserAgent();
 		if (count($account)) $account = $account[0];
 
 		if (count($account) && $account['validate'] == 1) {
@@ -13,7 +14,7 @@ class Users extends BaseController
 			$title = strtoupper($images[0]['nickname']).' AHORA EN ARTSBOOK-SITE';
 			$metaimage = base_url().'/images/artworks/'.$images[0]['accessname'].'.'.$images[0]['extension'];
 			$metas = ['img' => $metaimage, 'title' => $title];
-			echo $this->layout_view('public','users/index',['images_list' => $images, 'info' => $account, 'metas'=> $metas]);
+			echo $this->layout_view('public','users/index',['images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
 
 		}
 		else if (count($account) && $account['validate'] == 0) {
@@ -33,7 +34,7 @@ class Users extends BaseController
 				$access = Users::login_validate_internal($user['account'], $user['pass']);
 				if($access['access'] == 1){
 					User::account_activate($user['id_user']);
-					return redirect()->to(base_url().'/'.$user['account']); 
+					return redirect()->to(base_url().'/'.$user['account']);
 				}
 			}
 			else echo "Parece que su llave de activación no es valida";

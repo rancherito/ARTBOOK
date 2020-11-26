@@ -1,6 +1,7 @@
 <?php
 	$access = $_SESSION['access'];
 	$access_account = !empty($access['account']) && $access['account'] == $info['account'] && $access['validate'] != 0;
+
 ?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=2" ></script>
 <style media="screen">
@@ -116,16 +117,16 @@
 const $_module = {
 	template: `<?= $template ?>`,
 	mounted: function () {
-
 		const body = $(document.body);
-		this.stack = body.width() >= 360 ? 320 : 260;
+		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		window.addEventListener('resize', () => {
-			this.stack = body.width() >= 360 ? 320 : 260;
+			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		});
-		console.log($('#nav-movil'));
+
+		
 		<?php
 		if ($access_account) {
-			
+
 			echo "
 				this.\$refs.grid.setEdit(true);
 				this.autoraccess.push({id_user: 'current', nickname: 'current'});
@@ -142,7 +143,7 @@ const $_module = {
 		return {
 			list_img: <?= json_encode($images_list) ?>,
 			autoraccess: [],
-			stack: 260
+			stack: <?= $agent->isMobile() ? 170 : 320 ?>
 		}
 	},
 	methods: {
