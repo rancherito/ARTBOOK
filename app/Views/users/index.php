@@ -7,17 +7,10 @@
 <style media="screen">
 
 #user_header{
-	height: 500px;
 	background: black;
 	position: relative;
-	overflow: hidden;
 }
 #user_header_bg{
-	position: 	absolute;
-	left: 0;
-	top: 0;
-	height: 100%;
-	width: 100%;
 
 }
 #user_header_bg::before{
@@ -31,6 +24,7 @@
 	background-size: cover;
 	background-position: center;
 	background-image: url('<?= base_url() ?>/images/bg_003.jpg');
+	filter: blur(10px);
 }
 #user_header_bg::after{
 	position: absolute;
@@ -39,7 +33,8 @@
 	top: 0;
 	height: 100%;
 	width: 100%;
-	background: linear-gradient(0deg, white, transparent);
+	background: black;
+	opacity: .4
 }
 #user_header_bg_content{
 	height: 260px;
@@ -52,38 +47,50 @@
 	color: white;
 }
 #user_header_bg_content h5{
-	background-color: #444444;
-    padding: .5rem 1rem;
-    border-radius: 50px;
 	color: white;
 }
 .user-foto{
-	background: white;
-	height: 140px;
-	width: 140px;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 3rem;
-	font-family: Calibri;
-	text-transform: uppercase;
-	color: gray;
+	background: #876ced;
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-family: Calibri;
+    text-transform: uppercase;
+    color: white;
+    position: absolute;
+    top: 100%;
+    z-index: 5;
+    transform: translateY(calc(-50% - 20px));
 }
 .content-grid{
-	margin-top: -240px;
+	background: white;
+	border-radius: 10px;
+	margin-top: -20px;
+	position: relative;
+	padding-top: 6rem;
+}
+#user_header_decorator{
+	height: 100%;
+	width: 100%;
+	transform: scale(1.2);
+	position: absolute;
 }
 @media (max-width: 600px) {
-	.content-grid{
-		margin-top: -340px;
-	}
+
 	#user_header_bg_content{
 		flex-direction: row;
-		height: 160px;
+		height: 200px;
 	}
 	.user-foto{
 		height: 80px;
 		width: 80px;
+	}
+	.content-grid{
+		padding-top: 4rem;
 	}
 	#user_header_bg_content h5{
 		margin-left: 1rem;
@@ -98,13 +105,15 @@
 <?php template_start(); ?>
 <div>
 	<div class="" id="user_header">
-		<div id="user_header_bg"></div>
+		<div id="user_header_decorator">
+			<div id="user_header_bg"></div>
+		</div>
 		<div id="user_header_bg_content">
 			<div class="user-foto"><?= $info['nickname'][0] ?></div>
 			<h5><?= $info['nickname'] ?></h5>
 		</div>
 	</div>
-	<div class="py-4 px-2 content-grid">
+	<div class="content-grid">
 		<cg-grid ref='grid' @changeimage="change" :images="list_img" :stack_size="stack" :details="false" ></cg-grid>
 	</div>
 	<upload-editor base_url="<?=base_url()?>" ref="editor" :autors="autoraccess" @onfinish="onfinish"></upload-editor>
@@ -123,7 +132,7 @@ const $_module = {
 			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		});
 
-		
+
 		<?php
 		if ($access_account) {
 
