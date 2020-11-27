@@ -30,6 +30,15 @@
     position: absolute;
 	left: 1rem;
 	top: 1rem;
+	opacity: 0;
+	pointer-events: none;
+	transition: linear all .2s;
+}
+
+.cg-grid-image:hover .cg-grid-image-options{
+	display: block;
+	opacity: 1;
+	pointer-events: auto;
 }
 .cg-grid-image-options i{
 	color: var(--primary)
