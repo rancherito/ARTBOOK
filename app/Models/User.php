@@ -17,7 +17,7 @@ class User
 	}
 	public static function account_create($user, $email, $pass)
 	{
-		$sql = "EXEC app.sp_user_create @user = ?, @email = ?, @pass = ?";
+		$sql = "EXEC app.sp_user_create @user = ?, @email = ?, @pass = ?;";
 		return query_database($sql,[$user, $email, $pass]);
 	}
 	public static function account_validate($account)
@@ -39,5 +39,10 @@ class User
 	{
 		$sql = "UPDATE users.tb_users SET validate = 1 WHERE id_user = ?;";
 		return query_database($sql,[$id_user]);
+	}
+	public function ipuser_save($ip)
+	{
+		$sql = "EXEC users.sp_ipuser_save @ipuser ?;";
+		return query_database($sql,[$ip]);
 	}
 }

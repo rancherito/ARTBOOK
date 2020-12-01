@@ -18,6 +18,11 @@ class Home extends BaseController
 
 		return view('login');
 	}
+	public function chanlenges_votes()
+	{
+		$list = General::qry_challenge_image_list('1');
+		echo $this->layout_view('public','challenges', ['images' => $list]);
+	}
 	//--------------------------------------------------------------------
 
 }

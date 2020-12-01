@@ -16,10 +16,12 @@ $routes->get('/', 'Home');
 $routes->get('user/close', 'Utils::close_session');
 $routes->add('user/login', 'Home::access');
 $routes->add('user/activation/([a-zA-Z0-9_]+)/(:alphanum)', 'Users::account_validate/$1/$2');
+$routes->add('events/challenges',  'Home::chanlenges_votes');
 
 $routes->add('emailview', function () {
 	echo view('emailcard',['user'=>'CAFECONPATO','activate' => 'patarad']);
 });
+
 
 $routes->add('testemail', function ()
 {
@@ -40,7 +42,6 @@ $routes->add('testemail', function ()
 
 $routes->post('services/getaccess', 'Services::login_validate');
 $routes->post('services/account/create', 'Services::account_create');
-
 $routes->add('recortar', 'Utils::image');
 
 if (isset($_SESSION['access'])) {

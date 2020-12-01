@@ -47,8 +47,17 @@ class General
 	}
 	public function qry_challenge_image_list($id_event)
 	{
-		$sql = "app.sp_event_challenge_images_list @id_event = ?";
+		$sql = "events.sp_challenge_images_list @id_event = ?";
 		return query_database($sql, [$id_event]);
 	}
-
+	public function qry_challenge_choise_artwork($nickname_or_ip, $artwork, $tag_event)
+	{
+		$sql = "
+		EXEC events.sp_challenge_choise_artwork
+			@nickname_or_ip ?,
+			@artwork ?,
+			@tag_event ?;
+		";
+		return query_database($sql, [$nickname_or_ip, $artwork, $tag_event]);
+	}
 }
