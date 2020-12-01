@@ -3,6 +3,18 @@
 
 class User
 {
+	public static function account_edit($account, $pass_verify, $nickname_new, $pass_new, $is_newpass)
+	{
+		$sql = "
+		EXEC app.sp_account_edit
+		@account ?,
+		@pass_verify ?,
+		@nickname_new ?,
+		@pass_new ?,
+		@is_newpass ?
+		";
+		return query_database($sql,[$account, $pass_verify, $nickname_new, $pass_new, $is_newpass]);
+	}
 	public static function account_create($user, $email, $pass)
 	{
 		$sql = "EXEC app.sp_user_create @user = ?, @email = ?, @pass = ?";

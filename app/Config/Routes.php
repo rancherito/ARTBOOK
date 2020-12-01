@@ -45,8 +45,11 @@ $routes->add('recortar', 'Utils::image');
 
 if (isset($_SESSION['access'])) {
 
-	$routes->post('/services/artwork/save', 'Services::artwork_save');
-	$routes->post('/services/artworks/recover', 'Services::artworks_recover');
+	$routes->post('services/artwork/save', 'Services::artwork_save');
+	$routes->post('services/artworks/recover', 'Services::artworks_recover');
+	$routes->add('user/settings', 'Users::settings');
+	$routes->add('user/editinfo', 'Users::account_editinfo');
+
 
 	if ($_SESSION['access']['accesstype'] == 'ADMINISTRADOR') {
 		$routes->add('/administrador', 'Administrator');

@@ -9,6 +9,7 @@
 #user_header{
 	background: black;
 	position: relative;
+	height: 260px;
 }
 #user_header_bg{
 
@@ -36,8 +37,8 @@
 	background: black;
 	opacity: .4
 }
-#user_header_bg_content{
-	height: 260px;
+#user_header_info_content{
+	height: calc(100% - 20px);
 	position: relative;
 	padding: 1rem;
 	display: flex;
@@ -46,11 +47,12 @@
 	flex-direction: column;
 	color: white;
 }
-#user_header_bg_content h5{
+#user_header_info_content h5{
 	color: white;
 }
-.user-foto{
+#user_info_photo{
 	background: #876ced;
+	box-shadow: 0 0 0px 8px #876ced33;
     height: 120px;
     width: 120px;
     border-radius: 50%;
@@ -64,7 +66,7 @@
     position: absolute;
     top: 100%;
     z-index: 5;
-    transform: translateY(calc(-50% - 20px));
+    transform: translateY(-50%);
 }
 .content-grid{
 	background: white;
@@ -79,22 +81,43 @@
 	transform: scale(1.2);
 	position: absolute;
 }
+#user_options{
+	position: absolute;
+	z-index: 2;
+	width: 100%;
+	padding: 1rem;
+	display: flex;
+	flex-direction: row-reverse;
+}
 @media (max-width: 600px) {
-
-	#user_header_bg_content{
-		flex-direction: row;
+	#user_header{
 		height: 200px;
 	}
-	.user-foto{
+
+	#user_info_photo{
 		height: 80px;
 		width: 80px;
 	}
 	.content-grid{
 		padding-top: 4rem;
 	}
-	#user_header_bg_content h5{
+	#user_header_info_content h5{
 		margin-left: 1rem;
 	}
+}
+.btn-icon{
+	background: white;
+	color: var(--primary);
+	height: 36px;
+	width: 36px;
+	display: inline-block;
+	border-radius: 50%;
+	line-height: 36px;
+	text-align: center;
+}
+.btn-bg{
+	background: #ffffff1a;
+	color: white;
 }
 </style>
 
@@ -104,12 +127,17 @@
 
 <?php template_start(); ?>
 <div>
-	<div class="" id="user_header">
+	<div id="user_header">
+		<div id="user_options">
+			<a class="btn-icon btn-bg" href="<?= base_url() ?>/user/settings">
+				<i class="mdi mdi-cog mdi-18px"></i>
+			</a>
+		</div>
 		<div id="user_header_decorator">
 			<div id="user_header_bg"></div>
 		</div>
-		<div id="user_header_bg_content">
-			<div class="user-foto"><?= $info['nickname'][0] ?></div>
+		<div id="user_header_info_content">
+			<div id="user_info_photo"><?= $info['nickname'][0] ?></div>
 			<h5><?= $info['nickname'] ?></h5>
 		</div>
 	</div>
@@ -131,8 +159,6 @@ const $_module = {
 		window.addEventListener('resize', () => {
 			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		});
-
-
 		<?php
 		if ($access_account) {
 

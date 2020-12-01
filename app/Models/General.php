@@ -45,5 +45,10 @@ class General
 		$sql = "EXEC app.sp_feedpage;";
 		return query_database($sql);
 	}
+	public function qry_challenge_image_list($id_event)
+	{
+		$sql = "app.sp_event_challenge_images_list @id_event = ?";
+		return query_database($sql, [$id_event]);
+	}
 
 }

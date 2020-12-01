@@ -108,7 +108,7 @@ Vue.component('cg-field', {
 		<div class="cg-field-wrap">
 			<div class="cg-field-loader"></div>
 			<label v-if="this.label != undefined && !loading" class="cg-label" :for="name">{{label}}</label>
-			<input @keydown="keydown" class="cg-field-in browser-default" :placeholder="placeholder" :type="type == 'password' ? 'password' : 'text'" v-if="!loading" :disabled="disabled || loading" @blur="change" @input="inputchange" ref="input" :name="name" :value="value" @change="change">
+			<input :autocomplete="autocomplete" @keydown="keydown" class="cg-field-in browser-default" :placeholder="placeholder" :type="type == 'password' ? 'password' : 'text'" v-if="!loading" :disabled="disabled || loading" @blur="change" @input="inputchange" ref="input" :name="name" :id="name" :value="value" @change="change">
 			<div class="cg-field-loading-message" v-if="loading">CARGANDO {{label}}</div>
 		</div>
 		<div class="cg-field-details">
@@ -142,7 +142,8 @@ Vue.component('cg-field', {
 		isvalid: [Function, Object],
 		number: Boolean,
 		placeholder: String,
-		empty: Boolean
+		empty: Boolean,
+		autocomplete: [String, Boolean],
 	},
 	computed: {
 		maxchar: function () {

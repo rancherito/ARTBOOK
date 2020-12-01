@@ -44,6 +44,10 @@ class Users extends BaseController
 
 
 	}
+	public function account_editinfo()
+	{
+		print_r($_POST);
+	}
 	public static function login_validate_internal($user, $pass)
 	{
 		$access = ['access' => false, 'account' => ''];
@@ -74,5 +78,8 @@ class Users extends BaseController
 		return $access;
 	}
 
-
+	public function settings()
+	{
+		echo view('users/settings');
+	}
 }
