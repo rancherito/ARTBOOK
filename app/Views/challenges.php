@@ -23,13 +23,13 @@
 		top: 0;
 		bottom: 0;
 		background: #000;
-		opacity: 0.5
+		opacity: 0.2
 	}
 	#challenges-active-artwork{
 		position: relative;
 		overflow: hidden;
 		width: 100%;
-		height: 600px;
+		height: 700px;
 		border-radius: 10px;
 	}
 	#challenges-active-artwork img{
@@ -56,7 +56,6 @@
 		width: 100%;
 		left: 0;
 		top: 0;
-		background: red;
 	}
 	#challenges-active-bg::after{
 		content: '';
@@ -65,8 +64,8 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
-		background: #000;
-		opacity: 0.5
+		background: black;
+		opacity: 0.2
 	}
 	#challenges-active-bg img{
 		filter: blur(20px);
@@ -77,7 +76,7 @@
 		top: 1rem;
 		left: 1rem;
 		background: white;
-		padding: .5rem;
+		padding: .5rem 1rem;
 		border-radius: 20px;
 		box-shadow: 0 0 5px #0000003d;
 	}
@@ -128,6 +127,15 @@
 		background: #8bc34a;
 		color: white;
 	}
+	#challenges-description{
+		position: absolute;
+		bottom: 2.4rem;
+		left: 1rem;
+		background: var(--primary);
+		padding: .5rem 1rem;
+		border-radius: 20px;
+		color: white;
+	}
 	@media (max-width: 600px) {
 		#challenges-arrows{
 			position: fixed;
@@ -162,7 +170,7 @@
 		}
 		#challenges-active-artwork{
 			height: 100%;
-			border-radius: none;
+			border-radius: 0;
 		}
 	}
 </style>
@@ -176,12 +184,11 @@
 				<div id="challenges-active-bg">
 					<img :src="image_active">
 				</div>
-				<img :src="image_active">
-				<div id="challenges-counter">
-					{{posimage + 1}} de {{images.length}}
-				</div>
-				<div id="challenges-vote" class="f-c">
-					<i class="mdi" :class="images[posimage].my_votes ? 'mdi-check' : 'mdi-vote-outline'" @click="vote(images[posimage])"></i>
+				<img :src="image_active" ref="imageartwork">
+				<div id="challenges-counter">{{posimage + 1}} de {{images.length}}</div>
+				<div id="challenges-description" ref="nameartwork" class="animated">{{images[posimage].name}}</div>
+				<div id="challenges-vote" ref="btnvote" class="f-c">
+					<i  class="mdi" :class="images[posimage].my_votes ? 'mdi-check' : 'mdi-vote-outline'" @click="vote(images[posimage])"></i>
 				</div>
 			</div>
 			<div id="challenges-arrows" class="mt-2">
@@ -215,18 +222,23 @@
 			return {
 				images: images,
 				posimage: Math.floor(Math.random() * images.length),
-				challenge: <?= json_encode($challenge) ?>
+				challenge: <?= json_encode($challenge) ?>,
+				start_vote: false
 			}
 		},
 		methods: {
 			vote: function (image) {
-				const data = {image: image.accessname, challenge: this.challenge.event_tag}
-				$.post('<?= base_url() ?>/services/events/challenges/votes_save',data,(res) => {
-					M.toast({html: res.message, classes: 'rounded'})
-					console.log(res);
-					if (res.message == "VOTO GUARDADO") image.my_votes = 1
-					else if(res.message == "VOTO ANULADO") image.my_votes = 0
-				})
+				if (!this.start_vote) {
+					const data = {image: image.accessname, challenge: this.challenge.event_tag}
+					this.start_vote = true;
+					$.post('<?= base_url() ?>/services/events/challenges/votes_save',data,(res) => {
+						M.toast({html: res.message, classes: 'rounded'})
+						this.start_vote = false;
+						if (res.message == "VOTO GUARDADO") image.my_votes = 1
+						else if(res.message == "VOTO ANULADO") image.my_votes = 0
+					})
+				}
+
 			}
 		},
 		computed: {
@@ -234,8 +246,16 @@
 				return '<?= base_url() ?>/images/artworks/' + this.images[this.posimage].image
 			}
 		},
-		mounted: function () {
+		watch:{
+			posimage: function (val) {
 
+				animateCSS(this.$refs.nameartwork, 'bounceInLeft');
+				animateCSS(this.$refs.imageartwork, 'zoomInUp');
+				animateCSS(this.$refs.btnvote, 'bounceIn');
+
+
+				console.log(this.$refs.nameartwork);
+			}
 		}
 	}
 </script>
