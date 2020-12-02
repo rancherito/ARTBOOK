@@ -1,5 +1,6 @@
 <?php namespace App\Controllers;
 use App\Models\General;
+use App\Models\User;
 class Home extends BaseController
 {
 	public function index()
@@ -18,8 +19,13 @@ class Home extends BaseController
 
 		return view('login');
 	}
+	private static function getIPAddress() {
+		return isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+	}
 	public function chanlenges_votes()
 	{
+		$ip = Home::getIPAddress();
+		User::ipuser_save($ip);
 		$list = General::qry_challenge_image_list('1');
 		echo $this->layout_view('public','challenges', ['images' => $list]);
 	}

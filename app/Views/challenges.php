@@ -97,6 +97,26 @@
 		color: var(--primary);
 		cursor: pointer;
 	}
+	#challenges-vote{
+		position: absolute;
+		right: 23px;
+		top: 23px
+	}
+	#challenges-vote i{
+		box-shadow: 0 0 5px #0000003d;
+		height: 56px;
+		width: 56px;
+		line-height: 56px;
+		text-align: center;
+		color: lightgray;
+		border-radius: 50%;
+		font-size: 2rem;
+		background: white;
+	}
+	#challenges-vote span{
+		color: white;
+		text-shadow: 0 0 8px black;
+	}
 	@media (max-width: 600px) {
 		#challenges-arrows{
 			position: fixed;
@@ -122,6 +142,9 @@
 				<img :src="image_active">
 				<div id="challenges-counter">
 					{{posimage + 1}} de {{images.length}}
+				</div>
+				<div id="challenges-vote" class="f-c">
+					<i class="mdi mdi-vote-outline"></i>
 				</div>
 			</div>
 			<div id="challenges-arrows" class="mt-2">

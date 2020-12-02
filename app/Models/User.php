@@ -1,6 +1,4 @@
 <?php namespace App\Models;
-
-
 class User
 {
 	public static function account_edit($account, $pass_verify, $nickname_new, $pass_new, $is_newpass)
@@ -42,7 +40,7 @@ class User
 	}
 	public function ipuser_save($ip)
 	{
-		$sql = "EXEC users.sp_ipuser_save @ipuser ?;";
+		$sql = "EXEC users.sp_ipuser_save @ipuser = ?;";
 		return query_database($sql,[$ip]);
 	}
 }
