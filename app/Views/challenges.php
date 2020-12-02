@@ -172,6 +172,9 @@
 			height: 100%;
 			border-radius: 0;
 		}
+		#challenges-description{
+			position: fixed;
+		}
 	}
 </style>
 <?php template_start() ?>
