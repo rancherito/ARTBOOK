@@ -45,19 +45,24 @@ class General
 		$sql = "EXEC app.sp_feedpage;";
 		return query_database($sql);
 	}
-	public function qry_challenge_image_list($id_event)
+	public static function qry_challenge_image_list($event_tag, $user)
 	{
-		$sql = "events.sp_challenge_images_list @id_event = ?";
-		return query_database($sql, [$id_event]);
+		$sql = "events.sp_challenge_images_list @event_tag = ?, @user = ?";
+		return query_database($sql, [$event_tag, $user]);
 	}
-	public function qry_challenge_choise_artwork($nickname_or_ip, $artwork, $tag_event)
+	public function qry_challenge_artwork_vote($nickname_or_ip, $artwork, $tag_event)
 	{
 		$sql = "
 		EXEC events.sp_challenge_choise_artwork
-			@nickname_or_ip ?,
-			@artwork ?,
-			@tag_event ?;
+			@nickname_or_ip = ?,
+			@artwork = ?,
+			@tag_event = ?;
 		";
 		return query_database($sql, [$nickname_or_ip, $artwork, $tag_event]);
+	}
+	public function qry_challenge_current()
+	{
+		$sql = "SELECT TOP 1 name,event_start,event_end,[description],event_tag FROM events.tb_challenge";
+		return query_database($sql);
 	}
 }

@@ -100,7 +100,8 @@
 	#challenges-vote{
 		position: absolute;
 		right: 23px;
-		top: 23px
+		top: 23px;
+
 	}
 	#challenges-vote i{
 		box-shadow: 0 0 5px #0000003d;
@@ -112,16 +113,52 @@
 		border-radius: 50%;
 		font-size: 2rem;
 		background: white;
+		transition: linear all .2s;
+		cursor: pointer;
 	}
 	#challenges-vote span{
 		color: white;
 		text-shadow: 0 0 8px black;
 	}
+	#challenges-vote i:hover{
+		background: var(--primary);
+		color: white;
+	}
+	#challenges-active-artwork.challenges-vote #challenges-vote i{
+		background: #8bc34a;
+		color: white;
+	}
 	@media (max-width: 600px) {
 		#challenges-arrows{
 			position: fixed;
-			bottom: 23px;
-			box-shadow: 0 0 5px #0000003d;
+			top: 50%;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			transform: translateY(-50%);
+			background: transparent;
+			border-radius: 0;
+		}
+		#challenges-arrows a{
+			height: 80px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 3rem;
+			background: #0000000f;
+			color: white;
+		}
+		#challenges-arrows a:nth-child(1){
+			border-radius: 0 50px 50px 0;
+		}
+		#challenges-arrows a:nth-child(1) i{
+			transform: translateX(-20%);
+		}
+		#challenges-arrows a:nth-child(2){
+			border-radius: 50px 0 0 50px
+		}
+		#challenges-arrows a:nth-child(2) i{
+			transform: translateX(20%);
 		}
 		#challenges-active-artwork{
 			height: 100%;
@@ -135,7 +172,7 @@
 			<img src="<?= base_url() ?>/images/bg_003.jpg" alt="">
 		</div>
 		<div id="challenges-gallery">
-			<div id="challenges-active-artwork">
+			<div id="challenges-active-artwork" :class="{'challenges-vote': images[posimage].my_votes}">
 				<div id="challenges-active-bg">
 					<img :src="image_active">
 				</div>
@@ -144,12 +181,12 @@
 					{{posimage + 1}} de {{images.length}}
 				</div>
 				<div id="challenges-vote" class="f-c">
-					<i class="mdi mdi-vote-outline"></i>
+					<i class="mdi" :class="images[posimage].my_votes ? 'mdi-check' : 'mdi-vote-outline'" @click="vote(images[posimage])"></i>
 				</div>
 			</div>
 			<div id="challenges-arrows" class="mt-2">
-				<a @click="posimage = --posimage < 0 ? images.length - 1 : posimage"><i class="mdi mdi-arrow-left"></i></a>
-				<a @click="posimage = ++posimage >= images.length ? 0 : posimage"><i class="mdi mdi-arrow-right"></i></a>
+				<a @click="posimage = --posimage < 0 ? images.length - 1 : posimage"><i class="mdi mdi-chevron-left"></i></a>
+				<a @click="posimage = ++posimage >= images.length ? 0 : posimage"><i class="mdi mdi-chevron-right"></i></a>
 			</div>
 		</div>
 
@@ -157,7 +194,7 @@
 <?php $template = template_end() ?>
 
 <script type="text/javascript">
-	function shuffle(array) {
+	/*function shuffle(array) {
 	  var currentIndex = array.length, temporaryValue, randomIndex;
 	  while (0 !== currentIndex) {
 		randomIndex = Math.floor(Math.random() * currentIndex);
@@ -168,16 +205,28 @@
 	  }
 
 	  return array;
-	}
+  }*/
 	let images = <?= json_encode($images) ?>;
 
-	images = shuffle(images);
+	//images = shuffle(images);
 	$_module = {
 		template: `<?= $template ?>`,
 		data: function () {
 			return {
 				images: images,
-				posimage: 0
+				posimage: Math.floor(Math.random() * images.length),
+				challenge: <?= json_encode($challenge) ?>
+			}
+		},
+		methods: {
+			vote: function (image) {
+				const data = {image: image.accessname, challenge: this.challenge.event_tag}
+				$.post('<?= base_url() ?>/services/events/challenges/votes_save',data,(res) => {
+					M.toast({html: res.message, classes: 'rounded'})
+					console.log(res);
+					if (res.message == "VOTO GUARDADO") image.my_votes = 1
+					else if(res.message == "VOTO ANULADO") image.my_votes = 0
+				})
 			}
 		},
 		computed: {

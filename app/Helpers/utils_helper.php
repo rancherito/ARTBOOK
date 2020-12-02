@@ -17,7 +17,9 @@
         $url_escudo = 'data:image/'.$typeImage.';base64,' . base64_encode(file_get_contents($url));
         echo /** @lang text */ "<script>let $nameVar_imageJs = new Image(); $nameVar_imageJs.src = '$url_escudo';</script>";
     }
-
+	function getIPAddress() {
+		return isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
+	}
     function content_search_full($title,$description,$icon = 'fa fa-home')
     {
         echo '
