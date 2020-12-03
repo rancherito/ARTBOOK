@@ -282,7 +282,7 @@ canvas{
 					<span style="display: none" v-show="avatar_image == null"><?= $nickname[0] ?></span>
 					<img style="display: none" v-show="avatar_image" :src="avatar_image">
 					<label id="settings-take-newavatar" class="f-c">
-						<input type="file" style="display: none" @change="upload_avatar">
+						<input type="file" style="display: none" @change="upload_avatar" accept="image/x-png,image/jpeg">
 						<i class="mdi mdi-camera f-c"></i>
 					</label>
 				</div>
@@ -295,7 +295,7 @@ canvas{
 					<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="old_password.val" sizechars="4-20" :watchisvalid.sync="old_password.isvalid"  label="Ingrese contraseña para validar" placeholder="ignrese Contraseña"></cg-field>
 					<div id="settings-field-actions">
 						<label>
-							<input type="checkbox" class="filled-in" v-model="isNewPassword" accept="image/x-png,image/jpeg">
+							<input type="checkbox" class="filled-in" v-model="isNewPassword" >
 							<span>Editar clave</span>
 						</label>
 						<button type="submit" class="btn" :disabled="!isValid">SALVAR</button>
