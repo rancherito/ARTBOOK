@@ -75,7 +75,7 @@
 	color: gray;
 }
 
-.events-baner{
+.bg_animation_boxes{
 	height: 160px;
 	position: relative;
 	overflow: hidden;
@@ -225,7 +225,7 @@
 
 }
 @media (max-width: 600px) {
-	.events-baner{
+	.bg_animation_boxes{
 		height: 100px;
 	}
 }
@@ -237,7 +237,7 @@
 		<span>Sitio web oficial de la comunidad de artistas art's book</span>
 
 	</div>
-	<div class="events-baner" @click="goevent">
+	<div class="bg_animation_boxes" @click="goevent">
 		<div class="context">
 			<div class="combo-text-title">Retos de artistas</div>
 			<span class="white-text">Ayudanos a elegir un ganador con tu voto</span>

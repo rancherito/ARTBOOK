@@ -41,7 +41,29 @@ input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):
 	width: 54px;
 	padding: 0;
 }
+.btn-flat {
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+.btn-icon {
+    background: white;
+    color: var(--primary);
+    height: 36px;
+    width: 36px;
+    display: inline-block;
+    border-radius: 50%;
+    line-height: 36px;
+    text-align: center;
+}
 
+.btn-icon.btn-light {
+	background: #0000001a;
+    color: grey;
+}
+.btn-icon.btn-dark {
+    background: #ffffff1a;
+    color: white;
+}
 .btn:hover, .btn-large:hover, .btn-small:hover{
 	box-shadow: 0 3px 3px 0 rgba(131, 109, 237, 0.14), 0 1px 7px 0 rgba(131, 109, 237, 0.12), 0 3px 1px -1px rgba(131, 109, 237, .2);
 	background-color: var(--primary-hover)

@@ -26,6 +26,7 @@ if (isset($_SESSION['access'])) {
 
 	$routes->post('services/artwork/save', 'Services::artwork_save');
 	$routes->post('services/artworks/recover', 'Services::artworks_recover');
+	$routes->post('services/user/avatarsave', 'Services::avatar_save');
 	$routes->add('user/settings', 'Users::settings');
 	$routes->add('user/editinfo', 'Users::account_editinfo');
 

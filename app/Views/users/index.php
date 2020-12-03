@@ -46,15 +46,23 @@
 	align-items: center;
 	flex-direction: column;
 	color: white;
+
 }
+
+#user_header_info_content img{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
 #user_header_info_content h5{
 	color: white;
 }
 #user_info_photo{
 	background: #876ced;
-	box-shadow: 0 0 0px 8px #876ced33;
-    height: 120px;
-    width: 120px;
+	box-shadow: 0 0 0px 8px #ffffff33;
+    height: 140px;
+    width: 140px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -67,6 +75,7 @@
     top: 100%;
     z-index: 5;
     transform: translateY(-50%);
+	overflow: hidden;
 }
 .content-grid{
 	background: white;
@@ -95,29 +104,13 @@
 	}
 
 	#user_info_photo{
-		height: 80px;
-		width: 80px;
+		height: 110px;
+		width: 110px;
 	}
 	.content-grid{
-		padding-top: 4rem;
+		padding-top: 5rem;
 	}
-	#user_header_info_content h5{
-		margin-left: 1rem;
-	}
-}
-.btn-icon{
-	background: white;
-	color: var(--primary);
-	height: 36px;
-	width: 36px;
-	display: inline-block;
-	border-radius: 50%;
-	line-height: 36px;
-	text-align: center;
-}
-.btn-bg{
-	background: #ffffff1a;
-	color: white;
+
 }
 </style>
 
@@ -129,15 +122,21 @@
 <div>
 	<div id="user_header">
 		<div id="user_options">
-			<a class="btn-icon btn-bg" href="<?= base_url() ?>/user/settings">
-				<i class="mdi mdi-cog mdi-18px"></i>
-			</a>
+			<?php if (!empty($_SESSION['access'])): ?>
+				<a class="btn-icon btn-dark" href="<?= base_url() ?>/user/settings">
+					<i class="mdi mdi-cog mdi-18px"></i>
+				</a>
+			<?php endif; ?>
 		</div>
 		<div id="user_header_decorator">
 			<div id="user_header_bg"></div>
 		</div>
 		<div id="user_header_info_content">
-			<div id="user_info_photo"><?= $info['nickname'][0] ?></div>
+			<div id="user_info_photo">
+				<span  style="display: none" v-show="avatar_image == null"><?= $info['nickname'][0] ?></span>
+				<img style="display: none" v-show="avatar_image" :src="avatar_image">
+			</div>
+
 			<h5><?= $info['nickname'] ?></h5>
 		</div>
 	</div>
@@ -178,7 +177,8 @@ const $_module = {
 		return {
 			list_img: <?= json_encode($images_list) ?>,
 			autoraccess: [],
-			stack: <?= $agent->isMobile() ? 170 : 320 ?>
+			stack: <?= $agent->isMobile() ? 170 : 320 ?>,
+			avatar_image: <?= $path_image ?>
 		}
 	},
 	methods: {

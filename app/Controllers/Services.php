@@ -100,6 +100,19 @@ class Services extends BaseController
 			return $this->response->setJSON($images);
 		}
 	}
-	//--------------------------------------------------------------------
+	public function avatar_save()
+	{
+		if (!empty($_POST['image'])) {
+			$img = $_POST['image'];
+			$img = str_replace("data:image/jpeg;base64,", '', $img);
+			$img = str_replace(' ', '+', $img);
+			$data = base64_decode($img);
+			$namefile = 'avatar_'.md5($_SESSION['access']['user_access']);
+			$file = "images/avatars/$namefile.jpg";
+			file_put_contents($file, $data);
+			return $this->response->setJSON(['path_image' => base_url()."/$file"]);
+		}
+
+	}
 
 }
