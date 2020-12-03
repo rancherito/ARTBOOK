@@ -132,7 +132,7 @@
 			<div id="user_header_bg"></div>
 		</div>
 		<div id="user_header_info_content">
-			<div id="user_info_photo">
+			<div id="user_info_photo" :style="{background: avatar_image == null ? '' : 'transparent'}">
 				<span  style="display: none" v-show="avatar_image == null"><?= $info['nickname'][0] ?></span>
 				<img style="display: none" v-show="avatar_image" :src="avatar_image">
 			</div>
