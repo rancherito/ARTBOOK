@@ -60,7 +60,7 @@
 }
 #user_info_photo{
 	background: #876ced;
-	box-shadow: 0 0 0px 8px #ffffff33;
+	box-shadow: 0 0 0px 8px #e6e6e633;
     height: 140px;
     width: 140px;
     border-radius: 50%;

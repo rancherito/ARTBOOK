@@ -110,7 +110,7 @@ class Services extends BaseController
 			$namefile = 'avatar_'.md5($_SESSION['access']['user_access']);
 			$file = "images/avatars/$namefile.jpg";
 			file_put_contents($file, $data);
-			return $this->response->setJSON(['path_image' => base_url()."/$file"]);
+			return $this->response->setJSON(['path_image' => base_url()."/$file?v=".rand()]);
 		}
 
 	}
