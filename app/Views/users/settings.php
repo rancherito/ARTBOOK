@@ -295,7 +295,7 @@ canvas{
 					<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="old_password.val" sizechars="4-20" :watchisvalid.sync="old_password.isvalid"  label="Ingrese contraseña para validar" placeholder="ignrese Contraseña"></cg-field>
 					<div id="settings-field-actions">
 						<label>
-							<input type="checkbox" class="filled-in" v-model="isNewPassword">
+							<input type="checkbox" class="filled-in" v-model="isNewPassword" accept="image/x-png,image/jpeg">
 							<span>Editar clave</span>
 						</label>
 						<button type="submit" class="btn" :disabled="!isValid">SALVAR</button>
