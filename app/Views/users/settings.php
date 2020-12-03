@@ -240,9 +240,10 @@ $url = $access['account_site'];
 #settings-cropper{
 	max-width: 500px;
 	width: 100%;
-	height: 100vh;
 	position: fixed;
 	right: 0;
+	bottom: 0;
+	top: 0;
 	background-color: white;
 }
 #settings-cropper-avatar{
