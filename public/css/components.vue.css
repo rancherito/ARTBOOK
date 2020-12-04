@@ -76,9 +76,7 @@
 	justify-content: center;
 	z-index: 10;
 }
-.upload-editor .vue-advanced-cropper{
-	max-height: 600px;
-}
+
 .upload-editor form{
 	height: 460px;
 	padding: 2rem;
@@ -102,15 +100,16 @@
 	overflow: hidden;
 }
 .upload-editor-file{
-	width: 100%;
-	position: relative;
+	position: fixed;
 	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	height: 100%;
-	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }
 .upload-editor-close{
 	position: absolute;
@@ -156,6 +155,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	height: 56px;
 }
 .upload-editor-preview{
 	position: relative;
@@ -177,8 +177,16 @@
 }
 .upload-editor-wrapper-file{
 	width: 100%;
-	padding: 0 1rem;
+	max-width: 500px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
+.upload-editor-cropper{
+	padding: 1rem;
+	max-height: 600px;
+}
+
 @media (max-width: 992px) {
 	.upload-editor-description{
 		flex-direction: column;
@@ -192,14 +200,26 @@
 	}
 }
 @media (max-width: 600px) {
-
+	.upload-editor-cropper{
+		height: calc(100% - 56px);
+		padding-top: 5rem;
+	}
+	.vue-advanced-cropper{
+		position: fixed !important;
+		top: 5rem;
+		bottom: 56px;
+		height: auto;
+		width: auto;
+		left: 1rem;
+		right: 1rem;
+	}
 	.upload-editor{
 		align-items: flex-start;
 	}
-	.upload-editor .vue-advanced-cropper{
-		min-height: 500px;
-		width: 100%;
+	.upload-editor-wrapper-file{
+		height: 100%;
 	}
+
 	.upload-editor-file{
 		max-height: none;
 	}

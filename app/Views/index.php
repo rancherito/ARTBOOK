@@ -1,5 +1,18 @@
 
 <style media="screen">
+#app-title{
+	position: relative;
+}
+#app-title span{
+	position: absolute;
+	bottom: -10px;
+	right: -30px;
+	background-color: var(--primary);
+	color: white;
+	padding: .25rem .5rem;
+	border-radius: 30px;
+	transform: scale(.8) rotate(-45deg);
+}
 .feed-users{
 	display: flex;
 	padding: 1rem;
@@ -233,7 +246,10 @@
 <?php template_start()?>
 <div>
 	<div class="f-c pt-6 pb-4">
-		<div class="title-2 combo-text-title">Bienvenido a Art's Book</div>
+		<div class="combo-text-title" id="app-title">
+			<h1 class="title-2 m-0">Bienvenido a Art's Book</h1>
+			<span>BETA</span>
+		</div>
 		<span>Sitio web oficial de la comunidad de artistas art's book</span>
 
 	</div>

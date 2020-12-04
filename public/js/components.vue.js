@@ -1,11 +1,13 @@
 Vue.component('upload-editor',{
 	template: `
-	<div class="upload-editor cover" v-show="isOpen">
+	<div class="upload-editor" v-show="isOpen">
 		<a class="btn btn-floating upload-editor-close" @click="close"> <i class="mdi-18px mdi mdi-close"></i> </a>
 		<div class="upload-editor-file">
 			<div class="upload-editor-wrapper-file">
-				<cropper style="" ref="aaaaa" :src="img" @change="change"></cropper>
-				<div class="upload-editor-buttons-upload my-4">
+				<div class="upload-editor-cropper">
+					<cropper style="" ref="aaaaa" :src="img" @change="change"></cropper>
+				</div>
+				<div class="upload-editor-buttons-upload">
 					<label class="">
 						<a class="btn" v-show="steps >= 0" >
 							<i class="mdi mdi-upload left"></i>
@@ -126,7 +128,6 @@ Vue.component('upload-editor',{
 			        nw = iw * r,   // new prop. width
 			        nh = ih * r,   // new prop. height
 			        cx, cy, cw, ch, ar = 1;
-				console.log(iw + ' ' + ih);
 			    if (nw < w) ar = w / nw;
 			    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
 			    nw *= ar;
@@ -184,7 +185,6 @@ Vue.component('upload-editor',{
 			const reader = new FileReader();
 			this.isLoadImage = false
 			reader.addEventListener("load", e => {
-				console.log(reader.result);
 				this.img = reader.result
 				this.extensionimage = file.type
 			}, false);
