@@ -95,7 +95,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	cursor: pointer;
 }
 
 .context{
@@ -253,11 +252,11 @@
 		<span>Sitio web oficial de la comunidad de artistas art's book</span>
 
 	</div>
-	<div class="bg_animation_boxes" @click="goevent">
+	<div class="bg_animation_boxes">
 		<div class="context">
-			<div class="combo-text-title">Retos de artistas</div>
-			<span class="white-text">Ayudanos a elegir un ganador con tu voto</span>
-			<a>VAMOS!</a>
+			<div class="combo-text-title">Versus de artistas</div>
+			<span class="white-text">Este 10 de diciembre ayudanos a elegir un ganador</span>
+			<!--<a>VAMOS!</a>-->
 		</div>
 
 
