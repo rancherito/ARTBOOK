@@ -136,6 +136,11 @@
 		border-radius: 20px;
 		color: white;
 	}
+	#challenge-off-message{
+		height: 100%;
+		width: 100%;
+		position: relative;
+	}
 	@media (max-width: 600px) {
 		#challenges-arrows{
 			position: fixed;
@@ -182,7 +187,7 @@
 		<div id="challenges-bg-content">
 			<img src="<?= base_url() ?>/images/bg_003.jpg" alt="">
 		</div>
-		<div id="challenges-gallery">
+		<div id="challenges-gallery" style="display: none" v-show="is_eventStarted">
 			<div id="challenges-active-artwork" :class="{'challenges-vote': images[posimage].my_votes}">
 				<div id="challenges-active-bg">
 					<img :src="image_active">
@@ -199,7 +204,10 @@
 				<a @click="posimage = ++posimage >= images.length ? 0 : posimage"><i class="mdi mdi-chevron-right"></i></a>
 			</div>
 		</div>
-
+		<div id="challenge-off-message" style="display: none" v-show="!is_eventStarted" class="f-c">
+			<div class="title-1 combo-text-title white-text">El evento  de retos no esta disponible</div>
+			<span class="white-text">Pronto anunciaremos nuevos retos, esperenos</span>
+		</div>
 	</div>
 <?php $template = template_end() ?>
 
@@ -226,7 +234,8 @@
 				images: images,
 				posimage: Math.floor(Math.random() * images.length),
 				challenge: <?= json_encode($challenge) ?>,
-				start_vote: false
+				start_vote: false,
+				is_eventStarted: false
 			}
 		},
 		methods: {
