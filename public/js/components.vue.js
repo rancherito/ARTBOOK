@@ -26,7 +26,7 @@ Vue.component('upload-editor',{
 					<canvas ref="canvas" height="460" width="460"></canvas>
 				</div>
 				<form class="f-c" @submit.prevent="submit">
-					<div class="w100">
+					<div>
 						<cg-field required v-model.trim="name" :watchisvalid.sync="name_isvalid" sizechars="4-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
 						<cg-field required empty v-model.trim="description" :watchisvalid.sync="description_isvalid" sizechars="0-500" label="Descripcion de la obra" placeholder="descripcion..."></cg-field>
 						<cg-select v-show="author != 'current'" required v-model="author" :watchisvalid.sync="author_isvalid" label="Autor" novalues="-1">

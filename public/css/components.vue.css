@@ -79,11 +79,14 @@
 
 .upload-editor form{
 	height: 460px;
-	padding: 2rem;
 	width: 400px;
 }
+.upload-editor form > div{
+	width: 100%;
+	max-width: 300px;
+}
 .upload-editor-wrapper-description{
-	position: absolute;
+	position: fixed;
 	left: 0;
 	right: 0;
 	top: 0;
@@ -196,10 +199,18 @@
 	.upload-editor form{
 		height: auto;
 		width: auto;
-		padding: 4rem 2rem 2rem;
+		padding: 4rem;
 	}
 }
 @media (max-width: 600px) {
+	.upload-editor form{
+		padding: 1rem;
+		flex: 1;
+	}
+	.upload-editor-description{
+		height: 100%;
+		width: 100%;
+	}
 	.upload-editor-cropper{
 		height: calc(100% - 56px);
 		padding-top: 5rem;
