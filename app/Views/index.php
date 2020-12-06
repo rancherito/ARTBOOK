@@ -242,7 +242,19 @@
 	}
 }
 </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<div id="adsense-top-spot">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<ins class="adsbygoogle"
+	     style="display:block"
+	     data-ad-format="fluid"
+	     data-ad-layout-key="-6t+ed+2i-1n-4w"
+	     data-ad-client="ca-pub-1355252812560688"
+	     data-ad-slot="7585531731"></ins>
+	<script>
+	     (adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</div>
+
 <?php template_start()?>
 <div>
 	<div class="f-c pt-6 pb-4">
@@ -260,16 +272,6 @@
 			<!--<a>VAMOS!</a>-->
 		</div>
 
-
-		<ins class="adsbygoogle"
-		     style="display:block"
-		     data-ad-format="fluid"
-		     data-ad-layout-key="-6t+ed+2i-1n-4w"
-		     data-ad-client="ca-pub-1355252812560688"
-		     data-ad-slot="7585531731">
-
-		 </ins>
-
 		<div class="area" >
 			<ul class="circles">
 				<li></li>
@@ -286,7 +288,9 @@
 		</div >
 
 	</div>
+
 	<div class="content_feed_and_gallery" style="margin: 0 auto">
+		<div id="content-spot"></div>
 		<simplebar>
 			<div class="feed-users">
 				<?php foreach ($feed as $key => $f): ?>
@@ -311,9 +315,7 @@
 </div>
 
 <?php $template = template_end()?>
-<script>
-	 (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+
 <script>
 console.log();
 const $_module = {
@@ -338,6 +340,8 @@ const $_module = {
 		window.addEventListener('resize', () => {
 			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		});
+
+		$('#content-spot').append($('#adsense-top-spot'));
 	}
 }
 
