@@ -26,4 +26,8 @@ class C_Events extends BaseController
 		$list = General::qry_challenge_image_list($event_tag, $user);
 		echo $this->layout_view('public','challenges', ['images' => $list, 'challenge' => $current]);
 	}
+	public function versus_list()
+	{
+		return $this->layout_view('public', 'versus_list');
+	}
 }

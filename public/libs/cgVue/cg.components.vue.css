@@ -73,20 +73,13 @@
 		width: 100%;
 		transition: linear all .2s;
 	}
-	input.cg-field-in:focus{
-		box-shadow: inset 0 -2px 0 0 #6139ee;
-	}
+
 	.cg-field.cg-field-notvalid input,
 	.cg-field.cg-field-notvalid input:focus
 	{
 		box-shadow: inset 0 -2px 0 0 var(--cg-error);
 	}
-	.cg-select:hover select,
-	.cg-select select:focus,
-	.cg-field input:focus,
-	.cg-field input:hover{
-		background: #f0f0f0;
-	}
+
 	.cg-label + select, .cg-label + input{
 		padding-bottom: 8px;
 		padding-top: 24px;
@@ -175,4 +168,34 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+	}
+	.cg-textbox-in{
+		background: #f7f7f7;
+		width: 100% !important;
+		overflow: hidden;
+		resize: none;
+		display: block;
+		min-height: 56px;
+		padding: 1.2rem 12px;
+		border: 0px solid white;
+		box-shadow: inset 0 -1px 0 0 #9e9e9e;
+		border-radius: 6px 6px 0 0;
+		transition: linear all .2s;
+	}
+
+	.cg-textbox .cg-field-wrap{
+		height: auto;
+	}
+
+	input.cg-field-in:focus, textarea.cg-textbox-in:focus{
+		box-shadow: inset 0 -2px 0 0 #6139ee;
+	}
+	.cg-select:hover select.cg-field-in,
+	.cg-field:hover input.cg-field-in,
+	select.cg-field-in:focus,
+	input.cg-field-in:focus,
+	textarea.cg-textbox-in:focus,
+	.cg-textbox:hover textarea.cg-textbox-in
+	{
+		background: #f0f0f0;
 	}

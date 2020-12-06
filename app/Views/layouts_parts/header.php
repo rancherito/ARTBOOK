@@ -25,3 +25,4 @@
 <script src="<?= base_url() ?>/libs/simplebar/simplebar.min.js"></script>
 <script src="<?= base_url() ?>/libs/simplebar/simplebar.vue.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/libs/simplebar/simplebar.css">
+<script data-ad-client="ca-pub-1355252812560688" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
