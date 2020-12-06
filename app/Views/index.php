@@ -259,7 +259,16 @@
 			<!--<a>VAMOS!</a>-->
 		</div>
 
-
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-format="fluid"
+		     data-ad-layout-key="-6t+ed+2i-1n-4w"
+		     data-ad-client="ca-pub-1355252812560688"
+		     data-ad-slot="7585531731"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
 		<div class="area" >
 			<ul class="circles">
 				<li></li>
