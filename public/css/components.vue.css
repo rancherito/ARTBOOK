@@ -189,7 +189,11 @@
 	padding: 1rem;
 	max-height: 600px;
 }
-
+.cg-grid-adsense{
+	background: #fbfbfb;
+	border-radius: 10px;
+	overflow: hidden;
+}
 @media (max-width: 992px) {
 	.upload-editor-description{
 		flex-direction: column;

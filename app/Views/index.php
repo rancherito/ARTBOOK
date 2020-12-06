@@ -1,4 +1,8 @@
-
+<script type="text/javascript">
+Array.prototype.insert = function ( index, item ) {
+	this.splice( index, 0, item );
+};
+</script>
 <style media="screen">
 #app-title{
 	position: relative;
@@ -257,6 +261,20 @@
     }
   }
 </style>
+
+<div id="adsense-square-ingrid">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<ins class="adsbygoogle"
+	     style="display:block"
+	     data-ad-client="ca-pub-1355252812560688"
+	     data-ad-slot="5969213646"
+	     data-ad-format="auto"
+	     data-full-width-responsive="true">
+	</ins>
+	<script>
+	     (adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+</div>
 <div id="adsense-top-spot">
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<ins class="adsbygoogle"
@@ -264,7 +282,8 @@
 	     data-ad-format="fluid"
 	     data-ad-layout-key="-6t+ed+2i-1n-4w"
 	     data-ad-client="ca-pub-1355252812560688"
-	     data-ad-slot="7585531731"></ins>
+	     data-ad-slot="7585531731">
+	</ins>
 	<script>
 	     (adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
@@ -333,12 +352,13 @@
 <?php $template = template_end()?>
 
 <script>
-console.log();
+let list_images_pre = <?= json_encode($images_list) ?>;
+list_images_pre.insert(2, {adsense: true, id: 'adsense-01'});
 const $_module = {
 	template: `<?= $template ?>`,
 	data: function () {
 		return {
-			list_img: <?= json_encode($images_list) ?>,
+			list_img: list_images_pre,
 			stack: <?= $agent->isMobile() ? 170 : 320 ?>
 		}
 	},
@@ -356,8 +376,9 @@ const $_module = {
 		window.addEventListener('resize', () => {
 			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		});
-
-		$('#content-spot').append($('#adsense-top-spot'));
+		//
+		//$('#content-spot').append($('#adsense-top-spot'));
+		//$('#adsense-01').append($('#adsense-top-spot'));
 	}
 }
 

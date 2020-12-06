@@ -262,8 +262,9 @@ Vue.component('cg-grid',{
 	template: `
 	<div class="cg-grid-wrapper">
 		<div ref="menu" class="cg-grid">
-			<div v-for="img of images" class="cg-grid-wrapper-img" :style="{ width: stack_size + 'px'}">
-				<cg-grid-image @changeimage="$emit('changeimage', $event)" :info="img" :details="details" :edit="isEdit"></cg-grid-image>
+			<div v-for="img of images" class="cg-grid-wrapper-img" :style="{ width: stack_size + 'px', height: (img.adsense ? stack_size + 'px' : 'auto')}">
+				<cg-grid-image v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" :info="img" :details="details" :edit="isEdit"></cg-grid-image>
+				<div class="cg-grid-adsense" v-else style="height: 100%; width: 100%" :id="img.id"></div>
 			</div>
 		</div>
 	</div>
