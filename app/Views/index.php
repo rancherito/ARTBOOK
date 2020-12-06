@@ -275,7 +275,7 @@ Array.prototype.insert = function ( index, item ) {
 	     (adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
 </div>
-<div id="adsense-top-spot">
+<!--<div id="adsense-top-spot">
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<ins class="adsbygoogle"
 	     style="display:block; height:100px"
@@ -287,7 +287,7 @@ Array.prototype.insert = function ( index, item ) {
 	<script>
 	     (adsbygoogle = window.adsbygoogle || []).push({});
 	</script>
-</div>
+</div>-->
 
 <?php template_start()?>
 <div>
@@ -378,7 +378,7 @@ const $_module = {
 		});
 		//
 		//$('#content-spot').append($('#adsense-top-spot'));
-		//$('#adsense-01').append($('#adsense-top-spot'));
+		$('#adsense-01').append($('#adsense-square-ingrid'));
 	}
 }
 
