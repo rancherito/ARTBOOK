@@ -350,7 +350,7 @@ Array.prototype.insert = function ( index, item ) {
 </script>
 <script>
 let list_images_pre = <?= json_encode($images_list) ?>;
-list_images_pre.insert(2, {adsense: true, id: 'adsense-01'});
+list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
 const $_module = {
 	template: `<?= $template ?>`,
 	data: function () {
