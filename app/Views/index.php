@@ -266,7 +266,7 @@ Array.prototype.insert = function ( index, item ) {
 
 	<!-- block in grid -->
 	<ins class="adsbygoogle"
-	     style="display:block"
+	     style="display:block;height:100%; width:100%"
 	     data-ad-client="ca-pub-1355252812560688"
 	     data-ad-slot="5969213646"
 	     data-ad-format="auto"
