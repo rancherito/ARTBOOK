@@ -261,22 +261,19 @@ Array.prototype.insert = function ( index, item ) {
     }
   }
 </style>
-
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <div id="adsense-square-ingrid">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+	<!-- block in grid -->
 	<ins class="adsbygoogle"
 	     style="display:block"
 	     data-ad-client="ca-pub-1355252812560688"
 	     data-ad-slot="5969213646"
 	     data-ad-format="auto"
-	     data-full-width-responsive="true">
-	</ins>
-	<script>
-	     (adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
+	     data-full-width-responsive="true"></ins>
+
 </div>
-<!--<div id="adsense-top-spot">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<div id="adsense-top-spot">
 	<ins class="adsbygoogle"
 	     style="display:block; height:100px"
 	     data-ad-format="fluid"
@@ -284,10 +281,8 @@ Array.prototype.insert = function ( index, item ) {
 	     data-ad-client="ca-pub-1355252812560688"
 	     data-ad-slot="7585531731">
 	</ins>
-	<script>
-	     (adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
-</div>-->
+
+</div>
 
 <?php template_start()?>
 <div>
@@ -350,7 +345,9 @@ Array.prototype.insert = function ( index, item ) {
 </div>
 
 <?php $template = template_end()?>
-
+<script>
+	 (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 <script>
 let list_images_pre = <?= json_encode($images_list) ?>;
 list_images_pre.insert(2, {adsense: true, id: 'adsense-01'});
@@ -377,7 +374,7 @@ const $_module = {
 			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		});
 		//
-		//$('#content-spot').append($('#adsense-top-spot'));
+		$('#content-spot').append($('#adsense-top-spot'));
 		$('#adsense-01').append($('#adsense-square-ingrid'));
 	}
 }
