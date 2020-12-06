@@ -242,6 +242,7 @@
 	}
 }
 </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <?php template_start()?>
 <div>
 	<div class="f-c pt-6 pb-4">
@@ -259,16 +260,16 @@
 			<!--<a>VAMOS!</a>-->
 		</div>
 
-		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 		<ins class="adsbygoogle"
 		     style="display:block"
 		     data-ad-format="fluid"
 		     data-ad-layout-key="-6t+ed+2i-1n-4w"
 		     data-ad-client="ca-pub-1355252812560688"
-		     data-ad-slot="7585531731"></ins>
-		<script>
-		     (adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
+		     data-ad-slot="7585531731">
+
+		 </ins>
+
 		<div class="area" >
 			<ul class="circles">
 				<li></li>
@@ -310,7 +311,9 @@
 </div>
 
 <?php $template = template_end()?>
-
+<script>
+	 (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 <script>
 console.log();
 const $_module = {
