@@ -89,7 +89,7 @@
 }
 
 .bg_animation_boxes{
-	height: 160px;
+	height: 120px;
 	position: relative;
 	overflow: hidden;
 	display: flex;
@@ -241,11 +241,26 @@
 		height: 100px;
 	}
 }
+  @media (min-width: 350px) {
+    .infeed {
+      height: 180px;
+    }
+}
+ @media (min-width: 500px) {
+    .infeed {
+      height: 130px;
+    }
+  }
+ @media (min-width: 800px) {
+    .infeed {
+      height: 200px;
+    }
+  }
 </style>
 <div id="adsense-top-spot">
 	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	<ins class="adsbygoogle"
-	     style="display:block"
+	     style="display:block; height:100px"
 	     data-ad-format="fluid"
 	     data-ad-layout-key="-6t+ed+2i-1n-4w"
 	     data-ad-client="ca-pub-1355252812560688"
@@ -290,7 +305,7 @@
 	</div>
 
 	<div class="content_feed_and_gallery" style="margin: 0 auto">
-		<div id="content-spot"></div>
+
 		<simplebar>
 			<div class="feed-users">
 				<?php foreach ($feed as $key => $f): ?>
@@ -308,6 +323,7 @@
 				<?php endforeach; ?>
 			</div>
 		</simplebar>
+		<div id="content-spot"></div>
 	</div>
 
 
