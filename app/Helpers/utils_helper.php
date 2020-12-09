@@ -43,7 +43,23 @@
             </script>
         ';
     }
-
+	function bg_animate_001()
+	{
+		return '<div class="bg_animate_001" >
+			<ul class="circles">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>';
+	}
     function loader_content(){
         $waiters = [];
         $waiters[] = '
@@ -58,3 +74,13 @@
         </div>
         ';
     }
+	function bg_default()
+	{
+		return '
+		<div class="bg_full_default">
+			<div class="bg_full_default_wrap_image">
+				<img src="'.base_url().'/images/bg_003.jpg">
+			</div>
+		</div>
+		';
+	}

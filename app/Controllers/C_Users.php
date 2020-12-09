@@ -1,7 +1,7 @@
 <?php namespace App\Controllers;
 use App\Models\General;
 use App\Models\User;
-class Users extends BaseController
+class C_Users extends BaseController
 {
 	public function index($user)
 	{

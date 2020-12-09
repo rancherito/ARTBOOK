@@ -7,7 +7,7 @@ $pre_metas = [
 	'description' => 'Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art\'s Book 😁'
 ];
 
-$metas = array_merge($pre_metas, gettype($metas) == 'NULL' ? [] : $metas);
+$metas = array_merge($pre_metas, empty($metas) ? [] : $metas);
 
 
 $links = [];
@@ -175,6 +175,8 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 	new Vue({
 		el: '#app-body',
 		mounted: function () {
+			(adsbygoogle = window.adsbygoogle || []).push({});
+
 			M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'));
 			this.$refs.content.addEventListener('scroll', e => {
 				//console.log(this.$refs.content.scrollTop);

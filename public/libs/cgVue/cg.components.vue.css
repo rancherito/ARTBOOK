@@ -75,16 +75,18 @@
 	}
 
 	.cg-field.cg-field-notvalid input,
-	.cg-field.cg-field-notvalid input:focus
+	.cg-field.cg-field-notvalid input:focus,
+	.cg-textbox.cg-field-notvalid textarea,
+	.cg-textbox.cg-field-notvalid textarea:focus
 	{
 		box-shadow: inset 0 -2px 0 0 var(--cg-error);
 	}
 
-	.cg-label + select, .cg-label + input{
+	.cg-label + select, .cg-label + input, .cg-label + textarea{
 		padding-bottom: 8px;
-		padding-top: 24px;
+		padding-top: 26px;
 	}
-	.cg-select.cg-select-notvalid .cg-label, .cg-field.cg-field-notvalid .cg-label{
+	.cg-select.cg-select-notvalid .cg-label, .cg-field.cg-field-notvalid .cg-label, .cg-textbox.cg-field-notvalid .cg-label{
 		color: var(--cg-error);
 	}
 	.cg-field-details{

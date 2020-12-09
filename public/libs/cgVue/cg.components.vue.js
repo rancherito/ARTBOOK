@@ -253,6 +253,7 @@ Vue.component('cg-field', {
 			return this.validation;
 		},
 		inputchange: function (ff) {
+			this.$refs.input.value = this.$refs.input.value.replace(/ +/gm,' ').trimStart();
 			this.$emit('input', this.$refs.input.value)
 		},
 		change: function () {
@@ -370,7 +371,7 @@ Vue.component('cg-textbox', {
 		caculedvalidation: function () {
 			if (this.required) {
 				if (this.empty && this.value == '') return !0
-				return this.validatevoid() && this.validatenotvalus() && this.validatesize() && this.validateEmail()
+				return (this.validatevoid() && this.validatenotvalus() && this.validatesize() && this.validateEmail()) && true
 			}
 			return !0
 		},
@@ -429,7 +430,7 @@ Vue.component('cg-textbox', {
 
 
 
-			this.$refs.input.value = this.$refs.input.value.replace(/(\r\n|\n|\r)+/gm,'\n').replace(/ +/gm,' ');
+			this.$refs.input.value = this.$refs.input.value.replace(/(\r\n|\n|\r)+/gm,'\n').replace(/ +/gm,' ').trimStart();
 
 			this.$emit('input', this.$refs.input.value)
 		},

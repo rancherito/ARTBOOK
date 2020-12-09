@@ -33,12 +33,12 @@ class User
 		$sql = "SELECT account,nickname,validate,recreatepass,email,[user] FROM users.tb_users WHERE account = ?;";
 		return query_database($sql,[$account]);
 	}
-	public function account_activate($id_user)
+	public static function account_activate($id_user)
 	{
 		$sql = "UPDATE users.tb_users SET validate = 1 WHERE id_user = ?;";
 		return query_database($sql,[$id_user]);
 	}
-	public function ipuser_save($ip)
+	public static function ipuser_save($ip)
 	{
 		$sql = "EXEC users.sp_ipuser_save @ipuser = ?;";
 		return query_database($sql,[$ip]);

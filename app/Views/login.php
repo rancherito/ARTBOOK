@@ -109,6 +109,7 @@
 					newAccountMode: false,
 					loading: false,
 					register_ok: false,
+					fromurl: <?= empty($_GET['fromurl']) ? 'null' : "'$_GET[fromurl]'" ?>
 				},
 				computed:{
 					isvalid: function () {
@@ -143,9 +144,12 @@
 					submit: function () {
 						if (this.isvalid) {
 							const data = {user: this.user.val, password: this.pass.val}
-							$.post('<?= base_url() ?>/services/getaccess',data ,function (d) {
+							$.post('<?= base_url() ?>/services/getaccess',data , (d) => {
 
-								if (d['access']) window.location.href = '<?= base_url() ?>/' + d["account"];
+								if (d['access']) {
+									if (this.fromurl) window.location.href = this.fromurl
+									else window.location.href = '<?= base_url() ?>/' + d["account"];
+								}
 								else M.toast({html: 'CONTRASEÑA O USUARIOS INCORRECTO', classes: 'rounded bg-alert'});
 
 							})

@@ -1,6 +1,7 @@
 <?php namespace App\Controllers;
 use App\Models\General;
 use App\Models\User;
+use App\Models\M_Events;
 class Services extends BaseController
 {
 	public function account_create()
@@ -44,7 +45,7 @@ class Services extends BaseController
 	{
 		if (!empty($_POST['user']) && !empty($_POST['password'])) {
 			$pass = md5($_POST['password']);
-			$access = Users::login_validate_internal($_POST['user'], $pass);
+			$access = C_Users::login_validate_internal($_POST['user'], $pass);
 			return $this->response->setJSON($access);
 		}
 	}
@@ -113,6 +114,28 @@ class Services extends BaseController
 			return $this->response->setJSON(['path_image' => base_url()."/$file?v=".rand()]);
 		}
 
+	}
+	public function event_versuslist_Save()
+	{
+		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['tag'])) {
+			$regtitle = "/^[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.]+$/i";
+			$regdescription = "/^[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.\n]+$/i";
+
+			$description = trim(preg_replace('/\s\s+/',"\n", $_POST['description']));
+			$title = trim($_POST['title']);
+			$tag = htmlspecialchars($_POST['tag'], ENT_QUOTES);
+
+			if (preg_match($regtitle,$title) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales']);
+			if (preg_match($regdescription, $description) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales']);
+
+			$res = M_Events::qry_versus_register('0', $tag, $_SESSION['access']['user_access'], $title, $description);
+			if (count($res)) return $this->response->setJSON($res[0]);
+		}
+
+	}
+	public function event_apply_versus()
+	{
+		print_r($_POST);
 	}
 
 }

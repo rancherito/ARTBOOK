@@ -15,7 +15,7 @@ session();
 $routes->get('/', 'Home');
 $routes->get('user/close', 'Utils::close_session');
 $routes->add('user/login', 'Home::access');
-$routes->add('user/activation/([a-zA-Z0-9_]+)/(:alphanum)', 'Users::account_validate/$1/$2');
+$routes->add('user/activation/([a-zA-Z0-9_]+)/(:alphanum)', 'C_Users::account_validate/$1/$2');
 $routes->add('events/challenges',  'C_Events::chanllenges_votes');
 $routes->add('events/versus',  'C_Events::versus_list');
 
@@ -30,8 +30,10 @@ if (isset($_SESSION['access'])) {
 	$routes->post('services/artwork/save', 'Services::artwork_save');
 	$routes->post('services/artworks/recover', 'Services::artworks_recover');
 	$routes->post('services/user/avatarsave', 'Services::avatar_save');
-	$routes->add('user/settings', 'Users::settings');
-	$routes->add('user/editinfo', 'Users::account_editinfo');
+	$routes->post('service/events/versuslist_save', 'Services::event_versuslist_Save');
+	$routes->post('service/events/apply_versus', 'Services::event_apply_versus');
+	$routes->add('user/settings', 'C_Users::settings');
+	$routes->add('user/editinfo', 'C_Users::account_editinfo');
 
 
 	if ($_SESSION['access']['accesstype'] == 'ADMINISTRADOR') {
@@ -40,7 +42,7 @@ if (isset($_SESSION['access'])) {
 	}
 }
 
-$routes->add('/([a-zA-Z0-9_]+)', 'Users::index/$1');
+$routes->add('/([a-zA-Z0-9_]+)', 'C_Users::index/$1');
 $routes->add('emailview', function () {
 	echo view('emailcard',['user'=>'CAFECONPATO','activate' => 'patarad']);
 });

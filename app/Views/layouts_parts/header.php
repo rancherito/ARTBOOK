@@ -1,4 +1,4 @@
-<?php $version = 'beta_0.041' ?>
+<?php $version = 'beta_0.050' ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>ARTS BOOK</title>
@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="<?= base_url() ?>/libs/materialize/css/materialize.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>/libs/animate/animate.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>/css/custom_materialize.css?v=<?= $version ?>">
+<script src="<?= base_url() ?>/js/script.js?v=<?= $version ?>"></script>
 <script src="<?= base_url() ?>/js/jquery-3.4.1.min.js"></script>
 <script src="<?= base_url() ?>/libs/animate/animateCSS.js"></script>
 <script src="<?= base_url() ?>/libs/materialize/js/materialize.min.js"></script>

@@ -4,6 +4,9 @@ a{
 .dropdown-content{
 	z-index: 3;
 }
+.modal-overlay{
+	backdrop-filter: blur(2px);
+}
 .fixed-action-btn{
 	z-index: 3;
 }
@@ -16,8 +19,13 @@ a{
 	background: var(--bg-primary);
 }
 .btn, .btn-large{
-	background: var(--bg-primary);
+	background-color: var(--bg-primary);
 	transition: linear all 0.2s;
+	border-radius: 30px;
+	box-shadow: none;
+}
+.btn:focus, .btn-large:focus, .btn-small:focus, .btn-floating:focus{
+	background-color: var(--primary-dark);
 }
 input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){
 	border-bottom: 1px solid var(--primary);
@@ -34,9 +42,7 @@ input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):
 	width: 36px;
 	padding: 0;
 }
-.btn, .btn-large{
-	box-shadow: none;
-}
+
 .btn-large.btn-icon{
 	width: 54px;
 	padding: 0;
@@ -44,6 +50,7 @@ input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):
 .btn-flat {
     border: 1px solid var(--primary);
     color: var(--primary);
+	border-radius: 30px;
 }
 .btn-icon {
     background: white;
@@ -65,13 +72,15 @@ input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):
     color: white;
 }
 .btn:hover, .btn-large:hover, .btn-small:hover{
-	box-shadow: 0 3px 3px 0 rgba(131, 109, 237, 0.14), 0 1px 7px 0 rgba(131, 109, 237, 0.12), 0 3px 1px -1px rgba(131, 109, 237, .2);
-	background-color: var(--primary-hover)
+	box-shadow: none;
+	background-color: var(--primary-hover);
 }
 
-.btn.disabled, .disabled.btn-large, .disabled.btn-small, .btn-floating.disabled, .btn-large.disabled, .btn-small.disabled, .btn-flat.disabled, .btn:disabled, .btn-large:disabled, .btn-small:disabled, .btn-floating:disabled, .btn-large:disabled, .btn-small:disabled, .btn-flat:disabled, .btn[disabled], .btn-large[disabled], .btn-small[disabled], .btn-floating[disabled], .btn-large[disabled], .btn-small[disabled], .btn-flat[disabled]{
+.btn.disabled, .disabled.btn-large, .disabled.btn-small, .btn-floating.disabled, .btn-large.disabled, .btn-small.disabled, .btn-flat.disabled,
+.btn:disabled, .btn-large:disabled, .btn-small:disabled, .btn-floating:disabled, .btn-large:disabled, .btn-small:disabled, .btn-flat:disabled, .btn[disabled], .btn-large[disabled], .btn-small[disabled], .btn-floating[disabled], .btn-large[disabled], .btn-small[disabled], .btn-flat[disabled]{
 	background: #876ced21 !important;
 	color: #876ced7a !important;
+
 }
 .btn-animate{
 	position: relative;
@@ -91,7 +100,8 @@ input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):
 	left: -100%;
 }
 .btn-floating {
-	background: var(--bg-primary)
+	background: var(--bg-primary);
+	border-radius: 50%;
 }
 .btn-control{
 	display: flex;

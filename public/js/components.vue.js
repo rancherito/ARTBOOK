@@ -1,3 +1,36 @@
+Vue.component('lateral-modal',{
+	template: `
+	<div class="lateral-modal animated fadeIn" style="display: none" v-show="!is_close">
+		<div class="lateral-modal-container">
+			<slot></slot>
+		</div>
+		<div class="lateral-modal-out" @click="is_close = true"></div>
+	</div>
+	`,
+	data: function () {
+		return {
+			is_close: true
+		}
+	},
+	methods: {
+		toggle: function () {
+			this.is_close = !this.is_close
+		}
+	},
+	mounted: function () {
+		document.onkeydown = (evt) => {
+			if (!this.is_close) {
+				evt = evt || window.event;
+			    var isEscape = false;
+			    if ("key" in evt) isEscape = (evt.key === "Escape" || evt.key === "Esc");
+			    else isEscape = (evt.keyCode === 27);
+			    if (isEscape) this.is_close = true;
+			}
+
+
+		};
+	}
+})
 Vue.component('upload-editor',{
 	template: `
 	<div class="upload-editor" v-show="isOpen">

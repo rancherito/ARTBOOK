@@ -1,8 +1,3 @@
-<script type="text/javascript">
-Array.prototype.insert = function ( index, item ) {
-	this.splice( index, 0, item );
-};
-</script>
 <style media="screen">
 #app-title{
 	position: relative;
@@ -116,152 +111,15 @@ Array.prototype.insert = function ( index, item ) {
 	font-size: 1rem;
 }
 
-.area{
-	background: #4e54c8;
-	background: var(--bg-purple);
-	width: 100%;
-	height:100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-
-}
-
-.circles{
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	margin: 0;
-}
-
-.circles li{
-	position: absolute;
-	display: block;
-	list-style: none;
-	width: 20px;
-	height: 20px;
-	background: rgba(255, 255, 255, 0.2);
-	animation: animate 25s linear infinite;
-	bottom: -150px;
-
-}
-
-.circles li:nth-child(1){
-	left: 25%;
-	width: 80px;
-	height: 80px;
-	animation-delay: 0s;
-}
-
-
-.circles li:nth-child(2){
-	left: 10%;
-	width: 20px;
-	height: 20px;
-	animation-delay: 2s;
-	animation-duration: 12s;
-}
-
-.circles li:nth-child(3){
-	left: 70%;
-	width: 20px;
-	height: 20px;
-	animation-delay: 4s;
-}
-
-.circles li:nth-child(4){
-	left: 40%;
-	width: 60px;
-	height: 60px;
-	animation-delay: 0s;
-	animation-duration: 18s;
-}
-
-.circles li:nth-child(5){
-	left: 65%;
-	width: 20px;
-	height: 20px;
-	animation-delay: 0s;
-}
-
-.circles li:nth-child(6){
-	left: 75%;
-	width: 110px;
-	height: 110px;
-	animation-delay: 3s;
-}
-
-.circles li:nth-child(7){
-	left: 35%;
-	width: 150px;
-	height: 150px;
-	animation-delay: 7s;
-}
-
-.circles li:nth-child(8){
-	left: 50%;
-	width: 25px;
-	height: 25px;
-	animation-delay: 15s;
-	animation-duration: 45s;
-}
-
-.circles li:nth-child(9){
-	left: 20%;
-	width: 15px;
-	height: 15px;
-	animation-delay: 2s;
-	animation-duration: 35s;
-}
-
-.circles li:nth-child(10){
-	left: 85%;
-	width: 150px;
-	height: 150px;
-	animation-delay: 0s;
-	animation-duration: 11s;
-}
-
-@keyframes animate {
-
-	0%{
-		transform: translateY(0) rotate(0deg);
-		opacity: 1;
-		border-radius: 0;
-	}
-
-	100%{
-		transform: translateY(-1000px) rotate(720deg);
-		opacity: 0;
-		border-radius: 50%;
-	}
-
-}
 @media (max-width: 600px) {
 	.bg_animation_boxes{
 		height: 100px;
 	}
+	#content-spot{
+		display: none;
+	}
 }
-  @media (min-width: 350px) {
-    .infeed {
-      height: 180px;
-    }
-}
- @media (min-width: 500px) {
-    .infeed {
-      height: 130px;
-    }
-  }
- @media (min-width: 800px) {
-    .infeed {
-      height: 200px;
-    }
-  }
 </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <div id="adsense-square-ingrid">
 
 	<!-- block in grid -->
@@ -270,20 +128,11 @@ Array.prototype.insert = function ( index, item ) {
 	     data-ad-client="ca-pub-1355252812560688"
 	     data-ad-slot="5969213646"
 	     data-ad-format="auto"
-	     data-full-width-responsive="true"></ins>
+	     data-full-width-responsive="true">
 
-</div>
-<div id="adsense-top-spot">
-	<ins class="adsbygoogle"
-	     style="display:block; height:100px"
-	     data-ad-format="fluid"
-	     data-ad-layout-key="-6t+ed+2i-1n-4w"
-	     data-ad-client="ca-pub-1355252812560688"
-	     data-ad-slot="7585531731">
 	</ins>
 
 </div>
-
 <?php template_start()?>
 <div>
 	<div class="f-c pt-6 pb-4">
@@ -300,22 +149,7 @@ Array.prototype.insert = function ( index, item ) {
 			<span class="white-text">Este 10 de diciembre ayudanos a elegir un ganador</span>
 			<!--<a>VAMOS!</a>-->
 		</div>
-
-		<div class="area" >
-			<ul class="circles">
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</div >
-
+		<?= bg_animate_001() ?>
 	</div>
 
 	<div class="content_feed_and_gallery" style="margin: 0 auto">
@@ -337,7 +171,15 @@ Array.prototype.insert = function ( index, item ) {
 				<?php endforeach; ?>
 			</div>
 		</simplebar>
-		<div id="content-spot"></div>
+		<div id="content-spot">
+			<ins class="adsbygoogle"
+			     style="display:block; height:100px"
+			     data-ad-format="fluid"
+			     data-ad-layout-key="-6t+ed+2i-1n-4w"
+			     data-ad-client="ca-pub-1355252812560688"
+			     data-ad-slot="7585531731">
+			</ins>
+		</div>
 	</div>
 
 
@@ -345,9 +187,9 @@ Array.prototype.insert = function ( index, item ) {
 </div>
 
 <?php $template = template_end()?>
-<script>
-	 (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+
+
+
 <script>
 let list_images_pre = <?= json_encode($images_list) ?>;
 list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
@@ -373,8 +215,6 @@ const $_module = {
 		window.addEventListener('resize', () => {
 			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		});
-		//
-		$('#content-spot').append($('#adsense-top-spot'));
 		$('#adsense-01').append($('#adsense-square-ingrid'));
 	}
 }
