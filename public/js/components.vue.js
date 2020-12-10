@@ -42,14 +42,14 @@ Vue.component('upload-editor',{
 				</div>
 				<div class="upload-editor-buttons-upload">
 					<label class="">
-						<a class="btn" v-show="steps >= 0" >
+						<a class="btn" v-show="steps >= 0" v-if="!isModify">
 							<i class="mdi mdi-upload left"></i>
 							<span>{{ steps > 0 ? 'SUBIR OTRA IMAGEN' : 'SUBIR UNA IMAGEN'}}</span>
 						</a>
 						<input v-show="false" type="file" accept="image/x-png,image/jpeg" @change="onUploadFile">
 					</label>
 
-					<a class="btn ml-1" v-show="steps > 0" @click="steps = 2"> <i class="mdi mdi-arrow-right"></i> </a>
+					<a class="btn ml-1" v-show="steps > 0" @click="steps = 2"> <i class="mdi mdi-arrow-right" :class="{right: isModify}"></i> <span v-if="isModify">Siguiente</span></a>
 				</div>
 			</div>
 		</div>
@@ -93,6 +93,7 @@ Vue.component('upload-editor',{
 			isLoadImage: false,
 			image: null,
 			extensionimage: '',
+			isModify: false,
 			load: {
 				isUploading: false,
 				progress: 0
@@ -115,6 +116,7 @@ Vue.component('upload-editor',{
 	},
 	methods: {
 		setData: function (newData) {
+			this.isModify = true
 			this.img = newData.img
 			this.id = newData.id
 			this.author = newData.author
@@ -122,6 +124,15 @@ Vue.component('upload-editor',{
 			this.name = newData.name
 			this.extensionimage = newData.extension
 
+		},
+		newRegister: function () {
+			this.isModify = false
+			this.img = null
+			this.id = ''
+			this.author = 'current'
+			this.description = ''
+			this.name = ''
+			this.extensionimage = ''
 		},
 		submit: function () {
 			const datos = {
@@ -246,7 +257,7 @@ Vue.component('cg-grid-image', {
 		</a>
 		<ul :id="info.accessname" class="dropdown-content">
 			<li tabindex="0"><a @click="send"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
-			<li tabindex="0"><a @click="send"><i class="mdi mdi-eye-off-outline"></i>Ocultar</a></li>
+			<li tabindex="0"><a><i class="mdi mdi-eye-off-outline"></i>Ocultar</a></li>
 		</ul>
 		<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
 		<div class="cg-grid-info">

@@ -141,7 +141,7 @@
 		</div>
 	</div>
 	<div class="content-grid">
-		<cg-grid ref='grid' @changeimage="change" :images="list_img" :stack_size="stack" :details="false" ></cg-grid>
+		<cg-grid ref='grid' @changeimage="modify_image" :images="list_img" :stack_size="stack" :details="false" ></cg-grid>
 	</div>
 	<upload-editor base_url="<?=base_url()?>" ref="editor" :autors="autoraccess" @onfinish="onfinish"></upload-editor>
 </div>
@@ -182,7 +182,7 @@ const $_module = {
 		}
 	},
 	methods: {
-		change: function (data) {
+		modify_image: function (data) {
 			this.$refs.editor.open()
 			this.$refs.editor.setData({
 				author: 'current',
@@ -200,13 +200,7 @@ const $_module = {
 		},
 		openeditor: function () {
 			this.$refs.editor.open()
-			this.$refs.editor.setData({
-				author: 'current',
-				description: '',
-				name: '',
-				id: '',
-				img: null
-			})
+			this.$refs.editor.newRegister()
 		},
 
 	}
