@@ -422,11 +422,11 @@ Vue.component('cg-textbox', {
 		inputchange: function (ff) {
 
 
-			if (this.$refs.input.value.split(/\r\n|\r|\n/).length == 1) this.$refs.input.style.height = '56px';
-			else {
+			//if (this.$refs.input.value.split(/\r\n|\r|\n/).length == 1) this.$refs.input.style.height = '56px';
+			//else {
 				this.$refs.input.style.height = 'auto';
 	            this.$refs.input.style.height = this.$refs.input.scrollHeight + 'px';
-			}
+			//}
 
 
 

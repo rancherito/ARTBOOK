@@ -42,7 +42,7 @@
 	}
 	.cg-label{
 		position: absolute;
-		top: 11px;
+		top: 10px;
 		left: 11px;
 		font-size: 1rem;
 		transform: scale(0.8);
@@ -85,6 +85,9 @@
 	.cg-label + select, .cg-label + input, .cg-label + textarea{
 		padding-bottom: 8px;
 		padding-top: 26px;
+	}
+	.cg-label + textarea{
+		padding-top: 28px;
 	}
 	.cg-select.cg-select-notvalid .cg-label, .cg-field.cg-field-notvalid .cg-label, .cg-textbox.cg-field-notvalid .cg-label{
 		color: var(--cg-error);
@@ -177,7 +180,7 @@
 		overflow: hidden;
 		resize: none;
 		display: block;
-		min-height: 56px;
+		min-height: 70px;
 		padding: 1.2rem 12px;
 		border: 0px solid white;
 		box-shadow: inset 0 -1px 0 0 #9e9e9e;
