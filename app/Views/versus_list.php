@@ -328,8 +328,11 @@ const $_module = {
 				const data = {title: this.title.val, description: this.description.val, tag: this.current_register_event.event_tag}
 				this.is_send = true
 				$.post('<?= base_url() ?>/service/events/versuslist_save', data, (res) => {
-					this.clear()
-					this.$refs.modal.toggle()
+
+					if (res.message == 'REGISTRO EXITOSO') {
+						this.$refs.modal.toggle()
+						this.clear()
+					}
 					M.toast({html: res.message, classes: 'rounded'});
 					this.is_send = false
 				}).fail(() => {
