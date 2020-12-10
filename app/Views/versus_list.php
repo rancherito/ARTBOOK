@@ -194,7 +194,7 @@ article h1{
 	</div>
 	<div id="versus-list" style="display: <?= count($list_versus) == 0 ? 'none' : 'block' ?>">
 		<?php if (empty($_SESSION['access'])): ?>
-			<a href="<?= base_url() ?>/user/login" id="versus-access-account-movil">
+			<a href="<?= base_url() ?>/user/login?fromurl=<?= "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" id="versus-access-account-movil">
 				ACCEDE AQUI Y PARTICIPA
 			</a>
 		<?php endif; ?>
