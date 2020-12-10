@@ -35,8 +35,9 @@ class C_Users extends BaseController
 		if (count($account)) {
 			$user = $account[0];
 			$validate = md5($user['id_user'].$user['account']).md5($user['pass'].$user['id_user']);
+
 			if ($validate == $validatorcode) {
-				$access = Users::login_validate_internal($user['account'], $user['pass']);
+				$access = C_Users::login_validate_internal($user['account'], $user['pass']);
 				if($access['access'] == 1){
 					User::account_activate($user['id_user']);
 					return redirect()->to(base_url().'/'.$user['account']);
@@ -56,7 +57,7 @@ class C_Users extends BaseController
 			$newpass = md5($_POST['new']);
 			$verifypass = md5($_POST['old']);
 			$message = User::account_edit($user['user_access'], $verifypass, $_POST['nickname'], $newpass, $_POST['is_new']);
-			if ($message[0]['change'] == 'OK') Users::login_validate_internal($user['user_access'], ($_POST['is_new'] == '0' ? $verifypass : $newpass));
+			if ($message[0]['change'] == 'OK') C_Users::login_validate_internal($user['user_access'], ($_POST['is_new'] == '0' ? $verifypass : $newpass));
 
 			return $this->response->setJSON($message[0]);
 
