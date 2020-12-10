@@ -32,6 +32,8 @@ if (isset($_SESSION['access'])) {
 	$routes->post('services/user/avatarsave', 'Services::avatar_save');
 	$routes->post('service/events/versuslist_save', 'Services::event_versuslist_Save');
 	$routes->post('service/events/apply_versus', 'Services::event_apply_versus');
+	$routes->post('service/events/versuslist', 'Services::event_versus_list_recover');
+
 	$routes->add('user/settings', 'C_Users::settings');
 	$routes->add('user/editinfo', 'C_Users::account_editinfo');
 

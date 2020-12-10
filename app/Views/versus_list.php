@@ -252,7 +252,7 @@ article h1{
 						</a>
 
 					</div>
-					<div class="col s12 m6 l4" v-for="item in (3 - (participients[versus.event_tag].length > 3 ? 3 : participients[versus.event_tag].length))">
+					<div class="col s12 m6 l4 mb-4" v-for="item in (3 - (participients[versus.event_tag].length > 3 ? 3 : participients[versus.event_tag].length))">
 						<a class="dashbox mb-2 f-c p-4">
 							<span>Versus pendiente</span>
 						</a>
@@ -328,10 +328,13 @@ const $_module = {
 				const data = {title: this.title.val, description: this.description.val, tag: this.current_register_event.event_tag}
 				this.is_send = true
 				$.post('<?= base_url() ?>/service/events/versuslist_save', data, (res) => {
-
 					if (res.message == 'REGISTRO EXITOSO') {
 						this.$refs.modal.toggle()
+						const dataupdate = {tag: this.current_register_event.event_tag}
 						this.clear()
+						$.post('<?= base_url() ?>/service/events/versuslist', dataupdate, (res) => {
+							this.participients[dataupdate.tag] = res
+						})
 					}
 					M.toast({html: res.message, classes: 'rounded'});
 					this.is_send = false

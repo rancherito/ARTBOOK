@@ -145,5 +145,12 @@ class Services extends BaseController
 
 
 	}
+	public function event_versus_list_recover()
+	{
+		if (!empty($_POST['tag'])) {
+			$res = M_Events::qry_versus_list($_POST['tag']);
+			return $this->response->setJSON($res);
+		}
+	}
 
 }
