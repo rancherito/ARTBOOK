@@ -29,7 +29,6 @@
 .dashbox-info-promoter{
 	padding: 1rem;
 	padding-top: 0;
-	text-align: right;
 	font-size: .8rem;
 }
 .dashbox-info-promoter a{
@@ -48,6 +47,7 @@
 	font-size: .9rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	padding-bottom: .5rem;
 }
 #versus{
 	height: 100%; width: 100%
@@ -161,7 +161,7 @@ article h1{
 
 		</div>
 		<div class="modal-footer">
-			<a class="btn" @click="confirm_apply">CONFIRMAR</a>
+			<button class="btn" @click="confirm_apply" :disabled="is_send_apply">CONFIRMAR</button>
 			<a class="modal-close waves-effect btn-flat">CANCELAR</a>
 
 		</div>
@@ -236,8 +236,16 @@ article h1{
 									<div class="dashbox-description" v-html="jumplinereplace(item.description)"></div>
 								</div>
 								<div class="dashbox-info-promoter f-b">
-									<a :href="'<?= base_url() ?>/'+item.account_promoter">creado por {{item.promoter}}</a>
-									<span class="btn" v-if="'<?= !empty($_SESSION['access']) ? $_SESSION['access']['account'] : ''  ?>' != item.account_promoter" @click="versus_apply(item)">RETAR</span>
+									<div>
+										<a :href="'<?= base_url() ?>/'+item.account_promoter">creado por {{item.promoter}}</a>
+										<div style="margin-top: -.2rem">
+											<span style="height: 4px; width: 4px; background: var(--primary); display: inline-block"></span>
+											<span class="ml-2">Nro. inscritos {{item.participients}}</span>
+										</div>
+									</div>
+									<?php if (!empty($_SESSION['access'])): ?>
+										<span class="btn"  v-if="active_user != item.account_promoter" @click="versus_apply(item)">RETAR</span>
+									<?php endif; ?>
 
 								</div>
 							</div>
@@ -269,7 +277,9 @@ const $_module = {
 			current_register_event: {},
 			current_versus_apply: {},
 			is_send: false,
-			modal: null
+			is_send_apply: false,
+			modal: null,
+			active_user: '<?= !empty($_SESSION['access']) ? $_SESSION['access']['account'] : ''  ?>'
 		}
 	},
 	computed: {
@@ -302,11 +312,15 @@ const $_module = {
 			this.modal.modal('open')
 		},
 		confirm_apply: function () {
-			const data = {versus: this.current_versus_apply.versus, tag: this.current_versus_apply.tag}
+			const data = {versus: this.current_versus_apply.versus}
+			this.is_send_apply = true
 			$.post('<?= base_url() ?>/service/events/apply_versus', data, (res) => {
-				console.log(res);
+				M.toast({html: res.message, classes: 'rounded'});
+				this.modal.modal('close')
+				this.is_send_apply = false
 			}).fail(() => {
-		        console.log('ERROR');
+		        M.toast({html: 'ERROR EN LA PAGINA, VUELVA MÁS TARDE', classes: 'rounded bg-alert'});
+				this.is_send_apply = false
 		    });
 		},
 		submit: function () {
@@ -318,7 +332,10 @@ const $_module = {
 					this.$refs.modal.toggle()
 					M.toast({html: res.message, classes: 'rounded'});
 					this.is_send = false
-				})
+				}).fail(() => {
+			        this.is_send = false
+					M.toast({html: 'ERROR EN LA PAGINA, VUELVA MÁS TARDE', classes: 'rounded bg-alert'});
+			    });
 
 			}
 		},

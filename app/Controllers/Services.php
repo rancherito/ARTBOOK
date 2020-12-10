@@ -129,13 +129,21 @@ class Services extends BaseController
 			if (preg_match($regdescription, $description) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales']);
 
 			$res = M_Events::qry_versus_register('0', $tag, $_SESSION['access']['user_access'], $title, $description);
-			if (count($res)) return $this->response->setJSON($res[0]);
+			if (count($res)) $res = $res[0];
+			return $this->response->setJSON($res);
 		}
 
 	}
 	public function event_apply_versus()
 	{
-		print_r($_POST);
+		if (!empty($_POST['versus'])) {
+			$image = empty($_POST['versus']) ? '' : $_POST['image'];
+			$res = M_Events::qry_versus_apply($_SESSION['access']['user_access'], $_POST['versus'], $image);
+			if (count($res)) $res = $res[0];
+			return $this->response->setJSON($res);
+		}
+
+
 	}
 
 }

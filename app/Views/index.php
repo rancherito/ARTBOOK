@@ -87,8 +87,7 @@
 	color: gray;
 }
 
-.bg_animation_boxes{
-	height: 120px;
+.event-anunces{
 	position: relative;
 	overflow: hidden;
 	display: flex;
@@ -102,6 +101,7 @@
 	font-size: 2rem;
 	position: relative;
 	z-index: 2;
+	padding: .5rem
 }
 .context a{
 	background: #ffffff47;
@@ -112,11 +112,16 @@
 }
 
 @media (max-width: 600px) {
-	.bg_animation_boxes{
-		height: 100px;
-	}
 	#content-spot{
 		display: none;
+	}
+	.countdown{
+
+	}
+}
+@media (max-width: 320px) {
+	.countdown{
+		font-size: 1.6rem;
 	}
 }
 </style>
@@ -143,11 +148,12 @@
 		<span>Sitio web oficial de la comunidad de artistas art's book</span>
 
 	</div>
-	<div class="bg_animation_boxes">
+	<div class="event-anunces" v-if="typeof versus[0] != 'undefined'">
 		<div class="context">
-			<div class="combo-text-title">Versus de artistas</div>
-			<span class="white-text">Este 10 de diciembre ayudanos a elegir un ganador</span>
-			<!--<a>VAMOS!</a>-->
+			<div class="title-4">{{versus[0].name}}</div>
+			<div class="combo-text-title countdown">Termina en {{countdown}}</div>
+			<span class="white-text">Una vez finalizada la cuenta regresiva <b>inician las votaciones</b></span>
+			<a href="<?= base_url() ?>/events/versus">PARTICIPA AQUI!</a>
 		</div>
 		<?= bg_animate_001() ?>
 	</div>
@@ -191,6 +197,7 @@
 
 
 <script>
+console.log();
 let list_images_pre = <?= json_encode($images_list) ?>;
 list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
 const $_module = {
@@ -198,10 +205,37 @@ const $_module = {
 	data: function () {
 		return {
 			list_img: list_images_pre,
-			stack: <?= $agent->isMobile() ? 170 : 320 ?>
+			stack: <?= $agent->isMobile() ? 170 : 320 ?>,
+			versus: <?= json_encode($list_versus) ?>,
+			countdown: '0h 0d 0m 0s'
 		}
 	},
+
 	methods: {
+		formatdate: function (date) {
+			var event = new Date(date);
+			var options = { year: 'numeric', month: 'short', day: 'numeric'};
+			const ophour = { hour: '2-digit', minute: '2-digit', hour12: true}
+
+			return event.toLocaleDateString('es-ES', options).toUpperCase() + ' a las ' + event.toLocaleTimeString('es-ES', ophour)
+		},
+		datecoutdown: function (src, datestring) {
+			var countDownDate = new Date(datestring).getTime();
+
+			var x = setInterval( () => {
+			  var now = new Date().getTime();
+			  var distance = countDownDate - now;
+			  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+			  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+			   this.countdown = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
+			  if (distance < 0) {
+			    clearInterval(x);
+				this.countdown = 'TERMINADO'
+			}
+			}, 1000);
+		},
 		sizewrapper: function (size) {
 			$('.content_feed_and_gallery').width(size)
 		},
@@ -210,6 +244,10 @@ const $_module = {
 		}
 	},
 	mounted: function () {
+		if (this.versus[0] != undefined) {
+			this.datecoutdown(this.countdown, this.versus[0].voting)
+		}
+
 		const body = $(document.body);
 		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		window.addEventListener('resize', () => {
