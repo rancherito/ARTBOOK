@@ -81,6 +81,10 @@ $access_account = !empty($access['account']) && $access['account'] == $info['acc
 	box-shadow: 0 0 0 8px #ffffff0a;
 	text-transform: uppercase;
 }
+#user-profile-avatar{
+	font-family: Calibri;
+	font-size: 2rem;
+}
 #user-avatar-img{
 	width: 100%;
 	border-radius: 50%;
