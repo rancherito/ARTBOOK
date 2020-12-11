@@ -74,12 +74,12 @@
         </div>
         ';
     }
-	function bg_default()
+	function bg_default($bg = '')
 	{
 		return '
 		<div class="bg_full_default">
 			<div class="bg_full_default_wrap_image">
-				<img src="'.base_url().'/images/bg_003.jpg">
+				<img src="'.($bg == '' ? base_url().'/images/bg_003.jpg' : '').'">
 			</div>
 		</div>
 		';

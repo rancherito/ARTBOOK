@@ -3,7 +3,7 @@
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
-	position: relative;
+	position: absolute;
 }
 .bg_full_default_wrap_image{
 	width: 100%;
