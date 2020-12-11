@@ -204,8 +204,6 @@ const $_module = {
 		echo "
 		this.\$refs.grid.setEdit(true);
 		this.autoraccess.push({id_user: 'current', nickname: 'current'});
-		$('#app-nav-access').prepend($(\"<a><i class='mdi-24px mdi mdi-plus'></i></a>\").click(this.openeditor));
-		$('#nav-movil').prepend($(\"<li><a class='btn-floating'><i class='mdi-24px mdi mdi-plus'></i></a></li>\").click(this.openeditor));
 		";
 
 	}
