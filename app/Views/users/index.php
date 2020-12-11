@@ -79,6 +79,7 @@ $access_account = !empty($access['account']) && $access['account'] == $info['acc
 	height: 140px;
 	border-radius: 50%;
 	box-shadow: 0 0 0 8px #ffffff0a;
+	text-transform: uppercase;
 }
 #user-avatar-img{
 	width: 100%;
@@ -87,6 +88,7 @@ $access_account = !empty($access['account']) && $access['account'] == $info['acc
 #user-profile-nickname{
 	padding-top: 2rem;
 	letter-spacing: 4px;
+	text-transform: uppercase;
 }
 #user-profile-description{
 	padding: 2rem;
@@ -133,13 +135,12 @@ div#user_options + div#user-profile-description{
 			<div class="f-c">
 				<div id="user-profile-avatar" class="f-c">
 					<?php if ($path_image == ''): ?>
-						<span>C</span>
+						<span><?= $info['nickname'][0] ?></span>
 					<?php else: ?>
 						<img src="<?= $path_image ?>" id="user-avatar-img">
 					<?php endif; ?>
-
 				</div>
-				<div id="user-profile-nickname">CAFE CON PATO</div>
+				<div id="user-profile-nickname"><?= $info['nickname'] ?></div>
 
 			</div>
 		</div>
