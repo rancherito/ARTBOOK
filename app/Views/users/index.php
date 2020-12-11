@@ -3,7 +3,7 @@
 	$access_account = !empty($access['account']) && $access['account'] == $info['account'] && $access['validate'] != 0;
 
 ?>
-<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=2" ></script>
+<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 <style media="screen">
 
 #user_header{
@@ -96,7 +96,7 @@
 	width: 100%;
 	padding: 1rem;
 	display: flex;
-	flex-direction: row-reverse;
+	justify-content: flex-end;
 }
 @media (max-width: 600px) {
 	#user_header{
@@ -122,8 +122,12 @@
 <div>
 	<div id="user_header">
 		<div id="user_options">
-			<?php if (!empty($_SESSION['access'])): ?>
-				<a class="btn-icon btn-dark" href="<?= base_url() ?>/user/settings">
+			<?php if ($access_account): ?>
+				<a class="ml-1 btn btn-dark" @click="openeditor">
+					<i class="mdi mdi-upload left"></i>
+					<span>NUEVO</span>
+				</a>
+				<a class="ml-1 btn-icon btn-dark" href="<?= base_url() ?>/user/settings">
 					<i class="mdi mdi-cog mdi-18px"></i>
 				</a>
 			<?php endif; ?>
@@ -132,7 +136,7 @@
 			<div id="user_header_bg"></div>
 		</div>
 		<div id="user_header_info_content">
-			<div id="user_info_photo" :style="{background: avatar_image == null ? '' : 'transparent'}">
+			<div id="user_info_photo" :style="{background: avatar_image == null ? '' : '#ffffffcc'}">
 				<span  style="display: none" v-show="avatar_image == null"><?= $info['nickname'][0] ?></span>
 				<img style="display: none" v-show="avatar_image" :src="avatar_image">
 			</div>
@@ -140,6 +144,7 @@
 			<h5><?= $info['nickname'] ?></h5>
 		</div>
 	</div>
+
 	<div class="content-grid">
 		<cg-grid ref='grid' @changeimage="modify_image" :images="list_img" :stack_size="stack" :details="false" ></cg-grid>
 	</div>

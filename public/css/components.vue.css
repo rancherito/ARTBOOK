@@ -219,7 +219,7 @@
 		height: calc(100% - 56px);
 		padding-top: 5rem;
 	}
-	.vue-advanced-cropper{
+	.upload-editor-cropper .vue-advanced-cropper{
 		position: fixed !important;
 		top: 5rem;
 		bottom: 56px;
