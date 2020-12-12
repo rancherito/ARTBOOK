@@ -179,7 +179,7 @@ div#user_options + div#user-profile-description{
 
 
 		<div class="content-grid">
-			<cg-grid ref='grid' @changeimage="modify_image" :images="list_img" :stack_size="stack" :details="false" ></cg-grid>
+			<cg-grid ref='grid' @changeimage="modify_image" :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
 		</div>
 		<upload-editor base_url="<?=base_url()?>" ref="editor" :autors="autoraccess" @onfinish="onfinish"></upload-editor>
 	</div>
@@ -200,12 +200,7 @@ const $_module = {
 	});*/
 	<?php
 	if ($access_account) {
-
-		echo "
-		this.\$refs.grid.setEdit(true);
-		this.autoraccess.push({id_user: 'current', nickname: 'current'});
-		";
-
+		echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";
 	}
 
 	?>

@@ -33,6 +33,7 @@
 	opacity: 0;
 	pointer-events: none;
 	transition: linear all .2s;
+	z-index: 3;
 }
 
 .cg-grid-image:hover .cg-grid-image-options{
@@ -47,8 +48,6 @@
 	position: absolute;
 	float: left;
 	padding: 5px;
-	transition: all 200ms ease-in-out;
-	color: gray;
 }
 
 .cg-grid-info{
@@ -207,6 +206,44 @@
 	border-radius: 10px;
 	overflow: hidden;
 }
+.cg-grid-artwork-content{
+	position: relative;
+}
+.cg-grid-artwork-content::after{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(360deg, #0000005e, transparent);
+	border-radius: 10px;
+	z-index: 2;
+	transition: linear all .2s
+}
+.cg-grid-artwork-name{
+	position: absolute;
+	bottom: .5rem;
+	left: .5rem;
+	z-index: 3;
+	text-shadow: -0 0 3px black;
+	text-overflow: ellipsis;
+	transition: linear all .2s;
+	color: white;
+}
+.cg-grid-image:hover .cg-grid-artwork-content::after, .cg-grid-image:hover .cg-grid-artwork-name{
+	opacity: 0;
+}
+.cg-grid-artwork-content{
+	overflow: hidden;
+	border-radius: 10px;
+}
+.cg-grid-artwork-content img{
+	transition: linear all .2s
+}
+.cg-grid-image:hover .cg-grid-artwork-content img{
+	transform: scale(1.025);
+}
 @media (max-width: 992px) {
 	.upload-editor-description{
 		flex-direction: column;
@@ -274,4 +311,5 @@
 		transform: scale(.8);
 		transform-origin: 0 center;
 	}
+
 }

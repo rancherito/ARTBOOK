@@ -38,7 +38,7 @@ Vue.component('upload-editor',{
 		<div class="upload-editor-file">
 			<div class="upload-editor-wrapper-file">
 				<div class="upload-editor-cropper">
-					<cropper style="" ref="aaaaa" :src="img" @change="change"></cropper>
+					<cropper style="" ref="cropper" :src="img" @change="change" :default-size="defaultSize"></cropper>
 				</div>
 				<div class="upload-editor-buttons-upload">
 					<label class="">
@@ -108,7 +108,7 @@ Vue.component('upload-editor',{
 		base_url: {type: String, default: ''}
 	},
 	mounted: function () {
-		this.$refs.aaaaa.setCoordinates((coordinates, imageSize) => ({width: imageSize.width,height: imageSize.height}))
+		//this.$refs.cropper.setCoordinates((coordinates, imageSize) => ({width: imageSize.width,height: imageSize.height}))
 	},
 	computed: {
 		isvalid: function () {
@@ -116,6 +116,12 @@ Vue.component('upload-editor',{
 		}
 	},
 	methods: {
+		defaultSize: function({ imageSize }) {
+		  return {
+			width: imageSize.width,
+			height: imageSize.height,
+		  };
+		},
 		setData: function (newData) {
 			this.isModify = true
 			this.img = newData.img
@@ -166,7 +172,7 @@ Vue.component('upload-editor',{
 			this.steps = 1
 			if (!this.isLoadImage) {
 				this.isLoadImage = true
-				this.$refs.aaaaa.setCoordinates((coordinates, imageSize) => ({width: imageSize.width,height: imageSize.height}))
+				//this.$refs.cropper.setCoordinates((coordinates, imageSize) => ({width: imageSize.width,height: imageSize.height}))
 			}
 		},
 		onUploadFile: function (e) {
@@ -200,19 +206,22 @@ Vue.component('upload-editor',{
 Vue.component('cg-grid-image', {
 	template: `
 	<div class="cg-grid-image">
-		<a v-show="edit" ref="drop" :data-target="info.accessname" class="cg-grid-image-options btn btn-floating waves waves-effect waves-light">
+		<a v-show="is_on_profile" ref="drop" :data-target="info.accessname" class="cg-grid-image-options btn btn-floating waves waves-effect waves-light">
 			<i class="mdi-24px mdi mdi-dots-vertical"></i>
 		</a>
 		<ul :id="info.accessname" class="dropdown-content">
 			<li tabindex="0"><a @click="send"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
-			<li tabindex="0"><a><i class="mdi mdi-eye-off-outline"></i>Ocultar</a></li>
+			<li tabindex="0"><a><i class="mdi mdi-bell-alert-outline"></i>Aplicar a evento</a></li>
 		</ul>
-		<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
-		<div class="cg-grid-info">
-			<div  v-if="details" class="cg-grid-avatar" @click="redirect">{{info.nickname[0]}}</div>
+		<div class="cg-grid-artwork-content">
+			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
+			<div class="cg-grid-artwork-name">{{info.name}}</div>
+		</div>
+
+		<div class="cg-grid-info"  v-if="!is_on_profile">
+			<div  class="cg-grid-avatar" @click="redirect">{{info.nickname[0]}}</div>
 			<div class="cg-grid-autor">
-				<div style="font-size: 1.2rem" class="combo-text-title">{{info.name}}</div>
-				<span  v-if="details" class="grid-images" @click="redirect">{{info.nickname}}</span>
+				<span class="grid-images" @click="redirect">{{info.nickname}}</span>
 			</div>
 		</div>
 	</div>
@@ -242,8 +251,8 @@ Vue.component('cg-grid-image', {
 	},
 	props: {
 		info: Object,
-		details: {type: Boolean, default: true},
-		edit: Boolean
+		is_on_account:  Boolean,
+		is_on_profile: Boolean
 	},
 
 	mounted: function () {
@@ -255,7 +264,7 @@ Vue.component('cg-grid',{
 	<div class="cg-grid-wrapper">
 		<div ref="menu" class="cg-grid">
 			<div v-for="img of images" class="cg-grid-wrapper-img" :style="{ width: stack_size + 'px', height: (img.adsense ? stack_size + 'px' : 'auto')}">
-				<cg-grid-image v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" :info="img" :details="details" :edit="isEdit"></cg-grid-image>
+				<cg-grid-image v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" :info="img" :is_on_profile="is_on_profile" :is_on_account="is_on_account"></cg-grid-image>
 				<div class="cg-grid-adsense" v-else style="height: 100%; width: 100%" :id="img.id"></div>
 			</div>
 		</div>
@@ -263,14 +272,14 @@ Vue.component('cg-grid',{
 	`,
 	data: function () {
 		return {
-			current_stacks: 0,
-			isEdit: false
+			current_stacks: 0
 		}
 	},
 	props: {
 		images: Array,
 		stack_size: { type: Number, default: 200},
-		details: {type: Boolean, default: true},
+		is_on_account: Boolean,
+		is_on_profile: Boolean,
 		base_url: String
 	},
 	updated: function () {
@@ -287,9 +296,6 @@ Vue.component('cg-grid',{
 		}
 	},
 	methods: {
-		setEdit: function (set) {
-			this.isEdit = set
-		},
 		calcule: function (option) {
 
 			var top_height = 0;
