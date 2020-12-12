@@ -55,8 +55,9 @@ Vue.component('upload-editor',{
 		</div>
 		<div class="upload-editor-wrapper-description" style="display: none" v-show="steps == 2">
 			<div class="upload-editor-description">
-				<div class="upload-editor-preview cover f-c">
-					<canvas ref="canvas" height="460" width="460"></canvas>
+				<div class="upload-editor-preview f-c">
+					<img :src="image" class="upload-editor-image-blur" width="460" height="460">
+					<img :src="image" class="upload-editor-image-view" width="460" height="460">
 				</div>
 				<form class="f-c" @submit.prevent="submit">
 					<div>
@@ -159,62 +160,9 @@ Vue.component('upload-editor',{
 			})
 		},
 		change({coordinates, canvas}) {
-			function drawImageProp(ctx, img) {
-		        x = y = 0;
-		        w = ctx.canvas.width;
-		        h = ctx.canvas.height;
-			    offsetX = 0;
-			    offsetY = 0;
 
-			    let iw = img.width,
-			        ih = img.height,
-			        r = Math.min(w / iw, h / ih),
-			        nw = iw * r,   // new prop. width
-			        nh = ih * r,   // new prop. height
-			        cx, cy, cw, ch, ar = 1;
-			    if (nw < w) ar = w / nw;
-			    if (Math.abs(ar - 1) < 1e-14 && nh < h) ar = h / nh;  // updated
-			    nw *= ar;
-			    nh *= ar;
-
-			    cw = iw / (nw / w);
-			    ch = ih / (nh / h);
-
-			    cx = (iw - cw) * offsetX;
-			    cy = (ih - ch) * offsetY;
-
-			    if (cx < 0) cx = 0;
-			    if (cy < 0) cy = 0;
-			    if (cw > iw) cw = iw;
-			    if (ch > ih) ch = ih;
-
-				ctx.save();
-
-				ctx.filter = 'blur(10px)';
-				ctx.scale(1.1, 1.1);
-				ctx.translate(-23,-23)
-			    ctx.drawImage(img, cx, cy, cw, ch,  0, 0, w, h);
-
-				ctx.restore();
-				ctx.fillStyle = 'rgba(0,0,0,0.4)'
-				ctx.fillRect(0,0,460,460);
-				var scale = Math.min(ctx.canvas.width / img.width, ctx.canvas.height / img.height);
-			    // get the top left position of the image
-			    var x = (ctx.canvas.width / 2) - (img.width / 2) * scale;
-			    var y = (ctx.canvas.height / 2) - (img.height / 2) * scale;
-			    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
-
-			}
 			this.image = canvas.toDataURL('image/jpeg', 0.8)
 
-			if (this.isLoadImage) {
-				const ctx = this.$refs.canvas.getContext('2d')
-				var image = new Image();
-				image.onload = function() {
-				  drawImageProp(ctx, image);
-				};
-				image.src = this.image
-			}
 			this.steps = 1
 			if (!this.isLoadImage) {
 				this.isLoadImage = true
