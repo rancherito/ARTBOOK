@@ -206,12 +206,12 @@ Vue.component('upload-editor',{
 Vue.component('cg-grid-image', {
 	template: `
 	<div class="cg-grid-image">
-		<a v-show="is_on_profile" ref="drop" :data-target="info.accessname" class="cg-grid-image-options btn btn-floating waves waves-effect waves-light">
+		<a v-show="is_on_account" ref="drop" :data-target="info.accessname" class="cg-grid-image-options btn btn-floating waves waves-effect waves-light">
 			<i class="mdi-24px mdi mdi-dots-vertical"></i>
 		</a>
 		<ul :id="info.accessname" class="dropdown-content">
 			<li tabindex="0"><a @click="send"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
-			<li tabindex="0"><a><i class="mdi mdi-bell-alert-outline"></i>Aplicar a evento</a></li>
+			<li tabindex="0"><a @click="send_events"><i class="mdi mdi-bell-alert-outline"></i>Aplicar a evento</a></li>
 		</ul>
 		<div class="cg-grid-artwork-content">
 			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
@@ -238,6 +238,15 @@ Vue.component('cg-grid-image', {
 		redirect: function () {
 			window.location.href = this.info.account
 		},
+		send_events: function () {
+			const info = {
+				name: this.info.name,
+				artwork: this.info.accessname,
+				path: this.$refs.image.src,
+				uploaded_date: this.info.uploaded_date
+			}
+			this.$emit('events', info)
+		},
 		send: function () {
 			const info = {
 				description: this.info.description,
@@ -247,6 +256,7 @@ Vue.component('cg-grid-image', {
 				extension: this.info.extension
 			}
 			this.$emit('changeimage', info)
+
 		}
 	},
 	props: {
@@ -264,7 +274,7 @@ Vue.component('cg-grid',{
 	<div class="cg-grid-wrapper">
 		<div ref="menu" class="cg-grid">
 			<div v-for="img of images" class="cg-grid-wrapper-img" :style="{ width: stack_size + 'px', height: (img.adsense ? stack_size + 'px' : 'auto')}">
-				<cg-grid-image v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" :info="img" :is_on_profile="is_on_profile" :is_on_account="is_on_account"></cg-grid-image>
+				<cg-grid-image v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" @events="$emit('events_list', $event)" :info="img" :is_on_profile="is_on_profile" :is_on_account="is_on_account"></cg-grid-image>
 				<div class="cg-grid-adsense" v-else style="height: 100%; width: 100%" :id="img.id"></div>
 			</div>
 		</div>

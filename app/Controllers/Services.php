@@ -137,7 +137,7 @@ class Services extends BaseController
 	public function event_apply_versus()
 	{
 		if (!empty($_POST['versus'])) {
-			$image = empty($_POST['versus']) ? '' : $_POST['image'];
+			$image = empty($_POST['artwork']) ? '' : $_POST['artwork'];
 			$res = M_Events::qry_versus_apply($_SESSION['access']['user_access'], $_POST['versus'], $image);
 			if (count($res)) $res = $res[0];
 			return $this->response->setJSON($res);
@@ -151,6 +151,12 @@ class Services extends BaseController
 			$res = M_Events::qry_versus_list($_POST['tag']);
 			return $this->response->setJSON($res);
 		}
+	}
+	public function events_apply_list()
+	{
+		$user = $_SESSION['access']['user_access'];
+		$res = M_Events::qry_events_apply_list($user);
+		return $this->response->setJSON($res);
 	}
 
 }

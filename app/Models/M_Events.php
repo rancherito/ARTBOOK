@@ -59,4 +59,9 @@ class M_Events
 		$sql = "EXEC events.sp_versus_list @event_tag = ?;";
 		return query_database($sql, [$tag_event]);
 	}
+	public function qry_events_apply_list($user)
+	{
+		$sql = "events.sp_events_apply_list @user = ?";
+		return query_database($sql, [$user]);
+	}
 }
