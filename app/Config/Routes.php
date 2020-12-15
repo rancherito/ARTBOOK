@@ -46,6 +46,8 @@ if (isset($_SESSION['access'])) {
 }
 
 $routes->add('/([a-zA-Z0-9_]+)', 'C_Users::index/$1');
+$routes->add('/events/versus/([a-zA-Z0-9_]+)', 'C_Events::versus_recover/$1');
+
 $routes->add('emailview', function () {
 	echo view('emailcard',['user'=>'CAFECONPATO','activate' => 'patarad']);
 });

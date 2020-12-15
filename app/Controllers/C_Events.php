@@ -36,4 +36,20 @@ class C_Events extends BaseController
 		}
 		return $this->layout_view('public', 'versus_list',['list_versus' => $list_versus, 'list_participients' => $list_participients]);
 	}
+	public function versus_recover($tag)
+	{
+		$res = M_Events::qry_versus_recover($tag);
+		if (count($res)) {
+			$ip = getIPAddress();
+			User::ipuser_save($ip);
+
+			$user = !empty($_SESSION['access']) ? $_SESSION['access']['account'] : $ip;
+
+			$list = M_Events::qry_vs_artworks($tag, $user);
+			return $this->layout_view('public', 'events/versustag',['data' => $res[0], 'participients' => $list]);
+		}
+		else {
+			'Lo sentimos no encontramos eventos con este tag';
+		}
+	}
 }

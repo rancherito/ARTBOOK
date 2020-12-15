@@ -64,4 +64,14 @@ class M_Events
 		$sql = "events.sp_events_apply_list @user = ?";
 		return query_database($sql, [$user]);
 	}
+	public function qry_vs_artworks($tag, $user)
+	{
+		$sql = "EXEC events.[sp_versus_artworks_list] @event_tag = ?, @user = ?;";
+		return query_database($sql, [$tag, $user]);
+	}
+	public static function qry_versus_recover($tag)
+	{
+		$sql = "SELECT name,event_start,event_end,[description], creation_date FROM events.tb_events WHERE type_event = 2 AND event_tag = ?;";
+		return query_database($sql, [$tag]);
+	}
 }

@@ -235,7 +235,7 @@
 				posimage: Math.floor(Math.random() * images.length),
 				challenge: <?= json_encode($challenge) ?>,
 				start_vote: false,
-				is_eventStarted: false
+				is_eventStarted: true
 			}
 		},
 		methods: {
