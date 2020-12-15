@@ -99,6 +99,9 @@ function getPathImage($artwork)
 	background-color: var(--primary);
 	color: white;
 }
+.group-versus-avatar.yourwinner{
+	box-shadow: 0 0 0 4px #876cedbf;
+}
 #versustag-vs-choser{
 	display: none;
 	position: absolute;
@@ -128,9 +131,7 @@ function getPathImage($artwork)
 .versustag-onchoise #versustag-presentation{
 	opacity: 0;
 }
-.fixed-action-btn.direction-top{
-	display: none;
-}
+
 #versustag-vs-buttons{
 	position: absolute;
 	bottom: 1rem;
@@ -138,7 +139,7 @@ function getPathImage($artwork)
 	right: 1rem;
 	flex-direction: column;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-end;
 	display: flex;
 }
 #versustag-voting-button{
@@ -209,7 +210,7 @@ function getPathImage($artwork)
 	justify-content: center;
 	align-items: center;
 	font-size: 3rem;
-	background: #0000000f;
+	background: #0000006e;
 	color: white;
 }
 #challenges-arrows a:nth-child(1) {
@@ -224,8 +225,27 @@ function getPathImage($artwork)
 #challenges-arrows a:nth-child(2) i {
     transform: translateX(20%);
 }
+#versustag-vs-choser.versus-vote #versustag-voting-button, #versustag-voting-button:hover {
+    background: #8bc34a;
+    color: white;
+}
+.btn-dark {
+    background: #00000087;
+    color: white;
+}
+.fixed-action-btn{
+	display: none;
+}
+.btn.group-versus-hasvote{
+	background: #9ab80b
+}
 @media (max-width: 600px) {
-
+	.fixed-action-btn{
+		display: block;
+	}
+	.fixed-action-btn.enablebuttonfloat{
+		display: none;
+	}
 	#versustag-header-img{
 		height: 60px;
 	}
@@ -301,7 +321,7 @@ function getPathImage($artwork)
 								</div>
 							</template>
 						</template>
-						<template v-for="groups of group_versus">
+						<template v-for="(groups, index) of group_versus">
 							<template v-if="groups.length == 2">
 								<div class="title-4">
 									<span>VERSUS: {{groups[0].name}}</span>
@@ -312,14 +332,14 @@ function getPathImage($artwork)
 										<div class="group-versus-vs-text">VS</div>
 
 										<a v-for="artist of groups" class="artist-content f-c" target="_blank" :href="'<?= base_url()?>/' + artist.account">
-											<div class="group-versus-avatar cover f-c" :style="{'background-image': artist.avatar == undefined ? '' : 'url(' + artist.avatar + ')'}">
+											<div class="group-versus-avatar cover f-c" :class="{'yourwinner': artist.vote}" :style="{'background-image': artist.avatar == undefined ? '' : 'url(' + artist.avatar + ')'}">
 												{{artist.avatar == undefined ? artist.nickname[0] : ''}}
 											</div>
 											<span>{{artist.nickname}}</span>
 										</a>
 									</div>
 									<div class="c">
-										<div class="btn" @click="openversus(groups)">Elegir!</div>
+										<div class="btn" :class="{'group-versus-hasvote': my_votes[index]}" @click="openversus(groups)">{{my_votes[index] ? 'Cambiar mi voto' : 'Votar!'}}</div>
 									</div>
 
 								</div>
@@ -336,8 +356,7 @@ function getPathImage($artwork)
 									<div class="f-b" style="position: relative">
 
 										<a class="artist-content f-c" target="_blank" :href="'<?= base_url()?>/' + groups[0].account">
-											<div class="cover" :style="{'background-image': groups[0].avatar == undefined ? '' : 'url(' + groups[0].avatar + ')'}">
-
+											<div class="group-versus-avatar cover f-c" :class="{'yourwinner': groups[0].vote}" :style="{'background-image': groups[0].avatar == undefined ? '' : 'url(' + groups[0].avatar + ')'}">
 												{{groups[0].avatar == undefined ? groups[0].nickname[0] : ''}}
 											</div>
 											<span>{{groups[0].nickname}}</span>
@@ -356,21 +375,22 @@ function getPathImage($artwork)
 				</simplebar>
 			</div>
 		</div>
-		<div id="versustag-vs-choser">
+		<div id="versustag-vs-choser" :class="{'versus-vote': calculevote()}">
 			<img ref="imageartwork_bg" :src="calculeurl()" id="versustag-vs-choser-currente-img-bg">
 			<img ref="imageartwork" :src="calculeurl()" id="versustag-vs-choser-currente-img-view">
 			<div id="versustag-vs-preview-images" v-if="current_group">
 				<div v-for="pic in current_group" class="cover" :style="calculeartwork(pic)"></div>
 			</div>
 			<div id="versustag-vs-buttons">
-				<div class="">
-					<a ref="btnvote" class="btn-icon" id="versustag-voting-button">
-						<i class="mdi mdi-check"></i>
+				<div>
+					<a ref="btnvote" class="btn-icon" id="versustag-voting-button" @click="choise">
+						<i class="mdi" :class="calculevote_class()"></i>
 					</a>
 				</div>
 				<div class="f-c">
-					<a class="mt-2 btn-icon pointer" @click="closeversus">
-						<i class="mdi mdi-keyboard-return mdi-18px"></i>
+					<a class="mt-2 btn btn btn-dark pointer" @click="closeversus">
+						<i class="mdi mdi-keyboard-return mdi-18px left"></i>
+						<span>VOLVER</span>
 					</a>
 				</div>
 			</div>
@@ -393,18 +413,57 @@ $_module = {
 			group_versus: <?= json_encode($group_versus) ?>,
 			current_group: null,
 			base_url: '<?= base_url() ?>',
-			current_group_position: 0
+			current_group_position: 0,
+			start_vote: false
+		}
+	},
+	computed: {
+		my_votes: function () {
+			let votes = {}
+			for (var i in this.group_versus) {
+				let current = this.group_versus[i]
+				votes[i] = 0
+				for (var artist of current) votes[i] += artist.vote;
+
+			}
+			return votes
 		}
 	},
 	watch: {
 		current_group_position: function () {
-			animateCSS(this.$refs.imageartwork, 'zoomInUp');
+			//animateCSS(this.$refs.imageartwork, 'fadeIn');
 			animateCSS(this.$refs.btnvote, 'bounceIn');
 			//animateCSS(this.$refs.imageartwork_bg, 'fadeIn');
 
+		},
+		on_choise: function (val) {
+			$('.fixed-action-btn').toggleClass('enablebuttonfloat')
 		}
 	},
 	methods: {
+		choise: function () {
+			if (this.current_group && !this.start_vote) {
+				let current = this.current_group[this.current_group_position];
+				const data = {artwork: current.accessname, versus: current.versus}
+
+				this.start_vote = true;
+				$.post('<?= base_url() ?>/services/events/versus/votes_save', data, (res) => {
+					console.log(res);
+					//console.log($);
+
+					if (res.message != undefined) {
+						M.toast({html: res.message, classes: 'rounded'})
+						if (res.message == "VOTO GUARDADO") current.vote = 1
+						else if(res.message == "VOTO ANULADO") current.vote = 0
+					}
+					else M.toast({html: 'ERROR EN EL SISTEMA', classes: 'rounded bg-alert'})
+				}).fail(() => {
+					M.toast({html: 'ERROR EN EL SISTEMA', classes: 'rounded bg-alert'})
+				}).always(() => {
+				    this.start_vote = false;
+				  });
+			}
+		},
 		randomposition: function () {
 			return {top: parseInt(Math.random()*100) + '%', left: parseInt(Math.random()*100) + '%', position: 'absolute', height: '10px', width: '10px'}
 		},
@@ -430,6 +489,12 @@ $_module = {
 		calculeurl: function () {
 
 			return this.current_group ? this.base_url + '/images/artworks/' + this.current_group[this.current_group_position].accessname + '.jpg' : ''
+		},
+		calculevote_class: function(){
+			return this.calculevote() ? 'mdi-check' : 'mdi-vote-outline'
+		},
+		calculevote: function(){
+			return this.current_group != null && this.current_group[this.current_group_position].vote
 		}
 		//
 	}

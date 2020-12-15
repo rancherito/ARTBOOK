@@ -60,7 +60,7 @@ input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):
 	padding: 0;
 }
 
-.btn-icon.btn-light {
+.btn-light {
 	background: #0000001a;
     color: grey;
 }

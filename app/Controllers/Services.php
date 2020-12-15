@@ -158,5 +158,16 @@ class Services extends BaseController
 		$res = M_Events::qry_events_apply_list($user);
 		return $this->response->setJSON($res);
 	}
+	public function vs_artwork_choise()
+	{
+		$ip = getIPAddress();
+		$user = !empty($_SESSION['access']) ? $_SESSION['access']['account'] : $ip;
+		if (!empty($_POST['artwork']) && !empty($_POST['versus'])) {
+			$res = M_Events::qry_vs_artwork_choise($user,  $_POST['artwork'], $_POST['versus']);
+			if (count($res)) $res = $res[0];
+			return $this->response->setJSON($res);
+		}
+
+	}
 
 }
