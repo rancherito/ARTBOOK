@@ -143,7 +143,6 @@
 	data-full-width-responsive="true">
 
 </ins>-->
-<?php print_r($current_events) ?>
 </div>
 <?php template_start()?>
 <div>
@@ -275,7 +274,8 @@ const $_module = {
 			stack: <?= $agent->isMobile() ? 170 : 280 ?>,
 			versus: <?= json_encode($list_versus) ?>,
 			countdown: '0h 0d 0m 0s',
-			modal: null
+			modal: null,
+			test: <?= json_encode($current_events) ?>
 		}
 	},
 
