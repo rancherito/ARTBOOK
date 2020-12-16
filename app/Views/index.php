@@ -119,10 +119,11 @@
 	top: 1rem;
 	right: 1rem;
 }
+#content-spot{
+	display: none;
+}
 @media (max-width: 600px) {
-	#content-spot{
-		display: none;
-	}
+
 	.countdown{
 
 	}
