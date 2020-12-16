@@ -199,7 +199,7 @@
 <cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
 
 <?php foreach ($current_events as $key => $event): ?>
-	<?php if ($event['id_event'] == 2 && $event['is_voting'] == 1): ?>
+	<?php if ($event['is_voting'] == 1): ?>
 		<div id="modal1" class="modal" style="max-width: 400px">
 			<?= bg_default() ?>
 			<div class="modal-close waves-effect btn-icon btn-dark btn-modal-close">
