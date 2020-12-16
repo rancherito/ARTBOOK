@@ -110,7 +110,15 @@
 	padding: .5rem 1rem;
 	font-size: 1rem;
 }
-
+.modal{
+	overflow: hidden;
+	border-radius: 10px;
+}
+.btn-modal-close{
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+}
 @media (max-width: 600px) {
 	#content-spot{
 		display: none;
@@ -125,18 +133,17 @@
 	}
 }
 </style>
-<div id="adsense-square-ingrid">
+<!--<div id="adsense-square-ingrid">
 
-	<!-- block in grid -->
 	<ins class="adsbygoogle"
-	     style="display:block;height:100%; width:100%"
-	     data-ad-client="ca-pub-1355252812560688"
-	     data-ad-slot="5969213646"
-	     data-ad-format="auto"
-	     data-full-width-responsive="true">
+	style="display:block;height:100%; width:100%"
+	data-ad-client="ca-pub-1355252812560688"
+	data-ad-slot="5969213646"
+	data-ad-format="auto"
+	data-full-width-responsive="true">
 
-	</ins>
-
+</ins>-->
+<?php print_r($current_events) ?>
 </div>
 <?php template_start()?>
 <div>
@@ -179,17 +186,41 @@
 		</simplebar>
 		<div id="content-spot">
 			<ins class="adsbygoogle"
-			     style="display:block; height:100px"
-			     data-ad-format="fluid"
-			     data-ad-layout-key="-6t+ed+2i-1n-4w"
-			     data-ad-client="ca-pub-1355252812560688"
-			     data-ad-slot="7585531731">
-			</ins>
-		</div>
+			style="display:block; height:100px"
+			data-ad-format="fluid"
+			data-ad-layout-key="-6t+ed+2i-1n-4w"
+			data-ad-client="ca-pub-1355252812560688"
+			data-ad-slot="7585531731">
+		</ins>
 	</div>
+</div>
 
 
-	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
+<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
+
+<?php foreach ($current_events as $key => $event): ?>
+	<?php if ($event['id_event'] == 2 && $event['is_voting'] == 1): ?>
+		<div id="modal1" class="modal" style="max-width: 400px">
+			<?= bg_default() ?>
+			<div class="modal-close waves-effect btn-icon btn-dark btn-modal-close">
+				<i class="mdi mdi-close"></i>
+			</div>
+			<div class="modal-content f-c white-text" style="position: relative; height: 540px">
+				<img id="versustag-header-img" style="height: 160px; width: auto" src="<?= base_url() ?>/images/vs_logo.png">
+				<br><br>
+				<div class="title-3 combo-text-title"><?= $event['name'] ?></div>
+				<span class="white-text" style="margin-top: -.5rem">Votaciones de versus abiertas</span>
+
+					<span class="title-4 c pt-4">TERMINA EN</span>
+					<cg-countdown class="title-3 c" datestring="<?= $event['event_end'] ?>"></cg-countdown>
+
+				<a href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>" class="btn btn-dark">VAMOS!</a>
+
+			</div>
+		</div>
+	<?php endif; ?>
+<?php endforeach; ?>
+
 </div>
 
 <?php $template = template_end()?>
@@ -199,15 +230,52 @@
 <script>
 console.log();
 let list_images_pre = <?= json_encode($images_list) ?>;
-list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
+//list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
+
+Vue.component('cg-countdown', {
+	template: `<div class="cg-countdown">{{countdown}}</div>`,
+	data: function () {
+		return {
+			countdown: '0d 0h 0m 0s'
+		}
+	},
+	props: {
+		datestring: String
+	},
+	methods: {
+		countdown_start: function () {
+			var countDownDate = new Date(this.datestring).getTime();
+
+			var x = setInterval( () => {
+				var now = new Date().getTime();
+				var distance = countDownDate - now;
+				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+				this.countdown = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
+				if (distance < 0) {
+					clearInterval(x);
+					this.countdown = 'TERMINADO'
+				}
+			}, 1000);
+		}
+	},
+	mounted: function () {
+		if(this.datestring) this.countdown_start();
+	}
+})
+
+
 const $_module = {
 	template: `<?= $template ?>`,
 	data: function () {
 		return {
 			list_img: list_images_pre,
-			stack: <?= $agent->isMobile() ? 170 : 320 ?>,
+			stack: <?= $agent->isMobile() ? 170 : 280 ?>,
 			versus: <?= json_encode($list_versus) ?>,
-			countdown: '0h 0d 0m 0s'
+			countdown: '0h 0d 0m 0s',
+			modal: null
 		}
 	},
 
@@ -219,21 +287,21 @@ const $_module = {
 
 			return event.toLocaleDateString('es-ES', options).toUpperCase() + ' a las ' + event.toLocaleTimeString('es-ES', ophour)
 		},
-		datecoutdown: function (src, datestring) {
+		datecoutdown: function (datestring) {
 			var countDownDate = new Date(datestring).getTime();
 
 			var x = setInterval( () => {
-			  var now = new Date().getTime();
-			  var distance = countDownDate - now;
-			  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-			  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-			  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-			   this.countdown = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
-			  if (distance < 0) {
-			    clearInterval(x);
-				this.countdown = 'TERMINADO'
-			}
+				var now = new Date().getTime();
+				var distance = countDownDate - now;
+				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+				this.countdown = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
+				if (distance < 0) {
+					clearInterval(x);
+					this.countdown = 'TERMINADO'
+				}
 			}, 1000);
 		},
 		sizewrapper: function (size) {
@@ -244,17 +312,23 @@ const $_module = {
 		}
 	},
 	mounted: function () {
-		if (this.versus[0] != undefined) {
-			this.datecoutdown(this.countdown, this.versus[0].voting)
+		if ($('#modal1')) {
+			this.modal = $('#modal1').modal()
+
+			this.modal.modal('open')
+			if (this.versus[0] != undefined) {
+				this.datecoutdown(this.versus[0].voting)
+			}
 		}
 
-		const body = $(document.body);
+
+		/*const body = $(document.body);
 		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 		window.addEventListener('resize', () => {
-			this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
-		});
-		$('#adsense-01').append($('#adsense-square-ingrid'));
-	}
+		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
+	});*/
+	//$('#adsense-01').append($('#adsense-square-ingrid'));
+}
 }
 
 </script>

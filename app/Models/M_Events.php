@@ -54,6 +54,16 @@ class M_Events
 		";
 		return query_database($sql);
 	}
+	public function qry_events_current()
+	{
+		$sql = "
+			SELECT name, event_start,event_end,[description],event_tag, DATEADD(DD,-1,event_end) voting, id_event ,
+			IIF(GETDATE() BETWEEN event_start AND DATEADD(DD,-1,event_end), 0, 1) is_voting
+			FROM events.tb_events
+			WHERE GETDATE() BETWEEN event_start AND event_end;
+		";
+		return query_database($sql);
+	}
 	public  static function qry_versus_list($tag_event)
 	{
 		$sql = "EXEC events.sp_versus_list @event_tag = ?;";

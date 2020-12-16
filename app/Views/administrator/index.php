@@ -272,9 +272,7 @@ foreach (scandir('./images/artworks') as $key => $value) {
 				console.log(this.keyide);
 			},
 			submit: function () {
-				const datos = {key: this.keyide, author: this.autor.value, workname: this.nombre.value, image: this.$refs.imageCanvas.toDataURL(this.extensionimage, 0.9)}
-
-
+				const datos = {key: this.keyide, author: this.autor.value, workname: this.nombre.value, image: this.$refs.imageCanvas.toDataURL('image/jpeg', 0.8)}
 
 				this.load.progress = 0;
 				this.load.isUploading = true
