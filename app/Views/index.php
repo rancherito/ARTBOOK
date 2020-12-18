@@ -2,15 +2,16 @@
 #app-title{
 	position: relative;
 }
-#app-title span{
-	position: absolute;
-	bottom: -10px;
-	right: -30px;
+#beta-text{
 	background-color: var(--primary);
 	color: white;
 	padding: .25rem .5rem;
 	border-radius: 30px;
-	transform: scale(.8) rotate(-45deg);
+	transform: scale(.8);
+}
+#wrap_grid_gallery{
+	background-color: #f9f9f9;
+	padding: 1rem;
 }
 .feed-users{
 	display: flex;
@@ -123,10 +124,12 @@
 	display: none;
 }
 #presentation-page-start{
-	height: 200px;
+	padding-top: 3rem;
 }
 @media (max-width: 600px) {
-
+	#wrap_grid_gallery{
+		padding: 0;
+	}
 	.countdown{
 
 	}
@@ -154,12 +157,12 @@
 <div>
 	<div class="">
 		<div id="presentation-page-start" class="f-c">
+			<img src="<?= base_url() ?>/images/logo_primary.svg" alt="logo web" style="width: 160px">
 			<div class="combo-text-title" id="app-title">
-				<h1 class="title-2 m-0">Bienvenido a Art's Book</h1>
-				<span>BETA</span>
+				<h1 class="title-2 m-0" style="display: none">Bienvenido a Art's Book</h1>
 			</div>
-			<span>Sitio web oficial de la comunidad de artistas art's book</span>
-
+			<span class="pt-2">Sitio web oficial de la comunidad de artistas art's book</span>
+			<span id="beta-text">BETA</span>
 		</div>
 		<div class="event-anunces" v-if="typeof versus[0] != 'undefined'">
 			<div class="context">
@@ -203,13 +206,29 @@
 	</div>
 
 
-<div class="p-4" style="background-color: #f9f9f9">
+<div id="wrap_grid_gallery">
 	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
 </div>
 
-<div class="container">
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<div style="background: #09061b;" class="f-c f-b white-text">
+	<div class="f-c">
+		<div class="container">
+			<div class="row">
+				<div class="col s12 m4 f-c"  style="height: 170px">
+					<img src="<?= base_url() ?>/images/icon_white.svg" alt="icon" width="100">
+				</div>
+				<div class="col s12 m8">
+					La vida es un gran libro de arte, cada experiencia, cada sentir, cada parte de ti, han de crear hoja a hoja, al final de todo, el gran lienzo de tu existencia.
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="container p-4 f-c c" style="color: #ffffff75; font-size: .8rem;">
+		Plataforma esta desarrollada por la comunidad de artistas artsbook, de artistas para artistas. <?= date('Y') ?>
+	</div>
 </div>
+
 <?php foreach ($current_events as $key => $event): ?>
 	<?php if ($event['is_voting'] == 1): ?>
 		<div id="modal1" class="modal" style="max-width: 400px">
@@ -250,7 +269,7 @@ const $_module = {
 	data: function () {
 		return {
 			list_img: list_images_pre,
-			stack: <?= $agent->isMobile() ? 170 : 280 ?>,
+			stack: $(window).width() > 1200 ? 320 : <?= $agent->isMobile() ? 170 : 280 ?>,
 			versus: <?= json_encode($list_versus) ?>,
 			modal: null,
 			test: <?= json_encode($current_events) ?>

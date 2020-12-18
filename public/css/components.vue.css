@@ -51,7 +51,7 @@
 .cg-grid-wrapper-img {
 	position: absolute;
 	float: left;
-	padding: 5px;
+	padding: .5rem;
 }
 .cg-grid-wrapper-img > div {
 	height: 100%;
