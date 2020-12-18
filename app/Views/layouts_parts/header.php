@@ -1,32 +1,22 @@
 <?php $version = 'beta_0.063' ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Art's Book</title>
+<title>ARTS BOOK</title>
 <link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">
 <link rel="stylesheet" href="<?= base_url() ?>/font/RobotoCondensed/RobotoCondensed.css">
-<link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/extend.css">
 <link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/materialdesignicons.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>/css/helpers.css?v=<?= $version ?>">
-<style>
-    <?php include dirname(APPPATH).'/public/libs/materialize/css/materialize.min.css' ?>
-	<?php include dirname(APPPATH).'/public/libs/animate/animate.min.css' ?>
-	<?php include dirname(APPPATH).'/public/css/custom_materialize.css' ?>
-</style>
-
+<link rel="stylesheet" href="<?= base_url() ?>/libs/materialize/css/materialize.min.css">
+<link rel="stylesheet" href="<?= base_url() ?>/libs/animate/animate.min.css">
+<link rel="stylesheet" href="<?= base_url() ?>/css/custom_materialize.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/js/script.js?v=<?= $version ?>"></script>
-<script type="text/javascript">
-	<?php include dirname(APPPATH).'/public/js/jquery-3.4.1.min.js' ?>
-</script>
+<script src="<?= base_url() ?>/js/jquery-3.4.1.min.js"></script>
 <script src="<?= base_url() ?>/libs/animate/animateCSS.js"></script>
 <script src="<?= base_url() ?>/libs/materialize/js/materialize.min.js"></script>
 <script src="<?= base_url() ?>/libs/ResizeSensor/ResizeSensor.js"></script>
 <script src="<?= base_url() ?>/libs/ResizeSensor/ElementQueries.js"></script>
 <script src="<?= base_url() ?>/libs/axios/axios.min.js"></script>
-<script type="text/javascript">
-<?php
-	include dirname(APPPATH).'/public/libs/vue/vue.min.js';
-?>
-</script>
+<script src="<?= base_url() ?>/libs/vue/vue.min.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/libs/cgVue/cg.components.vue.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js?v=<?= $version ?>"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/css/main.css?v=<?= $version ?>">
