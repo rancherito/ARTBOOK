@@ -19,6 +19,11 @@ $routes->add('user/revocar',  function ()
 {
 	echo "Lamentamos que tegas que irte de nuestra plataforma :'c'";
 });
+
+$routes->add('user/revocar',  function ()
+{
+	echo "No spam, no contenido pornografico, banneo si se incumple las reglas basicas";
+});
 $routes->add('user/activation/([a-zA-Z0-9_]+)/(:alphanum)', 'C_Users::account_validate/$1/$2');
 $routes->add('events/challenges',  'C_Events::chanllenges_votes');
 $routes->add('events/versus',  'C_Events::versus_list');
