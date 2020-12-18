@@ -209,7 +209,7 @@
 	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
 </div>
 <article class="adsenseblock"></article>
-<div style="background: #09061b;" class="f-c f-b white-text">
+<footer style="background: #09061b;" class="f-c f-b white-text footer">
 	<div class="f-c">
 		<div class="container">
 			<div class="row m-0">
@@ -226,7 +226,7 @@
 	<div class="container p-4 f-c c" style="color: #ffffff75; font-size: .8rem;">
 		Plataforma esta desarrollada por la comunidad de artistas artsbook, de artistas para artistas. <?= date('Y') ?>
 	</div>
-</div>
+</footer>
 
 <?php foreach ($current_events as $key => $event): ?>
 	<?php if ($event['is_voting'] == 1): ?>
