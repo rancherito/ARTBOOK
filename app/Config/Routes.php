@@ -20,7 +20,7 @@ $routes->add('user/revocar',  function ()
 	echo "Lamentamos que tegas que irte de nuestra plataforma :'c'";
 });
 
-$routes->add('user/revocar',  function ()
+$routes->add('user/politicas',  function ()
 {
 	echo "No spam, no contenido pornografico, banneo si se incumple las reglas basicas";
 });
