@@ -204,16 +204,15 @@
 
 	</div>
 	</div>
-
-
+<article class="adsenseblock"></article>
 <div id="wrap_grid_gallery">
 	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
 </div>
-
+<article class="adsenseblock"></article>
 <div style="background: #09061b;" class="f-c f-b white-text">
 	<div class="f-c">
 		<div class="container">
-			<div class="row">
+			<div class="row m-0">
 				<div class="col s12 m4 f-c"  style="height: 170px">
 					<img src="<?= base_url() ?>/images/icon_white.svg" alt="icon" width="100">
 				</div>
@@ -259,7 +258,6 @@
 
 
 <script>
-console.log();
 let list_images_pre = <?= json_encode($images_list) ?>;
 //list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
 
