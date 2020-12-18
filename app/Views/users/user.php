@@ -26,7 +26,7 @@ $access_account = !empty($access['account']) && $access['account'] == $info['acc
 
 .content-grid{
 	position: relative;
-	padding: 2rem 0;
+	padding: 2rem;
 }
 
 #user_options{

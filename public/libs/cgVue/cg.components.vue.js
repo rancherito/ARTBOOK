@@ -1,3 +1,36 @@
+Vue.component('cg-countdown', {
+	template: `<div class="cg-countdown">{{countdown}}</div>`,
+	data: function () {
+		return {
+			countdown: '0d 0h 0m 0s'
+		}
+	},
+	props: {
+		datestring: String
+	},
+	methods: {
+		countdown_start: function () {
+			var countDownDate = new Date(this.datestring).getTime();
+
+			var x = setInterval( () => {
+				var now = new Date().getTime();
+				var distance = countDownDate - now;
+				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+				this.countdown = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
+				if (distance < 0) {
+					clearInterval(x);
+					this.countdown = 'TERMINADO'
+				}
+			}, 1000);
+		}
+	},
+	mounted: function () {
+		if(this.datestring) this.countdown_start();
+	}
+})
 Vue.component('cg-button',{
 	template: `
 		<button :disabled="disabled || loading" class="btn waves waves-effect waves-light">

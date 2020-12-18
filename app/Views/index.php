@@ -122,6 +122,9 @@
 #content-spot{
 	display: none;
 }
+#presentation-page-start{
+	height: 200px;
+}
 @media (max-width: 600px) {
 
 	.countdown{
@@ -143,61 +146,70 @@
 	data-ad-format="auto"
 	data-full-width-responsive="true">
 
-</ins>-->
+</ins>
+
 </div>
+-->
 <?php template_start()?>
 <div>
-	<div class="f-c pt-6 pb-4">
-		<div class="combo-text-title" id="app-title">
-			<h1 class="title-2 m-0">Bienvenido a Art's Book</h1>
-			<span>BETA</span>
-		</div>
-		<span>Sitio web oficial de la comunidad de artistas art's book</span>
-
-	</div>
-	<div class="event-anunces" v-if="typeof versus[0] != 'undefined'">
-		<div class="context">
-			<div class="title-4">{{versus[0].name}}</div>
-			<div class="combo-text-title countdown">Termina en {{countdown}}</div>
-			<span class="white-text">Una vez finalizada la cuenta regresiva <b>inician las votaciones</b></span>
-			<a href="<?= base_url() ?>/events/versus">PARTICIPA AQUI!</a>
-		</div>
-		<?= bg_animate_001() ?>
-	</div>
-
-	<div class="content_feed_and_gallery" style="margin: 0 auto">
-
-		<simplebar>
-			<div class="feed-users">
-				<?php foreach ($feed as $key => $f): ?>
-					<div class="feed-users-item f-c">
-						<div class="feed-users-count f-c"><span><?= $f['total'] ?></span></div>
-						<div class="feed-users-wrapper-item f-c">
-							<div></div>
-							<div class="f-c feed-users-icon">
-								<span><?= $f['nickname'][0] ?></span>
-							</div>
-						</div>
-						<a href="<?= base_url() ?>/<?= $f['account'] ?>" class="pt-2"><?= $f['nickname'] ?></a>
-					</div>
-
-				<?php endforeach; ?>
+	<div class="">
+		<div id="presentation-page-start" class="f-c">
+			<div class="combo-text-title" id="app-title">
+				<h1 class="title-2 m-0">Bienvenido a Art's Book</h1>
+				<span>BETA</span>
 			</div>
-		</simplebar>
-		<div id="content-spot">
-			<ins class="adsbygoogle"
-			style="display:block; height:100px"
-			data-ad-format="fluid"
-			data-ad-layout-key="-6t+ed+2i-1n-4w"
-			data-ad-client="ca-pub-1355252812560688"
-			data-ad-slot="7585531731">
-		</ins>
+			<span>Sitio web oficial de la comunidad de artistas art's book</span>
+
+		</div>
+		<div class="event-anunces" v-if="typeof versus[0] != 'undefined'">
+			<div class="context">
+				<div class="title-4">{{versus[0].name}}</div>
+				<span class="white-text">Una vez finalizada la cuenta regresiva <b>inician las votaciones</b></span>
+				<a href="<?= base_url() ?>/events/versus">PARTICIPA AQUI!</a>
+			</div>
+			<?= bg_animate_001() ?>
+		</div>
+
+		<div class="container">
+
+			<simplebar>
+				<div class="feed-users">
+					<?php foreach ($feed as $key => $f): ?>
+						<div class="feed-users-item f-c">
+							<div class="feed-users-count f-c"><span><?= $f['total'] ?></span></div>
+							<div class="feed-users-wrapper-item f-c">
+								<div></div>
+								<div class="f-c feed-users-icon">
+									<span><?= $f['nickname'][0] ?></span>
+								</div>
+							</div>
+							<a href="<?= base_url() ?>/<?= $f['account'] ?>" class="pt-2"><?= $f['nickname'] ?></a>
+						</div>
+
+					<?php endforeach; ?>
+				</div>
+			</simplebar>
+			<div id="content-spot">
+				<ins class="adsbygoogle"
+				style="display:block; height:100px"
+				data-ad-format="fluid"
+				data-ad-layout-key="-6t+ed+2i-1n-4w"
+				data-ad-client="ca-pub-1355252812560688"
+				data-ad-slot="7585531731">
+			</ins>
+		</div>
+
 	</div>
+	</div>
+
+
+<div class="p-4" style="background-color: #f9f9f9">
+	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
 </div>
 
-
-<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
-
+<div class="container">
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</div>
 <?php foreach ($current_events as $key => $event): ?>
 	<?php if ($event['is_voting'] == 1): ?>
 		<div id="modal1" class="modal" style="max-width: 400px">
@@ -232,40 +244,6 @@ console.log();
 let list_images_pre = <?= json_encode($images_list) ?>;
 //list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
 
-Vue.component('cg-countdown', {
-	template: `<div class="cg-countdown">{{countdown}}</div>`,
-	data: function () {
-		return {
-			countdown: '0d 0h 0m 0s'
-		}
-	},
-	props: {
-		datestring: String
-	},
-	methods: {
-		countdown_start: function () {
-			var countDownDate = new Date(this.datestring).getTime();
-
-			var x = setInterval( () => {
-				var now = new Date().getTime();
-				var distance = countDownDate - now;
-				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-				this.countdown = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
-				if (distance < 0) {
-					clearInterval(x);
-					this.countdown = 'TERMINADO'
-				}
-			}, 1000);
-		}
-	},
-	mounted: function () {
-		if(this.datestring) this.countdown_start();
-	}
-})
-
 
 const $_module = {
 	template: `<?= $template ?>`,
@@ -274,7 +252,6 @@ const $_module = {
 			list_img: list_images_pre,
 			stack: <?= $agent->isMobile() ? 170 : 280 ?>,
 			versus: <?= json_encode($list_versus) ?>,
-			countdown: '0h 0d 0m 0s',
 			modal: null,
 			test: <?= json_encode($current_events) ?>
 		}
@@ -287,23 +264,6 @@ const $_module = {
 			const ophour = { hour: '2-digit', minute: '2-digit', hour12: true}
 
 			return event.toLocaleDateString('es-ES', options).toUpperCase() + ' a las ' + event.toLocaleTimeString('es-ES', ophour)
-		},
-		datecoutdown: function (datestring) {
-			var countDownDate = new Date(datestring).getTime();
-
-			var x = setInterval( () => {
-				var now = new Date().getTime();
-				var distance = countDownDate - now;
-				var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-				this.countdown = days + "d " + hours + "h "+ minutes + "m " + seconds + "s ";
-				if (distance < 0) {
-					clearInterval(x);
-					this.countdown = 'TERMINADO'
-				}
-			}, 1000);
 		},
 		sizewrapper: function (size) {
 			$('.content_feed_and_gallery').width(size)

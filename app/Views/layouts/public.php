@@ -177,10 +177,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		mounted: function () {
 			(adsbygoogle = window.adsbygoogle || []).push({});
 
-			M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'));
-			this.$refs.content.addEventListener('scroll', e => {
-				//console.log(this.$refs.content.scrollTop);
-			})
+			$('.fixed-action-btn').floatingActionButton();
 			let drop = $('.dropdown-trigger').dropdown({constrainWidth: false});
 			window.addEventListener('resize', function (e) {
 				drop.dropdown('close');

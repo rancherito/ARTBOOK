@@ -215,15 +215,19 @@ Vue.component('cg-grid-image', {
 		</ul>
 		<div class="cg-grid-artwork-content">
 			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
-			<div class="cg-grid-artwork-name">{{info.name}}</div>
-		</div>
+			<div class="cg-grid-artwork-name">
 
-		<div class="cg-grid-info"  v-if="!is_on_profile">
-			<div  class="cg-grid-avatar" @click="redirect">{{info.nickname[0]}}</div>
-			<div class="cg-grid-autor">
-				<span class="grid-images" @click="redirect">{{info.nickname}}</span>
+				<div class="cg-grid-info"  v-if="!is_on_profile">
+					<div  class="cg-grid-avatar" @click="redirect">{{info.nickname[0]}}</div>
+					<div class="cg-grid-autor">
+						<div>{{info.name}}</div>
+						<span class="grid-images" @click="redirect">{{info.nickname}}</span>
+					</div>
+				</div>
 			</div>
 		</div>
+
+
 	</div>
 	`,
 	data: function () {
@@ -271,7 +275,7 @@ Vue.component('cg-grid-image', {
 })
 Vue.component('cg-grid',{
 	template: `
-	<div class="cg-grid-wrapper">
+	<div class="cg-grid-wrapper" ref="wrap">
 		<div ref="menu" class="cg-grid">
 			<div v-for="img of images" class="cg-grid-wrapper-img" :style="{ width: stack_size + 'px', height: (img.adsense ? stack_size + 'px' : 'auto')}">
 				<cg-grid-image v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" @events="$emit('events_list', $event)" :info="img" :is_on_profile="is_on_profile" :is_on_account="is_on_account"></cg-grid-image>
@@ -311,22 +315,45 @@ Vue.component('cg-grid',{
 			var top_height = 0;
 			var count_stack = parseInt(this.$el.clientWidth / this.stack_size);
 
+
 			if (count_stack !== this.current_stacks || typeof option != 'undefined') {
 
 				let stacks = Array(count_stack).fill(0);
+				let elementEndStack = Array(count_stack).fill(null);
 				this.$refs.menu.style.width = (count_stack * this.stack_size) + 'px'
 				this.$emit('sizewrapper', count_stack * this.stack_size)
 				for (var el of this.$el.querySelectorAll('.cg-grid-wrapper-img')) {
+					el.classList.remove("cg-grid-image-end-stack");
+					el.classList.remove("cg-grid-image-hide-info");
+					el.style.height = 'auto'
 					var near_index = stacks.findIndex(a => a == Math.min.apply(null, stacks));
 					var img_height = el.offsetHeight;
 					el.style.top = stacks[near_index] + 'px'
 					el.style.left = (near_index * this.stack_size) + 'px'
+					elementEndStack[near_index] = el
 					stacks[near_index] += img_height;
 					if (top_height < img_height) top_height = img_height
 				}
-				this.$refs.menu.style.height = Math.max.apply(null, stacks) + 'px'
+
+
+				this.$refs.menu.style.height =  (this.is_on_profile ? Math.max.apply(null, stacks) : Math.min.apply(null, stacks)) + 'px'
+				if (!this.is_on_profile) {
+					for (var el of elementEndStack) {
+						const limit_el = parseInt(el.style.top.replace('px',''));
+						const limit = this.$refs.menu.offsetHeight
+						const ideal_height_el = limit - limit_el;
+						el.style.height = ideal_height_el + 'px'
+						el.classList.add("cg-grid-image-end-stack");
+						if (el.offsetHeight < 70) el.classList.add("cg-grid-image-hide-info");
+					}
+				}
 
 			}
+			const scale = this.$el.clientWidth / this.$refs.menu.clientWidth;
+			const wrap_height = this.$refs.menu.offsetHeight * scale;
+
+			this.$refs.menu.style['transform'] = `scale(${scale})`;
+			this.$el.style.height = wrap_height + 'px';
 			this.current_stacks = count_stack;
 		}
 	},

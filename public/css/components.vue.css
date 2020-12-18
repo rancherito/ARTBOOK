@@ -1,9 +1,9 @@
 
 .cg-grid {
-	margin: 0 auto;
 	width: 100%;
 	position: relative;
 	height: 100%;
+	transform-origin: 0 0;
 }
 .cg-grid-img {
 	width: 100%;
@@ -11,7 +11,7 @@
 	height: auto;
 	display: block;
 	transition: linear all .2s;
-	background: lightgray;
+	background: rgba(0,0,0,0.1);
 }
 .cg-grid-avatar{
 	background: var(--primary);
@@ -44,12 +44,29 @@
 .cg-grid-image-options i{
 	color: var(--primary)
 }
+.cg-grid-wrapper{
+	position: relative;
+	overflow-y: hidden;
+}
 .cg-grid-wrapper-img {
 	position: absolute;
 	float: left;
 	padding: 5px;
 }
-
+.cg-grid-wrapper-img > div {
+	height: 100%;
+	overflow: hidden;
+}
+.cg-grid-wrapper-img.cg-grid-image-end-stack .cg-grid-artwork-content{
+	height: inherit;
+}
+.cg-grid-wrapper-img.cg-grid-image-end-stack img.cg-grid-img{
+	height: inherit;
+	object-fit: cover;
+}
+.cg-grid-wrapper-img.cg-grid-image-hide-info .cg-grid-image:hover .cg-grid-artwork-name{
+	opacity: 0;
+}
 .cg-grid-info{
 	padding: .8rem 1rem;
 	display: flex;
@@ -57,11 +74,13 @@
 }
 .cg-grid-autor{
 	padding-left: 1rem;
+	color: white;
 }
-.grid-images:hover{
-	color: var(--primary);
-	cursor: pointer;
-	text-decoration: underline;
+.grid-images{
+	color: white;
+	margin-top: -.2rem;
+	display: block;
+	font-size: .8rem;
 }
 .upload-editor{
 	background: #1e1e2b;
@@ -216,23 +235,30 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: linear-gradient(360deg, #0000005e, transparent);
+	background: linear-gradient(45deg, rgba(0, 0, 0, .35), rgba(0, 0, 0, .1));
 	border-radius: 10px;
 	z-index: 2;
-	transition: linear all .2s
+	transition: linear all .2s;
+	opacity: 0;
 }
 .cg-grid-artwork-name{
 	position: absolute;
 	bottom: .5rem;
 	left: .5rem;
 	z-index: 3;
-	text-shadow: -0 0 3px black;
 	text-overflow: ellipsis;
 	transition: linear all .2s;
 	color: white;
-}
-.cg-grid-image:hover .cg-grid-artwork-content::after, .cg-grid-image:hover .cg-grid-artwork-name{
 	opacity: 0;
+	transform: translateX(-150%);
+	cursor: pointer;
+}
+.cg-grid-image:hover .cg-grid-artwork-content::after{
+	opacity: 1;
+}
+.cg-grid-image:hover .cg-grid-artwork-name{
+	transform: translateX(0%);
+	opacity: 1
 }
 .cg-grid-artwork-content{
 	overflow: hidden;
@@ -242,7 +268,7 @@
 	transition: linear all .2s
 }
 .cg-grid-image:hover .cg-grid-artwork-content img{
-	transform: scale(1.025);
+
 }
 @media (max-width: 992px) {
 	.upload-editor-description{
@@ -301,7 +327,7 @@
 	}
 
 	.cg-grid-info{
-		padding: 0 .5rem;
+		padding: .5rem;
 	}
 	.cg-grid-avatar{
 		width: 24px;
