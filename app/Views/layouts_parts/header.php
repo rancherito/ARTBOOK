@@ -5,9 +5,9 @@
 <link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">
 <link rel="stylesheet" href="<?= base_url() ?>/font/RobotoCondensed/RobotoCondensed.css">
 <link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/extend.css">
+<link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/materialdesignicons.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>/css/helpers.css?v=<?= $version ?>">
 <style>
-	<?php include dirname(APPPATH).'/public/font/mdi/css/materialdesignicons.min.css' ?>
     <?php include dirname(APPPATH).'/public/libs/materialize/css/materialize.min.css' ?>
 	<?php include dirname(APPPATH).'/public/libs/animate/animate.min.css' ?>
 	<?php include dirname(APPPATH).'/public/css/custom_materialize.css' ?>
