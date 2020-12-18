@@ -1,7 +1,7 @@
 <?php $version = 'beta_0.063' ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title><?= is_dir(dirname(APPPATH).'/public') ? 'asd' : '4444' ?></title>
+<title>Art's Book</title>
 <link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">
 <link rel="stylesheet" href="<?= base_url() ?>/font/RobotoCondensed/RobotoCondensed.css">
 <link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/materialdesignicons.min.css">
