@@ -169,8 +169,10 @@ class C_Users extends BaseController
 		}
 
 		$user = $response->getGraphUser();
-		print_r($user);
-		var_dump($accessToken->getValue());
+		echo 'Id: ' . $user['id'];
+		echo "<br>";
+		echo 'Name: ' . $user['name'];
+		//var_dump($accessToken->getValue());
 
 		// The OAuth 2.0 client handler helps us manage access tokens
 		//$oAuth2Client = $fb->getOAuth2Client();
@@ -183,18 +185,18 @@ class C_Users extends BaseController
 		$tokenMetadata->validateExpiration();
 
 		if (! $accessToken->isLongLived()) {
-			try {
-				$accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
-			} catch (Facebook\Exceptions\FacebookSDKException $e) {
-				echo "<p>Error getting long-lived access token: " . $e->getMessage() . "</p>\n\n";
-				exit;
-			}
+		try {
+		$accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
+	} catch (Facebook\Exceptions\FacebookSDKException $e) {
+	echo "<p>Error getting long-lived access token: " . $e->getMessage() . "</p>\n\n";
+	exit;
+}
 
-			echo '<h3>Long-lived</h3>';
-			var_dump($accessToken->getValue());
-		}
+echo '<h3>Long-lived</h3>';
+var_dump($accessToken->getValue());
+}
 
-		$_SESSION['fb_access_token'] = (string) $accessToken;*/
+$_SESSION['fb_access_token'] = (string) $accessToken;*/
 
-	}
+}
 }
