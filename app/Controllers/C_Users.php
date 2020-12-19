@@ -122,8 +122,9 @@ class C_Users extends BaseController
 	}
 	public function login_fbauth()
 	{
+		$idapp = '3301610373300333';
 		$fb = new Facebook([
-			'app_id' => '3301610373300333',
+			'app_id' => $idapp,
 			'app_secret' => '1b1091d319cee49b6f19096bd442261e',
 			'default_graph_version' => 'v3.2',
 		]);
@@ -143,7 +144,7 @@ class C_Users extends BaseController
 			echo 'Facebook SDK returned an error: ' . $e->getMessage();
 			exit;
 		}
-
+		
 		if (! isset($accessToken)) {
 			if ($helper->getError()) {
 				header('HTTP/1.0 401 Unauthorized');
@@ -184,11 +185,8 @@ class C_Users extends BaseController
 		$tokenMetadata = $oAuth2Client->debugToken($accessToken);
 		echo '<h3>Metadata</h3>';
 		var_dump($tokenMetadata);
-
-		// Validation (these will throw FacebookSDKException's when they fail)
-		$tokenMetadata->validateAppId('{app-id}'); // Replace {app-id} with your app id
-		// If you know the user ID this access token belongs to, you can validate it here
-		//$tokenMetadata->validateUserId('123');
+		$tokenMetadata->validateAppId($idapp); // Replace {app-id} with your app id
+		
 		$tokenMetadata->validateExpiration();
 
 		if (! $accessToken->isLongLived()) {
