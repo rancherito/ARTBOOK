@@ -122,8 +122,9 @@ class C_Users extends BaseController
 	}
 	public function login_fbauth()
 	{
+		$idapp = '3301610373300333';
 		$fb = new Facebook([
-			'app_id' => '3301610373300333',
+			'app_id' => $idapp,
 			'app_secret' => '1b1091d319cee49b6f19096bd442261e',
 			'default_graph_version' => 'v3.2',
 		]);
@@ -181,9 +182,8 @@ class C_Users extends BaseController
 		// Get the access token metadata from /debug_token
 		$tokenMetadata = $oAuth2Client->debugToken($accessToken);
 		echo '<h3>Metadata</h3>';
-		print_r($tokenMetadata);
-		$tokenMetadata->validateAppId('3301610373300333'); // Replace {app-id} with your app id
-
+		var_dump($tokenMetadata);
+		$tokenMetadata->validateAppId($idapp); // Replace {app-id} with your app id
 		$tokenMetadata->validateExpiration();
 
 		if (! $accessToken->isLongLived()) {
