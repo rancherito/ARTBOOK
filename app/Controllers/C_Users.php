@@ -169,10 +169,12 @@ class C_Users extends BaseController
 		}
 
 		$user = $response->getGraphUser();
-		echo 'Id: ' . $user['id'];
-		echo "<br>";
-		echo 'Name: ' . $user['name'];
-		$short_id = dechex($user['id']);
+		$id = $user['id'];
+		$account = dechex($user['id']);
+		$nickname = explode(' ', $user['name'])[0];
+
+		$res = User::accountfb_create($id, $nickname, $account);
+		print_r($res);
 		//var_dump($accessToken->getValue());
 
 		// The OAuth 2.0 client handler helps us manage access tokens
