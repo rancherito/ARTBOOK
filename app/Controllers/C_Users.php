@@ -115,9 +115,8 @@ class C_Users extends BaseController
 
 		$helper = $fb->getRedirectLoginHelper();
 
-		$permissions = ['email']; // Optional permissions
-		$redirectURL = base_url().'/user/login_fbauth';
-		$loginUrl = $helper->getLoginUrl($redirectURL, $permissions);
+		$permissions = ['email'];
+		$loginUrl = $helper->getLoginUrl(base_url().'/user/login_fbauth', $permissions);
 		echo '<a href="' . $loginUrl . '">Log in con Facebook!</a>';
 	}
 	public function login_fbauth()
@@ -171,23 +170,19 @@ class C_Users extends BaseController
 
 		$user = $response->getGraphUser();
 		print_r($user);
-
-		// Logged in
-		echo '<h3>Access Token</h3>';
 		var_dump($accessToken->getValue());
 
 		// The OAuth 2.0 client handler helps us manage access tokens
-		$oAuth2Client = $fb->getOAuth2Client();
+		//$oAuth2Client = $fb->getOAuth2Client();
 
 		// Get the access token metadata from /debug_token
-		$tokenMetadata = $oAuth2Client->debugToken($accessToken);
-		echo '<h3>Metadata</h3>';
-		var_dump($tokenMetadata);
-		$tokenMetadata->validateAppId($idapp); // Replace {app-id} with your app id
+		//$tokenMetadata = $oAuth2Client->debugToken($accessToken);
+		//echo '<h3>Metadata</h3>';
+		//var_dump($tokenMetadata);
+		/*$tokenMetadata->validateAppId($idapp); // Replace {app-id} with your app id
 		$tokenMetadata->validateExpiration();
 
 		if (! $accessToken->isLongLived()) {
-			// Exchanges a short-lived access token for a long-lived one
 			try {
 				$accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
 			} catch (Facebook\Exceptions\FacebookSDKException $e) {
@@ -199,7 +194,7 @@ class C_Users extends BaseController
 			var_dump($accessToken->getValue());
 		}
 
-		$_SESSION['fb_access_token'] = (string) $accessToken;
+		$_SESSION['fb_access_token'] = (string) $accessToken;*/
 
 	}
 }
