@@ -1,6 +1,8 @@
 <?php namespace App\Controllers;
 use App\Models\General;
 use App\Models\User;
+use Facebook\Facebook;
+
 class C_Users extends BaseController
 {
 	public function index($user)
@@ -105,7 +107,7 @@ class C_Users extends BaseController
 	}
 	public function login_fb()
 	{
-		$fb = new Facebook\Facebook([
+		$fb = new Facebook([
 			'app_id' => '3301610373300333',
 			'app_secret' => '1b1091d319cee49b6f19096bd442261e',
 			'default_graph_version' => 'v3.2',
@@ -114,13 +116,13 @@ class C_Users extends BaseController
 		$helper = $fb->getRedirectLoginHelper();
 
 		$permissions = ['email']; // Optional permissions
-		$redirectURL = "https://".$_SERVER['SERVER_NAME']."/fb-callback.php";
+		$redirectURL = base_url().'/user/login_fbauth';
 		$loginUrl = $helper->getLoginUrl($redirectURL, $permissions);
 		echo '<a href="' . $loginUrl . '">Log in con Facebook!</a>';
 	}
 	public function login_fbauth()
 	{
-		$fb = new Facebook\Facebook([
+		$fb = new Facebook([
 			'app_id' => '3301610373300333',
 			'app_secret' => '1b1091d319cee49b6f19096bd442261e',
 			'default_graph_version' => 'v3.2',
