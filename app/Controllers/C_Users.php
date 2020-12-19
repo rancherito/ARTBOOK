@@ -174,7 +174,14 @@ class C_Users extends BaseController
 		$nickname = explode(' ', $user['name'])[0];
 
 		$res = User::accountfb_create($id, $nickname, $account);
-		print_r($res);
+		if (count($res)) {
+			$pass = $res[0]['pass'];
+			$access = C_Users::login_validate_internal("FB_$id", $pass);
+			if($access['access'] == 1){
+				//User::account_activate($user['id_user']);
+				return redirect()->to(base_url().'/'.$user['account']);
+			}
+		}
 		//var_dump($accessToken->getValue());
 
 		// The OAuth 2.0 client handler helps us manage access tokens
