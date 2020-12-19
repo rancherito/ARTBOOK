@@ -1,6 +1,5 @@
 <?php
-$access = $_SESSION['access'];
-$access_account = !empty($access['account']) && $access['account'] == $info['account'] && $access['validate'] != 0;
+$access_account = !empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $info['account'] && $_SESSION['access']['validate'] != 0;
 
 ?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
@@ -328,9 +327,12 @@ methods: {
 		})
 	},
 	onfinish: function (data) {
-		$.post('<?= base_url() ?>/services/artworks/recover',{account: '<?= $_SESSION['access']['account'] ?>'}, (res) => {
-			this.list_img = res;
-		})
+		<?php if ($access_account): ?>
+			$.post('<?= base_url() ?>/services/artworks/recover',{account: '<?= $_SESSION['access']['account'] ?>'}, (res) => {
+				this.list_img = res;
+			})
+		<?php endif; ?>
+
 	},
 	openeditor: function () {
 		this.$refs.editor.open()
