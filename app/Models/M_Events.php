@@ -54,7 +54,7 @@ class M_Events
 		";
 		return query_database($sql);
 	}
-	public function qry_events_current()
+	public static function qry_events_current()
 	{
 		$sql = "
 			SELECT name, event_start,event_end,[description],event_tag, DATEADD(DD,-1,event_end) voting, id_event ,
