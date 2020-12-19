@@ -169,9 +169,7 @@ class C_Users extends BaseController
 		}
 
 		$user = $response->getGraphUser();
-		var_dump($user);
-		echo 'Id: ' . $user['id'];
-		echo 'Name: ' . $user['name'];
+		print_r($user);
 
 		// Logged in
 		echo '<h3>Access Token</h3>';
@@ -183,12 +181,9 @@ class C_Users extends BaseController
 		// Get the access token metadata from /debug_token
 		$tokenMetadata = $oAuth2Client->debugToken($accessToken);
 		echo '<h3>Metadata</h3>';
-		var_dump($tokenMetadata);
+		print_r($tokenMetadata);
+		$tokenMetadata->validateAppId('3301610373300333'); // Replace {app-id} with your app id
 
-		// Validation (these will throw FacebookSDKException's when they fail)
-		$tokenMetadata->validateAppId('{app-id}'); // Replace {app-id} with your app id
-		// If you know the user ID this access token belongs to, you can validate it here
-		//$tokenMetadata->validateUserId('123');
 		$tokenMetadata->validateExpiration();
 
 		if (! $accessToken->isLongLived()) {
