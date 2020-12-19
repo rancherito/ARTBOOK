@@ -18,6 +18,11 @@ class User
 		$sql = "EXEC app.sp_user_create @user = ?, @email = ?, @pass = ?;";
 		return query_database($sql,[$user, $email, $pass]);
 	}
+	public static function accountfb_create($fb_id, $nickname, $account)
+	{
+		$sql = "EXEC users.sp_userfb_create @fb_id = ?, @nickname = ?, @account = ?";
+		return query_database($sql,[$fb_id, $nickname, $account]);
+	}
 	public static function account_validate($account)
 	{
 		$sql = "SELECT id_user, account, validate,pass FROM users.tb_users WHERE account = ?;";
