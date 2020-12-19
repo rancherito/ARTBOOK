@@ -1,5 +1,6 @@
 <?php
 
+//echo __DIR__.DIRECTORY_SEPARATOR;
 // Valid PHP Version?
 $minPHPVersion = '7.2';
 if (phpversion() < $minPHPVersion)
@@ -13,6 +14,7 @@ $pathsPath = FCPATH . '../app/Config/Paths.php';
 chdir(__DIR__);
 
 require $pathsPath;
+require  __DIR__.'/../vendor/autoload.php';
 $paths = new Config\Paths();
 
 $app = require rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
