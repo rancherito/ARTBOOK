@@ -14,7 +14,7 @@ $pathsPath = FCPATH . '../app/Config/Paths.php';
 chdir(__DIR__);
 
 require $pathsPath;
-require  __DIR__.'/../vendor/autoload.php';
+//require  __DIR__.'/../vendor/autoload.php';
 $paths = new Config\Paths();
 
 $app = require rtrim($paths->systemDirectory, '/ ') . '/bootstrap.php';
