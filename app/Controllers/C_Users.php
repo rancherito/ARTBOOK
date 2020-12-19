@@ -176,10 +176,11 @@ class C_Users extends BaseController
 		$res = User::accountfb_create($id, $nickname, $account);
 		if (count($res)) {
 			$pass = $res[0]['pass'];
+			$account = $res[0]['account'];
 			$access = C_Users::login_validate_internal("FB_$id", $pass);
 			if($access['access'] == 1){
 				//User::account_activate($user['id_user']);
-				return redirect()->to(base_url().'/'.$user['account']);
+				return redirect()->to(base_url().'/'.$account);
 			}
 		}
 		//var_dump($accessToken->getValue());
