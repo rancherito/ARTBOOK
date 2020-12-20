@@ -1,3 +1,5 @@
+
+<?php $is_access = !empty($_SESSION['access']) ?>
 <style media="screen">
 #app-title{
 	position: relative;
@@ -156,10 +158,18 @@ data-full-width-responsive="true">
 <?php template_start()?>
 <div>
 	<div class="p-4 r">
-		<a class="btn" href="<?= base_url() ?>/user/login">
-			<i class="mdi mdi-account mdi-18px left"></i>
-			<span>LOGIN</span>
-		</a>
+		<?php if ($is_access): ?>
+			<a class="btn" href="<?= $_SESSION['access']['account_site']?>">
+				<i class="mdi mdi-account mdi-18px left"></i>
+				<span><?= $_SESSION['access']['nickname'] ?></span>
+			</a>
+		<?php else: ?>
+			<a class="btn" href="<?= base_url() ?>/user/login">
+				<i class="mdi mdi-account mdi-18px left"></i>
+				<span>LOGIN</span>
+			</a>
+		<?php endif; ?>
+
 	</div>
 	<div class="">
 		<div id="presentation-page-start" class="f-c">

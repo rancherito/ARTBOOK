@@ -8,7 +8,7 @@
 	$helper = $fb->getRedirectLoginHelper();
 
 	$permissions = ['email'];
-	$loginUrl = $helper->getLoginUrl(base_url().'/user/login_fbauth', $permissions);
+	$loginUrl = empty($_SESSION['access']) ? $helper->getLoginUrl(base_url().'/user/login_fbauth', $permissions) : base_url().'/'.$_SESSION['access']['account'];
 
 
 ?>
