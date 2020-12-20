@@ -124,7 +124,7 @@
 	display: none;
 }
 #presentation-page-start{
-	padding-top: 3rem;
+	padding-top: 1rem;
 }
 @media (max-width: 600px) {
 	#wrap_grid_gallery{
@@ -142,12 +142,12 @@
 </style>
 <!--<div id="adsense-square-ingrid">
 
-	<ins class="adsbygoogle"
-	style="display:block;height:100%; width:100%"
-	data-ad-client="ca-pub-1355252812560688"
-	data-ad-slot="5969213646"
-	data-ad-format="auto"
-	data-full-width-responsive="true">
+<ins class="adsbygoogle"
+style="display:block;height:100%; width:100%"
+data-ad-client="ca-pub-1355252812560688"
+data-ad-slot="5969213646"
+data-ad-format="auto"
+data-full-width-responsive="true">
 
 </ins>
 
@@ -155,6 +155,12 @@
 -->
 <?php template_start()?>
 <div>
+	<div class="p-4 r">
+		<a class="btn" href="<?= base_url() ?>/user/login">
+			<i class="mdi mdi-account mdi-18px left"></i>
+			<span>LOGIN</span>
+		</a>
+	</div>
 	<div class="">
 		<div id="presentation-page-start" class="f-c">
 			<img src="<?= base_url() ?>/images/logo_primary.svg" alt="logo web" style="width: 160px">
@@ -203,7 +209,7 @@
 		</div>
 
 	</div>
-	</div>
+</div>
 <article class="adsenseblock"></article>
 <div id="wrap_grid_gallery">
 	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
@@ -241,8 +247,8 @@
 				<div class="title-3 combo-text-title"><?= $event['name'] ?></div>
 				<span class="white-text" style="margin-top: -.5rem">Votaciones de versus abiertas</span>
 
-					<span class="title-4 c pt-4">TERMINA EN</span>
-					<cg-countdown class="title-3 c" datestring="<?= $event['event_end'] ?>"></cg-countdown>
+				<span class="title-4 c pt-4">TERMINA EN</span>
+				<cg-countdown class="title-3 c" datestring="<?= $event['event_end'] ?>"></cg-countdown>
 
 				<a href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>" class="btn btn-dark">VAMOS!</a>
 

@@ -1,3 +1,17 @@
+<?php
+	$fb = new \Facebook\Facebook([
+		'app_id' => '3301610373300333',
+		'app_secret' => '1b1091d319cee49b6f19096bd442261e',
+		'default_graph_version' => 'v3.2',
+	]);
+
+	$helper = $fb->getRedirectLoginHelper();
+
+	$permissions = ['email'];
+	$loginUrl = $helper->getLoginUrl(base_url().'/user/login_fbauth', $permissions);
+
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head>
@@ -54,18 +68,24 @@
 		</style>
 	</head>
 	<body>
+		<?= bg_animate_001() ?>
 		<div id="app-login" class="card">
-			<div class="cover" style="background-image: url('<?= base_url() ?>/images/bg_003.jpg')">
-				<div style="height: 100%; background-color: #00000066" class="f-c">
-					<img src="<?= base_url() ?>/images/logo.svg" alt="arts book">
-				</div>
+			<div class="f-c" style="position: relative">
+				<?= bg_default() ?>
+				<img src="<?= base_url() ?>/images/logo_white.svg" alt="logo web" style="position: relative">
 			</div>
 			<div class="p-4 f-c">
 				<div style="max-width: 300px" class="w100 f-c">
 					<div id="logger"></div>
 					<h3 class="mb-0">{{newAccountMode ? 'REGISTRO' :'ACCESSO'}}</h3>
 					<div class="grey-text">Acceso para usuarios Art's Book</div>
-					<div class="w100 pt-6">
+					<div class="l pb-4 pt-6 w100">
+						<a href="<?= $loginUrl ?>" class="btn" style="background-color: #2139bf">
+							<i class="mdi mdi-facebook"></i>
+							<span>LOGIN FACEBOOK</span>
+						</a>
+					</div>
+					<div class="w100 pt-1">
 						<form method="post" @submit.prevent="submit" v-show="!newAccountMode">
 							<cg-field :watchisvalid.sync="user.isvalid" required name="user" v-model="user.val" sizechars="4-16" label="Usuario" placeholder="ingrese credenciales"></cg-field>
 							<cg-field :watchisvalid.sync="pass.isvalid" required name="password" v-model="pass.val" sizechars="4-20" label="Contraseña" type="password" placeholder="ingrese clave de acceso secreto"></cg-field>
