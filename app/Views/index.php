@@ -315,11 +315,7 @@ const $_module = {
 	mounted: function () {
 		if ($('#modal1')) {
 			this.modal = $('#modal1').modal()
-
 			this.modal.modal('open')
-			if (this.versus[0] != undefined) {
-				this.datecoutdown(this.versus[0].voting)
-			}
 		}
 
 
