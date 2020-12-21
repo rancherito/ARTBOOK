@@ -127,6 +127,7 @@
 }
 #presentation-page-start{
 }
+
 @media (max-width: 600px) {
 	#wrap_grid_gallery{
 		padding: 0;

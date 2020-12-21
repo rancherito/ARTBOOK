@@ -80,12 +80,12 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 	position: relative;
 }
 #app-aside-nav-avatar {
-    background: #ffffff17;
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    box-shadow: 0 0 0 8px rgba(255, 255, 255, .15);
-    text-transform: uppercase;
+	background: #ffffff17;
+	width: 130px;
+	height: 130px;
+	border-radius: 50%;
+	box-shadow: 0 0 0 8px rgba(255, 255, 255, .15);
+	text-transform: uppercase;
 }
 #app-aside-nav-avatar{
 	height: 130px;
@@ -146,6 +146,8 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 #modal_image{
 	width: 1000px;
 	height: 600px;
+	overflow: hidden;
+	border-radius: 10px;
 }
 #modal_image > div{
 	height: 100%;
@@ -195,7 +197,19 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 #bar-grid{
 	height: 100%; padding: 0 0.5rem;
 }
+#settings-back-account {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	z-index: 2;
+}
+.artwork-title{
+	padding-top: 2rem;
+}
 @media (max-width: 1200px) {
+	.artwork-title{
+		padding: 0;
+	}
 	#user_profile{
 		position: relative;
 		width: 100%;
@@ -212,7 +226,26 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 		height: 0;
 		width: 0;
 	}
-	#content-grid{
+
+}
+@media (max-width: 992px) {
+
+	.modal-image-preview, .modal-image-info-content{
+		width: 100%;
+	}
+	.btn-light{
+		color: white;
+	}
+	.modal-image-preview{
+		height: 300px;
+	}
+	#modal_image{
+		max-width: 400px;
+		width: 100%;
+		height: auto;
+	}
+	#modal_image > div{
+		flex-direction: column;
 	}
 }
 @media (max-width: 600px) {
@@ -252,6 +285,7 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 <div class="bg-primary fixed-full" id="user_content_app">
 	<?php if ($access_account): ?>
 		<div id="modal_image" ref="modal_openimage" class="modal">
+			<a id="settings-back-account" href="http://localhost:4001/cafeconpato" class="btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
 			<div>
 				<div class="modal-image-preview">
 					<template v-if="image_apply != null">
@@ -260,7 +294,7 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 					</template>
 				</div>
 				<div class="modal-image-info-content">
-					<div class="title-4 combo-text-title">TITULO</div>
+					<div class="title-4 combo-text-title artwork-title">TITULO</div>
 					<div v-if="image_apply != null" style="position: relative">{{image_apply.name}}</div>
 					<br>
 					<div class="user-events-list" v-for="event of list_events">
@@ -466,8 +500,8 @@ methods: {
 
 	},
 	dateCheck: function(from,to,check) {
-	    let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
-	    return (cDate <= lDate && cDate >= fDate);
+		let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
+		return (cDate <= lDate && cDate >= fDate);
 	},
 	modify_image: function (data) {
 		this.$refs.editor.open()
@@ -482,9 +516,9 @@ methods: {
 	},
 	onfinish: function (data) {
 		<?php if ($access_account): ?>
-			$.post('<?= base_url() ?>/services/artworks/recover',{account: '<?= $_SESSION['access']['account'] ?>'}, (res) => {
-				this.list_img = res;
-			})
+		$.post('<?= base_url() ?>/services/artworks/recover',{account: '<?= $_SESSION['access']['account'] ?>'}, (res) => {
+			this.list_img = res;
+		})
 		<?php endif; ?>
 
 	},
