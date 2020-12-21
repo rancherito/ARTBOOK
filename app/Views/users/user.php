@@ -285,7 +285,7 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 <div class="bg-primary fixed-full" id="user_content_app">
 	<?php if ($access_account): ?>
 		<div id="modal_image" ref="modal_openimage" class="modal">
-			<a id="settings-back-account" href="http://localhost:4001/cafeconpato" class="btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
+			<a id="settings-back-account" class="modal-close btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
 			<div>
 				<div class="modal-image-preview">
 					<template v-if="image_apply != null">
