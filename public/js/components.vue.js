@@ -206,13 +206,9 @@ Vue.component('upload-editor',{
 Vue.component('cg-grid-image', {
 	template: `
 	<div class="cg-grid-image">
-		<a v-show="is_on_account" ref="drop" :data-target="info.accessname" class="cg-grid-image-options btn btn-floating waves waves-effect waves-light">
-			<i class="mdi-24px mdi mdi-dots-vertical"></i>
+		<a @click="send_events" v-show="is_on_account" class="cg-grid-image-options btn-icon btn-dark waves waves-effect waves-light">
+			<i class="mdi-24px mdi mdi-cog"></i>
 		</a>
-		<ul :id="info.accessname" class="dropdown-content">
-			<li tabindex="0"><a @click="send"><i class="mdi mdi-image-edit-outline"></i>Modificar</a></li>
-			<li tabindex="0"><a @click="send_events"><i class="mdi mdi-bell-alert-outline"></i>Aplicar a evento</a></li>
-		</ul>
 		<div class="cg-grid-artwork-content">
 			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
 			<div class="cg-grid-artwork-name">
@@ -270,7 +266,7 @@ Vue.component('cg-grid-image', {
 	},
 
 	mounted: function () {
-		M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'left'});
+		//M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'left'});
 	}
 })
 Vue.component('cg-grid',{
@@ -351,7 +347,7 @@ Vue.component('cg-grid',{
 			}
 			const scale = this.$el.clientWidth / this.$refs.menu.clientWidth;
 			const wrap_height = this.$refs.menu.offsetHeight * scale;
-
+			document.documentElement.style.setProperty('--dropeditor', `scale(${2 - scale})`);
 			this.$refs.menu.style['transform'] = `scale(${scale})`;
 			this.$el.style.height = wrap_height + 'px';
 			this.current_stacks = count_stack;

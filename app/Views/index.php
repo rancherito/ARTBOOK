@@ -126,14 +126,13 @@
 	display: none;
 }
 #presentation-page-start{
-	padding-top: 1rem;
 }
 @media (max-width: 600px) {
 	#wrap_grid_gallery{
 		padding: 0;
 	}
-	.countdown{
-
+	#presentation-page-start{
+		padding-top: 1rem;
 	}
 }
 @media (max-width: 320px) {
@@ -180,14 +179,22 @@ data-full-width-responsive="true">
 			<span class="pt-2">Sitio web oficial de la comunidad de artistas art's book</span>
 			<span id="beta-text">BETA</span>
 		</div>
-		<div class="event-anunces" v-if="typeof versus[0] != 'undefined'">
-			<div class="context">
-				<div class="title-4">{{versus[0].name}}</div>
-				<span class="white-text">Una vez finalizada la cuenta regresiva <b>inician las votaciones</b></span>
-				<a href="<?= base_url() ?>/events/versus">PARTICIPA AQUI!</a>
-			</div>
-			<?= bg_animate_001() ?>
-		</div>
+		<?php foreach ($current_events as $key => $event): ?>
+			<?php if ($event['is_voting'] == 0): ?>
+
+				<div class="event-anunces">
+					<?= bg_animate_001() ?>
+					<div class="context">
+						<div class="title-4"><?= $event['name'] ?></div>
+						<cg-countdown class="title-3 c" datestring="<?= $event['voting'] ?>"></cg-countdown>
+						<span class="white-text" style="font-size: .9rem; margin-top: -.2rem; display: block">Una vez finalizada la cuenta regresiva <b>inician las votaciones</b></span>
+						<a href="<?= base_url() ?>/events/versus">PARTICIPA AQUI!</a>
+					</div>
+
+				</div>
+			<?php endif; ?>
+		<?php endforeach; ?>
+
 
 		<div class="container">
 

@@ -26,9 +26,9 @@ a {
     border-radius: 30px;
     box-shadow: none;
 	align-items: center;
-	width: auto;
 
 }
+
 .btn-floating:focus,
 .btn-large:focus,
 .btn-small:focus,
@@ -476,6 +476,9 @@ select:focus {
 .btn-dark:hover {
     background: #ffffff4f;
     color: #fff;
+}
+.btn-lighter{
+	background: rgba(0,0,0,0.05);
 }
 @media only screen and (max-width: 992px) {
     .modal {

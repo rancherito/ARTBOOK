@@ -44,7 +44,7 @@ $url = $access['account_site'];
 }
 #settings-content{
 	position: absolute;
-	right: 0;
+	left: 0;
 	background: white;
 	max-width: 500px;
 	width: 100%;
@@ -75,6 +75,7 @@ $url = $access['account_site'];
 }
 #settings-decorations{
 	position: absolute;
+	right: 0;
 	height: 100vh;
 	width: calc(100vw - 500px);
 }

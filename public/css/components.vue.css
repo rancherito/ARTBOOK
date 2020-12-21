@@ -1,4 +1,9 @@
-
+:root{
+	--dropeditor: scale(1);
+}
+.drop-editor{
+	transform: var(--dropeditor)  !important;
+}
 .cg-grid {
 	width: 100%;
 	position: relative;
