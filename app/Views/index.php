@@ -292,7 +292,6 @@ const $_module = {
 		return {
 			list_img: list_images_pre,
 			stack: $(window).width() > 1200 ? 320 : <?= $agent->isMobile() ? 170 : 280 ?>,
-			versus: <?= json_encode($list_versus) ?>,
 			modal: null,
 			test: <?= json_encode($current_events) ?>
 		}

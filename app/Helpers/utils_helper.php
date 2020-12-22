@@ -92,3 +92,7 @@
 		$movil = true;
 		return $movil;
 	}
+	function is_self_account($account)
+	{
+		return !empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $account && $_SESSION['access']['validate'] != 0;
+	}

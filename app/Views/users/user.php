@@ -1,5 +1,5 @@
 <?php
-$access_account = !empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $info['account'] && $_SESSION['access']['validate'] != 0;
+$access_account = is_self_account($info['account']);
 
 ?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
@@ -78,6 +78,7 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 	padding: 1rem 0;
 	color: white;
 	position: relative;
+	transition: linear all .2s
 }
 #app-aside-nav-avatar {
 	background: #ffffff17;
@@ -205,6 +206,17 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 }
 .artwork-title{
 	padding-top: 2rem;
+}
+.box-events{
+	padding: .5rem 1rem;
+	border-radius: 10px;
+	border: 1px solid var(--primary);
+	color: var(--primary);
+	text-align: center;
+}
+.box-events span{
+	display: flex;
+	justify-content: center;
 }
 @media (max-width: 1200px) {
 	.artwork-title{
@@ -419,8 +431,30 @@ $access_account = !empty($_SESSION['access']['account']) && $_SESSION['access'][
 										Espero que disfrutes tu estadia en mi perfil de trabajos, subo contenido regularmente
 
 									</p>
+									 <div class="row">
+										 <?php if ($access_account): ?>
+											 <?php foreach ($current_events as $key => $event): ?>
+ 												<?php if ($event['is_voting'] == 0): ?>
+ 													<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus">
+ 														<div class="box-events w100">
+ 															<div class="combo-text-title"><?= $event['name'] ?></div>
+ 															<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['event_end'] ?>"></cg-countdown> </span>
+ 														</div>
+ 													</a>
+ 												<?php else: ?>
+ 													<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>">
+ 														<div class="box-events w100">
+ 															<div class="combo-text-title"><?= $event['name'] ?></div>
+ 															<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['voting'] ?>"></cg-countdown> </span>
+ 														</div>
+ 													</a>
+ 												<?php endif; ?>
 
 
+ 											<?php endforeach; ?>
+										 <?php endif; ?>
+
+									</div>
 								</div>
 							</div>
 						</div>
@@ -449,6 +483,10 @@ const $_module = {
 		window.addEventListener('resize', () => {
 		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
 	});*/
+
+	$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
+		console.log(res_list);
+	})
 	<?php
 	if ($access_account) {
 		echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";

@@ -2,12 +2,13 @@
 use App\Models\General;
 use App\Models\User;
 use Facebook\Facebook;
-
+use App\Models\M_Events;
 class C_Users extends BaseController
 {
 	public function index($user)
 	{
 		$account = User::qry_account_exists($user);
+		$current_events = M_Events::qry_events_current();
 		$agent = $this->request->getUserAgent();
 		if (count($account)) $account = $account[0];
 
@@ -20,7 +21,7 @@ class C_Users extends BaseController
 			$title = strtoupper($images[0]['nickname']).' AHORA EN ARTSBOOK-SITE';
 			$metaimage = base_url().'/images/artworks/'.$images[0]['accessname'].'.'.$images[0]['extension'];
 			$metas = ['img' => $metaimage, 'title' => $title];
-			echo $this->layout_view('basic','users/user',['path_image' => $path, 'images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
+			echo $this->layout_view('basic','users/user',['current_events' => $current_events, 'path_image' => $path, 'images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
 
 		}
 		else if (count($account) && $account['validate'] == 0) {
