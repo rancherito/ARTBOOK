@@ -125,8 +125,8 @@ class Services extends BaseController
 			$title = trim($_POST['title']);
 			$tag = htmlspecialchars($_POST['tag'], ENT_QUOTES);
 
-			if (preg_match($regtitle,$title) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales']);
-			if (preg_match($regdescription, $description) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales']);
+			if (preg_match($regtitle,$title) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales en el titulo']);
+			if (preg_match($regdescription, $description) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales en la descripción']);
 
 			$res = M_Events::qry_versus_register('0', $tag, $_SESSION['access']['user_access'], $title, $description);
 			if (count($res)) $res = $res[0];
