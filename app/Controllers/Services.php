@@ -118,8 +118,8 @@ class Services extends BaseController
 	public function event_versuslist_Save()
 	{
 		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['tag'])) {
-			$regtitle = "/^[ 0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.]+$/i";
-			$regdescription = "/^[ 0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.\n]+$/i";
+			$regtitle = "/^[ \-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.]+$/i";
+			$regdescription = "/^[ \-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.\n]+$/i";
 
 			$description = trim(preg_replace('/\s\s+/',"\n", $_POST['description']));
 			$title = trim($_POST['title']);
