@@ -49,6 +49,7 @@ if (isset($_SESSION['access'])) {
 	$routes->post('service/events/versuslist_save', 'Services::event_versuslist_Save');
 	$routes->post('service/events/apply_versus', 'Services::event_apply_versus');
 	$routes->post('service/events/versuslist', 'Services::event_versus_list_recover');
+	$routes->post('service/events/artworks_candidates', 'Services::artworks_candidates');
 	$routes->get('service/events/apply_list', 'Services::events_apply_list');
 
 	$routes->add('user/settings', 'C_Users::settings');

@@ -96,3 +96,27 @@
 	{
 		return !empty($_SESSION['access']['account']) && $_SESSION['access']['account'] == $account && $_SESSION['access']['validate'] != 0;
 	}
+	function is_access()
+	{
+		return !empty($_SESSION['access']);
+	}
+	function user_account()
+	{
+		return empty($_SESSION['access']['account']) ? '' : $_SESSION['access']['account'];
+	}
+	function user_nickname()
+	{
+		return empty($_SESSION['access']['account']) ? '' : $_SESSION['access']['nickname'];
+	}
+	function user_site()
+	{
+		return empty($_SESSION['access']['account']) ? '' : $_SESSION['access']['account_site'];
+	}
+	function user_id()
+	{
+		return empty($_SESSION['access']['account']) ? '' : $_SESSION['access']['user'];
+	}
+	function user()
+	{
+		return empty($_SESSION['access']['account']) ? '' : $_SESSION['access']['user_access'];
+	}

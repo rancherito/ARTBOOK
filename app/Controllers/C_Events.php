@@ -33,8 +33,15 @@ class C_Events extends BaseController
 		$list_participients = [];
 		foreach ($list_versus as $k => $v) {
 			$list_participients[$v['event_tag']] = M_Events::qry_versus_list($v['event_tag']);
+
+			$list_participients[$v['event_tag']] = array_map(function ($i)
+			{
+				$i['applicants'] = M_Events::qry_vs_participients($i['versus']);
+				return $i;
+			},$list_participients[$v['event_tag']]);
+
 		}
-		return $this->layout_view('public', 'versus_list',['list_versus' => $list_versus, 'list_participients' => $list_participients]);
+		return $this->layout_view('publicv2', 'events/inscriptions',['list_versus' => $list_versus, 'list_participients' => $list_participients]);
 	}
 	public function versus_recover($tag)
 	{

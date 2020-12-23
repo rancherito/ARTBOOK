@@ -89,4 +89,14 @@ class M_Events
 		$sql = "EXEC [events].[sp_versus_choise_artwork] @nickname_or_ip  = ?, @artwork = ?, @versus  = ?;";
 		return query_database($sql, [$nickname_or_ip,  $artwork, $versus]);
 	}
+	public static function qry_vs_participients($vs)
+	{
+		$sql = "SELECT u.account, u.nickname FROM events.tb_versus_inscription i, users.tb_users u WHERE id_versus = ? AND u.id_user = i.id_user";
+		return query_database($sql, [$vs]);
+	}
+	public static function qry_vs_artworks_candidates($id_versus, $user)
+	{
+		$sql = "EXEC events.sp_versus_candidates_artworks @id_versus = ?, @user = ?;";
+		return query_database($sql, [$id_versus, $user]);
+	}
 }

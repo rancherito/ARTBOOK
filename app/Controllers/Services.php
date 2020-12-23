@@ -149,6 +149,11 @@ class Services extends BaseController
 	{
 		if (!empty($_POST['tag'])) {
 			$res = M_Events::qry_versus_list($_POST['tag']);
+			$res = array_map(function ($i)
+			{
+				$i['applicants'] = M_Events::qry_vs_participients($i['versus']);
+				return $i;
+			}, $res);
 			return $this->response->setJSON($res);
 		}
 	}
@@ -168,6 +173,14 @@ class Services extends BaseController
 			return $this->response->setJSON($res);
 		}
 
+	}
+	public function artworks_candidates()
+	{
+
+		if (!empty($_POST['versus']) && is_access()) {
+			$res = M_Events::qry_vs_artworks_candidates($_POST['versus'], user());
+			return $this->response->setJSON($res);
+		}
 	}
 
 }
