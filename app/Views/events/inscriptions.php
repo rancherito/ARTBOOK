@@ -9,6 +9,8 @@
 	width: 100%;
 	border-radius: 10px;
 	height: 100%;
+	position: relative;
+	overflow: hidden;
 }
 .dashbox > i {
 	padding: 1rem 0;
@@ -25,6 +27,22 @@
 .dashbox-info-description{
 	padding: 1rem;
 	padding-top: 0;
+}
+.dashbox-promoter-mark{
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+}
+.dashbox-promoter-mark span{
+	color: white;
+	color: gray;
+}
+.dashbox-promoter-mark span::before{
+	display: block;
 }
 .dashbox-info-promoter{
 	padding: 1rem;
@@ -239,6 +257,7 @@ article h1{
 				<div id="versus-list-container" class="row">
 					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in 1 + (3 - (participients[versus.event_tag].length > 3 ? 3 : participients[versus.event_tag].length))">
 						<a class="dashbox">
+
 							<i class="mdi mdi-plus"></i>
 							<div class="dashbox-info w100 c">
 								<div class="dashbox-info-description ">
@@ -270,6 +289,9 @@ article h1{
 					</div>
 					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in participients[versus.event_tag]">
 						<a class="dashbox">
+							<div class="dashbox-promoter-mark" v-if="item.account_promoter == active_user">
+								<span class="mdi mdi-flag"></span>
+							</div>
 							<i class="mdi mdi-fire"></i>
 							<div class="dashbox-info w100 c">
 								<div class="dashbox-info-description ">
@@ -323,7 +345,7 @@ const $_module = {
 			is_send_apply: false,
 			modal_confirmar: null,
 			modal_versus_add: null,
-			active_user: '<?= is_access() ? $_SESSION['access']['account'] : ''  ?>'
+			active_user: '<?= is_access() ? user_account() : ''  ?>'
 		}
 	},
 	computed: {
