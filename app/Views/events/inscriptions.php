@@ -31,14 +31,15 @@
 .dashbox-promoter-mark{
 	position: absolute;
 	top: 1rem;
-	left: 1rem;
+	right: 1rem;
+	padding: 0 .5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 50%;
+	border-radius: 20px;
+	background: lightgray;
 }
-.dashbox-promoter-mark span{
-	color: white;
+.dashbox-promoter-mark a{
 	color: gray;
 }
 .dashbox-promoter-mark span::before{
@@ -54,7 +55,7 @@
 	justify-content: center;
 	flex-wrap: nowrap;
 }
-.dashbox-info-promoter a{
+.dashbox-info-promoter > div *{
 	padding: .25rem .5rem;
 	border-radius: 20px;
 	border: 1px solid var(--primary);
@@ -133,6 +134,7 @@ article h1{
 	line-height: 36px;
 	padding: 0 1rem;
 	left: 23px;
+	z-index: 2
 }
 @media (max-width: 600px) {
 	#versus-access-account{
@@ -200,6 +202,45 @@ article h1{
 
 		</div>
 	</div>
+	<div ref="modal_confirmar_invitation" class="modal" style="max-width: 400px">
+		<div class="modal-content" >
+
+
+
+			<a class="dashbox">
+				<i class="mdi mdi-fire"></i>
+				<div class="dashbox-info w100 c">
+					<div class="dashbox-info-description ">
+						<h3 class="dashbox-title">TEMA: {{vs_invitation.name}}</h3>
+						<div class="py-4 dashbox-description" v-if="is_acepted_invitation">
+							YA ESTAS INSCRITO EN ESTE VERSUS <br>
+							😊
+						</div>
+						<div v-else class="dashbox-description" v-html="jumplinereplace(vs_invitation.description)"></div>
+					</div>
+					<div class="dashbox-info-promoter p-0">
+						<b>Inscritos ({{vs_invitation.participients}})</b>
+						<div>
+							<span v-for="applicant of vs_invitation.applicants">{{applicant.nickname}}</span>
+						</div>
+					</div>
+				</div>
+
+			</a>
+
+		</div>
+		<div class="modal-footer">
+			<?php if (is_access()): ?>
+				<template v-if="!is_acepted_invitation">
+					<span class="btn" @click="confirm_invitation" :disabled="is_send_apply">ACEPTAR VERSUS</span>
+				</template>
+			<?php else: ?>
+				<a href="<?= base_url() ?>/user/login?fromurl=<?= base64_encode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]")?>" class="btn">LOGUEAR</a>
+			<?php endif; ?>
+			<a class="modal-close waves-effect" :class="is_acepted_invitation ? 'btn' : 'btn-flat'">{{is_acepted_invitation ? 'ACEPTAR' : 'CERRAR'}}</a>
+
+		</div>
+	</div>
 	<div ref="modal_versus_add" class="modal" style="max-width: 400px">
 		<form @submit.prevent="submit">
 			<div id="versus-apply-content">
@@ -222,6 +263,7 @@ article h1{
 			</div>
 		</form>
 	</div>
+
 	<?=  count($list_versus) ? '' : bg_default()?>
 	<div id="versus-content-off" class="f-c" style="display: <?= count($list_versus) ? 'none' : 'flex' ?>">
 		<img src="<?= base_url() ?>/images/vs_logo.png">
@@ -233,7 +275,7 @@ article h1{
 	</div>
 	<div id="versus-list" style="display: <?= count($list_versus) == 0 ? 'none' : 'block' ?>">
 		<?php if (empty($_SESSION['access'])): ?>
-			<a href="<?= base_url() ?>/user/login?fromurl=<?= "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>" id="versus-access-account-movil">
+			<a href="<?= base_url() ?>/user/login?fromurl=<?= base64_encode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") ?>" id="versus-access-account-movil">
 				ACCEDE AQUI Y PARTICIPA
 			</a>
 		<?php endif; ?>
@@ -280,8 +322,8 @@ article h1{
 										<span>Nuevo</span>
 									</a>
 								<?php else: ?>
-									<a id="versus-access-account" class="btn" href="<?= base_url() ?>/user/login?fromurl=<?= "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>">
-										<span>ACCEDE AQUI Y PARTICIPA</span>
+									<a id="versus-access-account" class="btn" href="<?= base_url() ?>/user/login?fromurl=<?= base64_encode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") ?>">
+										<span>PRIMERO LOGUEAR</span>
 									</a>
 								<?php endif; ?>
 							</div>
@@ -289,8 +331,10 @@ article h1{
 					</div>
 					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in participients[versus.event_tag]">
 						<a class="dashbox">
-							<div class="dashbox-promoter-mark" v-if="item.account_promoter == active_user">
-								<span class="mdi mdi-flag"></span>
+
+							<div class="dashbox-promoter-mark">
+								<a v-if="item.account_promoter == active_user" class="px-1 mdi mdi-flag"></a>
+								<a style="cursor: pointer" class="px-1 mdi mdi-share-variant" @click="generatelinkshare(item)"></a>
 							</div>
 							<i class="mdi mdi-fire"></i>
 							<div class="dashbox-info w100 c">
@@ -301,7 +345,7 @@ article h1{
 								<div class="dashbox-info-promoter">
 									<b>Inscritos ({{item.participients}})</b>
 									<div>
-										<a :href="'<?= base_url() ?>/'+applicant.account" v-for="applicant in item.applicants">{{applicant.nickname}}</a>
+										<a :href="'<?= base_url() ?>/'+applicant.account" v-for="applicant of item.applicants">{{applicant.nickname}}</a>
 									</div>
 								</div>
 							</div>
@@ -345,7 +389,10 @@ const $_module = {
 			is_send_apply: false,
 			modal_confirmar: null,
 			modal_versus_add: null,
-			active_user: '<?= is_access() ? user_account() : ''  ?>'
+			modal_confirmar_invitation: null,
+			active_user: '<?= is_access() ? user_account() : ''  ?>',
+			vs_invitation: <?= json_encode($invitation) ?>,
+			is_acepted_invitation: false
 		}
 	},
 	computed: {
@@ -355,15 +402,27 @@ const $_module = {
 	},
 	mounted: function () {
 
-		$.post('<?= base_url() ?>/service/events/artworks_candidates',{versus: 26}, res => {
-			console.log(454545);
-			console.log(res);
-		})
+		/*$.post('<?= base_url() ?>/service/events/artworks_candidates',{versus: 26}, res => {
+
+		})*/
     	this.modal_confirmar = $(this.$refs.modal_confirmar).modal();
 		this.modal_versus_add = $(this.$refs.modal_versus_add).modal();
-		//this.modal_versus_add.modal('open')
+		this.modal_confirmar_invitation = $(this.$refs.modal_confirmar_invitation).modal();
+		if (this.vs_invitation.versus != undefined) {
+			this.is_acepted_invitation = this.calcule_participation(this.vs_invitation.applicants)
+			this.modal_confirmar_invitation.modal('open')
+		}
 	},
 	methods: {
+		confirm_invitation: function () {
+			this.current_versus_apply = this.vs_invitation
+			this.confirm_apply();
+		},
+		generatelinkshare: function (info) {
+			copyStringToClipboard(`<?= base_url() ?>/events/versus?id=${info.versus}`);
+			M.toast({html: 'Link de ' + info.name +' copiado con exito', classes: 'rounded bg-primary'});
+			//console.log();
+		},
 		calcule_participation: function (applicants) {
 			let active = false;
 			for (var applicant of applicants) active |= applicant.account == this.active_user
@@ -393,6 +452,7 @@ const $_module = {
 			$.post('<?= base_url() ?>/service/events/apply_versus', data, (res) => {
 				M.toast({html: res.message, classes: 'rounded'});
 				this.modal_confirmar.modal('close')
+				this.modal_confirmar_invitation.modal('close');
 				this.is_send_apply = false
 				const dataupdate = {tag: this.current_versus_apply.tag}
 				$.post('<?= base_url() ?>/service/events/versuslist', dataupdate, (res) => {

@@ -129,7 +129,7 @@
 					newAccountMode: false,
 					loading: false,
 					register_ok: false,
-					fromurl: <?= empty($_GET['fromurl']) ? 'null' : "'$_GET[fromurl]'" ?>
+					fromurl: <?= empty($_GET['fromurl']) ? 'null' : "'".base64_decode($_GET['fromurl'])."'" ?>
 				},
 				computed:{
 					isvalid: function () {
