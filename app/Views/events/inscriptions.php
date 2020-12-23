@@ -54,9 +54,9 @@
 	justify-content: center;
 	flex-wrap: nowrap;
 }
-.dashbox-info-promoter span{
+.dashbox-info-promoter a{
 	padding: .25rem .5rem;
-	border-radius: 10px;
+	border-radius: 20px;
 	border: 1px solid var(--primary);
 	margin: 2px;
 }
@@ -301,7 +301,7 @@ article h1{
 								<div class="dashbox-info-promoter">
 									<b>Inscritos ({{item.participients}})</b>
 									<div>
-										<span v-for="applicant in item.applicants">{{applicant.nickname}}</span>
+										<a :href="'<?= base_url() ?>/'+applicant.account" v-for="applicant in item.applicants">{{applicant.nickname}}</a>
 									</div>
 								</div>
 							</div>
