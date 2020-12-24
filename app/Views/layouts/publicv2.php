@@ -42,6 +42,37 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 	#app-body{
 		background-color: var(--primary);
 	}
+	#app-user-card{
+		position: absolute;
+		top: 2rem;
+		right: 2rem;
+		background-color: white;
+		border-radius: 20px;
+		height: 36px;
+		display: flex;
+		flex-direction: row-reverse;
+		align-items: center;
+		z-index: 4;
+		color: gray;
+		padding: 0 2px;
+	}
+	#app-user-card i{
+		background-color: var(--primary);
+		color: white;
+		height: 34px;
+		width: 34px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		font-style: normal;
+		text-transform: capitalize;
+		font-size: 1.5rem;
+		font-family: Calibri;
+	}
+	#app-user-card span{
+		padding: 1rem;
+	}
 	aside{
 		width: var(--navaside_width);
 		position: fixed;
@@ -116,6 +147,11 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		display: none;
 	}
 	@media (max-width: 600px){
+		#app-user-card{
+			top: 1rem;
+			right: 1rem;
+		}
+
 		aside {
 			z-index: 2;
 			transform: translateX(-100%);
@@ -142,6 +178,9 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 </head>
 <body>
 	<div id="app-body">
+
+
+
 		<aside :class="{'app-aside-nav-close': toggle_nav}">
 			<div id="app-aside-nav-toggle" class="bg-primary" @click="toggle_nav = !toggle_nav"><i class="mdi mdi-menu"></i></div>
 			<div class="f-c w100">
@@ -161,6 +200,21 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		</aside>
 		<section id="app-module">
 			<div id="app-module-content">
+				<?php if (is_access()): ?>
+					<a id="app-user-card" href="<?= user_site() ?>">
+						<?php if (has_user_avatar()): ?>
+							<i class="cover" style="background-image: url('<?= user_avatar() ?>')"></i>
+						<?php else: ?>
+							<i class="f-c"> <?= user_account()[0] ?> </i>
+						<?php endif; ?>
+						<span><?= user_nickname() ?></span>
+					</a>
+				<?php else: ?>
+					<a id="app-user-card" href="<?= base_url() ?>/user/login">
+						<i class="mdi mdi-account"></i>
+						<span>LOGIN</span>
+					</a>
+				<?php endif; ?>
 				<module></module>
 			</div>
 		</section>

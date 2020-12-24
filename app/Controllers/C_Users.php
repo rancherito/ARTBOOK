@@ -15,7 +15,7 @@ class C_Users extends BaseController
 		if (count($account) && $account['validate'] == 1) {
 			$user_account = md5($account['user']);
 			$partial_path = "images/avatars/avatar_$user_account.jpg";
-			$path = file_exists($partial_path) ?base_url()."/$partial_path?v=".rand() : '';
+			$path = file_exists($partial_path) ?base_url()."/$partial_path?v=".date("Ymd") : '';
 			unset($account['user']);
 			$images = General::qry_images_recover($user);
 			$title = strtoupper($images[0]['nickname']).' AHORA EN ARTSBOOK-SITE';

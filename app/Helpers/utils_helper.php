@@ -120,3 +120,15 @@
 	{
 		return empty($_SESSION['access']['account']) ? '' : $_SESSION['access']['user_access'];
 	}
+	function has_user_avatar($user_id = '')
+	{
+		if($user_id == '') $user_id = user_id();
+		return file_exists("images/avatars/avatar_".md5($user_id).".jpg");
+	}
+	function user_avatar($user_id = '')
+	{
+		if($user_id == '') $user_id = user_id();
+		$user_account = md5($user_id);
+		$partial_path = "images/avatars/avatar_$user_account.jpg";
+		return file_exists($partial_path) ?  base_url()."/$partial_path?v=".date("Ymd") : '';
+	}
