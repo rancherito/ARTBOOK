@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'e8a8356ecf8f33eaabefe5d037d22fc9b10a2f01',
+    'reference' => '7b6acff00406992fcabb66ef5f49cecc724fd790',
     'name' => 'codeigniter4/framework',
   ),
   'versions' => 
@@ -50,7 +50,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'e8a8356ecf8f33eaabefe5d037d22fc9b10a2f01',
+      'reference' => '7b6acff00406992fcabb66ef5f49cecc724fd790',
     ),
     'doctrine/instantiator' => 
     array (
@@ -79,6 +79,24 @@ private static $installed = array (
         0 => '1.9.x-dev',
       ),
       'reference' => '5ffe7db6c80f441f150fc88008d64e64af66634b',
+    ),
+    'gumlet/php-image-resize' => 
+    array (
+      'pretty_version' => '1.9.2',
+      'version' => '1.9.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '06339a9c1b167acd58173db226f57957a6617547',
+    ),
+    'hashids/hashids' => 
+    array (
+      'pretty_version' => '4.1.0',
+      'version' => '4.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8cab111f78e0bd9c76953b082919fc9e251761be',
     ),
     'kint-php/kint' => 
     array (
@@ -176,12 +194,12 @@ private static $installed = array (
     ),
     'phpspec/prophecy' => 
     array (
-      'pretty_version' => '1.12.1',
-      'version' => '1.12.1.0',
+      'pretty_version' => '1.12.2',
+      'version' => '1.12.2.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8ce87516be71aae9b956f81906aaf0338e0d8a2d',
+      'reference' => '245710e971a030f42e08f4912863805570f23d39',
     ),
     'phpunit/php-code-coverage' => 
     array (

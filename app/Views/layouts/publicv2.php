@@ -3,7 +3,7 @@
 use Config\App;
 $pre_metas = [
 	'img' => base_url()."/images/meta.png",
-	'title' => 'ARTS BOOK SITEWEB',
+	'title' => 'ARTS BOOK',
 	'description' => 'Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art\'s Book 😁'
 ];
 

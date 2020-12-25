@@ -42,6 +42,14 @@ class ComposerStaticInit9b37282ca75613bf4c50c1f162e0e1a6
         array (
             'Kint\\' => 5,
         ),
+        'H' => 
+        array (
+            'Hashids\\' => 8,
+        ),
+        'G' => 
+        array (
+            'Gumlet\\' => 7,
+        ),
         'F' => 
         array (
             'Faker\\' => 6,
@@ -96,6 +104,14 @@ class ComposerStaticInit9b37282ca75613bf4c50c1f162e0e1a6
         'Kint\\' => 
         array (
             0 => __DIR__ . '/..' . '/kint-php/kint/src',
+        ),
+        'Hashids\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hashids/hashids/src',
+        ),
+        'Gumlet\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gumlet/php-image-resize/lib',
         ),
         'Faker\\' => 
         array (

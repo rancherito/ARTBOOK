@@ -2,6 +2,8 @@
 use App\Models\General;
 use App\Models\User;
 use App\Models\M_Events;
+use \Gumlet\ImageResize;
+use Hashids\Hashids;
 class Services extends BaseController
 {
 	public function account_create()
@@ -79,10 +81,16 @@ class Services extends BaseController
 			$key = General::qry_images_salvar($id_image, '', $ext, 0, 0, '1', '2', $name);
 			$key_value = $key[0]['KeyItem'];
 
-			$namefile = md5($key_value.$name.getdate()[0]);
+			$hashids = new Hashids('', 0, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUW');
+			$namefile = $hashids->encode($key_value.getdate()[0]); //md5($key_value.$name.getdate()[0]);
 			$file = "images/artworks/$namefile.$ext";
 			file_put_contents($file, $data);
 			list($ancho, $alto) = getimagesize($file);
+
+			$image = new ImageResize($file);
+			$image->resizeToShortSide(300);
+			$image->crop(300, 300, true, ImageResize::CROPCENTER);
+			$image->save("images/artworks_lite/$namefile.jpg");
 
 			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, $_POST['author'], '2', $name,$description);
 

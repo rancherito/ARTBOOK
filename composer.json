@@ -13,7 +13,9 @@
 		"kint-php/kint": "^3.3",
 		"laminas/laminas-escaper": "^2.6",
 		"psr/log": "^1.1",
-		"facebook/graph-sdk": "^5.7"
+		"facebook/graph-sdk": "^5.7",
+		"gumlet/php-image-resize": "1.9.*",
+		"hashids/hashids": "^4.1"
 	},
 	"require-dev": {
 		"codeigniter4/codeigniter4-standard": "^1.0",

@@ -45,6 +45,7 @@ $RECYCLE.BIN/
 .vagrant
 Vagrantfile.dist
 public/images/artworks/*.jpg
+public/images/artworks_lite/*.jpg
 public/images/avatars/*.jpg
 public/images/artworks/*.png
 #-------------------------
