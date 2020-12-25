@@ -15,12 +15,16 @@ class Home extends BaseController
 	public function artwork_recover($artwork)
 	{
 		$res = General::qry_artwork_recover($artwork);
-		$top_nine = [];
 		if (count($res)) {
 			$res = $res[0];
 			$top_nine = General::qry_top9_artworks_list($res['account']);
+			$metaimage = base_url().'/images/artworks_lite/'.$artwork.'.'.$res['extension'];
+			$title = $res['name'];
+			$description = isset($res['description']) ? $res['description'] : 'Autor de la obra: '.$res['nickname'];
+			$metas = ['img' => $metaimage, 'title' => $title, 'description' => $description];
+			echo $this->layout_view('publicv2','artwork',['artwork' => $res, 'others_artworks' => $top_nine]);
 		}
-		echo $this->layout_view('publicv2','artwork',['artwork' => $res, 'others_artworks' => $top_nine]);
+		else throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 	}
 	public function access()
 	{
