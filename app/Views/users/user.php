@@ -459,7 +459,7 @@ $access_account = is_self_account($info['account']);
 							</div>
 						</div>
 					</div>
-					<cg-grid id="user_grid" ref='grid' @changeimage="modify_image" @events_list="events_list" :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
+					<cg-grid base_url="<?= base_url() ?>" id="user_grid" ref='grid' @changeimage="modify_image" @events_list="events_list" :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
 
 				</div>
 
