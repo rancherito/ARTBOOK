@@ -233,8 +233,7 @@
 .cg-grid-artwork-content{
 	position: relative;
 }
-.cg-grid-artwork-content::after{
-	content: '';
+.cg-grid-artwork-curtain{
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -246,6 +245,9 @@
 	transition: linear all .2s;
 	opacity: 0;
 }
+.cg-grid-artwork-curtain a{
+	
+}
 .cg-grid-artwork-name{
 	position: absolute;
 	bottom: .5rem;
@@ -256,9 +258,8 @@
 	color: white;
 	opacity: 0;
 	transform: translateX(-150%);
-	cursor: pointer;
 }
-.cg-grid-image:hover .cg-grid-artwork-content::after{
+.cg-grid-image:hover .cg-grid-artwork-curtain{
 	opacity: 1;
 }
 .cg-grid-image:hover .cg-grid-artwork-name{

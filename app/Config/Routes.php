@@ -15,6 +15,8 @@ session();
 $routes->get('/', 'Home');
 $routes->get('user/close', 'Utils::close_session');
 $routes->add('user/login', 'Home::access');
+$routes->get('artwork/view/(:alphanum)', 'Home::artwork_recover/$1');
+
 $routes->add('user/revocar',  function ()
 {
 	echo "Lamentamos que tegas que irte de nuestra plataforma :'c'";

@@ -12,6 +12,16 @@ class Home extends BaseController
 		$feed = General::qry_feedpage();
 		echo $this->layout_view('public','index',['images_list' => $images, 'feed' => $feed, 'agent' => $agent, 'current_events' => $current_events]);
 	}
+	public function artwork_recover($artwork)
+	{
+		$res = General::qry_artwork_recover($artwork);
+		$top_nine = [];
+		if (count($res)) {
+			$res = $res[0];
+			$top_nine = General::qry_top9_artworks_list($res['account']);
+		}
+		echo $this->layout_view('publicv2','artwork',['artwork' => $res, 'others_artworks' => $top_nine]);
+	}
 	public function access()
 	{
 		if (isset($_SESSION['access'])) {

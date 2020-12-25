@@ -214,13 +214,16 @@ Vue.component('cg-grid-image', {
 			<div class="cg-grid-artwork-name">
 
 				<div class="cg-grid-info"  v-if="!is_on_profile">
-					<div  class="cg-grid-avatar" @click="redirect">{{info.nickname[0]}}</div>
+					<a class="cg-grid-avatar" :href="site">{{info.nickname[0]}}</a>
 					<div class="cg-grid-autor">
 						<div>{{info.name}}</div>
-						<span class="grid-images" @click="redirect">{{info.nickname}}</span>
+						<span class="grid-images">{{info.nickname}}</span>
 					</div>
 				</div>
 			</div>
+			<a class="cg-grid-artwork-curtain f-c" :href="site_image">
+				<i class="mdi mdi-eye mdi-24px white-text"></i>
+			</a>
 		</div>
 
 
@@ -231,10 +234,19 @@ Vue.component('cg-grid-image', {
 			base64: null
 		}
 	},
+	computed: {
+		site: function () {
+			return this.base_url + '/' + this.info.account
+		},
+		site_image: function () {
+			return this.base_url + '/artwork/view/' + this.info.accessname
+		}
+	},
 	methods: {
 		calculeimage: function () {
 			return `images/artworks/${this.info.accessname}.${this.info.extension}`;
 		},
+
 		redirect: function () {
 			window.location.href = this.info.account
 		},
@@ -262,7 +274,8 @@ Vue.component('cg-grid-image', {
 	props: {
 		info: Object,
 		is_on_account:  Boolean,
-		is_on_profile: Boolean
+		is_on_profile: Boolean,
+		base_url: String
 	},
 
 	mounted: function () {
@@ -274,7 +287,7 @@ Vue.component('cg-grid',{
 	<div class="cg-grid-wrapper" ref="wrap">
 		<div ref="menu" class="cg-grid">
 			<div v-for="img of images" class="cg-grid-wrapper-img" :style="{ width: stack_size + 'px', height: (img.adsense ? stack_size + 'px' : 'auto')}">
-				<cg-grid-image v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" @events="$emit('events_list', $event)" :info="img" :is_on_profile="is_on_profile" :is_on_account="is_on_account"></cg-grid-image>
+				<cg-grid-image :base_url="base_url" v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" @events="$emit('events_list', $event)" :info="img" :is_on_profile="is_on_profile" :is_on_account="is_on_account"></cg-grid-image>
 				<div class="cg-grid-adsense" v-else style="height: 100%; width: 100%" :id="img.id"></div>
 			</div>
 		</div>

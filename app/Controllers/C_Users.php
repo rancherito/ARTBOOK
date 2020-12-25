@@ -43,6 +43,7 @@ class C_Users extends BaseController
 				$access = C_Users::login_validate_internal($user['account'], $user['pass']);
 				if($access['access'] == 1){
 					User::account_activate($user['id_user']);
+					C_Users::login_validate_internal($user['account'], $user['pass']);
 					return redirect()->to(base_url().'/'.$user['account']);
 				}
 			}

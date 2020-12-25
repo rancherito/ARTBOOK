@@ -44,8 +44,8 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 	}
 	#app-user-card{
 		position: absolute;
-		top: 2rem;
-		right: 2rem;
+		top: 1rem;
+		right: 1rem;
 		background-color: white;
 		border-radius: 20px;
 		height: 36px;
@@ -100,7 +100,6 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		position: relative;
 		height: 100%;
 		width: 100%;
-		padding: 1rem;
 		background: #f9f9f9;
 		border-radius: 10px;
 		overflow-y: auto;
@@ -200,22 +199,23 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		</aside>
 		<section id="app-module">
 			<div id="app-module-content">
-				<?php if (is_access()): ?>
-					<a id="app-user-card" href="<?= user_site() ?>">
-						<?php if (has_user_avatar()): ?>
-							<i class="cover" style="background-image: url('<?= user_avatar() ?>')"></i>
-						<?php else: ?>
-							<i class="f-c"> <?= user_account()[0] ?> </i>
-						<?php endif; ?>
-						<span><?= user_nickname() ?></span>
-					</a>
-				<?php else: ?>
-					<a id="app-user-card" href="<?= base_url() ?>/user/login">
-						<i class="mdi mdi-account"></i>
-						<span>LOGIN</span>
-					</a>
-				<?php endif; ?>
-				<module></module>
+					<?php if (is_access()): ?>
+						<a id="app-user-card" href="<?= user_site() ?>">
+							<?php if (has_user_avatar()): ?>
+								<i class="cover" style="background-image: url('<?= user_avatar() ?>')"></i>
+							<?php else: ?>
+								<i class="f-c"> <?= user_account()[0] ?> </i>
+							<?php endif; ?>
+							<span><?= user_nickname() ?></span>
+						</a>
+					<?php else: ?>
+						<a id="app-user-card" href="<?= base_url() ?>/user/login">
+							<i class="mdi mdi-account"></i>
+							<span>LOGIN</span>
+						</a>
+					<?php endif; ?>
+					<module></module>
+
 			</div>
 		</section>
 
