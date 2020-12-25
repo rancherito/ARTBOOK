@@ -113,7 +113,7 @@
 	<div id="app-artwork" class="f-b">
 		<simplebar id="app-artwork-image-info">
 			<div id="app-artwork-image-content">
-				<img id="app-artwork-image"  src="<?= base_url() ?>/images/artworks/<?= $artwork['accessname'] ?>.jpg" alt="<?= $artwork['accessname'] ?>">
+				<img id="app-artwork-image"  src="<?= base_url() ?>/images/artworks/<?= $artwork['accessname'].'.'.$artwork['extension'] ?>" alt="<?= $artwork['accessname'] ?>">
 			</div>
 			<div id="app-artwork-image-description" class="container">
 				<div class="author f-b">
@@ -141,7 +141,7 @@
 					<div class="image-simple-grid">
 						<canvas width="160" height="160"></canvas>
 						<?php
-							$path = base_url().'/images/artworks/'.$other_artwork['accessname'].'.jpg';
+							$path = base_url().'/images/artworks/'.$other_artwork['accessname'].'.'.$other_artwork['extension'];
 							$path_url = base_url().'/artwork/view/'.$other_artwork['accessname']
 						?>
 						<a href="<?= $path_url ?>" class="cover" style="background-image: url('<?= $path ?>')"></a>

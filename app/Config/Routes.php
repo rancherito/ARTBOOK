@@ -16,6 +16,18 @@ $routes->get('/', 'Home');
 $routes->get('user/close', 'Utils::close_session');
 $routes->add('user/login', 'Home::access');
 $routes->get('artwork/view/(:alphanum)', 'Home::artwork_recover/$1');
+$routes->add('user/login_fb', 'C_Users::login_fb');
+$routes->add('user/login_fbauth', 'C_Users::login_fbauth');
+$routes->add('user/activation/([a-zA-Z0-9_]+)/(:alphanum)', 'C_Users::account_validate/$1/$2');
+$routes->add('events/challenges',  'C_Events::chanllenges_votes');
+$routes->add('events/versus',  'C_Events::versus_list');
+$routes->post('services/events/challenges/votes_save', 'C_Events');
+$routes->post('services/events/versus/votes_save', 'Services::vs_artwork_choise');
+$routes->post('services/getaccess', 'Services::login_validate');
+$routes->post('services/account/create', 'Services::account_create');
+
+$routes->add('generateimages',  'Utils::resizeimage');
+
 
 $routes->add('user/revocar',  function ()
 {
@@ -26,22 +38,6 @@ $routes->add('user/politicas',  function ()
 {
 	echo "No spam, no contenido pornografico, banneo si se incumple las reglas basicas";
 });
-
-$routes->add('user/login_fb', 'C_Users::login_fb');
-
-$routes->add('user/login_fbauth', 'C_Users::login_fbauth');
-
-
-$routes->add('user/activation/([a-zA-Z0-9_]+)/(:alphanum)', 'C_Users::account_validate/$1/$2');
-$routes->add('events/challenges',  'C_Events::chanllenges_votes');
-$routes->add('events/versus',  'C_Events::versus_list');
-
-
-$routes->post('services/events/challenges/votes_save', 'C_Events');
-$routes->post('services/events/versus/votes_save', 'Services::vs_artwork_choise');
-$routes->post('services/getaccess', 'Services::login_validate');
-$routes->post('services/account/create', 'Services::account_create');
-
 
 if (isset($_SESSION['access'])) {
 

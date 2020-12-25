@@ -88,8 +88,8 @@ class Services extends BaseController
 			list($ancho, $alto) = getimagesize($file);
 
 			$image = new ImageResize($file);
-			$image->resizeToShortSide(300);
-			$image->crop(300, 300, true, ImageResize::CROPCENTER);
+			$image->resizeToShortSide(400);
+			$image->crop(400, 400, true, ImageResize::CROPCENTER);
 			$image->save("images/artworks_lite/$namefile.jpg");
 
 			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, $_POST['author'], '2', $name,$description);
