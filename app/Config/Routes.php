@@ -26,8 +26,6 @@ $routes->post('services/events/versus/votes_save', 'Services::vs_artwork_choise'
 $routes->post('services/getaccess', 'Services::login_validate');
 $routes->post('services/account/create', 'Services::account_create');
 
-$routes->add('generateimages',  'Utils::resizeimage');
-
 
 $routes->add('user/revocar',  function ()
 {
@@ -84,7 +82,6 @@ $routes->add('testemail', function ()
 		print_r($data);
 	}
 });
-$routes->add('recortar', 'Utils::image');
 if (file_exists(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php'))
 {
 	require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
