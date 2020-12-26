@@ -33,11 +33,13 @@ Vue.component('lateral-modal',{
 })
 Vue.component('upload-editor',{
 	template: `
-	<div class="upload-editor" v-show="isOpen">
+	<div class="upload-editor" v-show="isOpen" :class="{'upload-description-add': steps >= 2}">
 		<a class="btn btn-floating upload-editor-close" @click="close"> <i class="mdi-18px mdi mdi-close"></i> </a>
 		<div class="upload-editor-file">
 			<div class="upload-editor-wrapper-file">
+				<span class="upload-editor-text">Recorte y vista previa</span>
 				<div class="upload-editor-cropper">
+					<span class="upload-editor-text-waiting" v-if="!isLoadImage">{{loading_artwork_text}}</span>
 					<cropper style="" ref="cropper" :src="img" @change="change" :default-size="defaultSize"></cropper>
 				</div>
 				<div class="upload-editor-buttons-upload">
@@ -46,48 +48,40 @@ Vue.component('upload-editor',{
 							<i class="mdi mdi-upload left"></i>
 							<span>{{ steps > 0 ? 'SUBIR OTRA IMAGEN' : 'SUBIR UNA IMAGEN'}}</span>
 						</a>
-						<input v-show="false" type="file" accept="image/x-png,image/jpeg" @change="onUploadFile">
+						<input ref="input" v-show="false" type="file" accept="image/x-png,image/jpeg" @change="onUploadFile">
 					</label>
-
 					<a class="btn ml-1" v-show="steps > 0" @click="steps = 2"> <i class="mdi mdi-arrow-right" :class="{right: isModify}"></i> <span v-if="isModify">Siguiente</span></a>
 				</div>
 			</div>
 		</div>
 		<div class="upload-editor-wrapper-description" style="display: none" v-show="steps == 2">
 			<div class="upload-editor-description">
+				<span class="upload-editor-text-details">Describa su obra</span>
 				<div class="upload-editor-preview f-c">
-					<img :src="image" class="upload-editor-image-blur" width="460" height="460">
-					<img :src="image" class="upload-editor-image-view" width="460" height="460">
+					<img :src="image" class="upload-editor-image-view">
 				</div>
 				<form class="f-c" @submit.prevent="submit">
 					<div>
+
 						<cg-field required v-model.trim="name" :watchisvalid.sync="name_isvalid" sizechars="4-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
-						<cg-field required empty v-model.trim="description" :watchisvalid.sync="description_isvalid" sizechars="0-500" label="Descripcion de la obra" placeholder="descripcion..."></cg-field>
-						<cg-select v-show="author != 'current'" required v-model="author" :watchisvalid.sync="author_isvalid" label="Autor" novalues="-1">
-							<option value="-1" disabled>seleccione autor</option>
-							<option :value="autor.id_user" v-for="autor in autors">{{autor.nickname}}</option>
-						</cg-select>
+						<cg-textbox required empty v-model.trim="description" :watchisvalid.sync="description_isvalid" sizechars="0-500" label="Descripcion de la obra" placeholder="descripcion..."></cg-textbox>
+
 						<div class="r">
 							<a class="btn" @click="steps = 1"> <i class="mdi mdi-arrow-left"></i></a>
 							<cg-button :disabled="!isvalid" :loading="load.isUploading" :progress="load.progress"></cg-button>
 						</div>
 					</div>
-
-
 				</form>
 			</div>
 		</div>
-
 	</div>
 	`,
 	data: function () {
 		return {
+			loading_artwork_text: 'CARGANDO ARTWORK..',
 			img: null,
-			id: '',
-			author: '-1',
 			name: '',
 			description: '',
-			author_isvalid: false,
 			name_isvalid: false,
 			description_isvalid: false,
 			isOpen: false,
@@ -112,7 +106,7 @@ Vue.component('upload-editor',{
 	},
 	computed: {
 		isvalid: function () {
-			return this.author_isvalid && this.name_isvalid && this.description_isvalid && this.isLoadImage
+			return this.name_isvalid && this.description_isvalid && this.isLoadImage
 		}
 	},
 	methods: {
@@ -122,29 +116,15 @@ Vue.component('upload-editor',{
 			height: imageSize.height,
 		  };
 		},
-		setData: function (newData) {
-			this.isModify = true
-			this.img = newData.img
-			this.id = newData.id
-			this.author = newData.author
-			this.description = newData.description
-			this.name = newData.name
-			this.extensionimage = newData.extension
-
-		},
 		newRegister: function () {
 			this.isModify = false
 			this.img = null
-			this.id = ''
-			this.author = 'current'
 			this.description = ''
 			this.name = ''
 			this.extensionimage = ''
 		},
 		submit: function () {
 			const datos = {
-				key: this.id,
-				author: this.author,
 				workname: this.name,
 				description: this.description,
 				image: this.image
@@ -162,18 +142,21 @@ Vue.component('upload-editor',{
 			}).then (data => {
 				this.close();
 				this.$emit('onfinish', data.data)
+				console.log(data.data);
 				this.load.isUploading = false
 			})
 		},
 		change({coordinates, canvas}) {
 
-			this.image = canvas.toDataURL('image/jpeg', 0.8)
+			console.log(canvas.height);
+			console.log(canvas.width);
+
+			this.image = canvas.toDataURL('image/jpeg', 0.85)
 
 			this.steps = 1
-			if (!this.isLoadImage) {
-				this.isLoadImage = true
+			this.isLoadImage = true
 				//this.$refs.cropper.setCoordinates((coordinates, imageSize) => ({width: imageSize.width,height: imageSize.height}))
-			}
+
 		},
 		onUploadFile: function (e) {
 			if (e.target.files[0]) this.loadFile(e.target.files[0])
@@ -183,9 +166,31 @@ Vue.component('upload-editor',{
 			const reader = new FileReader();
 			this.isLoadImage = false
 			reader.addEventListener("load", e => {
-				this.img = reader.result
+
+				const image = new Image();
+				image.addEventListener('load', () => {
+					const limit = 2000
+
+
+					const max = Math.max(image.naturalHeight, image.naturalWidth)
+					if (max > limit) {
+						this.loading_artwork_text = 'LIMITE DE ' + limit + 'px EXEDIDOS, REDIMENCIONANDO...'
+						const new_canvas = $('<canvas></canvas>')[0];
+						const ctx = new_canvas.getContext('2d');
+						new_canvas.height = image.naturalHeight
+						new_canvas.width = image.naturalWidth
+						const scale = limit / max
+						ctx.drawImage(image,0,0)
+						this.img = downScaleCanvas(new_canvas, scale).toDataURL(file.type)
+						//this.loading_artwork_text = 'LISTO'
+					}
+					else this.img = image.src
+				})
+				image.src = reader.result;
+				this.loading_artwork_text = 'PREPARANDO ARTWORK...'
 				this.extensionimage = file.type
 			}, false);
+			this.loading_artwork_text = 'CARGANDO ARTWORK...'
 			reader.readAsDataURL(file);
 		},
 		close: function () {
@@ -195,10 +200,12 @@ Vue.component('upload-editor',{
 			this.isLoadImage = false
 		},
 		open: function () {
+			this.loading_artwork_text = 'CARGANDO ARTWORK...'
 			this.isOpen = true
 			this.steps = 0
 			this.img = null
 			this.isLoadImage = false
+			$(this.$refs.input).trigger('click')
 		}
 	}
 })
@@ -212,7 +219,6 @@ Vue.component('cg-grid-image', {
 		<div class="cg-grid-artwork-content">
 			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
 			<div class="cg-grid-artwork-name">
-
 				<div class="cg-grid-info"  v-if="!is_on_profile">
 					<a class="cg-grid-avatar" :href="site">{{info.nickname[0]}}</a>
 					<div class="cg-grid-autor">
@@ -225,8 +231,6 @@ Vue.component('cg-grid-image', {
 				<i class="mdi mdi-eye mdi-24px white-text"></i>
 			</a>
 		</div>
-
-
 	</div>
 	`,
 	data: function () {
@@ -243,6 +247,7 @@ Vue.component('cg-grid-image', {
 		}
 	},
 	methods: {
+
 		calculeimage: function () {
 			return `images/artworks/${this.info.accessname}.${this.info.extension}`;
 		},

@@ -88,7 +88,7 @@
 	font-size: .8rem;
 }
 .upload-editor{
-	background: #1e1e2b;
+	background: rgba(0,0,0,0.6);
 	position: fixed;
 	right: 0;
 	bottom: 0;
@@ -101,13 +101,13 @@
 }
 
 .upload-editor form{
-	height: 460px;
-	width: 400px;
+	padding: 3rem 0;
+	width: 100%;
 	background: white;
 }
 .upload-editor form > div{
 	width: 100%;
-	max-width: 300px;
+	padding: 2rem;
 }
 .upload-editor-wrapper-description{
 	position: fixed;
@@ -118,12 +118,15 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: #1e1e2b;
 }
 .upload-editor-description{
 	display: flex;
+	flex-direction: column;
 	border-radius: 10px;
 	overflow: hidden;
+	max-width: 500px;
+	width: 100%;
+	background: white;
 }
 .upload-editor-file{
 	position: fixed;
@@ -141,13 +144,12 @@
 	position: absolute;
 	top: 1rem;
 	right: 1rem;
-	background: #ffffff1a;
+	background: rgba(255,255,255,.1);
 }
 .upload-editor-close:hover{
-	background: #ffffff1f;
+	background: rgba(255,255,255,.2);
 }
 .upload-editor-close i{
-
 	color: white
 }
 .upload-editor-firts-upload{
@@ -186,12 +188,19 @@
 .upload-editor-preview{
 	position: relative;
 	color: white;
-	background: black;
-	height: 460px;
-	width: 460px;
+	background: #949494;
+	height: 300px;
+	width: 100%;
+	overflow: hidden;
+
+	border: 1rem solid #949494;
 }
 .upload-editor-preview img{
 	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
 }
 .upload-editor-image-blur{
 	object-fit: cover;
@@ -216,14 +225,45 @@
 }
 .upload-editor-wrapper-file{
 	width: 100%;
-	max-width: 500px;
+	max-width: 600px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	background: white;
+	border-radius: 10px;
+	overflow: hidden;
+	position: relative;
+}
+.upload-editor-text{
+	width: 100%;
+	font-size: 1.2rem;
+	color: gray;
+	background-color: white;
+	height: 4rem;
+	display: flex;
+	align-items: center;
+	padding: 0 2rem;
 }
 .upload-editor-cropper{
-	padding: 1rem;
-	max-height: 600px;
+	position: relative;
+	border: solid 1rem #949494;
+	max-height: 700px;
+	background-color: #949494;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.upload-description-add .upload-editor-file{
+	opacity: 0;
+	pointer-events: none;
+}
+.upload-editor-text-details{
+	font-size: 1.2rem;
+	display: block;
+	height: 4rem;
+	padding: 0 2rem;
+	display: flex;
+	align-items: center;
 }
 .cg-grid-adsense{
 	background: #fbfbfb;
@@ -246,7 +286,7 @@
 	opacity: 0;
 }
 .cg-grid-artwork-curtain a{
-	
+
 }
 .cg-grid-artwork-name{
 	position: absolute;
@@ -276,6 +316,12 @@
 .cg-grid-image:hover .cg-grid-artwork-content img{
 
 }
+.upload-editor-text-waiting{
+	display: block;
+	width: 100%;
+	text-align: center;
+	color: white;
+}
 @media (max-width: 992px) {
 	.upload-editor-description{
 		flex-direction: column;
@@ -289,6 +335,13 @@
 	}
 }
 @media (max-width: 600px) {
+	.upload-editor-close{
+		background: rgba(0, 0, 0, 0.1);
+	}
+	.upload-editor-wrapper-file{
+		border-radius: 0;
+		height: 100%;
+	}
 	.upload-editor-wrapper-description{
 		overflow: hidden;
 	}
@@ -297,7 +350,6 @@
 		flex: 1;
 	}
 	.upload-editor-preview{
-		max-width: 360px;
 		width: 100%;
 		height: 360px;
 	}
@@ -309,24 +361,13 @@
 		width: 100%;
 	}
 	.upload-editor-cropper{
-		height: calc(100% - 56px);
-		padding-top: 5rem;
+		height: calc(100% - 112px);
 	}
-	.upload-editor-cropper .vue-advanced-cropper{
-		position: fixed !important;
-		top: 5rem;
-		bottom: 56px;
-		height: auto;
-		width: auto;
-		left: 1rem;
-		right: 1rem;
-	}
+
 	.upload-editor{
 		align-items: flex-start;
 	}
-	.upload-editor-wrapper-file{
-		height: 100%;
-	}
+
 
 	.upload-editor-file{
 		max-height: none;

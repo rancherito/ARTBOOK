@@ -21,7 +21,7 @@ class C_Users extends BaseController
 			$title = strtoupper($images[0]['nickname']).' AHORA EN ARTSBOOK-SITE';
 			$metaimage = base_url().'/images/artworks/'.$images[0]['accessname'].'.'.$images[0]['extension'];
 			$metas = ['img' => $metaimage, 'title' => $title];
-			echo $this->layout_view('basic','users/user',['current_events' => $current_events, 'path_image' => $path, 'images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
+			echo $this->layout_view('publicv2','users/user',['current_events' => $current_events, 'path_image' => $path, 'images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
 
 		}
 		else if (count($account) && $account['validate'] == 0) {

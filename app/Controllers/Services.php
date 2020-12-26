@@ -56,11 +56,10 @@ class Services extends BaseController
 	{
 		$_POST = json_decode(file_get_contents("php://input"), true);
 
-		if (!empty($_POST['author']) && !empty($_POST['workname']) && !empty($_POST['image']) && isset($_POST['key'])) {
+		if (!empty($_SESSION['access']['user']) && !empty($_POST['workname']) && !empty($_POST['image'])) {
 
-			if ($_POST['author'] == 'current') $_POST['author'] = $_SESSION['access']['user'];
+			$author= $_SESSION['access']['user'];
 
-			$id_image = $_POST['key'];
 			$name = trim($_POST['workname']);
 			$description = trim($_POST['description']);
 			$extension_change = ['jpeg' => 'jpg', 'jpg' => 'jpg', 'png' => 'png'];
@@ -71,14 +70,14 @@ class Services extends BaseController
 			$img = str_replace(' ', '+', $img);
 			$data = base64_decode($img);
 
-			$queryfiename = General::exists_image($id_image);
+			/*$queryfiename = General::exists_image($id_image);
 			if (count($queryfiename)) {
 				$filename = $queryfiename[0]['filename'];
 				if (file_exists("images/artworks/$filename")) {
 					unlink("images/artworks/$filename");
 				}
-			}
-			$key = General::qry_images_salvar($id_image, '', $ext, 0, 0, '1', '2', $name);
+			}*/
+			$key = General::qry_images_salvar('', '', $ext, 0, 0, $author, $author, $name);
 			$key_value = $key[0]['KeyItem'];
 
 			$hashids = new Hashids('', 0, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUW');
@@ -92,9 +91,9 @@ class Services extends BaseController
 			$image->crop(400, 400, true, ImageResize::CROPCENTER);
 			$image->save("images/artworks_lite/$namefile.jpg");
 
-			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, $_POST['author'], '2', $name,$description);
+			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, $author, $author, $name,$description);
 
-			return $this->response->setJSON(['key' => $key_value]);
+			return $this->response->setJSON(['path' => base_url().'/'.$file]);
 		}
 	}
 	public function artwork_list()

@@ -15,6 +15,7 @@ session();
 $routes->get('/', 'Home');
 $routes->get('user/close', 'Utils::close_session');
 $routes->add('user/login', 'Home::access');
+$routes->get('artwork/upload', 'Home::artwork_upload');
 $routes->get('artwork/view/(:alphanum)', 'Home::artwork_recover/$1');
 $routes->add('user/login_fb', 'C_Users::login_fb');
 $routes->add('user/login_fbauth', 'C_Users::login_fbauth');

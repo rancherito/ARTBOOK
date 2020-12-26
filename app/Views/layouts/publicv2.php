@@ -35,6 +35,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 	<meta property="og:image" content="<?= $metas['img'] ?>" />
 	<meta property="og:description" content="<?= $metas['description'] ?>" />
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
+	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 	<style media="screen">
 	:root{
 		--navaside_width: 80px;
@@ -124,6 +125,12 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 	}
 	.access-btn span {
 		font-size: .8rem;
+		line-height: .8rem;
+		text-align: center;
+		margin-top: -4px;
+		display: block;
+		padding: 0 .5rem;
+		padding-bottom: 8px;
 	}
 	#app-aside-decorator {
 		height: 160px;
@@ -135,7 +142,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		position: absolute;
 		right: 0;
 		top: 50%;
-		transform: translate(calc(100% - 1px), 50%);
+		transform: translate(calc(100% - 1px), -50%);
 		z-index: 1;
 		height: 50px;
 		width: 40px;
@@ -154,10 +161,17 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		aside {
 			z-index: 2;
 			transform: translateX(-100%);
+			width: 60px;
+		}
+		.access-btn{
+			height: 80px;
 		}
 		#app-module{
 			padding: 0;
 			left: 0;
+		}
+		#app-aside-decorator{
+			height: 120px;
 		}
 		#app-module-content{
 			border-radius: 0;
@@ -173,12 +187,16 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 			transform: translateX(0);
 		}
 	}
+	.vue-simple-handler{
+		border-radius: 50%;
+	}
+	
 	</style>
 </head>
 <body>
 	<div id="app-body">
 
-
+		<upload-editor ref="upload_artwork"></upload-editor>
 
 		<aside :class="{'app-aside-nav-close': toggle_nav}">
 			<div id="app-aside-nav-toggle" class="bg-primary" @click="toggle_nav = !toggle_nav"><i class="mdi mdi-menu"></i></div>
@@ -186,7 +204,8 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 				<div id="app-aside-decorator" class="f-c"><img src="<?= base_url() ?>/images/icon_white.svg"></div>
 				<a href="<?= base_url() ?>" class="access-btn"><i class="mdi mdi-home"></i> <span>INICIO</span></a>
 				<?php if (is_access()): ?>
-					<a href="<?= user_site() ?>" class="access-btn"><i class="mdi mdi-account"></i> <span>MI CUENTA</span></a>
+					<a href="<?= user_site() ?>" class="access-btn"><i class="mdi mdi-account"></i> <span>MI PERFIL</span></a>
+					<a @click="open_editor" class="access-btn"><i class="mdi mdi-upload"></i> <span>SUBIR ARTWORK</span></a>
 				<?php else: ?>
 					<a href="<?= base_url() ?>/user/login" class="access-btn"><i class="mdi mdi-account"></i> <span>ACCEDER</span></a>
 				<?php endif; ?>
@@ -198,6 +217,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 			</div>
 		</aside>
 		<section id="app-module">
+
 			<div id="app-module-content">
 					<?php if (is_access()): ?>
 						<a id="app-user-card" href="<?= user_site() ?>">
@@ -229,6 +249,13 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		data: function () {
 			return {
 				toggle_nav: false
+			}
+		},
+		methods: {
+			open_editor: function () {
+				if (this.$refs.upload_artwork) {
+					this.$refs.upload_artwork.open()
+				}
 			}
 		},
 		mounted: function () {

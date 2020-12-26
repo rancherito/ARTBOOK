@@ -455,15 +455,19 @@ Vue.component('cg-textbox', {
 		inputchange: function (ff) {
 
 
-			//if (this.$refs.input.value.split(/\r\n|\r|\n/).length == 1) this.$refs.input.style.height = '56px';
-			//else {
 				this.$refs.input.style.height = 'auto';
-	            this.$refs.input.style.height = this.$refs.input.scrollHeight + 'px';
-			//}
+	            this.$refs.input.style.height = this.$refs.input.scrollHeight + 28 + 'px';
+
+				if (this.$refs.input.scrollHeight + 28 >= 138) {
+					this.$refs.input.style.overflow = 'auto';
+					this.$refs.input.style.height = '138px'
+				}
+				else {
+					this.$refs.input.style.overflow = 'hidden';
+				}
 
 
-
-			this.$refs.input.value = this.$refs.input.value.replace(/(\r\n|\n|\r)+/gm,'\n').replace(/ +/gm,' ').trimStart();
+			this.$refs.input.value = this.$refs.input.value.replace(/(\r\n|\n|\r){3}/gm,'\n\n').replace(/ +/gm,' ').trimStart();
 
 			this.$emit('input', this.$refs.input.value)
 		},

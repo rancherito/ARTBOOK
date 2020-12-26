@@ -35,6 +35,10 @@ class Home extends BaseController
 
 		return view('login');
 	}
+	public function artwork_upload()
+	{
+		echo $this->layout_view('publicv2','artwork/upload');
+	}
 
 
 	//--------------------------------------------------------------------

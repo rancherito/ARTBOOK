@@ -6,16 +6,16 @@ class General
     public static function qry_images_salvar( $id_image, $accessname, $extension, $height, $width, $autor, $uploaded_user, $name, $description = '')
     {
         $sql = "EXEC app.sp_images_salvar
-		@id_image = '$id_image',
-		@accessname = '$accessname',
-		@extension = '$extension',
-		@height = '$height',
-		@width = '$width' ,
-		@autor = '$autor' ,
-		@uploaded_user = '$uploaded_user',
-		@name = '$name',
-		@description = '$description';";
-        return query_database($sql);
+		@id_image = ?,
+		@accessname = ?,
+		@extension = ?,
+		@height = ?,
+		@width = ? ,
+		@autor = ? ,
+		@uploaded_user = ?,
+		@name = ?,
+		@description = ?;";
+        return query_database($sql, [$id_image, $accessname, $extension, $height, $width, $autor, $uploaded_user, $name, $description]);
     }
 
 	public static function exists_image($id)

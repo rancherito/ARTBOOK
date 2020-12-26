@@ -87,7 +87,8 @@
 		padding-top: 26px;
 	}
 	.cg-label + textarea{
-		padding-top: 28px;
+		border-top: 28px solid #f7f7f7;
+		padding-top: 0;
 	}
 	.cg-select.cg-select-notvalid .cg-label, .cg-field.cg-field-notvalid .cg-label, .cg-textbox.cg-field-notvalid .cg-label{
 		color: var(--cg-error);
@@ -185,7 +186,7 @@
 		border: 0px solid white;
 		box-shadow: inset 0 -1px 0 0 #9e9e9e;
 		border-radius: 6px 6px 0 0;
-		transition: linear all .2s;
+		transition: linear background-color .2s, linear border-color .2s, linear box-shadow .2s;
 	}
 
 	.cg-textbox .cg-field-wrap{
@@ -203,4 +204,7 @@
 	.cg-textbox:hover textarea.cg-textbox-in
 	{
 		background: #f0f0f0;
+	}
+	textarea.cg-textbox-in:focus, .cg-textbox:hover textarea.cg-textbox-in{
+		border-top-color: #f0f0f0
 	}

@@ -5,7 +5,6 @@ $access_account = is_self_account($info['account']);
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 <style media="screen">
 :root{
-	--aside-user: 80px;
 	--profile-user: 320px;
 }
 .user-events-list{
@@ -41,18 +40,8 @@ $access_account = is_self_account($info['account']);
 	letter-spacing: 2px;
 	position: relative;
 }
-#user_content_app{
-
-}
-#user-content{
-	height: 100%;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: var(--aside-user);
-	right: 0;
-	padding: 1rem 1rem 1rem 0;
-
+#app-user-card{
+	display: none;
 }
 #content-grid{
 	height: 100%;
@@ -62,25 +51,12 @@ $access_account = is_self_account($info['account']);
 	border-radius: 10px;
 	position: relative;
 }
-#content-grid::before{
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	width: var(--profile-user);
-	background-color: white;
-	content: '';
-	z-index: 0;
-}
-#app-aside-nav{
-	height: 100%;
-	width: var(--aside-user);
-	padding: 1rem 0;
-	color: white;
+#app-profile{
 	position: relative;
-	transition: linear all .2s
+	height: 100%;
+	display: flex;
 }
-#app-aside-nav-avatar {
+#app-profile-avatar {
 	background: #ffffff17;
 	width: 130px;
 	height: 130px;
@@ -88,7 +64,7 @@ $access_account = is_self_account($info['account']);
 	box-shadow: 0 0 0 8px rgba(255, 255, 255, .15);
 	text-transform: uppercase;
 }
-#app-aside-nav-avatar{
+#app-profile-avatar{
 	height: 130px;
 	width: 130px;
 }
@@ -96,34 +72,27 @@ $access_account = is_self_account($info['account']);
 	width: 100%;
 	border-radius: 50%;
 }
-#app-aside-nav-decorator{
+#app-profile-decorator{
 	padding-top: 1rem;
 }
-#app-aside-nav-conent > div{
+#app-profile-content > div{
 	height: 200px;
 }
-#app-aside-nav-nickname{
+#app-profile-nickname{
 	padding-top: 1rem;
 	text-transform: uppercase;
 	letter-spacing: 2px;
 }
 #user_grid{
-	margin-left: var(--profile-user);
+	width: calc(100% - var(--profile-user));
+	height: 100%; padding: 1rem;
 }
-#user_profile{
-	position: fixed;
-	left: 6rem;
-	top: 2rem;
-	padding: 1rem;
-	padding-left: 0;
+#user-profile-info{
+	padding: 0 1rem;
 	width: var(--profile-user);
+	background-color: white;
 }
-#app-aside-decorator{
-	height: 160px;
-}
-#app-aside-decorator img{
-	width: 50%;
-}
+
 .access-btn{
 	display: flex;
 	color: white;
@@ -154,24 +123,7 @@ $access_account = is_self_account($info['account']);
 	height: 100%;
 	display: flex;
 }
-#app-aside-nav-toggle{
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translate(calc(100% - 1px), 50%);
-	z-index: 1;
-	height: 50px;
-	width: 40px;
-	align-items: center;
-	justify-content: center;
-	border-radius: 0 30px 30px 0;
-	cursor: pointer;
-	display: none;
-}
-#app-aside-nav-toggle i{
-	transform: translateX(-10%);
-	font-size: 1.6rem;
-}
+
 .modal-image-preview{
 	width: calc(100% - 360px);
 	background: black;
@@ -222,7 +174,10 @@ $access_account = is_self_account($info['account']);
 	.artwork-title{
 		padding: 0;
 	}
-	#user_profile{
+	#app-profile{
+		flex-direction: column;
+	}
+	#user-profile-info{
 		position: relative;
 		width: 100%;
 		margin: 0;
@@ -232,7 +187,9 @@ $access_account = is_self_account($info['account']);
 		border-radius: 10px;
 	}
 	#user_grid{
-		margin-left: 0;
+		width: 100%;
+		height: auto;
+		padding: 0;
 	}
 	#content-grid::before{
 		height: 0;
@@ -261,13 +218,11 @@ $access_account = is_self_account($info['account']);
 	}
 }
 @media (max-width: 600px) {
-	#app-aside-nav-toggle{
-		display: flex;
-	}
+
 	#bar-grid{
 		padding: 0;
 	}
-	#user_profile{
+	#user-profile-info{
 		padding: 1rem;
 		border-radius: 0;
 	}
@@ -278,14 +233,7 @@ $access_account = is_self_account($info['account']);
 		border-radius: 0;
 		padding: 0;
 	}
-	#app-aside-nav{
-		background-color: var(--primary);
-		z-index: 2;
-		transform: translateX(-100%);
-	}
-	.app-aside-nav-close#app-aside-nav{
-		transform: translateX(0);
-	}
+
 	#user-content{
 		left: 0;
 	}
@@ -294,7 +242,7 @@ $access_account = is_self_account($info['account']);
 
 
 <?php template_start(); ?>
-<div class="bg-primary fixed-full" id="user_content_app">
+<div id="app-profile">
 	<?php if ($access_account): ?>
 		<div id="modal_image" ref="modal_openimage" class="modal">
 			<a id="settings-back-account" class="modal-close btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
@@ -329,145 +277,67 @@ $access_account = is_self_account($info['account']);
 			</div>
 
 		</div>
-		<div id="modal1" ref="modal-events" class="modal" style="max-width: 400px">
-			<div class="modal-content" >
-				<div class="title-3 combo-text-title">Lista de eventos </div>
-				<span>Eventos a los que me he inscrito</span>
-				<div class="user-event-image-preview" v-if="image_apply != null">
-					<div class="cover" :style="{'background-image': 'url(' + image_apply.path + ')'}"></div>
-					<span class="f-c">
-						<?= bg_animate_001() ?>
-						<div style="position: relative">{{image_apply.name}}</div>
-					</span>
-				</div>
-				<div class="user-events-list" v-for="event of list_events">
 
-					<div v-if="dateCheck(event.event_start, event.voting, image_apply.uploaded_date)" class="btn user-apply-image" @click="apply_artwork(event)" :disabled="event.is_artwork_register == 1">{{event.is_artwork_register ? 'Registrado' : 'Adjuntar'}}</div>
-					<div>
-						<div class="combo-text-title title-4">{{event.name}}</div>
-						<span>{{event.name_event}}</span>
-					</div>
-					<div class="f-b pt-2">
-						<div>Promotor {{event.nickname_promoter}}</div>
-						<div>Evento {{event.type_event}}</div>
-					</div>
-					<div v-if="!dateCheck(event.event_start, event.voting, image_apply.uploaded_date)" class="red-text">
-						Fecha de registro fuera de este evento
-					</div>
-				</div>
-
-			</div>
-			<div class="modal-footer">
-				<a class="modal-close waves-effect btn-flat">CERRAR</a>
-
-			</div>
-		</div>
 	<?php endif; ?>
 
-	<div id="app-aside-nav" class="f-c f-b" :class="{'app-aside-nav-close': toggle_nav}">
-		<div id="app-aside-nav-toggle" class="bg-primary" @click="toggle_nav = !toggle_nav">
-			<i class="mdi mdi-menu"></i>
-		</div>
-		<div class="f-c w100">
-			<div id="app-aside-decorator" class="f-c">
-				<img src="<?= base_url() ?>/images/icon_white.svg">
-			</div>
-			<a class="access-btn" href="<?= base_url() ?>">
-				<i class="mdi mdi-home"></i>
-				<span>INICIO</span>
-			</a>
-			<?php if ($access_account): ?>
-				<a class="access-btn" href="<?= base_url() ?>/user/settings">
-					<i class="mdi mdi-cog"></i>
-					<span>OPCCIONES</span>
-				</a>
-				<a class="access-btn" @click="openeditor">
-					<i class="mdi mdi-upload"></i>
-					<span>SUBIR</span>
-				</a>
-			<?php else: ?>
-				<a class="access-btn" href="<?= base_url() ?>/user/login">
-					<i class="mdi mdi-account"></i>
-					<span>Acceder</span>
-				</a>
-			<?php endif; ?>
-
-		</div>
-		<div class="w100">
-			<?php if ($access_account): ?>
-				<a class="access-btn" href="<?= base_url() ?>/user/close">
-					<i class="mdi mdi-power-standby"></i>
-				</a>
-			<?php endif; ?>
-
-		</div>
-	</div>
-	<div id="user-content">
-
-
-		<div id="content-grid">
-			<simplebar id="bar-grid">
-				<div id="user_feed">
-					<div id="user_profile">
-						<div id="app-aside-nav-conent">
-							<div class="f-c">
-								<div id="app-aside-nav-avatar" class="f-c">
-									<?php if ($path_image == ''): ?>
-										<span><?= $info['nickname'][0] ?></span>
-									<?php else: ?>
-										<img src="<?= $path_image ?>" id="user-avatar-img">
-									<?php endif; ?>
-								</div>
-								<div id="app-aside-nav-nickname"><?= $info['nickname'] ?></div>
-
-							</div>
-						</div>
-						<div id="app-aside-nav-decorator" >
-							<div id="user_header">
-
-								<div id="app-aside-nav-description" class="c">
-									<div class="title-3">Bienvenido</div>
-									<p>
-										Espero que disfrutes tu estadia en mi perfil de trabajos, subo contenido regularmente
-
-									</p>
-									 <div class="row">
-										 <?php if ($access_account): ?>
-											 <?php foreach ($current_events as $key => $event): ?>
- 												<?php if ($event['is_voting'] == 0): ?>
- 													<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus">
- 														<div class="box-events w100">
- 															<div class="combo-text-title"><?= $event['name'] ?></div>
- 															<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['event_end'] ?>"></cg-countdown> </span>
- 														</div>
- 													</a>
- 												<?php else: ?>
- 													<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>">
- 														<div class="box-events w100">
- 															<div class="combo-text-title"><?= $event['name'] ?></div>
- 															<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['voting'] ?>"></cg-countdown> </span>
- 														</div>
- 													</a>
- 												<?php endif; ?>
-
-
- 											<?php endforeach; ?>
-										 <?php endif; ?>
-
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<cg-grid base_url="<?= base_url() ?>" id="user_grid" ref='grid' @changeimage="modify_image" @events_list="events_list" :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
-
+	<div id="user-profile-info">
+		<div id="app-profile-content">
+			<div class="f-c">
+				<div id="app-profile-avatar" class="f-c">
+					<?php if ($path_image == ''): ?>
+						<span><?= $info['nickname'][0] ?></span>
+					<?php else: ?>
+						<img src="<?= $path_image ?>" id="user-avatar-img">
+					<?php endif; ?>
 				</div>
+				<div id="app-profile-nickname"><?= $info['nickname'] ?></div>
 
-			</simplebar>
-
+			</div>
 		</div>
-		<upload-editor base_url="<?=base_url()?>" ref="editor" :autors="autoraccess" @onfinish="onfinish"></upload-editor>
+		<div id="app-profile-decorator" >
+			<div id="user_header">
+
+				<div id="app-profile-description" class="c">
+					<div class="title-3">Bienvenido</div>
+					<p>
+						Espero que disfrutes tu estadia en mi perfil de trabajos, subo contenido regularmente
+
+					</p>
+					 <div class="row">
+						 <?php if ($access_account): ?>
+							 <?php foreach ($current_events as $key => $event): ?>
+								<?php if ($event['is_voting'] == 0): ?>
+									<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus">
+										<div class="box-events w100">
+											<div class="combo-text-title"><?= $event['name'] ?></div>
+											<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['event_end'] ?>"></cg-countdown> </span>
+										</div>
+									</a>
+								<?php else: ?>
+									<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>">
+										<div class="box-events w100">
+											<div class="combo-text-title"><?= $event['name'] ?></div>
+											<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['voting'] ?>"></cg-countdown> </span>
+										</div>
+									</a>
+								<?php endif; ?>
+
+
+							<?php endforeach; ?>
+						 <?php endif; ?>
+
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+
+	<simplebar id="user_grid">
+		<cg-grid base_url="<?= base_url() ?>" ref='grid' @events_list="events_list" :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
+
+	</simplebar>
+
+
 
 </div>
 <?php $template = template_end()?>
@@ -478,21 +348,12 @@ $access_account = is_self_account($info['account']);
 const $_module = {
 	template: `<?= $template ?>`,
 	mounted: function () {
-		/*const body = $(document.body);
-		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
-		window.addEventListener('resize', () => {
-		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
-	});*/
 
-	$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
-		console.log(res_list);
-	})
 	<?php
 	if ($access_account) {
 		echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";
 		echo "this.modal = $(this.\$refs['modal-events']).modal();";
 		echo "this.modal_openimage = $(this.\$refs['modal_openimage']).modal();";
-
 	}
 
 	?>
@@ -541,17 +402,7 @@ methods: {
 		let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
 		return (cDate <= lDate && cDate >= fDate);
 	},
-	modify_image: function (data) {
-		this.$refs.editor.open()
-		this.$refs.editor.setData({
-			author: 'current',
-			description: data.description,
-			name: data.name,
-			id: data.id_image,
-			img: data.img,
-			extension: data.extension
-		})
-	},
+
 	onfinish: function (data) {
 		<?php if ($access_account): ?>
 		$.post('<?= base_url() ?>/services/artworks/recover',{account: '<?= $_SESSION['access']['account'] ?>'}, (res) => {
@@ -559,11 +410,8 @@ methods: {
 		})
 		<?php endif; ?>
 
-	},
-	openeditor: function () {
-		this.$refs.editor.open()
-		this.$refs.editor.newRegister()
-	},
+	}
+
 
 }
 }
