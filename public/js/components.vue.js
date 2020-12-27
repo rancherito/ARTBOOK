@@ -216,8 +216,6 @@ Vue.component('upload-editor',{
 					this.load.progress = parseInt((p.loaded / p.total) * 100)
 				}
 			}).then (res => {
-				//this.close();
-				console.log(res.data);
 				this.$emit('onfinish', res.data)
 				this.steps = 3
 				this.artwork_apply = res.data.artwork_info
@@ -226,10 +224,7 @@ Vue.component('upload-editor',{
 		},
 		change({coordinates, canvas}) {
 
-			console.log(canvas.height);
-			console.log(canvas.width);
-
-			this.image = canvas.toDataURL('image/jpeg', 0.85)
+			this.image = canvas.toDataURL('image/jpeg', 0.8)
 
 			this.steps = 1
 			this.isLoadImage = true
