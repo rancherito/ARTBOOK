@@ -43,10 +43,10 @@ class General
     }
 	public static function qry_top9_artworks_list($account)
     {
-    	$sql = "SELECT TOP 6 i.id_image, i.[description], i.accessname, i.extension,
+    	$sql = "SELECT TOP 9 i.id_image, i.[description], i.accessname, i.extension,
 		i.height, i.width, i.uploaded_date, i.name, u.nickname, u.account
 		FROM app.tb_images i, [users].tb_users u
-		WHERE i.autor = u.id_user AND u.account = ? AND i.[state] = 'A' ORDER BY i.uploaded_date DESC;";
+		WHERE i.autor = u.id_user AND u.account = ? AND i.[state] = 'A' ORDER BY NEWID();";
 
 		return query_database($sql, [$account]);
     }

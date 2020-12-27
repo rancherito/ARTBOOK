@@ -111,10 +111,11 @@ Vue.component('upload-editor',{
 					<cropper style="" ref="cropper" :src="img" @change="change" :default-size="defaultSize"></cropper>
 				</div>
 				<div class="upload-editor-buttons-upload">
+					<a href="" class="btn-flat">CERRAR</a>
 					<label class="">
-						<a class="btn" v-show="steps >= 0" v-if="!isModify">
+						<a class="btn ml-1" v-show="steps >= 0" v-if="!isModify">
 							<i class="mdi mdi-upload left"></i>
-							<span>{{ steps > 0 ? 'SUBIR OTRA IMAGEN' : 'SUBIR UNA IMAGEN'}}</span>
+							<span>{{ steps > 0 ? 'SUBIR OTRA' : 'SUBIR'}}</span>
 						</a>
 						<input ref="input" v-show="false" type="file" accept="image/x-png,image/jpeg" @change="onUploadFile">
 					</label>
