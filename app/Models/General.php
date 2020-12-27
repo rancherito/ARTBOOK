@@ -20,7 +20,7 @@ class General
 
 	public static function exists_image($id)
 	{
-		$sql = "SELECT accessname+'.'+extension filename FROM app.tb_images WHERE id_image = ?";
+		$sql = "SELECT accessname+'.'+extension filename, uploaded_date, accessname artwork FROM app.tb_images WHERE id_image = ?";
 		return query_database($sql,[$id]);
 	}
 

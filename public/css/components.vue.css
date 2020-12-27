@@ -1,6 +1,35 @@
 :root{
 	--dropeditor: scale(1);
 }
+.app-events-list{
+	border-radius: 5px;
+	margin-top: .5rem;
+	position: relative;
+	display: flex;
+	background-color: #f9f9f9;
+}
+.app-events-apply-button{
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	transform: scale(.8);
+	transform-origin: top right;
+}
+.app-events-preview{
+	width: 70px;
+	border: .5rem solid #f9f9f9;
+	border-radius: 1rem;
+	background-color: #f9f9f9;
+	height: 70px;
+	background-position: center;
+	background-size: contain;
+}
+.app-events-info{
+	padding: 1rem;
+}
+.app-events-preview + .app-events-info{
+	padding-left: .5rem;
+}
 .drop-editor{
 	transform: var(--dropeditor)  !important;
 }
@@ -144,13 +173,13 @@
 	position: absolute;
 	top: 1rem;
 	right: 1rem;
-	background: rgba(255,255,255,.1);
+	background: white;
 }
 .upload-editor-close:hover{
-	background: rgba(255,255,255,.2);
+	background: white;
 }
 .upload-editor-close i{
-	color: white
+	color: var(--primary)
 }
 .upload-editor-firts-upload{
 	display: flex;
@@ -189,7 +218,7 @@
 	position: relative;
 	color: white;
 	background: #949494;
-	height: 300px;
+	height: 240px;
 	width: 100%;
 	overflow: hidden;
 
@@ -264,6 +293,9 @@
 	padding: 0 2rem;
 	display: flex;
 	align-items: center;
+}
+.upload-editor-after-finish{
+	padding: 2rem 0;
 }
 .cg-grid-adsense{
 	background: #fbfbfb;

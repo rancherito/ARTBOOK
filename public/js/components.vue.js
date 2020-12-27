@@ -1,3 +1,71 @@
+Vue.component('event-list', {
+	template: `<div class="w100">
+		<div>
+			<div class="combo-text-title">LISTA DE EVENTOS</div>
+			<span>Adjunte su artwork a uno de los eventos pendientes que tiene</span>
+		</div>
+		<template v-if="dateCheck(event.event_start, event.voting, artwork_apply.uploaded_date)" v-for="event of list_events">
+			<div class="app-events-list">
+				<template v-if="is_registered">
+					<div class="btn app-events-apply-button bg-secondary" v-if="event.artwork == artwork_apply.artwork">
+						<i class="mdi mdi-check"></i>
+					</div>
+				</template>
+				<template v-else>
+					<div v-if="event.is_artwork_register == 1" class="btn app-events-apply-button" @click="apply_artwork(event)" disabled>
+						{{event.is_artwork_register ? 'Registrado' : 'Adjuntar'}}
+					</div>
+					<div v-else class="btn app-events-apply-button" @click="apply_artwork(event)">Adjuntar</div>
+				</template>
+
+				<div v-if="event.is_artwork_register == 1" class="app-events-preview" :style="{'background-image': calcule_artwok_path(event)}"></div>
+				<div class="app-events-info">
+					<div class="combo-text-title title-4">{{event.name}}</div>
+					<span>{{event.name_event}}</span>
+				</div>
+			</div>
+		</template>
+	</div>`,
+	data: function () {
+		return {
+			list_events: {}
+		};
+	},
+	props: {'artwork_apply': Object, base_url: String},
+	computed: {
+		is_registered: function () {
+			if (this.artwork_apply.artwork != undefined) {
+				for (var ev of this.list_events) if (ev.artwork == this.artwork_apply.artwork) return true;
+			}
+			return false
+		}
+	},
+	methods: {
+		calcule_artwok_path: function (e_item) {
+			return  `url('${this.base_url}/images/artworks_lite/${e_item.artwork}.${e_item.extension}')`
+		},
+		dateCheck: function(from,to,check) {
+			let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
+			return (cDate <= lDate && cDate >= fDate);
+		},
+		apply_artwork: function (event_info) {
+			const data = {versus: event_info.versus, artwork: this.artwork_apply.artwork}
+
+			$.post(this.base_url + '/service/events/apply_versus', data, (res) => {
+				$.get(this.base_url + '/service/events/apply_list', (res_list) => {
+					this.list_events = res_list;
+				})
+			})
+		},
+	},
+	mounted: function () {
+		$.get(this.base_url + '/service/events/apply_list', (res_list) => {
+			//for (var item of res_list) if (item.artwork == image.artwork) {findartwork = true; this.list_events = [item];}
+			this.list_events = res_list;
+		})
+	}
+})
+
 Vue.component('lateral-modal',{
 	template: `
 	<div class="lateral-modal animated fadeIn" style="display: none" v-show="!is_close">
@@ -54,13 +122,13 @@ Vue.component('upload-editor',{
 				</div>
 			</div>
 		</div>
-		<div class="upload-editor-wrapper-description" style="display: none" v-show="steps == 2">
+		<div class="upload-editor-wrapper-description" style="display: none" v-show="steps >= 2">
 			<div class="upload-editor-description">
-				<span class="upload-editor-text-details">Describa su obra</span>
-				<div class="upload-editor-preview f-c">
+				<span class="upload-editor-text-details">{{steps > 2 ? 'Artwork cargado con exito' : 'Describa su obra'}}</span>
+				<div class="upload-editor-preview f-c" v-show="steps == 2">
 					<img :src="image" class="upload-editor-image-view">
 				</div>
-				<form class="f-c" @submit.prevent="submit">
+				<form class="f-c" @submit.prevent="submit" v-show="steps == 2">
 					<div>
 
 						<cg-field required v-model.trim="name" :watchisvalid.sync="name_isvalid" sizechars="4-20" label="Nombre de la obra" placeholder="ingrese credenciales"></cg-field>
@@ -72,12 +140,26 @@ Vue.component('upload-editor',{
 						</div>
 					</div>
 				</form>
+				<div class="p-4 upload-editor-after-finish f-c" v-show="steps == 3">
+					<event-list :base_url="base_url" :artwork_apply="artwork_apply"></event-list>
+					<i class="mdi mdi-check right" style="font-size: 4rem; color: var(--primary)"></i>
+					<div class="p-4 c" style=" margin-top: -2rem;">SU TRABAJO A SIDO SUBIDO CON EXITO</div>
+					<div class="c" style="padding-bottom: 2rem;">
+						<a class="btn-flat" :href="base_url + '/' + author">
+							<span>MI MURAL</span>
+						</a>
+						<a class="btn" @click="close">
+							<span>ACEPTAR</span>
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	`,
 	data: function () {
 		return {
+			artwork_apply: {},
 			loading_artwork_text: 'CARGANDO ARTWORK..',
 			img: null,
 			name: '',
@@ -89,6 +171,7 @@ Vue.component('upload-editor',{
 			image: null,
 			extensionimage: '',
 			isModify: false,
+			upload_finish: true,
 			load: {
 				isUploading: false,
 				progress: 0
@@ -98,7 +181,7 @@ Vue.component('upload-editor',{
 	},
 
 	props: {
-		autors: Array,
+		author: String,
 		base_url: {type: String, default: ''}
 	},
 	mounted: function () {
@@ -116,13 +199,6 @@ Vue.component('upload-editor',{
 			height: imageSize.height,
 		  };
 		},
-		newRegister: function () {
-			this.isModify = false
-			this.img = null
-			this.description = ''
-			this.name = ''
-			this.extensionimage = ''
-		},
 		submit: function () {
 			const datos = {
 				workname: this.name,
@@ -139,10 +215,12 @@ Vue.component('upload-editor',{
 				onUploadProgress: (p) => {
 					this.load.progress = parseInt((p.loaded / p.total) * 100)
 				}
-			}).then (data => {
-				this.close();
-				this.$emit('onfinish', data.data)
-				console.log(data.data);
+			}).then (res => {
+				//this.close();
+				console.log(res.data);
+				this.$emit('onfinish', res.data)
+				this.steps = 3
+				this.artwork_apply = res.data.artwork_info
 				this.load.isUploading = false
 			})
 		},
@@ -198,13 +276,19 @@ Vue.component('upload-editor',{
 			this.steps = 0
 			this.img = null
 			this.isLoadImage = false
+			this.upload_finish = true
+			location.reload();
 		},
 		open: function () {
+			this.description = ''
+			this.name = ''
+			this.extensionimage = ''
 			this.loading_artwork_text = 'CARGANDO ARTWORK...'
 			this.isOpen = true
 			this.steps = 0
 			this.img = null
 			this.isLoadImage = false
+			this.upload_finish = true
 			$(this.$refs.input).trigger('click')
 		}
 	}

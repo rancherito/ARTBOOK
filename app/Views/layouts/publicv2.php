@@ -190,13 +190,15 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 	.vue-simple-handler{
 		border-radius: 50%;
 	}
-	
+
 	</style>
 </head>
 <body>
 	<div id="app-body">
+		<?php if (is_access()): ?>
+			<upload-editor ref="upload_artwork" base_url="<?= base_url() ?>" author="<?= user_account() ?>"></upload-editor>
+		<?php endif; ?>
 
-		<upload-editor ref="upload_artwork"></upload-editor>
 
 		<aside :class="{'app-aside-nav-close': toggle_nav}">
 			<div id="app-aside-nav-toggle" class="bg-primary" @click="toggle_nav = !toggle_nav"><i class="mdi mdi-menu"></i></div>

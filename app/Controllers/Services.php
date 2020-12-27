@@ -91,9 +91,15 @@ class Services extends BaseController
 			$image->crop(400, 400, true, ImageResize::CROPCENTER);
 			$image->save("images/artworks_lite/$namefile.jpg");
 
+
 			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, $author, $author, $name,$description);
 
-			return $this->response->setJSON(['path' => base_url().'/'.$file]);
+			$queryfiename = General::exists_image($key_value);
+			if (count($queryfiename)) {
+				$queryfiename = $queryfiename[0];
+			}
+
+			return $this->response->setJSON(['path' => base_url().'/'.$file, 'artwork_info' => $queryfiename]);
 		}
 	}
 	public function artwork_list()

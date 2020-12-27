@@ -7,20 +7,7 @@ $access_account = is_self_account($info['account']);
 :root{
 	--profile-user: 320px;
 }
-.user-events-list{
-	border-radius: 5px;
-	padding: 1rem;
-	border: 1px solid #f3f3f3;
-	margin-top: .5rem;
-	position: relative;
-}
-.user-apply-image{
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
-	transform: scale(.8);
-	transform-origin: top right;
-}
+
 .user-event-image-preview{
 	height: 80px;
 	display: flex;
@@ -248,30 +235,16 @@ $access_account = is_self_account($info['account']);
 			<a id="settings-back-account" class="modal-close btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
 			<div>
 				<div class="modal-image-preview">
-					<template v-if="image_apply != null">
-						<img :src="image_apply.path" alt="image fill">
-						<img :src="image_apply.path" alt="image preview">
+					<template v-if="artwork_apply != null">
+						<img :src="artwork_apply.path" alt="image fill">
+						<img :src="artwork_apply.path" alt="image preview">
 					</template>
 				</div>
 				<div class="modal-image-info-content">
 					<div class="title-4 combo-text-title artwork-title">TITULO</div>
-					<div v-if="image_apply != null" style="position: relative">{{image_apply.name}}</div>
+					<div v-if="artwork_apply != null" style="position: relative">{{artwork_apply.name}}</div>
 					<br>
-					<div class="user-events-list" v-for="event of list_events">
-
-						<div v-if="dateCheck(event.event_start, event.voting, image_apply.uploaded_date)" class="btn user-apply-image" @click="apply_artwork(event)" :disabled="event.is_artwork_register == 1">{{event.is_artwork_register ? 'Registrado' : 'Adjuntar'}}</div>
-						<div>
-							<div class="combo-text-title title-4">{{event.name}}</div>
-							<span>{{event.name_event}}</span>
-						</div>
-						<div class="f-b pt-2">
-							<div>Promotor {{event.nickname_promoter}}</div>
-							<div>Evento {{event.type_event}}</div>
-						</div>
-						<div v-if="!dateCheck(event.event_start, event.voting, image_apply.uploaded_date)" class="red-text">
-							Fecha de registro fuera de este evento
-						</div>
-					</div>
+					<event-list base_url="<?= base_url() ?>" :artwork_apply="artwork_apply"></event-list>
 				</div>
 
 			</div>
@@ -344,7 +317,6 @@ $access_account = is_self_account($info['account']);
 <script>
 
 
-
 const $_module = {
 	template: `<?= $template ?>`,
 	mounted: function () {
@@ -367,29 +339,29 @@ data: function () {
 		modal: null,
 		modal_openimage: null,
 		list_events: null,
-		image_apply: null,
+		artwork_apply: {},
 		toggle_nav: false
 	}
 },
 methods: {
 	apply_artwork: function (event_info) {
-		const data = {versus: event_info.versus, artwork: this.image_apply.artwork}
+		const data = {versus: event_info.versus, artwork: this.artwork_apply.artwork}
 
 		$.post('<?= base_url() ?>/service/events/apply_versus', data, (res) => {
 			$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
 				let findartwork = false;
-				for (var item of res_list) if (item.artwork == this.image_apply.artwork) {findartwork = true; this.list_events = [item];}
+				//for (var item of res_list) if (item.artwork == this.artwork_apply.artwork) {findartwork = true; this.list_events = [item];}
 				if (!findartwork) this.list_events = res_list;
 			})
 		})
 	},
 	events_list: function (image) {
 		if (this.modal_openimage) this.modal_openimage.modal('open')
-		this.image_apply = image
+		this.artwork_apply = image
 		$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
 			let findartwork = false;
 
-			for (var item of res_list) if (item.artwork == image.artwork) {findartwork = true; this.list_events = [item];}
+			//for (var item of res_list) if (item.artwork == image.artwork) {findartwork = true; this.list_events = [item];}
 
 			if (!findartwork) this.list_events = res_list;
 
