@@ -3,7 +3,7 @@
 use Config\App;
 $pre_metas = [
 	'img' => base_url()."/images/meta.png",
-	'title' => 'ARTS BOOK',
+	'title' => 'ARTS BOOK - Comunidad de artistas',
 	'description' => 'Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art\'s Book 😁'
 ];
 
@@ -34,6 +34,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 	<meta property="og:url" content="<?= base_url() ?>" />
 	<meta property="og:image" content="<?= $metas['img'] ?>" />
 	<meta property="og:description" content="<?= $metas['description'] ?>" />
+	<title><?= $metas['title'] ?></title>
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 	<style media="screen">

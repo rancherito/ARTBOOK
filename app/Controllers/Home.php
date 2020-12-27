@@ -19,9 +19,11 @@ class Home extends BaseController
 			$res = $res[0];
 			$top_nine = General::qry_top9_artworks_list($res['account']);
 			$metaimage = base_url().'/images/artworks_lite/'.$artwork.'.'.$res['extension'];
-			$title = $res['name'];
-			$description = isset($res['description']) ? $res['description'] : 'Autor de la obra: '.$res['nickname'];
-			$metas = ['img' => $metaimage, 'title' => $title, 'description' => $description];
+			$title = $res['name'].' por '.$res['nickname'];
+
+			$metas = ['img' => $metaimage, 'title' => $title];
+			if (isset($res['description'])) $metas['description'] = $res['description'];
+
 			echo $this->layout_view('publicv2','artwork',['artwork' => $res, 'others_artworks' => $top_nine, 'metas' => $metas]);
 		}
 		else throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();

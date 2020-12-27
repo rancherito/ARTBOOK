@@ -1,7 +1,6 @@
 <?php $version = 'beta_0.081' ?>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>ARTS BOOK</title>
 <link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">
 <link rel="stylesheet" href="<?= base_url() ?>/font/RobotoCondensed/RobotoCondensed.css">
 <link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/materialdesignicons.min.css">
