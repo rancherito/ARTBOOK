@@ -64,6 +64,7 @@ $access_account = is_self_account($info['account']);
 }
 #app-profile-content > div{
 	height: 200px;
+	padding-top: 3rem;
 }
 #app-profile-nickname{
 	padding-top: 1rem;
@@ -74,12 +75,17 @@ $access_account = is_self_account($info['account']);
 	width: calc(100% - var(--profile-user));
 	height: 100%; padding: 1rem;
 }
-#user-profile-info{
+#app-profile-info{
 	padding: 0 1rem;
 	width: var(--profile-user);
 	background-color: white;
+	position: relative;
 }
-
+#app-profile-info-edit{
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+}
 .access-btn{
 	display: flex;
 	color: white;
@@ -164,7 +170,7 @@ $access_account = is_self_account($info['account']);
 	#app-profile{
 		flex-direction: column;
 	}
-	#user-profile-info{
+	#app-profile-info{
 		position: relative;
 		width: 100%;
 		margin: 0;
@@ -209,7 +215,7 @@ $access_account = is_self_account($info['account']);
 	#bar-grid{
 		padding: 0;
 	}
-	#user-profile-info{
+	#app-profile-info{
 		padding: 1rem;
 		border-radius: 0;
 	}
@@ -253,7 +259,12 @@ $access_account = is_self_account($info['account']);
 
 	<?php endif; ?>
 
-	<div id="user-profile-info">
+	<div id="app-profile-info">
+		<?php if (is_self_account($info['account'])): ?>
+			<a class="btn" id="app-profile-info-edit" href="<?= base_url() ?>/user/settings">
+				<i class="mdi mdi-account-edit mdi-18px"></i>
+			</a>
+		<?php endif; ?>
 		<div id="app-profile-content">
 			<div class="f-c">
 				<div id="app-profile-avatar" class="f-c">

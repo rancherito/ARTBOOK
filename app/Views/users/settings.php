@@ -1,22 +1,8 @@
-<?php
-$access = $_SESSION['access'];
-$nickname = $access['nickname'];
-$url = $access['account_site'];
-?>
-
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-	<meta name="robots" content="noindex,nofollow" />
-
-	<?php
-	include APPPATH.'Views/layouts_parts/header.php';
-	?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 <style media="screen">
-#settings-bg-content, body,#settings{
-	height: 100vh;
-	width: 100vw;
+#settings-bg-content,#settings{
+	height: 100%;
+	width: 100%;
 	overflow: hidden;
 	position: relative;
 }
@@ -115,10 +101,8 @@ $url = $access['account_site'];
 #settings-cropper{
 	max-width: 500px;
 	width: 100%;
-	position: fixed;
-	right: 0;
-	bottom: 0;
-	top: 0;
+	height: 100%;
+	position: relative;
 	background-color: white;
 }
 #settings-cropper-avatar{
@@ -140,8 +124,7 @@ canvas{
 	-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 }
 </style>
-</head>
-<body>
+<?= template_start() ?>
 	<div id="settings">
 		<div id="settings-decorations" class="f-c">
 			<div id="settings-bg-content">
@@ -151,11 +134,11 @@ canvas{
 		</div>
 
 		<div id="settings-content"  class="f-c">
-			<a id="settings-back-account" href="<?= $url ?>" class="btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
+			<a id="settings-back-account" href="<?= user_site() ?>" class="btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
 			<div id="settings-avatar-content" class="f-c">
 				<h5 class="pb-4">Modificar mi cuenta</h5>
 				<div id="settings-avatar-img" class="f-c">
-					<span style="display: none" v-show="avatar_image == null"><?= $nickname[0] ?></span>
+					<span style="display: none" v-show="avatar_image == null"><?= user_nickname()[0] ?></span>
 					<img style="display: none" v-show="avatar_image" :src="avatar_image">
 					<label id="settings-take-newavatar" class="f-c">
 						<input type="file" style="display: none" @change="upload_avatar" accept="image/x-png,image/jpeg">
@@ -189,7 +172,7 @@ canvas{
 				default-boundaries="fill"
 				:src="img" @change="change_image" image-restriction="stencil" stencil-component="circle-stencil"></cropper>
 				<div class="pt-4 w100">
-					<input type="range" v-model="zoom" min="0" max="99" v-model="zoom">
+					<input type="range" v-model="zoom" min="0" max="99">
 				</div>
 			</div>
 			<div id="settings-cropper-buttons">
@@ -198,106 +181,106 @@ canvas{
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-	new Vue({
-		el: '#settings',
-		data: {
+<?php $template = template_end() ?>
+<script type="text/javascript">
+$_module = {
+	template: `<?= $template ?>`,
+	data: function() {
+		return {
 			isNewPassword: false,
 			showpass: false,
 			old_password: {val: '', isvalid: false},
 			new_password: {val: '', isvalid: false},
-			nickname: {val: '<?= $nickname ?>', isvalid: false},
+			nickname: {val: '<?= user_nickname() ?>', isvalid: false},
 			img: null,
 			isOpeneditor: false,
 			image_send: null,
 			avatar_image: <?= $path_image ?>,
 			zoom: 0
+		}
+	},
+	computed: {
+		isValid: function () {
+			return this.old_password.isvalid && this.new_password.isvalid && this.nickname.isvalid
+		}
+	},
+	watch: {
+		zoom: function (newvalue, oldvalue) {
+			const ov = oldvalue/100
+			const nv = newvalue/100
+			const cropper = this.$refs.cropper;
+			  if (cropper) {
+				if (cropper.imageSize.height < cropper.imageSize.width) {
+				  const minHeight = cropper.sizeRestrictions.minHeight;
+				  cropper.zoom(
+					((1 - ov) * cropper.imageSize.height + minHeight) /
+					  ((1 - nv) * cropper.imageSize.height + minHeight)
+				  );
+				} else {
+				  const minWidth = cropper.sizeRestrictions.minWidth;
+				  cropper.zoom(
+					((1 - ov) * cropper.imageSize.width + minWidth) /
+					  ((1 - nv) * cropper.imageSize.width + minWidth)
+				  );
+				}
+			  }
+		}
+	},
+	methods: {
+
+		defaultSize({ imageSize }) {
+		  return {
+			width: Math.min(imageSize.height, imageSize.width),
+			height: Math.min(imageSize.height, imageSize.width),
+		  };
 		},
-		computed: {
-			isValid: function () {
-				return this.old_password.isvalid && this.new_password.isvalid && this.nickname.isvalid
-			}
+		upload_avatar: function (e) {
+			if (e.target.files[0]) this.loadFile(e.target.files[0])
+			this.isOpeneditor = true;
 		},
-		watch: {
-			zoom: function (newvalue, oldvalue) {
-				const ov = oldvalue/100
-				const nv = newvalue/100
-				const cropper = this.$refs.cropper;
-			      if (cropper) {
-					  console.log(nv);
-			        if (cropper.imageSize.height < cropper.imageSize.width) {
-			          const minHeight = cropper.sizeRestrictions.minHeight;
-			          cropper.zoom(
-			            ((1 - ov) * cropper.imageSize.height + minHeight) /
-			              ((1 - nv) * cropper.imageSize.height + minHeight)
-			          );
-			        } else {
-			          const minWidth = cropper.sizeRestrictions.minWidth;
-			          cropper.zoom(
-			            ((1 - ov) * cropper.imageSize.width + minWidth) /
-			              ((1 - nv) * cropper.imageSize.width + minWidth)
-			          );
-			        }
-			      }
-			}
+		loadFile: function (file) {
+			this.img = null
+			const reader = new FileReader();
+			this.isLoadImage = false
+			reader.addEventListener("load", e => {
+				this.img = reader.result
+			}, false);
+			reader.readAsDataURL(file);
 		},
-		methods: {
+		change_image: function ({coordinates, canvas}) {
 
-			defaultSize({ imageSize }) {
-		      return {
-		        width: Math.min(imageSize.height, imageSize.width),
-		        height: Math.min(imageSize.height, imageSize.width),
-		      };
-		    },
-			upload_avatar: function (e) {
-				if (e.target.files[0]) this.loadFile(e.target.files[0])
-				this.isOpeneditor = true;
-			},
-			loadFile: function (file) {
-				this.img = null
-				const reader = new FileReader();
-				this.isLoadImage = false
-				reader.addEventListener("load", e => {
-					this.img = reader.result
-				}, false);
-				reader.readAsDataURL(file);
-			},
-			change_image: function ({coordinates, canvas}) {
-
-				let c = canvas.width > 300 ? downScaleCanvas(canvas,300/canvas.width) : canvas
-				this.image_send = c.toDataURL('image/jpeg', 0.8)
-			},
-			sendimage: function () {
-				const data = {image: this.image_send};
-				$.post('<?= base_url() ?>/services/user/avatarsave', data, (res) => {
-					if (res.path_image) {
-						M.toast({html: 'Exito al guardar imagen', classes: 'rounded'})
-						this.isOpeneditor = false
-						this.avatar_image = res.path_image
-					}
-
-				})
-			},
-			submit: function () {
-				if (this.isValid) {
-					const data = {
-						old: this.old_password.val,
-						new: this.new_password.val,
-						is_new: this.isNewPassword ? 1 : 0,
-						nickname: this.nickname.val
-					}
-					$.post('<?=  base_url() ?>/user/editinfo', data, (data) => {
-						M.toast({html: (data.change != 'OK' ? 'ERROR: virifique contraseña' : 'Exito al Modificar'), classes: 'rounded'+ (data.change != 'OK' ? ' bg-alert' : '')})
-
-					})
+			let c = canvas.width > 300 ? downScaleCanvas(canvas,300/canvas.width) : canvas
+			this.image_send = c.toDataURL('image/jpeg', 0.8)
+		},
+		sendimage: function () {
+			const data = {image: this.image_send};
+			$.post('<?= base_url() ?>/services/user/avatarsave', data, (res) => {
+				if (res.path_image) {
+					M.toast({html: 'Exito al guardar imagen', classes: 'rounded'})
+					this.isOpeneditor = false
+					this.avatar_image = res.path_image
 				}
 
-			}
+			})
 		},
-		mounted: function () {
+		submit: function () {
+			if (this.isValid) {
+				const data = {
+					old: this.old_password.val,
+					new: this.new_password.val,
+					is_new: this.isNewPassword ? 1 : 0,
+					nickname: this.nickname.val
+				}
+				$.post('<?=  base_url() ?>/user/editinfo', data, (data) => {
+					M.toast({html: (data.change != 'OK' ? 'ERROR: virifique contraseña' : 'Exito al Modificar'), classes: 'rounded'+ (data.change != 'OK' ? ' bg-alert' : '')})
+
+				})
+			}
 
 		}
-	})
+	},
+	mounted: function () {
+
+	}
+}
 </script>
-</body>
-</html>

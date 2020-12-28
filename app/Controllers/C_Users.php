@@ -105,7 +105,7 @@ class C_Users extends BaseController
 		$user = md5($_SESSION['access']['user_access']);
 		$partial_path = "images/avatars/avatar_$user.jpg";
 		$path = file_exists($partial_path) ? "'".base_url()."/$partial_path?v=".rand()."'" : 'null';
-		echo view('users/settings', ['path_image' => $path]);
+		return $this->layout_view('publicv2','users/settings', ['path_image' => $path]);
 	}
 	public function login_fb()
 	{
