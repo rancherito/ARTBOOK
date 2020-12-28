@@ -44,16 +44,19 @@ $access_account = is_self_account($info['account']);
 	display: flex;
 }
 #app-profile-avatar {
-	background: #ffffff17;
+	background: rgba(0,0,0,0.1);
 	width: 130px;
 	height: 130px;
 	border-radius: 50%;
 	box-shadow: 0 0 0 8px rgba(255, 255, 255, .15);
-	text-transform: uppercase;
+
 }
-#app-profile-avatar{
-	height: 130px;
-	width: 130px;
+#app-profile-avatar span{
+	font-size: 3rem;
+	font-family: Calibri;
+	font-weight: lighter;
+	text-transform: uppercase;
+	color: white;
 }
 #user-avatar-img{
 	width: 100%;
@@ -63,7 +66,7 @@ $access_account = is_self_account($info['account']);
 	padding-top: 1rem;
 }
 #app-profile-content > div{
-	height: 200px;
+	height: 216px;
 	padding-top: 3rem;
 }
 #app-profile-nickname{

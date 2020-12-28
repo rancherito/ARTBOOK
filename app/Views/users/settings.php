@@ -130,7 +130,7 @@ canvas{
 			<div id="settings-bg-content">
 				<img src="<?= base_url() ?>/images/bg_003.jpg" alt="">
 			</div>
-			<img src="<?= base_url() ?>/images/logo.svg" class="animated zoomInLeft">
+			<img src="<?= base_url() ?>/images/logo_white.svg" class="animated zoomInLeft">
 		</div>
 
 		<div id="settings-content"  class="f-c">

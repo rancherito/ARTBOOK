@@ -15,13 +15,14 @@ class C_Users extends BaseController
 		if (count($account) && $account['validate'] == 1) {
 			$user_account = md5($account['user']);
 			$partial_path = "images/avatars/avatar_$user_account.jpg";
-			$path = file_exists($partial_path) ?base_url()."/$partial_path?v=".date("Ymd") : '';
+			$path = file_exists($partial_path) ? base_url()."/$partial_path?v=".date("Ymd") : '';
 			unset($account['user']);
 			$images = General::qry_images_recover($user);
-			$title = strtoupper($images[0]['nickname']).' - ARTS BOOK';
-			$metaimage = base_url().'/images/artworks/'.$images[0]['accessname'].'.'.$images[0]['extension'];
+			$title = strtoupper($account['nickname']).' - ARTS BOOK';
+
+			$metaimage = $path == '' ?  base_url().'/images/meta.png' : $path;
 			$metas = ['img' => $metaimage, 'title' => $title];
-			echo $this->layout_view('publicv2','users/user',['current_events' => $current_events, 'path_image' => $path, 'images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
+			echo $this->layout_view('publicv2','users/profile',['current_events' => $current_events, 'path_image' => $path, 'images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
 
 		}
 		else if (count($account) && $account['validate'] == 0) {
