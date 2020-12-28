@@ -1,4 +1,27 @@
 <?php $version = 'beta_0.081' ?>
+<?php
+	$pre_metas = [
+		'img' => base_url()."/images/meta.png",
+		'title' => 'ARTS BOOK - Comunidad de artistas',
+		'description' => 'Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art\'s Book 😁'
+	];
+
+	$metas = array_merge($pre_metas, empty($metas) ? [] : $metas);
+
+ ?>
+<meta name="description" content="<?= $metas['description'] ?>" />
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" value="summary">
+
+<!-- Open Graph data -->
+<meta property="og:title" content="<?= $metas['title'] ?>" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="<?= base_url() ?>" />
+<meta property="og:image" content="<?= $metas['img'] ?>" />
+<meta property="og:description" content="<?= $metas['description'] ?>" />
+<title><?= $metas['title'] ?></title>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">

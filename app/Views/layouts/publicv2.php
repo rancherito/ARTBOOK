@@ -1,14 +1,6 @@
 
 <?php
 use Config\App;
-$pre_metas = [
-	'img' => base_url()."/images/meta.png",
-	'title' => 'ARTS BOOK - Comunidad de artistas',
-	'description' => 'Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art\'s Book 😁'
-];
-
-$metas = array_merge($pre_metas, empty($metas) ? [] : $metas);
-
 
 $links = [];
 
@@ -23,18 +15,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta name="description" content="<?= $metas['description'] ?>" />
 
-	<!-- Twitter Card data -->
-	<meta name="twitter:card" value="summary">
-
-	<!-- Open Graph data -->
-	<meta property="og:title" content="<?= $metas['title'] ?>" />
-	<meta property="og:type" content="article" />
-	<meta property="og:url" content="<?= base_url() ?>" />
-	<meta property="og:image" content="<?= $metas['img'] ?>" />
-	<meta property="og:description" content="<?= $metas['description'] ?>" />
-	<title><?= $metas['title'] ?></title>
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 	<style media="screen">

@@ -22,7 +22,7 @@ class Home extends BaseController
 			$title = $res['name'].' por '.$res['nickname'];
 
 			$metas = ['img' => $metaimage, 'title' => $title];
-			if (isset($res['description'])) $metas['description'] = $res['description'];
+			if (!empty($res['description'])) $metas['description'] = $res['description'];
 
 			echo $this->layout_view('publicv2','artwork',['artwork' => $res, 'others_artworks' => $top_nine, 'metas' => $metas]);
 		}
