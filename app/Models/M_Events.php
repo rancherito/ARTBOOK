@@ -81,7 +81,7 @@ class M_Events
 	}
 	public static function qry_versus_recover($tag)
 	{
-		$sql = "SELECT name,event_start,event_end,[description], creation_date FROM events.tb_events WHERE type_event = 2 AND event_tag = ?;";
+		$sql = "SELECT name,event_start,event_end,[description], creation_date, IIF(event_end < GETDATE(),'E',IIF(DATEADD(DAY, -1, event_end) < GETDATE(),'S','N')) event_voting_state, IIF(event_end < GETDATE(),'END VOTING',IIF(DATEADD(DAY, -1, event_end) < GETDATE(),'START VOTING','NO VOTING STARTER')) event_voting_state_details FROM events.tb_events WHERE type_event = 2 AND event_tag = ?;";
 		return query_database($sql, [$tag]);
 	}
 	public static function qry_vs_artwork_choise($nickname_or_ip,  $artwork, $versus)
@@ -98,5 +98,10 @@ class M_Events
 	{
 		$sql = "EXEC events.sp_versus_candidates_artworks @id_versus = ?, @user = ?;";
 		return query_database($sql, [$id_versus, $user]);
+	}
+	public static function qry_vs_results($tag)
+	{
+		$sql = "EXEC events.[sp_versus_results] @evet_tag = ?;";
+		return query_database($sql, [$tag]);
 	}
 }

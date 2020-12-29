@@ -55,17 +55,29 @@ class C_Events extends BaseController
 	public function versus_recover($tag)
 	{
 		$res = M_Events::qry_versus_recover($tag);
+
 		if (count($res)) {
-			$ip = getIPAddress();
-			User::ipuser_save($ip);
+			$res = $res[0];
+			if ($res['event_voting_state'] == 'S') {
+				$ip = getIPAddress();
+				User::ipuser_save($ip);
+				$user = !empty($_SESSION['access']) ? $_SESSION['access']['account'] : $ip;
+				$list = M_Events::qry_vs_artworks($tag, $user);
+				return $this->layout_view('public', 'events/versustag',['data' => $res, 'participients' => $list]);
+			}
+			else {
+				$list = M_Events::qry_vs_results($tag);
 
-			$user = !empty($_SESSION['access']) ? $_SESSION['access']['account'] : $ip;
-
-			$list = M_Events::qry_vs_artworks($tag, $user);
-			return $this->layout_view('public', 'events/versustag',['data' => $res[0], 'participients' => $list]);
+				$versus_list = [];
+				foreach ($list as $key => $versus) {
+					if(empty($versus_list[$versus['versus']])) $versus_list[$versus['versus']] = [];
+					$versus_list[$versus['versus']][] = $versus;
+				}
+				return $this->layout_view('publicv2', 'events/versustag_presentation',['data' => $res, 'versus_list' => $versus_list]);
+			}
 		}
 		else {
-			'Lo sentimos no encontramos eventos con este tag';
+			echo 'Lo sentimos no encontramos eventos con este tag';
 		}
 	}
 }
