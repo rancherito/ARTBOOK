@@ -25,7 +25,7 @@ function getPathImage($artwork)
 	position: fixed;
 	top: 1rem;
 	bottom: 1rem;
-	background: white;
+	background: #f9f9f9;
 	border-radius: 10px;
 	overflow: hidden;
 	width: 100%;
@@ -54,14 +54,19 @@ function getPathImage($artwork)
 	transform: translate(-50%, -50%);
 	opacity: 0.5
 }
+.artist-content{
+	position: relative;
+	width: 90px;
+}
 .artist-content div{
 	height: 50px;
 	width: 50px;
 	border-radius: 50%;
 }
 .artist-content span{
-	width: 90px;
+	width: 100%;
 	display: block;
+	overflow: hidden;
 	text-overflow: ellipsis;
 	text-align: center;
 	color: gray;
@@ -73,23 +78,27 @@ function getPathImage($artwork)
 	position: absolute;
 	top: 0;
 	left: 0;
+	padding: 0 3.25rem;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-around;
 	font-size: 1.5rem;
-	letter-spacing: 4px;
 	font-weight: lighter;
 	font-family: sans-serif;
-	z-index: -1;
+	color: gray;
+
+}
+.group-versus-vs-text span{
+	color: gray;
 }
 .group-versus{
 	color: gray;
 	display: flex;
 	flex-direction: column;
 	padding: .5rem;
-	border: 1px solid #0000001f;
 	border-radius: 5px;
 	position: relative;
+	background-color: white;
 }
 .group-versus .btn{
 	transform: scale(.8);
@@ -160,20 +169,37 @@ function getPathImage($artwork)
 	bottom: 1rem;
 	left: 1rem;
 }
-#versustag-vs-preview-images div{
+.versus-pic{
 	height: 48px;
 	width: 48px;
 	border-radius: 50%;
 	display: inline-block;
 	margin-right: 1rem;
-	box-shadow: 0 0 0 4px #00000038;
+	box-shadow: 0 0 0 4px rgba(0,0,0,.5);
+	transform: scale(0.8);
+}
+.versus-pic-active{
+	box-shadow: 0 0 0 6px var(--primary);
+	animation-duration: 3s;
+	animation-name: bounce_shadow;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	transform: scale(1);
+}
+@keyframes bounce_shadow {
+	0%{
+		transform: scale(1) rotate(0);
+	}
+	100%{
+		transform: scale(1) rotate(360deg);
+	}
 }
 #versustag-vs-choser-currente-img-bg{
 	height: 100%;
 	width: 100%;
 	position: relative;
 	object-fit: cover;
-	opacity: .4
+	opacity: .1
 }
 #versustag-vs-choser-currente-img-view{
 	height: 100%;
@@ -185,6 +211,7 @@ function getPathImage($artwork)
 }
 #challenges-arrows {
 	position: fixed;
+	padding: 1rem;
 	top: 50%;
 	width: 100%;
 	display: flex;
@@ -194,43 +221,25 @@ function getPathImage($artwork)
 	border-radius: 0;
 }
 #challenges-arrows a {
-	background: white;
-	height: 42px;
-	display: inline-block;
-	line-height: 42px;
-	width: 42px;
-	text-align: center;
-	font-size: 1.5rem;
 	color: var(--primary);
 	cursor: pointer;
-}
-#challenges-arrows a {
 	height: 80px;
+	width: 80px;
+	border-radius: 50%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 3rem;
-	background: #0000006e;
+	font-size: 4rem;
+	background: rgba(0,0,0,.6);
 	color: white;
 }
-#challenges-arrows a:nth-child(1) {
-	border-radius: 0 50px 50px 0;
-}
-#challenges-arrows a:nth-child(2) {
-    border-radius: 50px 0 0 50px;
-}
-#challenges-arrows a:nth-child(1) i {
-    transform: translateX(-20%);
-}
-#challenges-arrows a:nth-child(2) i {
-    transform: translateX(20%);
-}
+
 #versustag-vs-choser.versus-vote #versustag-voting-button, #versustag-voting-button:hover {
     background: #8bc34a;
     color: white;
 }
 .btn-dark {
-    background: #00000087;
+    background: rgba(0,0,0,.6);
     color: white;
 }
 .fixed-action-btn{
@@ -312,24 +321,20 @@ function getPathImage($artwork)
 
 			</div>
 			<div id="versustag-body" >
-				<simplebar>
+				<simplebar style="height: 100%">
 					<div style="padding: 2rem;">
-						<template v-for="groups of group_versus">
-							<template v-if="groups.length == 3">
-								<div class="">
-									DE TRES Xd
-								</div>
-							</template>
-						</template>
+
 						<template v-for="(groups, index) of group_versus">
-							<template v-if="groups.length == 2">
-								<div class="title-4">
+							<template v-if="groups.length >= 2 && !my_votes[index]">
+								<div class="title-5">
 									<span>VERSUS: {{groups[0].name}}</span>
 								</div>
 								<div class="group-versus">
 
 									<div class="f-b" style="position: relative">
-										<div class="group-versus-vs-text">VS</div>
+										<div class="group-versus-vs-text">
+											<span v-for="n in (groups.length - 1)">VS</span>
+										</div>
 
 										<a v-for="artist of groups" class="artist-content f-c" target="_blank" :href="'<?= base_url()?>/' + artist.account">
 											<div class="group-versus-avatar cover f-c" :class="{'yourwinner': artist.vote}" :style="{'background-image': artist.avatar == undefined ? '' : 'url(' + artist.avatar + ')'}">
@@ -339,7 +344,35 @@ function getPathImage($artwork)
 										</a>
 									</div>
 									<div class="c">
-										<div class="btn" :class="{'group-versus-hasvote': my_votes[index]}" @click="openversus(groups)">{{my_votes[index] ? 'Cambiar mi voto' : 'Votar!'}}</div>
+										<div class="btn" @click="openversus(groups)">Votar!</div>
+									</div>
+
+								</div>
+								<br>
+							</template>
+
+						</template>
+						<template v-for="(groups, index) of group_versus">
+							<template v-if="groups.length >= 2 && my_votes[index]">
+								<div class="title-5">
+									<span>VERSUS: {{groups[0].name}}</span>
+								</div>
+								<div class="group-versus">
+
+									<div class="f-b" style="position: relative">
+										<div class="group-versus-vs-text">
+											<span v-for="n in (groups.length - 1)">VS</span>
+										</div>
+
+										<a v-for="artist of groups" class="artist-content f-c" target="_blank" :href="'<?= base_url()?>/' + artist.account">
+											<div class="group-versus-avatar cover f-c" :class="{'yourwinner': artist.vote}" :style="{'background-image': artist.avatar == undefined ? '' : 'url(' + artist.avatar + ')'}">
+												{{artist.avatar == undefined ? artist.nickname[0] : ''}}
+											</div>
+											<span>{{artist.nickname}}</span>
+										</a>
+									</div>
+									<div class="c">
+										<div class="btn bg-success" @click="openversus(groups)">Cambiar mi voto</div>
 									</div>
 
 								</div>
@@ -349,7 +382,7 @@ function getPathImage($artwork)
 						</template>
 						<template v-for="groups of group_versus">
 							<template v-if="groups.length == 1">
-								<div class="title-4">
+								<div class="title-5">
 									<span>VERSUS: {{groups[0].name}}</span>
 								</div>
 								<div class="group-versus">
@@ -363,7 +396,7 @@ function getPathImage($artwork)
 										</a>
 										<div style="flex: 1" class="c">
 											Ganador por default
-											<div class="btn" @click="openversus(groups)">Ver</div>
+											<div class="btn bg-success" @click="openversus(groups)">Ver</div>
 										</div>
 									</div>
 
@@ -379,7 +412,7 @@ function getPathImage($artwork)
 			<img ref="imageartwork_bg" :src="calculeurl()" id="versustag-vs-choser-currente-img-bg">
 			<img ref="imageartwork" :src="calculeurl()" id="versustag-vs-choser-currente-img-view">
 			<div id="versustag-vs-preview-images" v-if="current_group">
-				<div v-for="pic in current_group" class="cover" :style="calculeartwork(pic)"></div>
+				<div v-for="pic in current_group" class="cover versus-pic" :class="{'versus-pic-active': calculepic(pic)}" :style="calculeartwork(pic)"></div>
 			</div>
 			<div id="versustag-vs-buttons">
 				<div>
@@ -394,7 +427,7 @@ function getPathImage($artwork)
 					</a>
 				</div>
 			</div>
-			<div id="challenges-arrows" class="mt-2">
+			<div id="challenges-arrows">
 				<a @click="back"><i class="mdi mdi-chevron-left"></i></a>
 				<a @click="advance"><i class="mdi mdi-chevron-right"></i></a>
 			</div>
@@ -468,7 +501,7 @@ $_module = {
 			return {top: parseInt(Math.random()*100) + '%', left: parseInt(Math.random()*100) + '%', position: 'absolute', height: '10px', width: '10px'}
 		},
 		openversus: function (versus) {
-			this.current_group_position = 0
+			this.current_group_position = parseInt(Math.random() * versus.length)
 			this.current_group = versus
 			this.on_choise = true
 		},
@@ -484,7 +517,10 @@ $_module = {
 			if (this.current_group) this.current_group_position = --this.current_group_position < 0 ? this.current_group.length - 1 : this.current_group_position
 		},
 		calculeartwork: function (pic) {
-			return {'background-image': 'url(' + this.base_url + '/images/artworks/' + pic.accessname + '.jpg)'}
+			return {'background-image': 'url(' + this.base_url + '/images/artworks_lite/' + pic.accessname + '.jpg)'}
+		},
+		calculepic: function (pic) {
+			return pic.accessname == this.current_group[this.current_group_position].accessname
 		},
 		calculeurl: function () {
 

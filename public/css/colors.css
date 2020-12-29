@@ -12,7 +12,7 @@
     --bg-secondary: var(--secondary);
     --bg-alert: linear-gradient(45deg, #d65d54, #e01f54) ;
 	--bg-white: white;
-	--bg-lima: linear-gradient(135deg, #acd000, #7a8d1e);
+	--bg-lime: #9ab80b;
 	--bg-teal: linear-gradient(135deg, #4dcdb6, #037a69);
 	--bg-granadilla: linear-gradient(135deg, #6d3c87, #cd232e);
 	--bg-purple: linear-gradient(135deg, #d59aea, #4c35aa);
@@ -21,6 +21,9 @@
 	--bg-orange: linear-gradient(135deg, #ffc371, #ff606d);
 	--bg-mix01: linear-gradient(135deg, #c22ed0, #5ffae0);
 	--bg-darkpink: linear-gradient(135deg, #ff3e9d, #0e1f40);
+}
+.bg-lime, .bg-success, .bg-green{
+	background: var(--bg-lime);
 }
 .bg-white{
 	background: var(--bg-white) !important;
