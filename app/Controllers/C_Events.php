@@ -69,11 +69,17 @@ class C_Events extends BaseController
 				$list = M_Events::qry_vs_results($tag);
 
 				$versus_list = [];
+				$winners = [];
 				foreach ($list as $key => $versus) {
 					if(empty($versus_list[$versus['versus']])) $versus_list[$versus['versus']] = [];
+					if(empty($winners[$versus['versus']])) $winners[$versus['versus']] = [];
+
 					$versus_list[$versus['versus']][] = $versus;
+					if ($versus['ranking'] == 1) {
+						$winners[$versus['versus']][] = $versus;
+					}
 				}
-				return $this->layout_view('publicv2', 'events/versustag_presentation',['data' => $res, 'versus_list' => $versus_list]);
+				return $this->layout_view('publicv2', 'events/versustag_presentation',['data' => $res, 'versus_list' => $versus_list, 'winners' => $winners]);
 			}
 		}
 		else {
