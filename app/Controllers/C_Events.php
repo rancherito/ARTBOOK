@@ -70,6 +70,9 @@ class C_Events extends BaseController
 
 				$versus_list = [];
 				$winners = [];
+				$metas = [];
+				$metas['title'] = $res['name']. ' - ARTSBOOK';
+				$metas['description'] = $res['description'];
 				foreach ($list as $key => $versus) {
 					if(empty($versus_list[$versus['versus']])) $versus_list[$versus['versus']] = [];
 					if(empty($winners[$versus['versus']])) $winners[$versus['versus']] = [];
@@ -79,7 +82,7 @@ class C_Events extends BaseController
 						$winners[$versus['versus']][] = $versus;
 					}
 				}
-				return $this->layout_view('publicv2', 'events/versustag_presentation',['data' => $res, 'versus_list' => $versus_list, 'winners' => $winners]);
+				return $this->layout_view('publicv2', 'events/versustag_presentation',['metas' => $metas, 'data' => $res, 'versus_list' => $versus_list, 'winners' => $winners]);
 			}
 		}
 		else {
