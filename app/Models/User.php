@@ -48,4 +48,9 @@ class User
 		$sql = "EXEC users.sp_ipuser_save @ipuser = ?;";
 		return query_database($sql,[$ip]);
 	}
+	public static function qry_users_list()
+	{
+		$sql = "SELECT nickname, account, pass, [user], [state] FROM users.tb_users";
+		return query_database($sql);
+	}
 }

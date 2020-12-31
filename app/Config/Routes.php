@@ -54,8 +54,11 @@ if (isset($_SESSION['access'])) {
 
 
 	if ($_SESSION['access']['accesstype'] == 'ADMINISTRADOR') {
-		$routes->add('/administrador', 'Administrator');
+		$routes->add('controll', 'C_Controll');
+		$routes->get('controll/users', 'C_Controll::users');
+		$routes->post('controll/users', 'C_Controll::users_access');
 		$routes->get('/services/artwork/list', 'Services::artwork_list');
+
 	}
 }
 
