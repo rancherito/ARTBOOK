@@ -27,8 +27,9 @@
 <link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">
 <link rel="stylesheet" href="<?= base_url() ?>/font/RobotoCondensed/RobotoCondensed.css">
 <link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/materialdesignicons.min.css">
-<link rel="stylesheet" href="<?= base_url() ?>/css/helpers.css?v=<?= $version ?>">
+
 <link rel="stylesheet" href="<?= base_url() ?>/libs/materialize/css/materialize.min.css">
+<link rel="stylesheet" href="<?= base_url() ?>/css/helpers.css?v=<?= $version ?>">
 <link rel="stylesheet" href="<?= base_url() ?>/libs/animate/animate.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>/css/custom_materialize.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/js/script.js?v=<?= $version ?>"></script>

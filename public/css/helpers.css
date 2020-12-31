@@ -43,8 +43,12 @@
 .title-4, h4{
 	font-size: 1.25rem;
 }
-h1, h2, h3, h4{
-	margin-top: 0;
+
+.title-5, h5{
+	font-size: 1.1rem;
+}
+h1, h2, h3, h4,h5{
+	margin: 0;
 }
 .title-specia-1{
 	font-weight: bold;
@@ -74,6 +78,9 @@ h1, h2, h3, h4{
 }
 .w100{
 	width: 100%
+}
+.h100{
+	height: 100%
 }
 .w50{
 	width: 50%
