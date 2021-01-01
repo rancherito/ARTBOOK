@@ -243,7 +243,8 @@ $_SESSION['fb_access_token'] = (string) $accessToken;*/
 		  if (count($res)) {
   			$pass = $res[0]['pass'];
   			$account = $res[0]['account'];
-  			$access = C_Users::login_validate_internal($id, $pass);
+			$user = $res[0]['user'];
+  			$access = C_Users::login_validate_internal($user, $pass);
   			if($access['access'] == 1){
   				return redirect()->to(base_url().'/'.$account);
   			}
