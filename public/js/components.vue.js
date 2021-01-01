@@ -292,12 +292,13 @@ Vue.component('upload-editor',{
 
 Vue.component('cg-grid-image', {
 	template: `
-	<div class="cg-grid-image">
+	<div class="cg-grid-image" :class="{'cg-grid-img-restricted': info.category_main == 'R18'}">
 		<a @click="send_events" v-show="is_on_account" class="cg-grid-image-options btn-icon btn-dark waves waves-effect waves-light">
 			<i class="mdi-24px mdi mdi-cog"></i>
 		</a>
 		<div class="cg-grid-artwork-content">
-			<img ref="image" loading="lazy" class="cg-grid-img" :class="{'cg-grid-img-restricted': info.category_main == 'R18'}" :height="info.height" :width="info.width" :src="calculeimage()">
+			<div class="cg-grid-img-restricted-indicator f-c" v-if="info.category_main == 'R18'">R18</div>
+			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
 			<div class="cg-grid-artwork-name">
 				<div class="cg-grid-info"  v-if="!is_on_profile">
 					<a class="cg-grid-avatar" :href="site">{{info.nickname[0]}}</a>

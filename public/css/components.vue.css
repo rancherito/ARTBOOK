@@ -116,9 +116,26 @@
 	display: block;
 	font-size: .8rem;
 }
-img.cg-grid-img-restricted{
-	filter: blur(10px);
+.cg-grid-img-restricted{
+	background: var(--primary);
+	border-radius: 10px;
+}
+.cg-grid-img-restricted-indicator{
+	color: var(--primary);
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	font-family: Calibri;
+	height: 32px;
+	width: 32px;
+	background: white;
+	border-radius: 50%;
+	z-index: 2
+}
+.cg-grid-img-restricted .cg-grid-img{
+	filter: blur(16px);
 	transform: scale(1.2);
+	opacity: .8
 }
 .upload-editor{
 	background: rgba(0,0,0,0.6);
