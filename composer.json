@@ -15,7 +15,8 @@
 		"psr/log": "^1.1",
 		"facebook/graph-sdk": "^5.7",
 		"gumlet/php-image-resize": "1.9.*",
-		"hashids/hashids": "^4.1"
+		"hashids/hashids": "^4.1",
+		"telesign/telesign": "^2.2"
 	},
 	"require-dev": {
 		"codeigniter4/codeigniter4-standard": "^1.0",

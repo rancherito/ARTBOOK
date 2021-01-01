@@ -2,8 +2,20 @@
 use App\Models\General;
 use App\Models\User;
 use App\Models\M_Events;
+use telesign\sdk\messaging\MessagingClient;
 class Home extends BaseController
 {
+	public function test_sms()
+	{
+		$customer_id = "DCFC62D1-BD46-4D11-81FC-FF8E7153C1C8";
+		$api_key = "a5ce65HLd/GMG1i7C3I7nr7HBb5ivBL3/DqRWgF7mJImP+G6RTIt3XfS4fWBbm7QinST8PvW1RHY4LTyhyLHow==";
+		$phone_number = "51941643518";
+		$message = "You're scheduled for a dentist appointment at 2:30PM.";
+		$message_type = "ARN";
+		$messaging = new MessagingClient($customer_id, $api_key);
+		$response = $messaging->message($phone_number, $message, $message_type);
+		echo "SE ENVIO CON EXITO Xd";
+	}
 	public function index()
 	{
 		$current_events = M_Events::qry_events_current();
