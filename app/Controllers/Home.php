@@ -14,6 +14,7 @@ class Home extends BaseController
 		$message_type = "ARN";
 		$messaging = new MessagingClient($customer_id, $api_key);
 		$response = $messaging->message($phone_number, $message, $message_type);
+		print_r($response);
 		echo "SE ENVIO CON EXITO Xd";
 	}
 	public function index()
