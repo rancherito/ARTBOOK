@@ -9,10 +9,9 @@
 	$permissions = ['email'];
 	$loginUrl = empty($_SESSION['access']) ? $helper->getLoginUrl(base_url().'/user/login_fbauth', $permissions) : base_url().'/'.$_SESSION['access']['account'];
 
-
 	$client = new Google_Client();
-	$client->setApplicationName("118858058713-a8a8tmpjsuacva05cd14obk9qvq67l1h.apps.googleusercontent.com");
-	$client->setDeveloperKey("84aL1kjzHon4X2_tFbhE_ep9");
+	$client->setClientId("118858058713-a8a8tmpjsuacva05cd14obk9qvq67l1h.apps.googleusercontent.com");
+	$client->setClientSecret("84aL1kjzHon4X2_tFbhE_ep9");
 	$client->setRedirectUri(base_url().'/user/login_gooauth');
 	$client->addScope('email');
 	$client->addScope('profile');

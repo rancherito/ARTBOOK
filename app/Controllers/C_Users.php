@@ -216,12 +216,12 @@ $_SESSION['fb_access_token'] = (string) $accessToken;*/
 	public function login_gooauth()
 	{
 		$client = new Google_Client();
-		$client->setApplicationName("118858058713-a8a8tmpjsuacva05cd14obk9qvq67l1h.apps.googleusercontent.com");
-		$client->setDeveloperKey("84aL1kjzHon4X2_tFbhE_ep9");
+		$client->setClientId("118858058713-a8a8tmpjsuacva05cd14obk9qvq67l1h.apps.googleusercontent.com");
+		$client->setClientSecret("84aL1kjzHon4X2_tFbhE_ep9");
 		$client->setRedirectUri(base_url().'/user/login_gooauth');
 		$client->addScope('email');
 		$client->addScope('profile');
-		
+
 		if (isset($_GET['code'])) {
 		  $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
 		  $client->setAccessToken($token['access_token']);
