@@ -298,7 +298,8 @@ Vue.component('cg-grid-image', {
 		</a>
 		<div class="cg-grid-artwork-content">
 			<div class="cg-grid-img-restricted-indicator f-c" v-if="info.category_main == 'R18'">R18</div>
-			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
+
+			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.category_main == 'R18' ? 400 : info.height" :width="info.category_main == 'R18' ? 400 : info.width" :src="calculeimage()">
 			<div class="cg-grid-artwork-name">
 				<div class="cg-grid-info"  v-if="!is_on_profile">
 					<a class="cg-grid-avatar" :href="site">{{info.nickname[0]}}</a>
@@ -330,6 +331,9 @@ Vue.component('cg-grid-image', {
 	methods: {
 
 		calculeimage: function () {
+			if (this.info.category_main == 'R18') {
+				return `images/artworks_lite/${this.info.accessname}.${this.info.extension}`;
+			}
 			return `images/artworks/${this.info.accessname}.${this.info.extension}`;
 		},
 

@@ -121,21 +121,21 @@
 	border-radius: 10px;
 }
 .cg-grid-img-restricted-indicator{
-	color: var(--primary);
+	color: white;
 	position: absolute;
-	right: 1rem;
-	top: 1rem;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%) scale(2);
 	font-family: Calibri;
 	height: 32px;
 	width: 32px;
-	background: white;
 	border-radius: 50%;
 	z-index: 2
 }
 .cg-grid-img-restricted .cg-grid-img{
-	filter: blur(16px);
+	filter: blur(8px);
 	transform: scale(1.2);
-	opacity: .8
+	opacity: .9
 }
 .upload-editor{
 	background: rgba(0,0,0,0.6);

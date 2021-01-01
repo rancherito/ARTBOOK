@@ -1,4 +1,4 @@
-<?php $version = 'beta_0.086' ?>
+<?php $version = 'beta_0.087' ?>
 <?php
 	$pre_metas = [
 		'img' => base_url()."/images/meta.png",
