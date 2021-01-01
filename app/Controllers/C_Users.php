@@ -3,6 +3,7 @@ use App\Models\General;
 use App\Models\User;
 use Facebook\Facebook;
 use App\Models\M_Events;
+use Google\Client;
 class C_Users extends BaseController
 {
 	public function index($user)
@@ -215,7 +216,7 @@ $_SESSION['fb_access_token'] = (string) $accessToken;*/
 }
 	public function login_gooauth()
 	{
-		$client = new Google_Client();
+		$client = new \Google_Client();
 		$client->setClientId("118858058713-a8a8tmpjsuacva05cd14obk9qvq67l1h.apps.googleusercontent.com");
 		$client->setClientSecret("84aL1kjzHon4X2_tFbhE_ep9");
 		$client->setRedirectUri(base_url().'/user/login_gooauth');
@@ -227,12 +228,13 @@ $_SESSION['fb_access_token'] = (string) $accessToken;*/
 		  $client->setAccessToken($token['access_token']);
 
 		  // get profile info
-		  $google_oauth = new Google_Service_Oauth2($client);
+		  $google_oauth = new \Google_Service_Oauth2($client);
 		  $google_account_info = $google_oauth->userinfo->get();
 		  $email =  $google_account_info->email;
-		  $name =  $google_account_info->name;
-
+		  $name =  $google_account_info->givenName;
+		  $id =  $google_account_info->id;
 		  // Estos datos son los que obtenemos....
+		  echo $id .'<br>';
 		  echo $email .'<br>';
 		  echo $name ;
 
