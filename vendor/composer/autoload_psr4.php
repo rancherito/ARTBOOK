@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'telesign\\sdk\\' => array($vendorDir . '/telesign/telesign/src'),
+    'phpseclib\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Php72\\' => array($vendorDir . '/symfony/polyfill-php72'),
@@ -17,8 +18,10 @@ return array(
     'Ramsey\\Collection\\' => array($vendorDir . '/ramsey/collection/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Psr\\Cache\\' => array($vendorDir . '/psr/cache/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src/Prophecy'),
     'Predis\\' => array($vendorDir . '/predis/predis/src'),
+    'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'Laminas\\ZendFrameworkBridge\\' => array($vendorDir . '/laminas/laminas-zendframework-bridge/src'),
     'Laminas\\Escaper\\' => array($vendorDir . '/laminas/laminas-escaper/src'),
     'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
@@ -27,6 +30,8 @@ return array(
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
     'Gumlet\\' => array($vendorDir . '/gumlet/php-image-resize/lib'),
+    'Google\\Auth\\' => array($vendorDir . '/google/auth/src'),
+    'Firebase\\JWT\\' => array($vendorDir . '/firebase/php-jwt/src'),
     'Faker\\' => array($vendorDir . '/fzaninotto/faker/src/Faker'),
     'Facebook\\' => array($vendorDir . '/facebook/graph-sdk/src/Facebook'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),

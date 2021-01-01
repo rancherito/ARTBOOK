@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'cb7c25805073bbcf42dd4ba2b3331b5400bb8b57',
+    'reference' => '19e9b64e9d067295440a65ecf59e60fd4deb2b12',
     'name' => 'codeigniter4/framework',
   ),
   'versions' => 
@@ -36,7 +36,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'cb7c25805073bbcf42dd4ba2b3331b5400bb8b57',
+      'reference' => '19e9b64e9d067295440a65ecf59e60fd4deb2b12',
     ),
     'doctrine/instantiator' => 
     array (
@@ -56,6 +56,15 @@
       ),
       'reference' => '2d8250638b33d73e7a87add65f47fabf91f8ad9b',
     ),
+    'firebase/php-jwt' => 
+    array (
+      'pretty_version' => 'v5.2.0',
+      'version' => '5.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'feb0e820b8436873675fd3aca04f3728eb2185cb',
+    ),
     'fzaninotto/faker' => 
     array (
       'pretty_version' => 'dev-master',
@@ -65,6 +74,33 @@
         0 => '1.9.x-dev',
       ),
       'reference' => '5ffe7db6c80f441f150fc88008d64e64af66634b',
+    ),
+    'google/apiclient' => 
+    array (
+      'pretty_version' => 'v2.7.0',
+      'version' => '2.7.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '48ec94577b51bde415270116118b07a294e07c43',
+    ),
+    'google/apiclient-services' => 
+    array (
+      'pretty_version' => 'v0.156',
+      'version' => '0.156.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '2f5e54fdef034f856208328126bddd8376dae4b3',
+    ),
+    'google/auth' => 
+    array (
+      'pretty_version' => 'v1.14.3',
+      'version' => '1.14.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c1503299c779af0cbc99b43788f75930988852cf',
     ),
     'gumlet/php-image-resize' => 
     array (
@@ -147,6 +183,15 @@
       ),
       'reference' => '231c73783ebb7dd9ec77916c10037eff5a2b6efe',
     ),
+    'monolog/monolog' => 
+    array (
+      'pretty_version' => '2.2.0',
+      'version' => '2.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '1cb1cde8e8dd0f70cc0fe51354a59acad9302084',
+    ),
     'myclabs/deep-copy' => 
     array (
       'pretty_version' => '1.10.2',
@@ -204,6 +249,15 @@
       array (
       ),
       'reference' => '6a467b8989322d92aa1c8bf2bebcc6e5c2ba55c0',
+    ),
+    'phpseclib/phpseclib' => 
+    array (
+      'pretty_version' => '2.0.30',
+      'version' => '2.0.30.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '136b9ca7eebef78be14abf90d65c5e57b6bc5d36',
     ),
     'phpspec/prophecy' => 
     array (
@@ -277,6 +331,15 @@
       ),
       'reference' => '9930e933c67446962997b05201c69c2319bf26de',
     ),
+    'psr/cache' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd11b50ad223250cf17b86e38383413f5a6764bf8',
+    ),
     'psr/http-message' => 
     array (
       'pretty_version' => '1.0.1',
@@ -301,6 +364,13 @@
       array (
       ),
       'reference' => '0f73288fd15629204f9d42b7055f72dacbe811fc',
+    ),
+    'psr/log-implementation' => 
+    array (
+      'provided' => 
+      array (
+        0 => '1.0.0',
+      ),
     ),
     'ralouphie/getallheaders' => 
     array (

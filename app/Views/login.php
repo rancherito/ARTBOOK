@@ -6,11 +6,17 @@
 	]);
 
 	$helper = $fb->getRedirectLoginHelper();
-
 	$permissions = ['email'];
 	$loginUrl = empty($_SESSION['access']) ? $helper->getLoginUrl(base_url().'/user/login_fbauth', $permissions) : base_url().'/'.$_SESSION['access']['account'];
 
 
+	$client = new Google_Client();
+	$client->setApplicationName("118858058713-a8a8tmpjsuacva05cd14obk9qvq67l1h.apps.googleusercontent.com");
+	$client->setDeveloperKey("84aL1kjzHon4X2_tFbhE_ep9");
+	$client->setRedirectUri(base_url().'/user/login_gooauth');
+	$client->addScope('email');
+	$client->addScope('profile');
+	$loginGoogleUrl = $client->createAuthUrl();
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -79,10 +85,14 @@
 					<div id="logger"></div>
 					<h3 class="mb-0">{{newAccountMode ? 'REGISTRO' :'ACCESSO'}}</h3>
 					<div class="grey-text">Acceso para usuarios Art's Book</div>
-					<div class="l pb-4 pt-6 w100">
+					<div class="l pb-4 pt-6 w100 f-b">
 						<a href="<?= $loginUrl ?>" class="btn" style="background-color: #2139bf">
-							<i class="mdi mdi-facebook"></i>
-							<span>LOGIN FACEBOOK</span>
+							<i class="mdi mdi-facebook right"></i>
+							<span>INICIAR CON</span>
+						</a>
+						<a href="<?= $loginGoogleUrl ?>" class="btn orange">
+							<i class="mdi mdi-google-plus right"></i>
+							<span>INICIAR CON</span>
 						</a>
 					</div>
 					<div class="w100 pt-1">

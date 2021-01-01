@@ -213,8 +213,29 @@ var_dump($accessToken->getValue());
 $_SESSION['fb_access_token'] = (string) $accessToken;*/
 
 }
-public function login_gooauth()
-{
-	echo "google auth";
-}
+	public function login_gooauth()
+	{
+		$client = new Google_Client();
+		$client->setApplicationName("118858058713-a8a8tmpjsuacva05cd14obk9qvq67l1h.apps.googleusercontent.com");
+		$client->setDeveloperKey("84aL1kjzHon4X2_tFbhE_ep9");
+		$client->setRedirectUri(base_url().'/user/login_gooauth');
+		$client->addScope('email');
+		$client->addScope('profile');
+		
+		if (isset($_GET['code'])) {
+		  $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+		  $client->setAccessToken($token['access_token']);
+
+		  // get profile info
+		  $google_oauth = new Google_Service_Oauth2($client);
+		  $google_account_info = $google_oauth->userinfo->get();
+		  $email =  $google_account_info->email;
+		  $name =  $google_account_info->name;
+
+		  // Estos datos son los que obtenemos....
+		  echo $email .'<br>';
+		  echo $name ;
+
+		}
+	}
 }
