@@ -85,13 +85,13 @@
 					<h3 class="mb-0">{{newAccountMode ? 'REGISTRO' :'ACCESSO'}}</h3>
 					<div class="grey-text">Acceso para usuarios Art's Book</div>
 					<div class="l pb-4 pt-6 w100 f-b">
-						<a href="<?= $loginUrl ?>" class="btn" style="background-color: #2139bf">
-							<i class="mdi mdi-facebook right"></i>
-							<span>INICIAR CON</span>
+						<a href="<?= $loginUrl ?>" class="btn" style="background-color: #2139bf;padding-right: .5rem;">
+							<i class="mdi mdi-facebook right mdi-24px"></i>
+							<span>{{newAccountMode ? 'CREAR CON' : 'INICIAR CON'}}</span>
 						</a>
-						<a href="<?= $loginGoogleUrl ?>" class="btn orange">
-							<i class="mdi mdi-google-plus right"></i>
-							<span>INICIAR CON</span>
+						<a href="<?= $loginGoogleUrl ?>" class="btn orange" style="padding-right: .5rem;">
+							<i class="mdi mdi-google right mdi-24px"></i>
+							<span>{{newAccountMode ? 'CREAR CON' : 'INICIAR CON'}}</span>
 						</a>
 					</div>
 					<div class="w100 pt-1">
@@ -99,7 +99,7 @@
 							<cg-field :watchisvalid.sync="user.isvalid" required name="user" v-model="user.val" sizechars="4-16" label="Usuario" placeholder="ingrese credenciales"></cg-field>
 							<cg-field :watchisvalid.sync="pass.isvalid" required name="password" v-model="pass.val" sizechars="4-20" label="Contraseña" type="password" placeholder="ingrese clave de acceso secreto"></cg-field>
 							<div class="r">
-								<a href="<?= base_url() ?>" class="btn bg-white"><span>REGRESAR</span> </a>
+								<a href="<?= base_url() ?>" class="btn bg-white"><span>PAGINA DE INICIO</span> </a>
 								<button :disabled="!isvalid" type="submit" class="btn waves waves-effect waves-light">
 									<i class="mdi mdi-key right"></i>
 									<span>ACCEDER</span>
@@ -111,14 +111,22 @@
 							<cg-field :watchisvalid.sync="new_pass.isvalid" required name="password" v-model="new_pass.val" sizechars="8-20" label="Contraseña" type="password" placeholder="ingrese clave de acceso secreto"></cg-field>
 							<cg-field :watchisvalid.sync="email.isvalid" required name="email" v-model="email.val" label="Email" sizechars="0-50" type="email" placeholder="ingrese clave de acceso secreto"></cg-field>
 							<div class="r">
-								<a href="<?= base_url() ?>" class="btn bg-white"><span>REGRESAR</span> </a>
+								<a href="<?= base_url() ?>" class="btn bg-white"><span>PAGINA DE INICIO</span> </a>
 								<cg-button :loading="loading" :disabled="!isvalid_register" classicon="mdi mdi-account-plus" text="CREAR"></cg-button>
 
 							</div>
 						</form>
 					</div>
 					<div class="f-c pt-4 ">
-						<a class="simple-link" @click="toogleMode">{{newAccountMode ? 'Acceder con una cuenta' : '¿No tienes una cuenta? Registrate aqui!!'}}</a>
+						<a class="simple-link c" @click="toogleMode">
+							<span v-if="newAccountMode">
+								Acceder con una cuenta
+							</span>
+							<template v-else>
+								<span>¿No tienes una cuenta? </span><br>
+								<span class="title-4">REGISTRATE AQUI</span>
+							</template>
+						</a>
 						<h6 class="c primary" style="display: none" v-show="register_ok">Revise su E-mail para validar su registro</h6>
 					</div>
 				</div>
