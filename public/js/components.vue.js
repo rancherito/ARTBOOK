@@ -297,7 +297,7 @@ Vue.component('cg-grid-image', {
 			<i class="mdi-24px mdi mdi-cog"></i>
 		</a>
 		<div class="cg-grid-artwork-content">
-			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.height" :width="info.width" :src="calculeimage()">
+			<img ref="image" loading="lazy" class="cg-grid-img" :class="{'cg-grid-img-restricted': info.category_main == 'R18'}" :height="info.height" :width="info.width" :src="calculeimage()">
 			<div class="cg-grid-artwork-name">
 				<div class="cg-grid-info"  v-if="!is_on_profile">
 					<a class="cg-grid-avatar" :href="site">{{info.nickname[0]}}</a>

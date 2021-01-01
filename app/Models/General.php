@@ -26,7 +26,7 @@ class General
 
     public static function qry_images_list()
     {
-    	$sql = "SELECT TOP 30 i.id_image, i.[description], i.accessname, i.extension, i.height, i.width, i.uploaded_date, i.name, u.nickname, u.account
+    	$sql = "SELECT TOP 30 i.id_image, i.[description], i.accessname, i.extension, i.height, i.width, i.uploaded_date, i.name, u.nickname, u.account, category_main
 		FROM app.tb_images i, [users].tb_users u
 		WHERE i.autor = u.id_user AND i.[state] = 'A' ORDER BY i.uploaded_date DESC;";
 
@@ -53,7 +53,7 @@ class General
 	public static function qry_images_recover($account)
     {
     	$sql = "SELECT i.id_image, i.[description], i.accessname, i.extension,
-		i.height, i.width, i.uploaded_date, i.name, u.nickname, u.account
+		i.height, i.width, i.uploaded_date, i.name, u.nickname, u.account, category_main
 		FROM app.tb_images i, [users].tb_users u
 		WHERE i.autor = u.id_user AND u.account = ? AND i.[state] = 'A' ORDER BY i.uploaded_date DESC;";
 
