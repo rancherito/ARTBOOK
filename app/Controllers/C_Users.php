@@ -213,4 +213,8 @@ var_dump($accessToken->getValue());
 $_SESSION['fb_access_token'] = (string) $accessToken;*/
 
 }
+public function login_gooauth()
+{
+	echo "google auth";
+}
 }
