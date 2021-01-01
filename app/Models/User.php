@@ -23,6 +23,12 @@ class User
 		$sql = "EXEC users.sp_userfb_create @fb_id = ?, @nickname = ?, @account = ?";
 		return query_database($sql,[$fb_id, $nickname, $account]);
 	}
+
+	public static function accountgoogle_create($id, $nickname, $account, $email)
+	{
+		$sql = "users.[sp_usergoogle_create] @google_id = ?, @nickname = ?, @account = ?, @email = ?;";
+		return query_database($sql,[$id, $nickname, $account, $email]);
+	}
 	public static function account_validate($account)
 	{
 		$sql = "SELECT id_user, account, validate,pass FROM users.tb_users WHERE account = ?;";

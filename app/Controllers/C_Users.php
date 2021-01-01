@@ -4,6 +4,7 @@ use App\Models\User;
 use Facebook\Facebook;
 use App\Models\M_Events;
 use Google\Client;
+use Hashids\Hashids;
 class C_Users extends BaseController
 {
 	public function index($user)
@@ -232,12 +233,21 @@ $_SESSION['fb_access_token'] = (string) $accessToken;*/
 		  $google_account_info = $google_oauth->userinfo->get();
 		  $email =  $google_account_info->email;
 		  $name =  $google_account_info->givenName;
-		  $id =  $google_account_info->id;
-		  // Estos datos son los que obtenemos....
-		  echo $id .'<br>';
-		  echo $email .'<br>';
-		  echo $name ;
+		  $hashids = new Hashids('', 0, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUW');
 
+		  $id =  $google_account_info->id;
+  		  $nickname = explode(' ', $name)[0];
+		  $account = 'G_'.$hashids->encode($id);
+
+		  $res = User::accountgoogle_create($id, $nickname, $account, $email);
+		  if (count($res)) {
+  			$pass = $res[0]['pass'];
+  			$account = $res[0]['account'];
+  			$access = C_Users::login_validate_internal($id, $pass);
+  			if($access['access'] == 1){
+  				return redirect()->to(base_url().'/'.$account);
+  			}
+  		}
 		}
 	}
 }
