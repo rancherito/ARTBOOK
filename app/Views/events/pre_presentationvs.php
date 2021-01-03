@@ -1,4 +1,4 @@
-<?php $_SESSION['redirect_access'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>
+<?php $_SESSION['redirect_access'] = "$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>
 <style>
 	#app-pre-voting-main{
 		height: 300px;
