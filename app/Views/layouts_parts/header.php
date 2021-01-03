@@ -15,6 +15,7 @@
 <meta name="twitter:card" value="summary">
 
 <!-- Open Graph data -->
+<meta http-equiv="Content-Language" content="es"/>
 <meta property="og:title" content="<?= $metas['title'] ?>" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="<?= base_url() ?>" />

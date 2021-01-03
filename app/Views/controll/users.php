@@ -1,4 +1,4 @@
-<?php template_start() ?>
+<?php module_start() ?>
 	<div class="p-4">
 		<table style="width: auto">
 			<thead>
@@ -33,10 +33,10 @@
 
 		</table>
 	</div>
-<?php $template = template_end() ?>
+<?php module_end() ?>
 
 <script type="text/javascript">
 	$_module = {
-		template: `<?= $template ?>`
+
 	}
 </script>

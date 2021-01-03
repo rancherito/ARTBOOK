@@ -8,6 +8,11 @@ class M_Events
 		$sql = "events.sp_challenge_images_list @event_tag = ?, @user = ?";
 		return query_database($sql, [$event_tag, $user]);
 	}
+	public static function qry_events()
+	{
+		$sql = "SELECT name, event_start, event_end, [description], creation_date, type_event, event_tag, (SELECT name FROM events.tb_type_event t WHERE t.id_type = e.type_event) type_event_name FROM events.tb_events e";
+		return query_database($sql);
+	}
 	public static function qry_challenge_artwork_vote($nickname_or_ip, $artwork, $tag_event)
 	{
 		$sql = "

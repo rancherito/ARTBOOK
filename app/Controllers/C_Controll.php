@@ -1,6 +1,7 @@
 <?php namespace App\Controllers;
 use App\Models\General;
 use App\Models\User;
+use App\Models\M_Events;
 class C_Controll extends BaseController
 {
 	public function index()
@@ -12,7 +13,17 @@ class C_Controll extends BaseController
 	public function users()
 	{
 		$users = User::qry_users_list();
-		return $this->layout_view('publicv2','controll/users',['users' => $users]);
+		return $this->layout_view('controll','controll/users',['users' => $users]);
+	}
+	public function versus_results()
+	{
+		$list = M_Events::qry_events();
+		echo $this->layout_view('controll','controll/versus_results',['event_list' => $list]);
+	}
+	public function events()
+	{
+		$list = M_Events::qry_events();
+		echo $this->layout_view('controll','controll/events',['event_list' => $list]);
 	}
 	public function users_access()
 	{

@@ -54,9 +54,11 @@ if (isset($_SESSION['access'])) {
 
 
 	if ($_SESSION['access']['accesstype'] == 'ADMINISTRADOR') {
-		$routes->add('controll', 'C_Controll');
-		$routes->get('controll/users', 'C_Controll::users');
-		$routes->post('controll/users', 'C_Controll::users_access');
+		$routes->add('c', 'C_Controll');
+		$routes->get('c/events', 'C_Controll::events');
+		$routes->post('c/users', 'C_Controll::users_access');
+		$routes->get('c/users', 'C_Controll::users');
+		$routes->add('c/versus/results', 'C_Controll::versus_results');
 		$routes->get('/services/artwork/list', 'Services::artwork_list');
 
 	}

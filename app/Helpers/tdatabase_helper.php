@@ -48,4 +48,20 @@
 	{
 		return ob_get_clean();
 	}
+	function module_end()
+	{
+		$GLOBALS['module'] = ob_get_clean();
+	}
+	function module_start()
+	{
+		ob_start();
+	}
+	function style_end()
+	{
+		$GLOBALS['style'] = ob_get_clean();
+	}
+	function style_start()
+	{
+		ob_start();
+	}
 ?>
