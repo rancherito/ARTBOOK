@@ -75,7 +75,7 @@ class C_Users extends BaseController
 	public static function login_validate_internal($user, $pass)
 	{
 		$access = ['access' => false, 'account' => ''];
-		$_SESSION = [];
+		unset($_SESSION['access']);
 
 		$res = User::qry_access($user, $pass);
 		if (count($res)) {
