@@ -63,7 +63,10 @@ class C_Events extends BaseController
 				User::ipuser_save($ip);
 				$user = !empty($_SESSION['access']) ? $_SESSION['access']['account'] : $ip;
 				$list = M_Events::qry_vs_artworks($tag, $user);
-				return $this->layout_view('public', 'events/versustag',['data' => $res, 'participients' => $list]);
+				if (empty($_SESSION['access'])) {
+					return $this->layout_view('public', 'events/pre_presentationvs',['data' => $res, 'participients' => $list]);
+				}
+				else return $this->layout_view('public', 'events/versustag',['data' => $res, 'participients' => $list]);
 			}
 			else {
 				$list = M_Events::qry_vs_results($tag);

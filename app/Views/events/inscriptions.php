@@ -1,3 +1,4 @@
+<?php $_SESSION['redirect_access'] = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ?>
 <style media="screen">
 .dashbox {
 	background: white;

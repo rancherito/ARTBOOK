@@ -125,12 +125,12 @@
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	transform: translate(-50%, -50%) scale(2);
+	transform: translate(-50%, -50%);
 	font-family: Calibri;
-	height: 32px;
-	width: 32px;
 	border-radius: 50%;
-	z-index: 2
+	z-index: 2;
+	font-size: 1.1rem;
+	letter-spacing: 4px;
 }
 .cg-grid-img-restricted .cg-grid-img{
 	filter: blur(8px);

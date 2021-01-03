@@ -297,7 +297,7 @@ Vue.component('cg-grid-image', {
 			<i class="mdi-24px mdi mdi-cog"></i>
 		</a>
 		<div class="cg-grid-artwork-content">
-			<div class="cg-grid-img-restricted-indicator f-c" v-if="info.category_main == 'R18'">R18</div>
+			<div class="cg-grid-img-restricted-indicator f-c w100" v-if="info.category_main == 'R18'">CONTENIDO MADURO</div>
 
 			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.category_main == 'R18' ? 400 : info.height" :width="info.category_main == 'R18' ? 400 : info.width" :src="calculeimage()">
 			<div class="cg-grid-artwork-name">

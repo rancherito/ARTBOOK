@@ -184,37 +184,13 @@ class C_Users extends BaseController
 			$account = $res[0]['account'];
 			$access = C_Users::login_validate_internal("FB_$id", $pass);
 			if($access['access'] == 1){
-				//User::account_activate($user['id_user']);
+				if (!empty($_SESSION['redirect_access'])) return redirect()->to($_SESSION['redirect_access']);
 				return redirect()->to(base_url().'/'.$account);
 			}
 		}
-		//var_dump($accessToken->getValue());
 
-		// The OAuth 2.0 client handler helps us manage access tokens
-		//$oAuth2Client = $fb->getOAuth2Client();
 
-		// Get the access token metadata from /debug_token
-		//$tokenMetadata = $oAuth2Client->debugToken($accessToken);
-		//echo '<h3>Metadata</h3>';
-		//var_dump($tokenMetadata);
-		/*$tokenMetadata->validateAppId($idapp); // Replace {app-id} with your app id
-		$tokenMetadata->validateExpiration();
-
-		if (! $accessToken->isLongLived()) {
-		try {
-		$accessToken = $oAuth2Client->getLongLivedAccessToken($accessToken);
-	} catch (Facebook\Exceptions\FacebookSDKException $e) {
-	echo "<p>Error getting long-lived access token: " . $e->getMessage() . "</p>\n\n";
-	exit;
-}
-
-echo '<h3>Long-lived</h3>';
-var_dump($accessToken->getValue());
-}
-
-$_SESSION['fb_access_token'] = (string) $accessToken;*/
-
-}
+	}
 	public function login_gooauth()
 	{
 		$client = new \Google_Client();
@@ -225,30 +201,32 @@ $_SESSION['fb_access_token'] = (string) $accessToken;*/
 		$client->addScope('profile');
 
 		if (isset($_GET['code'])) {
-		  $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
-		  $client->setAccessToken($token['access_token']);
+			$token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+			$client->setAccessToken($token['access_token']);
 
-		  // get profile info
-		  $google_oauth = new \Google_Service_Oauth2($client);
-		  $google_account_info = $google_oauth->userinfo->get();
-		  $email =  $google_account_info->email;
-		  $name =  $google_account_info->givenName;
-		  $hashids = new Hashids('', 0, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUW');
+			// get profile info
+			$google_oauth = new \Google_Service_Oauth2($client);
+			$google_account_info = $google_oauth->userinfo->get();
+			$email =  $google_account_info->email;
+			$name =  $google_account_info->givenName;
+			$hashids = new Hashids('', 0, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUW');
 
-		  $id =  $google_account_info->id;
-  		  $nickname = explode(' ', $name)[0];
-		  $account = 'G_'.$hashids->encode($id);
+			$id =  $google_account_info->id;
+			$nickname = explode(' ', $name)[0];
+			$account = 'G_'.$hashids->encode($id);
 
-		  $res = User::accountgoogle_create($id, $nickname, $account, $email);
-		  if (count($res)) {
-  			$pass = $res[0]['pass'];
-  			$account = $res[0]['account'];
-			$user = $res[0]['user'];
-  			$access = C_Users::login_validate_internal($user, $pass);
-  			if($access['access'] == 1){
-  				return redirect()->to(base_url().'/'.$account);
-  			}
-  		}
+			$res = User::accountgoogle_create($id, $nickname, $account, $email);
+			if (count($res)) {
+				$pass = $res[0]['pass'];
+				$account = $res[0]['account'];
+				$user = $res[0]['user'];
+				$access = C_Users::login_validate_internal($user, $pass);
+
+				if($access['access'] == 1) {
+					if (!empty($_SESSION['redirect_access'])) return redirect()->to($_SESSION['redirect_access']);
+					else return redirect()->to(base_url().'/'.$account);
+				}
+			}
 		}
 	}
 }
