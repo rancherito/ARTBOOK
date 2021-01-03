@@ -129,7 +129,7 @@
 						</a>
 						<h6 class="c primary" style="display: none" v-show="register_ok">Revise su E-mail para validar su registro</h6>
 						<?php if (!empty($_SESSION['redirect_access'])): ?>
-							<span class="grey-text pt-4" style="font-size: .7rem"><?= $_SESSION['redirect_access'] ?></span>
+							<span class="grey-text pt-4" style="font-size: .7rem">Prev: <?= $_SESSION['redirect_access'] ?></span>
 						<?php endif; ?>
 					</div>
 				</div>
