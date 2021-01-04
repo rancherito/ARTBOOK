@@ -8,10 +8,16 @@ class M_Events
 		$sql = "events.sp_challenge_images_list @event_tag = ?, @user = ?";
 		return query_database($sql, [$event_tag, $user]);
 	}
-	public static function qry_events()
+	public static function qry_events($tag = 'all')
 	{
-		$sql = "SELECT name, event_start, event_end, [description], creation_date, type_event, event_tag, (SELECT name FROM events.tb_type_event t WHERE t.id_type = e.type_event) type_event_name FROM events.tb_events e";
-		return query_database($sql);
+		if ($tag == 'all') {
+			$sql = "SELECT name, event_start, event_end, [description], creation_date, type_event, event_tag, (SELECT name FROM events.tb_type_event t WHERE t.id_type = e.type_event) type_event_name FROM events.tb_events e ORDER BY event_end DESC, id_event DESC;";
+			return query_database($sql);
+		}
+		else {
+			$sql = "SELECT name, event_start, event_end, [description], creation_date, type_event, event_tag, (SELECT name FROM events.tb_type_event t WHERE t.id_type = e.type_event) type_event_name FROM events.tb_events e WHERE event_tag = ? ORDER BY event_end DESC, id_event DESC;";
+			return query_database($sql, [$tag]);
+		}
 	}
 	public static function qry_challenge_artwork_vote($nickname_or_ip, $artwork, $tag_event)
 	{

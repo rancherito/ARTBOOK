@@ -16,9 +16,28 @@ class C_Controll extends BaseController
 		return $this->layout_view('controll','controll/users',['users' => $users]);
 	}
 	public function versus_results()
-	{
-		$list = M_Events::qry_events();
-		echo $this->layout_view('controll','controll/versus_results',['event_list' => $list]);
+	{	$results = [];
+		$list = [];
+		$versus_list = [];
+		$winners = [];
+		if (empty($_GET['tag'])) {
+			$list = M_Events::qry_events('2');
+			if (count($list)) $results = M_Events::qry_vs_results($list[0]['event_tag']);
+		}
+		else $results = M_Events::qry_vs_results($_GET['tag']);
+
+		foreach ($results as $key => $versus) {
+			if(empty($versus_list[$versus['versus']])) $versus_list[$versus['versus']] = [];
+			if(empty($winners[$versus['versus']])) $winners[$versus['versus']] = [];
+
+			$versus_list[$versus['versus']][] = $versus;
+			if ($versus['ranking'] == 1) {
+				$winners[$versus['versus']][] = $versus;
+			}
+		}
+
+		return $this->layout_view('controll','controll/versus_results',['versus_list' => $versus_list, 'winners' => $winners]);
+
 	}
 	public function events()
 	{
