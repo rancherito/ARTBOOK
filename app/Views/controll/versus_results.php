@@ -31,10 +31,45 @@
 			</a>
 			<div class="title-2">RESULTADO VERSUS</div>
 		</div>
-		<?php print_r($winners) ?>
+		<?php foreach ($versus_list as $key => $versus): ?>
+			<article class="card-panel">
+				<?php foreach ($versus as $key => $participient): ?>
+					<section class="versus-participient">
+						<div class="versus-participient-artwork">
+							<img src="<?= base_url()."/images/artworks_lite/$participient[artwork].$participient[extension]" ?>" alt="">
+						</div>
+						<div>
+							<div>
+								ARTISTA: <?= $participient['nickname'] ?>
+							</div>
+
+							<div class="">
+								OBRA: <?= $participient['artwork_name'] ?>
+							</div>
+							<div class="">
+								RAKING: <?= $participient['ranking'] ?>
+							</div>
+							<div>
+								VOTOS: <?= $participient['votes'] ?>
+							</div>
+						</div>
+					</section>
+				<?php endforeach; ?>
+
+			</article>
+
+
+		<?php endforeach; ?>
+
+<br>
+<div class="title-4">
+	TEXTO PARA WHATSAPP
+</div>
 		<section class="card-panel">
 
 <pre class="">
+(っ◔◡◔)っ 🗳️ *RESUMEN* 🗳️
+
 ┌⌯━━━━━━⊰⍣⊱━━━━━━⌯┐
        GANADORES
 └⌯━━━━━━⊰⍣⊱━━━━━━⌯┘
@@ -73,35 +108,7 @@ ARTBOOK LINK:
 </pre>
 		</section>
 
-		<?php foreach ($versus_list as $key => $versus): ?>
-			<article class="card-panel">
-				<?php foreach ($versus as $key => $participient): ?>
-					<section class="versus-participient">
-						<div class="versus-participient-artwork">
-							<img src="<?= base_url()."/images/artworks_lite/$participient[artwork].$participient[extension]" ?>" alt="">
-						</div>
-						<div>
-							<div>
-								ARTISTA: <?= $participient['nickname'] ?>
-							</div>
 
-							<div class="">
-								OBRA: <?= $participient['artwork_name'] ?>
-							</div>
-							<div class="">
-								RAKING: <?= $participient['ranking'] ?>
-							</div>
-							<div>
-								VOTOS: <?= $participient['votes'] ?>
-							</div>
-						</div>
-					</section>
-				<?php endforeach; ?>
-
-			</article>
-
-
-		<?php endforeach; ?>
 
 
 	</div>
