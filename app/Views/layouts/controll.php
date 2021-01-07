@@ -70,7 +70,7 @@
 
 	</div>
 
-
+	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
 	<script type="text/javascript">
 
 	new Vue({
@@ -94,5 +94,6 @@
 		}
 	})
 </script>
+
 </body>
 </html>

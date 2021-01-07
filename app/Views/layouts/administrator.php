@@ -133,7 +133,7 @@
 		<div id="app-nav">
 			<div></div>
 			<div id="app-nav-access">
-				
+
 			</div>
 		</div>
 		<div id="app-content" class="white">
@@ -141,6 +141,7 @@
 		</div>
 	</div>
 	<?= $body ?>
+	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
 	<script type="text/javascript">
 		new Vue({
 			el: '#app-body',
@@ -150,4 +151,5 @@
 		})
 	</script>
 </body>
+
 </html>

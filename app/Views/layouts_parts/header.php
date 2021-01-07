@@ -35,11 +35,7 @@
 <link rel="stylesheet" href="<?= base_url() ?>/css/custom_materialize.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/js/script.js?v=<?= $version ?>"></script>
 <script src="<?= base_url() ?>/js/jquery-3.4.1.min.js"></script>
-<script src="<?= base_url() ?>/libs/animate/animateCSS.js"></script>
 <script src="<?= base_url() ?>/libs/materialize/js/materialize.min.js"></script>
-<script src="<?= base_url() ?>/libs/ResizeSensor/ResizeSensor.js"></script>
-<script src="<?= base_url() ?>/libs/ResizeSensor/ElementQueries.js"></script>
-<script src="<?= base_url() ?>/libs/axios/axios.min.js"></script>
 <script src="<?= base_url() ?>/libs/vue/vue.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/libs/cgVue/cg.components.vue.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js?v=<?= $version ?>"></script>

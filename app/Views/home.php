@@ -1,8 +1,11 @@
 
-<?php $is_access = !empty($_SESSION['access']) ?>
 <style media="screen">
 #app-title{
 	position: relative;
+		color: var(--primary);
+		font-size: 3rem;
+		font-family: sans-serif;
+		font-weight: bold;
 }
 #beta-text{
 	background-color: var(--primary);
@@ -96,6 +99,11 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	width: 300px;
+	height: 400px;
+	padding: 1rem;
+	border-radius: 10px;
+	margin: 0 .5rem
 }
 
 .context{
@@ -125,79 +133,114 @@
 #content-spot{
 	display: none;
 }
-#presentation-page-start{
+#app-home-start{
+	height: 500px;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
 }
+#app-home-events{
+	display: flex;
+}
+#app-home-navbar img{
+	width: 40px;
+}
+#app-home-navbar{
+	padding: 1rem;
+}
+@media (max-width: 900px) {
 
+	#app-home-events{
+		width: 100%;
+	}
+	#app-home-start{
+		align-items: center;
+		flex-direction: column;
+		height: auto;
+	}
+	#app-home-start-info{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		padding-bottom: 2rem;
+		text-align: center;
+	}
+	.event-anunces{
+		height: 200px;
+		width: auto;
+		flex: 1
+	}
+}
 @media (max-width: 600px) {
 	#wrap_grid_gallery{
 		padding: 0;
 	}
-	#presentation-page-start{
+	#app-home-start{
 		padding-top: 1rem;
+	}
+	.cg-countdown{
+		font-size: 1.4rem;
 	}
 }
 @media (max-width: 320px) {
-	.countdown{
-		font-size: 1.6rem;
-	}
+
 }
 </style>
-<!--<div id="adsense-square-ingrid">
 
-<ins class="adsbygoogle"
-style="display:block;height:100%; width:100%"
-data-ad-client="ca-pub-1355252812560688"
-data-ad-slot="5969213646"
-data-ad-format="auto"
-data-full-width-responsive="true">
-
-</ins>
-
-</div>
--->
-<?php template_start()?>
+<?php module_start()?>
 <div>
-	
-	<div class="p-4 r">
-		<?php if ($is_access): ?>
+
+	<div id="app-home-navbar" class="f-b">
+
+		<img src="<?= base_url() ?>/images/icon_primary.svg" alt="logo">
+		<?php if (is_access()): ?>
 			<a class="btn" href="<?= $_SESSION['access']['account_site']?>">
-				<i class="mdi mdi-account mdi-18px left"></i>
+				<i class="mdi mdi-account mdi-18px right"></i>
 				<span><?= $_SESSION['access']['nickname'] ?></span>
 			</a>
 		<?php else: ?>
 			<a class="btn" href="<?= base_url() ?>/user/login">
-				<i class="mdi mdi-account mdi-18px left"></i>
+				<i class="mdi mdi-account mdi-18px right"></i>
 				<span>LOGIN</span>
 			</a>
 		<?php endif; ?>
 
 	</div>
 	<div class="">
-		<div id="presentation-page-start" class="f-c">
-			<img src="<?= base_url() ?>/images/logo_primary.svg" alt="logo web" style="width: 160px">
-			<div class="combo-text-title" id="app-title">
-				<h1 class="title-2 m-0" style="display: none">Bienvenido a Art's Book</h1>
-			</div>
-			<span class="pt-2">Sitio web oficial de la comunidad de artistas art's book</span>
-			<span id="beta-text">BETA</span>
-		</div>
-		<?php foreach ($current_events as $key => $event): ?>
-			<?php if ($event['is_voting'] == 0): ?>
-
-				<div class="event-anunces">
-					<?= bg_animate_001() ?>
-					<div class="context">
-						<div class="title-4"><?= $event['name'] ?></div>
-						<cg-countdown class="title-3 c" datestring="<?= $event['voting'] ?>"></cg-countdown>
-						<span class="white-text" style="font-size: .9rem; margin-top: -.2rem; display: block">Una vez finalizada la cuenta regresiva <b>inician las votaciones</b></span>
-						<a href="<?= base_url() ?>/events/versus">PARTICIPA AQUI!</a>
-					</div>
-
+		<section id="app-home-start">
+			<div id="app-home-start-info">
+				<div style="display: flex">
+					<img src="<?= base_url() ?>/images/namepage_primary.svg" alt="" id="app-title">
 				</div>
-			<?php endif; ?>
-		<?php endforeach; ?>
+				<div style="font-size: 1.2rem; font-family: sans-serif">
+					COMUNIDAD DE DIBUJATES
+				</div>
+				<div class="pt-2">Sea bienvenido a esta comunidad de artistas digitales y tradicionales</div>
+			</div>
+			<div id="app-home-events">
+				<?php foreach ($current_events as $key => $event): ?>
+					<?php if ($event['is_voting'] == 0): ?>
 
+						<div class="event-anunces">
+							<?php if ($event['type_event'] != 1): ?>
+								<?= bg_animate_001() ?>
+							<?php else: ?>
+								<?= bg_animate_002() ?>
+							<?php endif; ?>
 
+							<div class="context">
+								<div class="title-4"><?= $event['name'] ?></div>
+								<cg-countdown class="title-3 c" datestring="<?= $event['voting'] ?>"></cg-countdown>
+								<span class="white-text" style="font-size: .9rem; margin-top: -.2rem; display: block">Una vez finalizada la cuenta regresiva <b>inician las votaciones</b></span>
+								<a href="<?= base_url() ?>/events/versus">PARTICIPA AQUI!</a>
+							</div>
+
+						</div>
+					<?php endif; ?>
+				<?php endforeach; ?>
+			</div>
+		</section>
 		<div class="container">
 
 			<simplebar>
@@ -278,7 +321,7 @@ data-full-width-responsive="true">
 
 </div>
 
-<?php $template = template_end()?>
+<?php module_end()?>
 
 
 
@@ -288,7 +331,6 @@ let list_images_pre = <?= json_encode($images_list) ?>;
 
 
 const $_module = {
-	template: `<?= $template ?>`,
 	data: function () {
 		return {
 			list_img: list_images_pre,

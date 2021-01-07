@@ -6,100 +6,17 @@ use Config\App;
 
 $links = [];
 
-if (empty($_SESSION['access']))
-$links[] = ['classicon' => 'mdi mdi-account', 'text' => 'ACCESO', 'url' => base_url().'/user/login'];
-
-if (isset($_SESSION['access']) && $_SESSION['access']['accesstype'] == 'ADMINISTRADOR')
-$links[] = ['classicon' => 'mdi mdi-book-minus', 'text' => 'ADMINISTRAR', 'url' => base_url().'/administrador'];
-if (!empty($_SESSION['access']))
 $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', 'url' => base_url().'/user/close'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
+
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 
-	<style media="screen">
-
-	#app-body{
-		height: 100vh;
-	}
-	#app-nav{
-		padding: .5rem;
-		color: white;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 1.5rem;
-		position: fixed;
-		top: 50%;
-		transform: translateY(-50%);
-		right: 32px;
-		width: 54px;
-		background: white;
-		z-index: 1;
-		box-shadow: 0 0 5px 2px #0000000a;
-		flex-direction: column;
-		border-radius: 40px;
-		background-color: var(--primary);
-		z-index: 4
-	}
-	#app-nav-access a{
-		color: white;
-		display: flex;
-		margin-top: 2px;
-		border-radius: 20px;
-		transition: linear all .2s;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		width: 100%;
-		padding: .5rem 0;
-	}
-	#app-nav-access{
-		width: 100%;
-	}
-	#app-nav-access a:hover{
-		background: #ffffff33;
-		padding: 1.5rem 0;
-	}
-	#app-nav-access a:hover i{
-		transform: scale(1.1);
-	}
-	#app-content{
-		height: 100%;
-		overflow-x: hidden;
-		overflow-y: auto;
-	}
-	#app-nav-left{
-		display: flex;
-		align-items: center;
-		color: var(--primary)
-	}
-	#app-nav-left a{
-		color: var(--primary);
-		display: flex;
-	}
-	.fixed-action-btn > a{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-	.fixed-action-btn{
-		display: none;
-	}
-	@media (max-width: 600px) {
-		#app-nav{
-			display: none;
-		}
-		.fixed-action-btn{
-			display: block;
-		}
-	}
-
-	.fil0 {fill: white}
-	</style>
+	<link rel="stylesheet" href="<?= base_url() ?>/css/layouts/public.css">
+	<?= $body ?>
+	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
 </head>
 <body>
 	<div id="app-body">
@@ -109,9 +26,6 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 					<i class="mdi mdi-home mdi-24px"></i>
 				</a>
 
-				<?php if (isset($_SESSION['access']) && base_url().$_SERVER['REQUEST_URI'] != $_SESSION['access']['account_site']):?>
-					<a href="<?= $_SESSION['access']['account_site'] ?>"> <i class="mdi mdi-account mdi-24px"></i></a>
-				<?php endif; ?>
 				<?php foreach ($links as $key => $link): ?>
 					<a href="<?= $link['url'] ?>">
 						<i class="mdi-24px <?= $link['classicon'] ?>"></i>
@@ -121,7 +35,15 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 			</div>
 		</div>
 		<div id="app-content" ref="content">
-			<module></module>
+			<module inline-template>
+				<?php if (empty($GLOBALS['module'])): ?>
+					<div>
+						MODULO CARGADO INCORRECTAMENTE
+					</div>
+				<?php else: ?>
+					<?= $GLOBALS['module'] ?>
+				<?php endif; ?>
+			</module>
 		</div>
 		<div class="fixed-action-btn">
 			<a class="btn-floating btn-large">
@@ -152,8 +74,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		</div>
 
 	</div>
-	<?= $body ?>
-
+	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
 	<script type="text/javascript">
 
 	new Vue({
@@ -173,5 +94,6 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		}
 	})
 </script>
+
 </body>
 </html>

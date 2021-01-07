@@ -23,7 +23,7 @@ class Home extends BaseController
 		$agent = $this->request->getUserAgent();
 		$images = General::qry_images_list();
 		$feed = General::qry_feedpage();
-		echo $this->layout_view('public','index',['images_list' => $images, 'feed' => $feed, 'agent' => $agent, 'current_events' => $current_events]);
+		echo $this->layout_view('public','home',['images_list' => $images, 'feed' => $feed, 'agent' => $agent, 'current_events' => $current_events]);
 	}
 	public function artwork_recover($artwork)
 	{

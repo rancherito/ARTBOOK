@@ -41,7 +41,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		<module></module>
 	</div>
 	<?= $body ?>
-
+	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
 	<script type="text/javascript">
 
 	new Vue({
@@ -61,5 +61,6 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		}
 	})
 </script>
+
 </body>
 </html>

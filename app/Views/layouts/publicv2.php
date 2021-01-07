@@ -15,17 +15,16 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 	<style media="screen">
 	:root{
 		--navaside_width: 80px;
 	}
-	#app-body{
+	#app-body {
 		background-color: var(--primary);
 	}
-	#app-user-card{
+	#app-user-card {
 		position: absolute;
 		top: 1rem;
 		right: 1rem;
@@ -134,12 +133,11 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		cursor: pointer;
 		display: none;
 	}
-	@media (max-width: 600px){
-		#app-user-card{
+	@media (max-width: 600px) {
+		#app-user-card {
 			top: 1rem;
 			right: 1rem;
 		}
-
 		aside {
 			z-index: 2;
 			transform: translateX(-100%);
@@ -165,11 +163,11 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 			transform: translateX(-10%);
 			font-size: 1.6rem;
 		}
-		aside.app-aside-nav-close{
+		aside.app-aside-nav-close {
 			transform: translateX(0);
 		}
 	}
-	.vue-simple-handler{
+	.vue-simple-handler {
 		border-radius: 50%;
 	}
 
@@ -228,7 +226,7 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 
 	</div>
 	<?= $body ?>
-
+	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
 	<script type="text/javascript">
 
 	new Vue({
@@ -260,5 +258,6 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		}
 	})
 </script>
+
 </body>
 </html>

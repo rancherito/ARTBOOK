@@ -19,7 +19,7 @@
 					<td class="c"><?= $user['state'] ?></td>
 					<td> <a href="<?= base_url().'/'.$user['account'] ?>" target="_blank" class="btn bg-secondary">IR A PERFIL</a></td>
 					<td>
-						<form class="" action="<?= base_url() ?>/controll/users" method="post">
+						<form class="" action="<?= base_url() ?>/c/users" method="post">
 							<input type="hidden" name="account" value="<?= $user['account'] ?>">
 							<input type="hidden" name="user" value="<?= $user['user'] ?>">
 							<input type="hidden" name="pass" value="<?= $user['pass'] ?>">

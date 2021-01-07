@@ -60,6 +60,23 @@
 			</ul>
 		</div>';
 	}
+	function bg_animate_002()
+	{
+		return '<div class="bg_animate_002" >
+			<ul class="circles">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>';
+	}
     function loader_content(){
         $waiters = [];
         $waiters[] = '
