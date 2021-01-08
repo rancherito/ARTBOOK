@@ -354,7 +354,7 @@ Vue.component('slider-feed-nartwork-container', {
 	</div>`,
 	data: function () {
 		return {
-			size_stack: 200
+			size_stack: <?= $agent->isMobile() ? 100 : 200 ?>
 		}
 	},
 	props: ['data'],
@@ -384,7 +384,7 @@ Vue.component('slider-feed-nartwork',{
 	`,
 	data: function () {
 		return {
-			size: 220
+			size: 200
 		}
 	},
 	props: ['data','base_url'],
