@@ -376,8 +376,10 @@ Vue.component('slider-feed-nartwork-container', {
 })
 Vue.component('slider-feed-nartwork',{
 	template: `
-	<div class="slider-feed-nartwork red" :style="{'min-width': size + 'px', 'min-height': size + 'px', 'width': size + 'px', 'height': size + 'px'}">
-		<img :src="base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name" />
+	<div class="slider-feed-nartwork" :style="{'min-width': size + 'px', 'min-height': size + 'px', 'width': size + 'px', 'height': size + 'px'}">
+		<a :href="base_url + '/artwork/view/' + data.accessname">
+			<img :src="base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name" />
+		</a>
 	</div>
 	`,
 	data: function () {
