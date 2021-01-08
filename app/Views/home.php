@@ -197,15 +197,17 @@ slider-feed-nartwork-container > div, .slider-feed-nartwork-container > div{
 	overflow: hidden;
 }
 slider-feed-nartwork, .slider-feed-nartwork{
-	background-color: lightgray;
 	min-height: 240px;
 	min-width: 240px;
 	height: 240px;
 	width: 240px;
+	padding: .25rem;
 }
 .slider-feed-nartwork img{
 	width: 100%;
 	height: 100%;
+	border-radius: 10px;
+	background-color: lightgray;
 }
 </style>
 
@@ -361,7 +363,7 @@ Vue.component('slider-feed-nartwork-container', {
 	methods: {
 		calcule_width: function () {
 			const items_in_row = parseInt(this.$refs.wrap.offsetWidth/this.size_stack);
-			const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row) + 1
+			const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row)
 			for (var child of this.$children) child.size = items_new_width;
 		}
 	},
