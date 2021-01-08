@@ -2,10 +2,10 @@
 <style media="screen">
 #app-title{
 	position: relative;
-		color: var(--primary);
-		font-size: 3rem;
-		font-family: sans-serif;
-		font-weight: bold;
+	color: var(--primary);
+	font-size: 3rem;
+	font-family: sans-serif;
+	font-weight: bold;
 }
 #beta-text{
 	background-color: var(--primary);
@@ -16,7 +16,6 @@
 }
 #wrap_grid_gallery{
 	background-color: #f9f9f9;
-	padding: 1rem;
 }
 .feed-users{
 	display: flex;
@@ -186,6 +185,28 @@
 @media (max-width: 320px) {
 
 }
+slider-feed-nartwork-container{
+	display: flex;
+	overflow: hidden;
+}
+slider-feed-nartwork-container, .slider-feed-nartwork-container{
+	width: 100%;
+}
+slider-feed-nartwork-container > div, .slider-feed-nartwork-container > div{
+	display: flex;
+	overflow: hidden;
+}
+slider-feed-nartwork, .slider-feed-nartwork{
+	background-color: lightgray;
+	min-height: 240px;
+	min-width: 240px;
+	height: 240px;
+	width: 240px;
+}
+.slider-feed-nartwork img{
+	width: 100%;
+	height: 100%;
+}
 </style>
 
 <?php module_start()?>
@@ -241,38 +262,35 @@
 				<?php endforeach; ?>
 			</div>
 		</section>
-		<div class="container">
-
-			<simplebar>
-				<div class="feed-users">
-					<?php foreach ($feed as $key => $f): ?>
-						<div class="feed-users-item f-c">
-							<div class="feed-users-count f-c"><span><?= $f['total'] ?></span></div>
-							<div class="feed-users-wrapper-item f-c">
-								<div></div>
-								<div class="f-c feed-users-icon">
-									<span><?= $f['nickname'][0] ?></span>
-								</div>
-							</div>
-							<a href="<?= base_url() ?>/<?= $f['account'] ?>" class="pt-2"><?= $f['nickname'] ?></a>
-						</div>
-
-					<?php endforeach; ?>
+		<h3 class="title-4 p-4 primary"><i class="mdi mdi-new-box"></i> NUEVOS</h3>
+		<slider-feed-nartwork-container class="p-4" :data="images_feed">
+			<?php foreach ($images_list as $key => $artwork): ?>
+				<div class="slider-feed-nartwork">
+					<img src="<?= base_url()."/images/artworks_lite/$artwork[accessname].$artwork[extension]" ?>" alt="<?= $artwork['name'] ?>">
 				</div>
-			</simplebar>
-			<div id="content-spot">
-				<ins class="adsbygoogle"
-				style="display:block; height:100px"
-				data-ad-format="fluid"
-				data-ad-layout-key="-6t+ed+2i-1n-4w"
-				data-ad-client="ca-pub-1355252812560688"
-				data-ad-slot="7585531731">
-			</ins>
-		</div>
+			<?php endforeach; ?>
+		</slider-feed-nartwork-container>
+		<!--<simplebar>
+			<div class="feed-users">
+				<?php foreach ($feed as $key => $f): ?>
+					<div class="feed-users-item f-c">
+						<div class="feed-users-count f-c"><span><?= $f['total'] ?></span></div>
+						<div class="feed-users-wrapper-item f-c">
+							<div></div>
+							<div class="f-c feed-users-icon">
+								<span><?= $f['nickname'][0] ?></span>
+							</div>
+						</div>
+						<a href="<?= base_url() ?>/<?= $f['account'] ?>" class="pt-2"><?= $f['nickname'] ?></a>
+					</div>
 
-	</div>
+				<?php endforeach; ?>
+			</div>
+		</simplebar>-->
 </div>
 <article class="adsenseblock"></article>
+
+<h3 class="title-4 p-4 primary"> <i class="mdi mdi-apps"></i> GALLERIA</h3>
 <div id="wrap_grid_gallery">
 	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
 </div>
@@ -328,12 +346,56 @@
 <script>
 let list_images_pre = <?= json_encode($images_list) ?>;
 //list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
+Vue.component('slider-feed-nartwork-container', {
+	template: `<div class="slider-feed-nartwork-container">
+		<div ref="wrap">
+			<slider-feed-nartwork v-for="artwork of data" :data='artwork' base_url="<?= base_url() ?>"></slider-feed-nartwork>
+		</div>
+	</div>`,
+	data: function () {
+		return {
+			size_stack: 200
+		}
+	},
+	props: ['data'],
+	methods: {
+		calcule_width: function () {
+			const items_in_row = parseInt(this.$refs.wrap.offsetWidth/this.size_stack);
+			const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row) + 1
+			for (var child of this.$children) child.size = items_new_width;
+		}
+	},
+	mounted: function () {
+		new ResizeSensor(this.$refs.wrap, () => {this.calcule_width()});
+		this.calcule_width();
 
+	},
+	created: function () {
+
+	}
+})
+Vue.component('slider-feed-nartwork',{
+	template: `
+	<div class="slider-feed-nartwork red" :style="{'min-width': size + 'px', 'min-height': size + 'px', 'width': size + 'px', 'height': size + 'px'}">
+		<img :src="base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name" />
+	</div>
+	`,
+	data: function () {
+		return {
+			size: 240
+		}
+	},
+	props: ['data','base_url'],
+	mounted: function () {
+		console.log(this.data);
+	}
+})
 
 const $_module = {
 	data: function () {
 		return {
 			list_img: list_images_pre,
+			images_feed: <?= json_encode($images_feed) ?>,
 			stack: $(window).width() > 1200 ? 320 : <?= $agent->isMobile() ? 170 : 280 ?>,
 			modal: null,
 			test: <?= json_encode($current_events) ?>
@@ -360,15 +422,7 @@ const $_module = {
 			this.modal = $('#modal1').modal()
 			this.modal.modal('open')
 		}
-
-
-		/*const body = $(document.body);
-		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
-		window.addEventListener('resize', () => {
-		this.stack = body.width() > 600 ? 320 : (body.width() > 300 ? 170 : 260);
-	});*/
-	//$('#adsense-01').append($('#adsense-square-ingrid'));
-}
+	}
 }
 
 </script>

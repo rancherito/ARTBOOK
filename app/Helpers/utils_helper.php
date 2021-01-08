@@ -47,16 +47,7 @@
 	{
 		return '<div class="bg_animate_001" >
 			<ul class="circles">
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
+				<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
 			</ul>
 		</div>';
 	}
@@ -64,16 +55,7 @@
 	{
 		return '<div class="bg_animate_002" >
 			<ul class="circles">
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
+				<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
 			</ul>
 		</div>';
 	}

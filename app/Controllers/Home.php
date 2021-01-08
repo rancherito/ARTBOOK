@@ -22,8 +22,9 @@ class Home extends BaseController
 		$current_events = M_Events::qry_events_current();
 		$agent = $this->request->getUserAgent();
 		$images = General::qry_images_list();
+		$new_images = General::qry_images_new_list();
 		$feed = General::qry_feedpage();
-		echo $this->layout_view('public','home',['images_list' => $images, 'feed' => $feed, 'agent' => $agent, 'current_events' => $current_events]);
+		return $this->layout_view('public','home',['images_feed' => $new_images,'images_list' => $images, 'feed' => $feed, 'agent' => $agent, 'current_events' => $current_events]);
 	}
 	public function artwork_recover($artwork)
 	{

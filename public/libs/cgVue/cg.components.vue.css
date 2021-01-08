@@ -208,3 +208,6 @@
 	textarea.cg-textbox-in:focus, .cg-textbox:hover textarea.cg-textbox-in{
 		border-top-color: #f0f0f0
 	}
+	cg-countdown::after{
+		content: '0d 0h 0m 0s'
+	}

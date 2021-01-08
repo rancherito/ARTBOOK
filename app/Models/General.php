@@ -24,11 +24,19 @@ class General
 		return query_database($sql,[$id]);
 	}
 
+	public static function qry_images_new_list()
+    {
+    	$sql = "SELECT TOP 20 i.id_image, i.[description], i.accessname, i.extension, i.height, i.width, i.uploaded_date, i.name, u.nickname, u.account, category_main
+		FROM app.tb_images i, [users].tb_users u
+		WHERE i.autor = u.id_user AND i.[state] = 'A' ORDER BY i.uploaded_date DESC;";
+
+		return query_database($sql);
+    }
     public static function qry_images_list()
     {
     	$sql = "SELECT TOP 30 i.id_image, i.[description], i.accessname, i.extension, i.height, i.width, i.uploaded_date, i.name, u.nickname, u.account, category_main
 		FROM app.tb_images i, [users].tb_users u
-		WHERE i.autor = u.id_user AND i.[state] = 'A' ORDER BY i.uploaded_date DESC;";
+		WHERE i.autor = u.id_user AND i.[state] = 'A' ORDER BY NEWID();";
 
 		return query_database($sql);
     }
