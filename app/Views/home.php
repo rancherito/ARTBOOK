@@ -384,12 +384,11 @@ Vue.component('slider-feed-nartwork',{
 	`,
 	data: function () {
 		return {
-			size: 240
+			size: 220
 		}
 	},
 	props: ['data','base_url'],
 	mounted: function () {
-		console.log(this.data);
 	}
 })
 
