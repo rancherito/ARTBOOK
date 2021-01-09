@@ -310,6 +310,11 @@ Vue.component('cg-grid-image', {
 					</div>
 				</div>
 			</div>
+			<div class="cg-grid-artwork-interaction">
+				<a class="cg-grid-artwork-interaction-like" :class="{'cg-artwork-like': info.heart}" @click="trigger_like(info)">
+					<i class="mdi mdi-24px" :class="info.heart ? 'mdi-heart' : 'mdi-heart-outline'"></i>
+				</a>
+			</div>
 			<a class="cg-grid-artwork-curtain f-c" :href="site_image">
 				<i class="mdi mdi-eye mdi-24px white-text"></i>
 			</a>
@@ -331,6 +336,10 @@ Vue.component('cg-grid-image', {
 		}
 	},
 	methods: {
+		trigger_like: function (info) {
+			if (this.$root.trigger_like != undefined) this.$root.trigger_like(info)
+			else console.log('FUNCTION LIKE NO FOUND');
+		},
 		calcule_avatar: function () {
 			return {'background-image': 'url("' + this.base_url + '/images/avatars/avatar_'+ this.info.user_avatar + '.jpg")'}
 		},

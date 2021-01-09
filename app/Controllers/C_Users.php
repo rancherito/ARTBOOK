@@ -3,6 +3,7 @@ use App\Models\General;
 use App\Models\User;
 use Facebook\Facebook;
 use App\Models\M_Events;
+use App\Models\M_App;
 use Google\Client;
 use Hashids\Hashids;
 class C_Users extends BaseController
@@ -19,7 +20,7 @@ class C_Users extends BaseController
 			$partial_path = "images/avatars/avatar_$user_account.jpg";
 			$path = file_exists($partial_path) ? base_url()."/$partial_path?v=".date("Ymd") : '';
 			unset($account['user']);
-			$images = General::qry_images_recover($user);
+			$images = M_App::qry_images_recover($user);
 			$title = strtoupper($account['nickname']).' - ARTS BOOK';
 
 			$metaimage = $path == '' ?  base_url().'/images/meta.png' : $path;

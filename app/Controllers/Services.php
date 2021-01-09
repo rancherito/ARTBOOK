@@ -2,6 +2,8 @@
 use App\Models\General;
 use App\Models\User;
 use App\Models\M_Events;
+use App\Models\M_App;
+
 use \Gumlet\ImageResize;
 use Hashids\Hashids;
 class Services extends BaseController
@@ -70,18 +72,12 @@ class Services extends BaseController
 			$img = str_replace(' ', '+', $img);
 			$data = base64_decode($img);
 
-			/*$queryfiename = General::exists_image($id_image);
-			if (count($queryfiename)) {
-				$filename = $queryfiename[0]['filename'];
-				if (file_exists("images/artworks/$filename")) {
-					unlink("images/artworks/$filename");
-				}
-			}*/
+
 			$key = General::qry_images_salvar('', '', $ext, 0, 0, $author, $author, $name);
 			$key_value = $key[0]['KeyItem'];
 
 			$hashids = new Hashids('', 0, 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUW');
-			$namefile = $hashids->encode($key_value.getdate()[0]); //md5($key_value.$name.getdate()[0]);
+			$namefile = $hashids->encode($key_value.getdate()[0]);
 			$file = "images/artworks/$namefile.$ext";
 			file_put_contents($file, $data);
 			list($ancho, $alto) = getimagesize($file);
@@ -104,7 +100,7 @@ class Services extends BaseController
 	}
 	public function artwork_list()
 	{
-		$images = General::qry_images_list();
+		$images = M_App::qry_images_list();
 		return $this->response->setJSON($images);
 	}
 	public function artworks_recover()
@@ -131,8 +127,8 @@ class Services extends BaseController
 	public function event_versuslist_Save()
 	{
 		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['tag'])) {
-			$regtitle = "/^[ \-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.]+$/i";
-			$regdescription = "/^[ ()\-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ.\n]+$/i";
+			$regtitle = "/^[ \-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ,:.]+$/i";
+			$regdescription = "/^[ ()\-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ,:.\n]+$/i";
 
 			$description = trim(preg_replace('/\s\s+/',"\n", $_POST['description']));
 			$title = trim($_POST['title']);
@@ -195,5 +191,12 @@ class Services extends BaseController
 			return $this->response->setJSON($res);
 		}
 	}
-
+	public function like_save()
+	{
+		if (!empty($_POST['artwork'])) {
+			$res = M_App::qry_like_artwork_save($_POST['artwork'], user_account());
+			if (count($res)) $res = $res[0];
+			return $this->response->setJSON($res);
+		}
+	}
 }

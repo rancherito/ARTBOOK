@@ -2,11 +2,12 @@
 use App\Models\General;
 use App\Models\User;
 use App\Models\M_Events;
+use App\Models\M_App;
 class C_Controll extends BaseController
 {
 	public function index()
 	{
-		$images = General::qry_images_list();
+		$images = M_App::qry_images_list();
 		$users = General::qry_simpleuser_list();
 		echo $this->layout_view('administrator','controll/index',['images_list' => $images, 'users' => $users]);
 	}

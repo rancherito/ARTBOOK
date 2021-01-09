@@ -2,6 +2,7 @@
 use App\Models\General;
 use App\Models\User;
 use App\Models\M_Events;
+use App\Models\M_App;
 use telesign\sdk\messaging\MessagingClient;
 class Home extends BaseController
 {
@@ -23,11 +24,11 @@ class Home extends BaseController
 		$agent = $this->request->getUserAgent();
 		$images = array_map(function ($artwork) {
 			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true);return $artwork;
-		},General::qry_images_list());
+		},M_App::qry_images_list());
 
 		$new_images = array_map(function ($artwork) {
 			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true); return $artwork;
-		},General::qry_images_new_list());
+		},M_App::qry_images_new_list());
 
 
 		$feed = General::qry_feedpage();

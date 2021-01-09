@@ -79,8 +79,22 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 
 	new Vue({
 		el: '#app-body',
+		methods: {
+			trigger_like: function (info) {
+
+				$.post("<?= base_url() ?>/service/artwork/like_save", {artwork: info.accessname}, (d) => {
+					if (d.state != undefined) info.heart = d.state
+
+				}).fail(function() {
+				    alert('INICIAR SESION PRIMERO');
+				})
+
+			}
+		},
 		mounted: function () {
 			(adsbygoogle = window.adsbygoogle || []).push({});
+
+
 
 			$('.fixed-action-btn').floatingActionButton();
 			let drop = $('.dropdown-trigger').dropdown({constrainWidth: false});

@@ -385,6 +385,28 @@
 .cg-grid-image:hover .cg-grid-artwork-content img{
 
 }
+.cg-grid-artwork-interaction{
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
+	z-index: 3;
+
+}
+.cg-grid-artwork-interaction a{
+	color: white;
+	cursor: pointer;
+	transition: linear all .2s;
+	display: inline-block;
+}
+.cg-grid-artwork-interaction-like.cg-artwork-like{
+	color: #e91e63;
+}
+.cg-grid-artwork-interaction-like:hover{
+	transform: scale(1.2);
+	color: #e91e63;
+	transition: cubic-bezier(0.42, -5, 0.57, 5) all .4s;
+
+}
 .upload-editor-text-waiting{
 	display: block;
 	width: 100%;

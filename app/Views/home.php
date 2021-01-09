@@ -272,23 +272,6 @@ slider-feed-nartwork, .slider-feed-nartwork{
 				</div>
 			<?php endforeach; ?>
 		</slider-feed-nartwork-container>
-		<!--<simplebar>
-			<div class="feed-users">
-				<?php foreach ($feed as $key => $f): ?>
-					<div class="feed-users-item f-c">
-						<div class="feed-users-count f-c"><span><?= $f['total'] ?></span></div>
-						<div class="feed-users-wrapper-item f-c">
-							<div></div>
-							<div class="f-c feed-users-icon">
-								<span><?= $f['nickname'][0] ?></span>
-							</div>
-						</div>
-						<a href="<?= base_url() ?>/<?= $f['account'] ?>" class="pt-2"><?= $f['nickname'] ?></a>
-					</div>
-
-				<?php endforeach; ?>
-			</div>
-		</simplebar>-->
 </div>
 <article class="adsenseblock"></article>
 
@@ -312,7 +295,7 @@ slider-feed-nartwork, .slider-feed-nartwork{
 		</div>
 	</div>
 	<div class="container p-4 f-c c" style="color: #ffffff75; font-size: .8rem;">
-		Plataforma esta desarrollada por la comunidad de artistas artsbook, de artistas para artistas. <?= date('Y') ?>
+		Esta plataforma desarrollada por la comunidad de artistas artsbook, de artistas para artistas. <?= date('Y') ?>
 	</div>
 </footer>
 
