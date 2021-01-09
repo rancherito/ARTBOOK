@@ -204,22 +204,22 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		<section id="app-module">
 
 			<div id="app-module-content">
-					<?php if (is_access()): ?>
-						<a id="app-user-card" href="<?= user_site() ?>">
-							<?php if (has_user_avatar()): ?>
-								<i class="cover" style="background-image: url('<?= user_avatar() ?>')"></i>
-							<?php else: ?>
-								<i class="f-c"> <?= user_account()[0] ?> </i>
-							<?php endif; ?>
-							<span><?= user_nickname() ?></span>
-						</a>
-					<?php else: ?>
-						<a id="app-user-card" href="<?= base_url() ?>/user/login">
-							<i class="mdi mdi-account"></i>
-							<span>LOGIN</span>
-						</a>
-					<?php endif; ?>
-					<module></module>
+				<?php if (is_access()): ?>
+					<a id="app-user-card" href="<?= user_site() ?>">
+						<?php if (has_user_avatar()): ?>
+							<i class="cover" style="background-image: url('<?= user_avatar() ?>')"></i>
+						<?php else: ?>
+							<i class="f-c"> <?= user_account()[0] ?> </i>
+						<?php endif; ?>
+						<span><?= user_nickname() ?></span>
+					</a>
+				<?php else: ?>
+					<a id="app-user-card" href="<?= base_url() ?>/user/login">
+						<i class="mdi mdi-account"></i>
+						<span>LOGIN</span>
+					</a>
+				<?php endif; ?>
+				<module></module>
 
 			</div>
 		</section>
@@ -243,16 +243,17 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 				}
 			},
 			trigger_like: function (info) {
-			  <?php if (is_access()): ?>
-			  	info.heart = info.heart ? 0 : 1;
-			    $.post("<?= base_url() ?>/service/artwork/like_save", {artwork: info.accessname}, (d) => {
-			      if (d.state != undefined) info.heart = d.state
-			    }).fail(function() {
-			      alert('INICIAR SESION PRIMERO');
-			    })
-			  <?php else: ?>
-			    alert('INICIAR SESION PRIMERO');
-			  <?php endif; ?>
+				<?php if (is_access()): ?>
+				info.heart = info.heart ? 0 : 1;
+				$.post("<?= base_url() ?>/service/artwork/like_save", {artwork: info.accessname}, (d) => {
+					if (d.state != undefined) info.heart = d.state
+				}).fail(function() {
+					info.heart = info.heart ? 0 : 1;
+					alert('INICIAR SESION PRIMERO');
+				})
+				<?php else: ?>
+				alert('INICIAR SESION PRIMERO');
+				<?php endif; ?>
 			}
 		},
 		mounted: function () {
