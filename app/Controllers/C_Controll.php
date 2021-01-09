@@ -7,7 +7,7 @@ class C_Controll extends BaseController
 {
 	public function index()
 	{
-		$images = M_App::qry_images_list();
+		$images = M_App::qry_images_list(user_account());
 		$users = General::qry_simpleuser_list();
 		echo $this->layout_view('administrator','controll/index',['images_list' => $images, 'users' => $users]);
 	}

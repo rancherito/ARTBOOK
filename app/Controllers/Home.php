@@ -24,11 +24,11 @@ class Home extends BaseController
 		$agent = $this->request->getUserAgent();
 		$images = array_map(function ($artwork) {
 			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true);return $artwork;
-		},M_App::qry_images_list());
+		},M_App::qry_images_list(user_account()));
 
 		$new_images = array_map(function ($artwork) {
 			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true); return $artwork;
-		},M_App::qry_images_new_list());
+		},M_App::qry_images_new_list(user_account()));
 
 
 		$feed = General::qry_feedpage();

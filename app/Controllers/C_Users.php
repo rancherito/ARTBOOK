@@ -20,7 +20,7 @@ class C_Users extends BaseController
 			$partial_path = "images/avatars/avatar_$user_account.jpg";
 			$path = file_exists($partial_path) ? base_url()."/$partial_path?v=".date("Ymd") : '';
 			unset($account['user']);
-			$images = M_App::qry_images_recover($user);
+			$images = M_App::qry_images_recover($user, user_account());
 			$title = strtoupper($account['nickname']).' - ARTS BOOK';
 
 			$metaimage = $path == '' ?  base_url().'/images/meta.png' : $path;

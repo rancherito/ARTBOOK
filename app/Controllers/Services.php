@@ -100,13 +100,13 @@ class Services extends BaseController
 	}
 	public function artwork_list()
 	{
-		$images = M_App::qry_images_list();
+		$images = M_App::qry_images_list(user_account());
 		return $this->response->setJSON($images);
 	}
 	public function artworks_recover()
 	{
 		if (isset($_POST['account'])) {
-			$images = General::qry_images_recover($_POST['account']);
+			$images = General::qry_images_recover($_POST['account'], user_account());
 			return $this->response->setJSON($images);
 		}
 	}
