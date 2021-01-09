@@ -292,17 +292,18 @@ Vue.component('upload-editor',{
 
 Vue.component('cg-grid-image', {
 	template: `
-	<div class="cg-grid-image" :class="{'cg-grid-img-restricted': info.category_main == 'R18'}">
+	<div class="cg-grid-image" :class="{'cg-grid-img-restricted': info.category_main == 'R18', 'cg-grid-image-mobile' : is_mobile}">
 		<a @click="send_events" v-show="is_on_account" class="cg-grid-image-options btn-icon btn-dark waves waves-effect waves-light">
 			<i class="mdi-24px mdi mdi-cog"></i>
 		</a>
 		<div class="cg-grid-artwork-content">
-			<div class="cg-grid-img-restricted-indicator f-c w100" v-if="info.category_main == 'R18'">CONTENIDO MADURO</div>
+			<div class="cg-grid-img-restricted-indicator f-c w100 c p-4" v-if="info.category_main == 'R18'">CONTENIDO MADURO</div>
 
 			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.category_main == 'R18' ? 400 : info.height" :width="info.category_main == 'R18' ? 400 : info.width" :src="calculeimage()">
 			<div class="cg-grid-artwork-name">
 				<div class="cg-grid-info"  v-if="!is_on_profile">
-					<a class="cg-grid-avatar" :href="site">{{info.nickname[0]}}</a>
+					<a v-if="info.has_avatar" class="cg-grid-avatar cover" :href="site" :style="calcule_avatar()"></a>
+					<a v-else class="cg-grid-avatar cover" :href="site" >{{info.nickname[0]}}</a>
 					<div class="cg-grid-autor">
 						<div>{{info.name}}</div>
 						<span class="grid-images">{{info.nickname}}</span>
@@ -317,7 +318,8 @@ Vue.component('cg-grid-image', {
 	`,
 	data: function () {
 		return {
-			base64: null
+			base64: null,
+			is_mobile: (Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) < 992) || mobiledetector()
 		}
 	},
 	computed: {
@@ -329,7 +331,9 @@ Vue.component('cg-grid-image', {
 		}
 	},
 	methods: {
-
+		calcule_avatar: function () {
+			return {'background-image': 'url("' + this.base_url + '/images/avatars/avatar_'+ this.info.user_avatar + '.jpg")'}
+		},
 		calculeimage: function () {
 			if (this.info.category_main == 'R18') {
 				return `images/artworks_lite/${this.info.accessname}.${this.info.extension}`;

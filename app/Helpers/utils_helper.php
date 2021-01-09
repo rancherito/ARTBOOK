@@ -119,10 +119,11 @@
 	{
 		return empty($_SESSION['access']['account']) ? '' : $_SESSION['access']['user_access'];
 	}
-	function has_user_avatar($user_id = '')
+	function has_user_avatar($user_id = '', $noencript = false)
 	{
 		if($user_id == '') $user_id = user();
-		return file_exists("images/avatars/avatar_".md5($user_id).".jpg");
+		$avatar = $noencript ? $user_id : md5($user_id);
+		return file_exists("images/avatars/avatar_$avatar.jpg");
 	}
 	function user_avatar($user_id = '')
 	{

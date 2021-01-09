@@ -21,8 +21,15 @@ class Home extends BaseController
 	{
 		$current_events = M_Events::qry_events_current();
 		$agent = $this->request->getUserAgent();
-		$images = General::qry_images_list();
-		$new_images = General::qry_images_new_list();
+		$images = array_map(function ($artwork) {
+			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true);return $artwork;
+		},General::qry_images_list());
+
+		$new_images = array_map(function ($artwork) {
+			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true); return $artwork;
+		},General::qry_images_new_list());
+
+
 		$feed = General::qry_feedpage();
 		return $this->layout_view('public','home',['images_feed' => $new_images,'images_list' => $images, 'feed' => $feed, 'agent' => $agent, 'current_events' => $current_events]);
 	}

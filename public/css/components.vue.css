@@ -48,7 +48,7 @@
 	background: rgba(0,0,0,0.1);
 }
 .cg-grid-avatar{
-	background: var(--primary);
+	background-color: rgb(0,0,0,0.2);
 	height: 32px;
 	width: 32px;
 	border-radius: 50%;
@@ -58,6 +58,7 @@
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
+	position: relative;
 }
 .cg-grid-image-options{
 	background: white !important;
@@ -109,6 +110,9 @@
 .cg-grid-autor{
 	padding-left: 1rem;
 	color: white;
+	transform: translate(-200%);
+	transition: cubic-bezier(0.42, 0, 0.57, 1.4) all .4s;
+	cursor: default;
 }
 .grid-images{
 	color: white;
@@ -349,15 +353,27 @@
 	text-overflow: ellipsis;
 	transition: linear all .2s;
 	color: white;
-	opacity: 0;
-	transform: translateX(-150%);
 }
 .cg-grid-image:hover .cg-grid-artwork-curtain{
 	opacity: 1;
 }
-.cg-grid-image:hover .cg-grid-artwork-name{
-	transform: translateX(0%);
-	opacity: 1
+.cg-grid-avatar{
+	opacity: 0;
+	transform: scale(0);
+	transition: cubic-bezier(0.42, 0, 0.57, 1.4) all .2s;
+	transition-delay: .3s;
+
+}
+.cg-grid-image-mobile .cg-grid-avatar{
+	opacity: 1;
+	transform: scale(1);
+}
+.cg-grid-image:hover .cg-grid-autor{
+	transform: translate(0%);
+}
+.cg-grid-image:hover .cg-grid-avatar{
+	opacity: 1;
+	transform: scale(1);
 }
 .cg-grid-artwork-content{
 	overflow: hidden;
@@ -388,6 +404,7 @@
 	}
 }
 @media (max-width: 600px) {
+
 	.upload-editor-close{
 		background: rgba(0, 0, 0, 0.1);
 	}
@@ -436,6 +453,9 @@
 	.cg-grid-autor{
 		transform: scale(.8);
 		transform-origin: 0 center;
+	}
+	.cg-grid-image-mobile .cg-grid-autor{
+		display: none;
 	}
 
 }
