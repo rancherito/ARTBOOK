@@ -81,13 +81,16 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 		el: '#app-body',
 		methods: {
 			trigger_like: function (info) {
-
-				$.post("<?= base_url() ?>/service/artwork/like_save", {artwork: info.accessname}, (d) => {
-					if (d.state != undefined) info.heart = d.state
-				}).fail(function() {
-				    alert('INICIAR SESION PRIMERO');
-				})
-
+				<?php if (is_access()): ?>
+					info.heart = info.heart ? 0 : 1;
+					$.post("<?= base_url() ?>/service/artwork/like_save", {artwork: info.accessname}, (d) => {
+						if (d.state != undefined) info.heart = d.state
+					}).fail(function() {
+						alert('INICIAR SESION PRIMERO');
+					})
+				<?php else: ?>
+					alert('INICIAR SESION PRIMERO');
+				<?php endif; ?>
 			}
 		},
 		mounted: function () {
