@@ -161,6 +161,7 @@ $access_account = is_self_account($info['account']);
 	border: 1px solid var(--primary);
 	color: var(--primary);
 	text-align: center;
+	margin: 1px 0;
 }
 .box-events span{
 	display: flex;

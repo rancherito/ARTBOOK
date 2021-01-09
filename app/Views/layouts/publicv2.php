@@ -241,6 +241,15 @@ $links[] = ['classicon' => 'mdi mdi-power-standby', 'text' => 'CERRAR SESION', '
 				if (this.$refs.upload_artwork) {
 					this.$refs.upload_artwork.open()
 				}
+			},
+			trigger_like: function (info) {
+
+				$.post("<?= base_url() ?>/service/artwork/like_save", {artwork: info.accessname}, (d) => {
+					if (d.state != undefined) info.heart = d.state
+				}).fail(function() {
+				    alert('INICIAR SESION PRIMERO');
+				})
+
 			}
 		},
 		mounted: function () {

@@ -110,7 +110,7 @@
 .cg-grid-autor{
 	padding-left: 1rem;
 	color: white;
-	transform: translate(-200%);
+	transform: translate(-400px);
 	transition: cubic-bezier(0.42, 0, 0.57, 1.4) all .4s;
 	cursor: default;
 }
