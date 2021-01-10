@@ -146,7 +146,7 @@
 					new_user: {val: '', isvalid: false},
 					new_pass: {val: '', isvalid: false},
 					email: {val: '', isvalid: false},
-					newAccountMode: false,
+					newAccountMode: <?= isset($_GET['register']) ? 'true' : 'false' ?>,
 					loading: false,
 					register_ok: false,
 					fromurl: <?= empty($_GET['fromurl']) ? 'null' : "'".base64_decode($_GET['fromurl'])."'" ?>

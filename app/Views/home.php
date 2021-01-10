@@ -100,9 +100,9 @@
 	justify-content: center;
 	width: 300px;
 	height: 400px;
-	padding: 1rem;
+	padding: .5rem 1rem;
 	border-radius: 10px;
-	margin: 0 .5rem
+	margin: .5rem
 }
 
 .context{
@@ -133,6 +133,7 @@
 	display: none;
 }
 #app-home-start{
+	padding: 0 1rem;
 	height: 500px;
 	display: flex;
 	align-items: center;
@@ -145,10 +146,28 @@
 	width: 40px;
 }
 #app-home-navbar{
-	padding: 1rem;
+	padding: .5rem 1rem;
 }
-@media (max-width: 900px) {
-
+#app-home-presentation{
+	background-color: #131a33;
+	background: linear-gradient(45deg, #0c132d, #182142);
+	color: white;
+}
+#app-home-start-info{
+	padding: 2rem 0;
+}
+#app-home-title{
+	display: flex;
+}
+@media (max-width: 1200px) {
+	.event-anunces{
+		width: 270px;
+	}
+}
+@media (max-width: 992px) {
+	#app-home-title{
+		flex-direction: column;
+	}
 	#app-home-events{
 		width: 100%;
 	}
@@ -162,16 +181,19 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		padding-bottom: 2rem;
 		text-align: center;
 	}
 	.event-anunces{
-		height: 200px;
+		height: 180px;
 		width: auto;
 		flex: 1
 	}
 }
 @media (max-width: 600px) {
+
+	#app-home-events{
+		flex-direction: column;
+	}
 	#wrap_grid_gallery{
 		padding: 0;
 	}
@@ -223,23 +245,30 @@ slider-feed-nartwork, .slider-feed-nartwork{
 				<span><?= $_SESSION['access']['nickname'] ?></span>
 			</a>
 		<?php else: ?>
-			<a class="btn" href="<?= base_url() ?>/user/login">
-				<i class="mdi mdi-account mdi-18px right"></i>
-				<span>LOGIN</span>
-			</a>
+			<div>
+				<a class="btn bg-secondary" href="<?= base_url() ?>/user/login?register=true">
+					<span>REGISTRASE</span>
+				</a>
+				<a class="btn" href="<?= base_url() ?>/user/login">
+					<span>ACCEDER</span>
+				</a>
+			</div>
+
 		<?php endif; ?>
 
 	</div>
-	<div class="">
+	<div id="app-home-presentation">
 		<section id="app-home-start">
 			<div id="app-home-start-info">
-				<div style="display: flex">
-					<img src="<?= base_url() ?>/images/namepage_primary.svg" alt="" id="app-title">
+				<div id="app-home-title">
+					<img src="<?= base_url() ?>/images/namepage_primary.svg" alt="ARTSBOOK" id="app-title">
+					<div style="overflow: hidden; height: 0;"><h1>ARTSBOOK</h1></div>
+
 				</div>
-				<div style="font-size: 1.2rem; font-family: sans-serif">
+				<h2 style="font-family: sans-serif;" class="pt-2 title-4">
 					COMUNIDAD DE DIBUJATES
-				</div>
-				<div class="pt-2">Sea bienvenido a esta comunidad de artistas digitales y tradicionales</div>
+				</h2>
+				<h3 class="pt-4 title-5" style="max-width: 420px">Somos una comunidad de artistas y dibujantes hispanohablantes. Ven, descubre y comparte trabajos artísticos en tradicional o digital, además de otras muchas cosas más.</h3>
 			</div>
 			<div id="app-home-events">
 				<?php foreach ($current_events as $key => $event): ?>
@@ -264,7 +293,7 @@ slider-feed-nartwork, .slider-feed-nartwork{
 				<?php endforeach; ?>
 			</div>
 		</section>
-		<h3 class="title-4 p-4 primary"><i class="mdi mdi-new-box"></i> NUEVOS</h3>
+		<h3 class="title-4 p-4 white-text"><i class="mdi mdi-new-box"></i> NUEVOS</h3>
 		<slider-feed-nartwork-container class="p-4" :data="images_feed">
 			<?php foreach ($images_list as $key => $artwork): ?>
 				<div class="slider-feed-nartwork">
