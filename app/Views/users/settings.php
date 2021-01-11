@@ -112,8 +112,11 @@
 	text-align: center;
 	padding: .5rem
 }
+#app-module{
+	height: 100%;
+}
 @media (max-width: 600px) {
-
+	
 }
 canvas{
 	image-rendering: optimizeSpeed;             /* Older versions of FF          */
@@ -124,7 +127,7 @@ canvas{
 	-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 }
 </style>
-<?= template_start() ?>
+<?= module_start() ?>
 	<div id="settings">
 		<div id="settings-decorations" class="f-c">
 			<div id="settings-bg-content">
@@ -181,10 +184,9 @@ canvas{
 			</div>
 		</div>
 	</div>
-<?php $template = template_end() ?>
+<?php module_end() ?>
 <script type="text/javascript">
 $_module = {
-	template: `<?= $template ?>`,
 	data: function() {
 		return {
 			isNewPassword: false,

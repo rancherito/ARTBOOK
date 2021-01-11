@@ -365,14 +365,15 @@ h1, h2, h3, h4,h5{
     -webkit-transform: scaleY(1.0);
   }
 }
-.bg_animate_001,.bg_animate_002{
-	background: var(--primary);
+.bg_animate_001,.bg_animate_002, .bg_animate{
 	width: 100%;
 	height:100%;
 	position: absolute;
 	top: 0;
 	left: 0;
-
+}
+.bg_animate_001{
+	background: var(--primary);
 }
 .bg_animate_002{
 	background: var(--secondary);

@@ -182,7 +182,7 @@
 		}
 	}
 </style>
-<?php template_start() ?>
+<?php module_start() ?>
 	<div id="challenges">
 		<div id="challenges-bg-content">
 			<img src="<?= base_url() ?>/images/bg_003.jpg" alt="">
@@ -209,7 +209,7 @@
 			<span class="white-text">Pronto anunciaremos nuevos retos, esperenos</span>
 		</div>
 	</div>
-<?php $template = template_end() ?>
+<?php module_end() ?>
 
 <script type="text/javascript">
 	/*function shuffle(array) {

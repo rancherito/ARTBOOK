@@ -186,7 +186,7 @@ article h1{
 }
 </style>
 
-<?php template_start() ?>
+<?php module_start() ?>
 <div id="versus">
 	<div ref="modal_confirmar" class="modal" style="max-width: 400px">
 		<div class="modal-content" >
@@ -299,7 +299,7 @@ article h1{
 				</div>
 				<div id="versus-list-container" class="row">
 					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in 1 + (3 - (participients[versus.event_tag].length > 3 ? 3 : participients[versus.event_tag].length))">
-						<a class="dashbox">
+						<div class="dashbox">
 
 							<i class="mdi mdi-plus"></i>
 							<div class="dashbox-info w100 c">
@@ -328,10 +328,10 @@ article h1{
 									</a>
 								<?php endif; ?>
 							</div>
-						</a>
+						</div>
 					</div>
 					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in participients[versus.event_tag]">
-						<a class="dashbox">
+						<div class="dashbox">
 
 							<div class="dashbox-promoter-mark">
 								<a v-if="item.account_promoter == active_user" class="px-1 mdi mdi-flag"></a>
@@ -363,7 +363,7 @@ article h1{
 
 							</div>
 
-						</a>
+						</div>
 
 					</div>
 
@@ -374,10 +374,9 @@ article h1{
 	</div>
 </div>
 
-<?php $template = template_end() ?>
+<?php module_end() ?>
 <script type="text/javascript">
-const $_module = {
-	template: `<?= $template ?>`,
+$_module = {
 	data: function () {
 		return {
 			list_versus: <?= json_encode($list_versus) ?>,

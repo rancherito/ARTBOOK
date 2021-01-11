@@ -274,7 +274,7 @@ function getPathImage($artwork)
 	cursor: pointer;
 }
 </style>
-<?php template_start() ?>
+<?php module_start() ?>
 <div class="">
 	<?= bg_animate_001() ?>
 	<?php if (false): ?>
@@ -436,10 +436,9 @@ function getPathImage($artwork)
 
 
 </div>
-<?php $templade = template_end() ?>
+<?php module_end() ?>
 <script type="text/javascript">
 $_module = {
-	template: `<?= $templade ?>`,
 	data: function () {
 		return {
 			on_choise: false,

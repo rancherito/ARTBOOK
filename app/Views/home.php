@@ -138,6 +138,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	flex: 1;
 }
 #app-home-events{
 	display: flex;
@@ -146,12 +147,17 @@
 	width: 40px;
 }
 #app-home-navbar{
+	background-color: var(--alter);
 	padding: .5rem 1rem;
 }
 #app-home-presentation{
-	background-color: #131a33;
-	background: linear-gradient(45deg, #0c132d, #182142);
+	background-color: var(--alter);
 	color: white;
+	position: relative;
+	height: calc(100vh - 52px);
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
 }
 #app-home-start-info{
 	padding: 2rem 0;
@@ -165,6 +171,10 @@
 	}
 }
 @media (max-width: 992px) {
+	#app-home-presentation{
+		height: auto;
+	}
+
 	#app-home-title{
 		flex-direction: column;
 	}
@@ -190,7 +200,9 @@
 	}
 }
 @media (max-width: 600px) {
-
+	#app-home-navbar img{
+		width: 30px;
+	}
 	#app-home-events{
 		flex-direction: column;
 	}
@@ -224,12 +236,34 @@ slider-feed-nartwork, .slider-feed-nartwork{
 	height: 240px;
 	width: 240px;
 	padding: .25rem;
+	position: relative;
 }
 .slider-feed-nartwork img{
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
 	background-color: lightgray;
+}
+.slider-feed-nartwork-heart{
+	position: absolute;
+	bottom: .5rem;
+	right: .5rem;
+	cursor: pointer;
+	transition: linear all .2s;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.slider-feed-nartwork-heart i{
+
+	font-size: 2rem;
+}
+.slider-feed-nartwork-heart:hover{
+	color: #e91e63;
+}
+.slider-feed-nartwork-heart.feed-heart-active{
+	color: #e91e63;
 }
 </style>
 
@@ -238,7 +272,7 @@ slider-feed-nartwork, .slider-feed-nartwork{
 
 	<div id="app-home-navbar" class="f-b">
 
-		<img src="<?= base_url() ?>/images/icon_primary.svg" alt="logo">
+		<img src="<?= base_url() ?>/images/icon_white.svg" alt="logo">
 		<?php if (is_access()): ?>
 			<a class="btn" href="<?= $_SESSION['access']['account_site']?>">
 				<i class="mdi mdi-account mdi-18px right"></i>
@@ -258,6 +292,7 @@ slider-feed-nartwork, .slider-feed-nartwork{
 
 	</div>
 	<div id="app-home-presentation">
+		<?= bg_animate() ?>
 		<section id="app-home-start">
 			<div id="app-home-start-info">
 				<div id="app-home-title">
@@ -293,14 +328,17 @@ slider-feed-nartwork, .slider-feed-nartwork{
 				<?php endforeach; ?>
 			</div>
 		</section>
-		<h3 class="title-4 p-4 white-text"><i class="mdi mdi-new-box"></i> NUEVOS</h3>
-		<slider-feed-nartwork-container class="p-4" :data="images_feed">
-			<?php foreach ($images_list as $key => $artwork): ?>
-				<div class="slider-feed-nartwork">
-					<img src="<?= base_url()."/images/artworks_lite/$artwork[accessname].$artwork[extension]" ?>" alt="<?= $artwork['name'] ?>">
-				</div>
-			<?php endforeach; ?>
-		</slider-feed-nartwork-container>
+		<section class="py-4">
+			<h3 class="title-4 p-4 white-text"><i class="mdi mdi-new-box"></i> NUEVOS</h3>
+			<slider-feed-nartwork-container class="p-4" :data="images_feed">
+				<?php foreach ($images_feed as $key => $artwork): ?>
+					<div class="slider-feed-nartwork">
+						<img src="<?= base_url()."/images/artworks_lite/$artwork[accessname].$artwork[extension]" ?>" alt="<?= $artwork['name'] ?>">
+					</div>
+				<?php endforeach; ?>
+			</slider-feed-nartwork-container>
+		</section>
+
 </div>
 <article class="adsenseblock"></article>
 
@@ -391,8 +429,11 @@ Vue.component('slider-feed-nartwork-container', {
 Vue.component('slider-feed-nartwork',{
 	template: `
 	<div class="slider-feed-nartwork" :style="{'min-width': size + 'px', 'min-height': size + 'px', 'width': size + 'px', 'height': size + 'px'}">
+		<div class="slider-feed-nartwork-heart" :class="{'feed-heart-active': data.heart}" @click="trigger_heart(data)">
+			<i class="mdi" :class="data.heart ? 'mdi-heart' : 'mdi-heart-outline'"></i>
+		</div>
 		<a :href="base_url + '/artwork/view/' + data.accessname">
-			<img :src="base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name" />
+			<img :src="base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name">
 		</a>
 	</div>
 	`,
@@ -402,6 +443,12 @@ Vue.component('slider-feed-nartwork',{
 		}
 	},
 	props: ['data','base_url'],
+	methods: {
+		trigger_heart: function (info) {
+			if (this.$root.trigger_like != undefined) this.$root.trigger_like(info)
+			else console.log('FUNCTION LIKE NO FOUND');
+		}
+	},
 	mounted: function () {
 	}
 })

@@ -46,7 +46,7 @@
 	}
 
 </style>
-<?php template_start() ?>
+<?php module_start() ?>
 	<div id="app-pre-voting" class="f-c fixed-full">
 		<section id="app-pre-voting-main" class="f-c c">
 			<div id="app-pre-voting-deco">
@@ -64,9 +64,7 @@
 		</section>
 
 	</div>
-<?php $template = template_end()  ?>
+<?php module_end()  ?>
 <script type="text/javascript">
-	$_module = {
-		template: `<?= $template ?>`
-	}
+	$_module = {}
 </script>

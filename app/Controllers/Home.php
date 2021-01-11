@@ -46,7 +46,7 @@ class Home extends BaseController
 			$metas = ['img' => $metaimage, 'title' => $title];
 			if (!empty($res['description'])) $metas['description'] = $res['description'];
 
-			echo $this->layout_view('publicv2','artwork',['artwork' => $res, 'others_artworks' => $top_nine, 'metas' => $metas]);
+			echo $this->layout_view('publicv2','artwork/view',['artwork' => $res, 'others_artworks' => $top_nine, 'metas' => $metas]);
 		}
 		else throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 	}

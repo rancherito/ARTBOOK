@@ -43,6 +43,14 @@
             </script>
         ';
     }
+	function bg_animate()
+	{
+		return '<div class="bg_animate" >
+			<ul class="circles">
+				<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+			</ul>
+		</div>';
+	}
 	function bg_animate_001()
 	{
 		return '<div class="bg_animate_001" >

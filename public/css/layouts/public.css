@@ -2,62 +2,14 @@
 	#app-body{
 		height: 100vh;
 	}
-	#app-nav{
-		padding: .5rem;
-		color: white;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		font-size: 1.5rem;
-		position: fixed;
-		top: 50%;
-		transform: translateY(-50%);
-		right: 32px;
-		width: 54px;
-		background: white;
-		z-index: 1;
-		box-shadow: 0 0 5px 2px #0000000a;
-		flex-direction: column;
-		border-radius: 40px;
-		background-color: var(--primary);
-		z-index: 4
-	}
-	#app-nav-access a{
-		color: white;
-		display: flex;
-		margin-top: 2px;
-		border-radius: 20px;
-		transition: linear all .2s;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-		width: 100%;
-		padding: .5rem 0;
-	}
-	#app-nav-access{
-		width: 100%;
-	}
-	#app-nav-access a:hover{
-		background: #ffffff33;
-		padding: 1.5rem 0;
-	}
-	#app-nav-access a:hover i{
-		transform: scale(1.1);
-	}
+
+
 	#app-content{
 		height: 100%;
 		overflow-x: hidden;
 		overflow-y: auto;
 	}
-	#app-nav-left{
-		display: flex;
-		align-items: center;
-		color: var(--primary)
-	}
-	#app-nav-left a{
-		color: var(--primary);
-		display: flex;
-	}
+
 	.fixed-action-btn > a{
 		display: flex;
 		justify-content: center;
@@ -67,9 +19,7 @@
 		display: none;
 	}
 	@media (max-width: 600px) {
-		#app-nav{
-			display: none;
-		}
+
 		.fixed-action-btn{
 			display: block;
 		}

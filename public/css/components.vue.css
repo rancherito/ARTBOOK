@@ -360,8 +360,7 @@
 .cg-grid-avatar{
 	opacity: 0;
 	transform: scale(0);
-	transition: cubic-bezier(0.42, 0, 0.57, 1.4) all .2s;
-	transition-delay: .3s;
+	transition: linear all .2s;
 
 }
 .cg-grid-image-mobile .cg-grid-avatar{
@@ -373,6 +372,9 @@
 }
 .cg-grid-image:hover .cg-grid-avatar{
 	opacity: 1;
+	transition: cubic-bezier(0.42, 0, 0.57, 1.4) all .2s;
+
+	transition-delay: .3s;
 	transform: scale(1);
 }
 .cg-grid-artwork-content{

@@ -152,10 +152,8 @@
 		}
 	}
 </style>
-<?php template_start() ?>
-<div style="height: 100%">
-	<?= bg_animate_001() ?>
-	<simplebar ref="scroll" class="h100">
+<?php module_start() ?>
+<div ref="scroll">
 		<div class="f-c" id="app-event-versus-presentation">
 			<img src="<?= base_url() ?>/images/logo_white.svg" alt="logo">
 			<h1 class="c">
@@ -220,13 +218,11 @@
 			<?php endforeach; ?>
 		</div>
 
-	</simplebar>
 </div>
 
-<?php $templade = template_end() ?>
+<?php module_end() ?>
 <script type="text/javascript">
 	$_module = {
-		template: `<?= $templade ?>`,
 		data: function () {
 			return {
 				scroll: null,
@@ -250,14 +246,14 @@
 			}
 		},
 		mounted: function () {
-			this.scroll = $('.scroll-position');
+			this.scroll = $('#app-body');
 			this.sections = this.scroll.find('article');
 			this.anchor_access = this.sections.length;
 			this.sections.each((i, el) => {
 				$(el).attr('id', i+'_pos')
 			});
 			this.calcule_pos()
-			let s = $(this.$refs.scroll.getScrollElement())
+			let s = this.scroll
 			s.scroll((e) => {
 				this.calcule_pos()
 			})

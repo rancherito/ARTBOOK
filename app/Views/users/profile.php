@@ -7,7 +7,9 @@ $access_account = is_self_account($info['account']);
 :root{
 	--profile-user: 320px;
 }
+body{
 
+}
 .user-event-image-preview{
 	height: 80px;
 	display: flex;
@@ -38,10 +40,13 @@ $access_account = is_self_account($info['account']);
 	border-radius: 10px;
 	position: relative;
 }
+#app-module-content, body{
+	background: white;
+}
 #app-profile{
 	position: relative;
-	height: 100%;
 	display: flex;
+	min-height: 100%;
 }
 #app-profile-avatar {
 	background: rgba(0,0,0,0.1);
@@ -76,39 +81,21 @@ $access_account = is_self_account($info['account']);
 }
 #user_grid{
 	width: calc(100% - var(--profile-user));
-	height: 100%; padding: 1rem;
+	background: var(--light-gray);
 }
 #app-profile-info{
 	padding: 0 1rem;
 	width: var(--profile-user);
 	background-color: white;
 	position: relative;
+	min-height: 100%;
 }
 #app-profile-info-edit{
 	position: absolute;
 	top: 1rem;
 	right: 1rem;
 }
-.access-btn{
-	display: flex;
-	color: white;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	cursor: pointer;
-	transition: linear all .2s;
-	height: 90px;
-	width: 100%;
-}
-.access-btn span{
-	font-size: .8rem;
-}
-.access-btn i{
-	font-size: 1.8rem;
-}
-.access-btn:hover{
-	background: rgba(255, 255, 255, 0.1);
-}
+
 #modal_image{
 	width: 1000px;
 	height: 600px;
@@ -238,7 +225,7 @@ $access_account = is_self_account($info['account']);
 </style>
 
 
-<?php template_start(); ?>
+<?php module_start(); ?>
 <div id="app-profile">
 	<?php if ($access_account): ?>
 		<div id="modal_image" ref="modal_openimage" class="modal">
@@ -264,78 +251,75 @@ $access_account = is_self_account($info['account']);
 	<?php endif; ?>
 
 	<div id="app-profile-info">
-		<?php if (is_self_account($info['account'])): ?>
-			<a class="btn" id="app-profile-info-edit" href="<?= base_url() ?>/user/settings">
-				<i class="mdi mdi-account-edit mdi-18px"></i>
-			</a>
-		<?php endif; ?>
-		<div id="app-profile-content">
-			<div class="f-c">
-				<div id="app-profile-avatar" class="f-c">
-					<?php if ($path_image == ''): ?>
-						<span><?= $info['nickname'][0] ?></span>
-					<?php else: ?>
-						<img src="<?= $path_image ?>" id="user-avatar-img">
-					<?php endif; ?>
+		<div ref="stiky">
+			<?php if (is_self_account($info['account'])): ?>
+				<a class="btn" id="app-profile-info-edit" href="<?= base_url() ?>/user/settings">
+					<i class="mdi mdi-account-edit mdi-18px"></i>
+				</a>
+			<?php endif; ?>
+			<div id="app-profile-content">
+				<div class="f-c">
+					<div id="app-profile-avatar" class="f-c">
+						<?php if ($path_image == ''): ?>
+							<span><?= $info['nickname'][0] ?></span>
+						<?php else: ?>
+							<img src="<?= $path_image ?>" id="user-avatar-img">
+						<?php endif; ?>
+					</div>
+					<div id="app-profile-nickname"><?= $info['nickname'] ?></div>
+
 				</div>
-				<div id="app-profile-nickname"><?= $info['nickname'] ?></div>
-
 			</div>
-		</div>
-		<div id="app-profile-decorator" >
-			<div id="user_header">
+			<div id="app-profile-decorator" >
+				<div id="user_header">
 
-				<div id="app-profile-description" class="c">
-					<div class="title-3">Bienvenido</div>
-					<p>
-						Espero que disfrutes tu estadia en mi perfil de trabajos, subo contenido regularmente
+					<div id="app-profile-description" class="c">
+						<div class="title-3">Bienvenido</div>
+						<p>
+							Espero que disfrutes tu estadia en mi perfil de trabajos, subo contenido regularmente
 
-					</p>
-					 <div class="row">
-						 <?php if ($access_account): ?>
-							 <?php foreach ($current_events as $key => $event): ?>
-								<?php if ($event['is_voting'] == 0): ?>
-									<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus">
-										<div class="box-events w100">
-											<div class="combo-text-title"><?= $event['name'] ?></div>
-											<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['event_end'] ?>"></cg-countdown> </span>
-										</div>
-									</a>
-								<?php else: ?>
-									<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>">
-										<div class="box-events w100">
-											<div class="combo-text-title"><?= $event['name'] ?></div>
-											<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['voting'] ?>"></cg-countdown> </span>
-										</div>
-									</a>
-								<?php endif; ?>
+						</p>
+						 <div class="row">
+							 <?php if ($access_account): ?>
+								 <?php foreach ($current_events as $key => $event): ?>
+									<?php if ($event['is_voting'] == 0): ?>
+										<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus">
+											<div class="box-events w100">
+												<div class="combo-text-title"><?= $event['name'] ?></div>
+												<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['event_end'] ?>"></cg-countdown> </span>
+											</div>
+										</a>
+									<?php else: ?>
+										<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>">
+											<div class="box-events w100">
+												<div class="combo-text-title"><?= $event['name'] ?></div>
+												<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['voting'] ?>"></cg-countdown> </span>
+											</div>
+										</a>
+									<?php endif; ?>
 
 
-							<?php endforeach; ?>
-						 <?php endif; ?>
+								<?php endforeach; ?>
+							 <?php endif; ?>
 
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 	</div>
 
-	<simplebar id="user_grid">
-		<cg-grid base_url="<?= base_url() ?>" ref='grid' @events_list="events_list" :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
-
-	</simplebar>
-
-
+	<cg-grid id="user_grid" style="min-height: 100vh;" base_url="<?= base_url() ?>" ref='grid' @events_list="events_list" :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
 
 </div>
-<?php $template = template_end()?>
+<?php module_end()?>
 <script>
 
 
 const $_module = {
-	template: `<?= $template ?>`,
 	mounted: function () {
-
+		var stickyEl = new Sticksy(this.$refs.stiky, true)
 	<?php
 	if ($access_account) {
 		echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";
