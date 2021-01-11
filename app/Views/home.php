@@ -407,8 +407,8 @@ slider-feed-nartwork, .slider-feed-nartwork{
 let list_images_pre = <?= json_encode($images_list) ?>;
 //list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
 Vue.component('slider-feed-nartwork-container', {
-	template: `<div class="slider-feed-nartwork-container" :style="{height: 'calc(2rem + ' + size + 'px)'}">
-		<div ref="wrap" :style="{height: size + 'px'}">
+	template: `<div class="slider-feed-nartwork-container" :style="{min-height: 'calc(2rem + ' + size + 'px)'}">
+		<div ref="wrap" :style="{min-height: size + 'px'}">
 			<slider-feed-nartwork v-for="artwork of data" :data='artwork' base_url="<?= base_url() ?>"></slider-feed-nartwork>
 		</div>
 	</div>`,
