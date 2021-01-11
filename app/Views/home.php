@@ -154,7 +154,7 @@
 	background-color: var(--alter);
 	color: white;
 	position: relative;
-	height: calc(100vh - 52px);
+	min-height: calc(100vh - 52px);
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
