@@ -12,16 +12,22 @@
 	background: #2d2d2d;
 	padding: 2rem;
 	width: calc(100% - var(--margin-more));
+	min-height: 100vh;
 }
 #app-artwork-more{
 	width: var(--margin-more);
 	position: relative;
 }
-#app-artwork-image{
+#app-artwork-wrapper{
 	width: auto;
 	max-height: 90vh;
-	display: block;
 	margin: 0 auto;
+}
+#app-artwork-image{
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	display: block;
 	box-shadow: 0 17px 20px 6px rgba(0,0,0,.3);
 }
 #app-artwork-image-description{
@@ -128,7 +134,9 @@
 <?php module_start() ?>
 <div id="app-artwork-image-info">
 	<div id="app-artwork-image-content">
-		<img id="app-artwork-image"  src="<?= base_url() ?>/images/artworks/<?= $artwork['accessname'].'.'.$artwork['extension'] ?>" alt="<?= $artwork['accessname'] ?>">
+		<div id="app-artwork-wrapper">
+			<img id="app-artwork-image"  src="<?= base_url() ?>/images/artworks/<?= $artwork['accessname'].'.'.$artwork['extension'] ?>" alt="<?= $artwork['accessname'] ?>">
+		</div>
 		<div id="app-artwork-image-description" class="container">
 			<div class="app-artwork-author">
 				<div class="pt-4 pb-4 white-text">
@@ -143,7 +151,7 @@
 						<div id="disqus_thread"></div>
 					<?php endif; ?>
 				</div>
-				
+
 
 
 
