@@ -102,7 +102,13 @@
 		flex-direction: column;
 
 	}
-	#app-artwork-image-info, #app-artwork-more{
+	#app-artwork-image-info{
+		flex-direction: column;
+	}
+	#app-artwork-image-content{
+		min-height: auto;
+	}
+	#app-artwork-image-content, #app-artwork-more{
 		width: 100%;
 		height: auto;
 	}
