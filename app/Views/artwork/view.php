@@ -18,16 +18,12 @@
 	width: var(--margin-more);
 	position: relative;
 }
-#app-artwork-wrapper{
+#app-artwork-image{
 	width: auto;
 	max-height: 90vh;
-	margin: 0 auto;
-}
-#app-artwork-image{
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
+	max-width: 100%;
 	display: block;
+	margin: 0 auto;
 	box-shadow: 0 17px 20px 6px rgba(0,0,0,.3);
 }
 #app-artwork-image-description{
@@ -134,9 +130,7 @@
 <?php module_start() ?>
 <div id="app-artwork-image-info">
 	<div id="app-artwork-image-content">
-		<div id="app-artwork-wrapper">
-			<img id="app-artwork-image"  src="<?= base_url() ?>/images/artworks/<?= $artwork['accessname'].'.'.$artwork['extension'] ?>" alt="<?= $artwork['accessname'] ?>">
-		</div>
+		<img id="app-artwork-image"  src="<?= base_url() ?>/images/artworks/<?= $artwork['accessname'].'.'.$artwork['extension'] ?>" alt="<?= $artwork['accessname'] ?>">
 		<div id="app-artwork-image-description" class="container">
 			<div class="app-artwork-author">
 				<div class="pt-4 pb-4 white-text">
