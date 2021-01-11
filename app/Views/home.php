@@ -158,6 +158,7 @@
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
+	overflow: hidden;
 }
 #app-home-start-info{
 	padding: 2rem 0;
