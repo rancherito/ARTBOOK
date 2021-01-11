@@ -225,6 +225,8 @@ slider-feed-nartwork-container{
 }
 slider-feed-nartwork-container, .slider-feed-nartwork-container{
 	width: 100%;
+	overflow: hidden;
+	position: relative;
 }
 slider-feed-nartwork-container > div, .slider-feed-nartwork-container > div{
 	display: flex;
