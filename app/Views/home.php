@@ -166,6 +166,11 @@
 #app-home-title{
 	display: flex;
 }
+#app-home-feedworks-container{
+	padding: 1rem 0;
+	overflow: hidden;
+	height: auto;
+}
 @media (max-width: 1200px) {
 	.event-anunces{
 		width: 270px;
@@ -331,7 +336,7 @@ slider-feed-nartwork, .slider-feed-nartwork{
 				<?php endforeach; ?>
 			</div>
 		</section>
-		<section class="py-4">
+		<section id="app-home-feedworks-container">
 			<h3 class="title-4 p-4 white-text"><i class="mdi mdi-new-box"></i> NUEVOS</h3>
 			<slider-feed-nartwork-container class="p-4" :data="images_feed">
 				<?php foreach ($images_feed as $key => $artwork): ?>
@@ -402,7 +407,7 @@ slider-feed-nartwork, .slider-feed-nartwork{
 let list_images_pre = <?= json_encode($images_list) ?>;
 //list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
 Vue.component('slider-feed-nartwork-container', {
-	template: `<div class="slider-feed-nartwork-container">
+	template: `<div class="slider-feed-nartwork-container" :style="{height: 'calc(2rem + ' + size + 'px)'}">
 		<div ref="wrap" :style="{height: size + 'px'}">
 			<slider-feed-nartwork v-for="artwork of data" :data='artwork' base_url="<?= base_url() ?>"></slider-feed-nartwork>
 		</div>
