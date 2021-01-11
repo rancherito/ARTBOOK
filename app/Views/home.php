@@ -402,13 +402,14 @@ let list_images_pre = <?= json_encode($images_list) ?>;
 //list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
 Vue.component('slider-feed-nartwork-container', {
 	template: `<div class="slider-feed-nartwork-container">
-		<div ref="wrap">
+		<div ref="wrap" :style="{height: size + 'px'}">
 			<slider-feed-nartwork v-for="artwork of data" :data='artwork' base_url="<?= base_url() ?>"></slider-feed-nartwork>
 		</div>
 	</div>`,
 	data: function () {
 		return {
-			size_stack: <?= $agent->isMobile() ? 100 : 200 ?>
+			size_stack: <?= $agent->isMobile() ? 100 : 200 ?>,
+			size: <?= $agent->isMobile() ? 100 : 200 ?>
 		}
 	},
 	props: ['data'],
@@ -416,6 +417,7 @@ Vue.component('slider-feed-nartwork-container', {
 		calcule_width: function () {
 			const items_in_row = parseInt(this.$refs.wrap.offsetWidth/this.size_stack);
 			const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row)
+			this.size = items_new_width
 			for (var child of this.$children) child.size = items_new_width;
 		}
 	},
