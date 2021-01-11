@@ -140,13 +140,13 @@
 		<div id="app-artwork-image-description" class="container">
 			<div class="app-artwork-author">
 				<div class="pt-4 pb-4 white-text">
-					<h3 class="title-4 m-0">Detalles</h3>
+					<h3 class="title-3 m-0 pb-4">Detalles</h3>
 					<?= strlen($artwork['description']) == 0 ? 'No hay detalles sobre la obra' : $artwork['description'] ?>
 				</div>
 
 				<div class="card-panel">
 					<?php if ($_ENV['CI_ENVIRONMENT'] == 'development'): ?>
-						SISTEMA DE COMENTARIOS AQUI
+						SISTEMA DE COMENTARIOS DISCUS
 					<?php else: ?>
 						<div id="disqus_thread"></div>
 					<?php endif; ?>
@@ -194,19 +194,22 @@
 <?php module_end() ?>
 
 <script>
+<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
+	(function() { // DON'T EDIT BELOW THIS LINE
+	var d = document, s = d.createElement('script');
+	s.src = 'https://artsbook-site.disqus.com/embed.js';
+	s.setAttribute('data-timestamp', +new Date());
+	(d.head || d.body).appendChild(s);
+	})();
+<?php endif; ?>
+
 
 $_module = {
 	mounted: function () {
 		var stickyEl = new Sticksy(this.$refs.stiky, true)
-		<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
-		(function() {
-			var d = document, s = d.createElement('script');
-			s.src = 'https://artsbook-site.disqus.com/embed.js';
-			s.setAttribute('data-timestamp', +new Date());
-			(d.head || d.body).appendChild(s);
-		})();
-		<?php endif; ?>
+
 	}
 }
+
 /**/
 </script>
