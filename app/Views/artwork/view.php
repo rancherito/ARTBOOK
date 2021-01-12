@@ -159,7 +159,7 @@
 		</div>
 	</div>
 	<div id="app-artwork-more">
-		<div ref="stiky"  style="position: relative">
+		<div ref="stiky" class="sticky">
 			<div id="app-author">
 				<div class="author-avatar cover f-c"><?= $artwork['nickname'][0] ?></div>
 				<div class="author-avatar-info">
@@ -183,17 +183,17 @@
 					</div>
 				<?php endforeach; ?>
 			</div>
-
+			<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
+			<adsense-ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-client="ca-pub-1355252812560688"
+			     data-ad-slot="6521651482"
+			     data-ad-format="auto"
+			     data-full-width-responsive="true"></adsense-ins>
+			<?php endif; ?>
 
 		</div>
-		<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
-		<adsense-ins class="adsbygoogle"
-			 style="display:block"
-			 data-ad-client="ca-pub-1355252812560688"
-			 data-ad-slot="6521651482"
-			 data-ad-format="auto"
-			 data-full-width-responsive="true"></adsense-ins>
-		<?php endif; ?>
+
 
 	</div>
 
@@ -215,8 +215,7 @@
 
 $_module = {
 	mounted: function () {
-		var stickyEl = new Sticksy(this.$refs.stiky, true)
-
+		new Stickyfill.Sticky(this.$refs.styky);
 	}
 }
 

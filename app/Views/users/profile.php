@@ -251,7 +251,7 @@ body{
 	<?php endif; ?>
 
 	<div id="app-profile-info">
-		<div ref="stiky">
+		<div ref="styky" class="sticky">
 			<?php if (is_self_account($info['account'])): ?>
 				<a class="btn" id="app-profile-info-edit" href="<?= base_url() ?>/user/settings">
 					<i class="mdi mdi-account-edit mdi-18px"></i>
@@ -327,7 +327,7 @@ body{
 
 const $_module = {
 	mounted: function () {
-		new Sticksy(this.$refs.stiky, true)
+		new Stickyfill.Sticky(this.$refs.styky);
 		<?php
 		if ($access_account) {
 			echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";

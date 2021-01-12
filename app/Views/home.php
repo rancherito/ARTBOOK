@@ -126,7 +126,7 @@
 </article>
 <div id="app-home-news-gallery" style="position: relative">
 	<section id="app-home-news" style="position: relative; top:0px;">
-		<div ref="styky_aside" style="position: relative; top:0px;">
+		<div class="sticky" ref="styky_aside">
 			<h3 class="title-4 py-4 primary"> <i class="mdi mdi-apps"></i> TOP ARTWORK</h3>
 			<div id="app-artwork-top">
 				<?php $artwork = $artwork_top[0] ?>
@@ -154,17 +154,17 @@
 				<?php endforeach; ?>
 
 			</div>
+			<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
+				<adsense-ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-client="ca-pub-1355252812560688"
+			     data-ad-slot="6102208452"
+			     data-ad-format="auto"
+			     data-full-width-responsive="true"></adsense-ins>
 
-
+			<?php endif; ?>
 		</div>
-		<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
-			<adsense-ins class="adsbygoogle"
-			 style="display:block"
-			 data-ad-client="ca-pub-1355252812560688"
-			 data-ad-slot="6102208452"
-			 data-ad-format="auto"
-			 data-full-width-responsive="true"></adsense-ins>
-		<?php endif; ?>
+
 	</section>
 	<div id="app-home-gallery-container">
 		<h3 class="title-4 p-4 primary"> <i class="mdi mdi-apps"></i> GALLERIA</h3>
@@ -323,7 +323,8 @@ $_module = {
 		}
 	},
 	mounted: function () {
-		new Sticksy(this.$refs.styky_aside, true)
+		new Stickyfill.Sticky(this.$refs.styky_aside);
+		//new Sticksy(this.$refs.styky_aside, true)
 
 		//$(this.$refs.styky_aside).sticky({topSpacing:0});
 		if ($('#modal1')) {
