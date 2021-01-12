@@ -50,7 +50,7 @@ aside{
 	position: fixed;
 	top: 0;
 	bottom: 0;
-	background-color: var(--alter);
+	background-color: var(--primary);
 	color: white;
 	padding: 1rem 0;
 	display: flex;

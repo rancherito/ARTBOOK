@@ -1,4 +1,7 @@
-<?php $version = 'beta_0.094' ?>
+<?php
+$version = 'beta_0.094';
+$GLOBALS['version'] = $version;
+?>
 <?php
 	$pre_metas = [
 		'img' => base_url()."/images/meta.png",

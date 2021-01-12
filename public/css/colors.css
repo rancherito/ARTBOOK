@@ -9,7 +9,7 @@
     --blue: #5c74eb;
     --purple: #5c74eb;
     --turkey: #45bcd4;
-	--alter: var(--primary);
+	--alter: #070d23;
     --bg-primary: var(--primary);
     --bg-secondary: var(--secondary);
     --bg-alert: linear-gradient(45deg, #d65d54, #e01f54) ;
