@@ -21,6 +21,9 @@
 		color: black;
 		text-decoration: underline;
 	}
+	.app-artwork-top-picture{
+		position: relative;
+	}
 </style>
 <?php module_start()?>
 <div>
@@ -114,6 +117,7 @@
 				<?php foreach ([$artwork_top[1],$artwork_top[2],$artwork_top[3]] as $key => $artwork): ?>
 					<a class="app-artwork-top-picture" href="<?= base_url()."/artwork/view/$artwork[artwork]" ?>">
 						<img src="<?= base_url()."/images/artworks_lite/$artwork[artwork].$artwork[extension]" ?>" alt="<?= $artwork['name'] ?>" style="width: 32%; border-radius: 10px;">
+						<div class="c white-text" style="position: absolute; bottom: .5rem; left: 0; right: 0; background-color: rgba(0,0,0,0.2)"><?= $artwork['nickname'] ?></div>
 					</a>
 				<?php endforeach; ?>
 
