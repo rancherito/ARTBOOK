@@ -13,7 +13,6 @@
 			<upload-editor ref="upload_artwork" base_url="<?= base_url() ?>" author="<?= user_account() ?>"></upload-editor>
 		<?php endif; ?>
 
-
 		<aside :class="{'app-aside-nav-close': toggle_nav}">
 			<div id="app-aside-nav-toggle" class="bg-primary" @click="toggle_nav = !toggle_nav"><i class="mdi mdi-menu"></i></div>
 			<div class="f-c w100">
@@ -39,8 +38,6 @@
 			</div>
 		</aside>
 		<section id="app-module">
-
-			<div id="app-module-content">
 				<?php if (is_access()): ?>
 					<a id="app-user-card" href="<?= user_site() ?>">
 						<?php if (has_user_avatar()): ?>
@@ -65,8 +62,6 @@
 						<?= $GLOBALS['module'] ?>
 					<?php endif; ?>
 				</module>
-
-			</div>
 		</section>
 
 	</div>

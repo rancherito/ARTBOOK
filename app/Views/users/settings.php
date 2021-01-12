@@ -1,5 +1,8 @@
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 <style media="screen">
+#app-body{
+	height: 100vh;
+}
 #settings-bg-content,#settings{
 	height: 100%;
 	width: 100%;
@@ -116,7 +119,7 @@
 	height: 100%;
 }
 @media (max-width: 600px) {
-	
+
 }
 canvas{
 	image-rendering: optimizeSpeed;             /* Older versions of FF          */

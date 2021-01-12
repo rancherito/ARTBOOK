@@ -279,9 +279,9 @@ body{
 							Espero que disfrutes tu estadia en mi perfil de trabajos, subo contenido regularmente
 
 						</p>
-						 <div class="row">
-							 <?php if ($access_account): ?>
-								 <?php foreach ($current_events as $key => $event): ?>
+						<div class="row">
+							<?php if ($access_account): ?>
+								<?php foreach ($current_events as $key => $event): ?>
 									<?php if ($event['is_voting'] == 0): ?>
 										<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus">
 											<div class="box-events w100">
@@ -300,7 +300,7 @@ body{
 
 
 								<?php endforeach; ?>
-							 <?php endif; ?>
+							<?php endif; ?>
 
 						</div>
 					</div>
@@ -319,72 +319,72 @@ body{
 
 const $_module = {
 	mounted: function () {
-		var stickyEl = new Sticksy(this.$refs.stiky, true)
-	<?php
-	if ($access_account) {
-		echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";
-		echo "this.modal = $(this.\$refs['modal-events']).modal();";
-		echo "this.modal_openimage = $(this.\$refs['modal_openimage']).modal();";
-	}
+		new Sticksy(this.$refs.stiky, true)
+		<?php
+		if ($access_account) {
+			echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";
+			echo "this.modal = $(this.\$refs['modal-events']).modal();";
+			echo "this.modal_openimage = $(this.\$refs['modal_openimage']).modal();";
+		}
 
-	?>
+		?>
 
-},
-data: function () {
-	return {
-		list_img: <?= json_encode($images_list) ?>,
-		autoraccess: [],
-		stack: 260,
-		modal: null,
-		modal_openimage: null,
-		list_events: null,
-		artwork_apply: {},
-		toggle_nav: false
-	}
-},
-methods: {
-	apply_artwork: function (event_info) {
-		const data = {versus: event_info.versus, artwork: this.artwork_apply.artwork}
+	},
+	data: function () {
+		return {
+			list_img: <?= json_encode($images_list) ?>,
+			autoraccess: [],
+			stack: 260,
+			modal: null,
+			modal_openimage: null,
+			list_events: null,
+			artwork_apply: {},
+			toggle_nav: false
+		}
+	},
+	methods: {
+		apply_artwork: function (event_info) {
+			const data = {versus: event_info.versus, artwork: this.artwork_apply.artwork}
 
-		$.post('<?= base_url() ?>/service/events/apply_versus', data, (res) => {
+			$.post('<?= base_url() ?>/service/events/apply_versus', data, (res) => {
+				$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
+					let findartwork = false;
+					//for (var item of res_list) if (item.artwork == this.artwork_apply.artwork) {findartwork = true; this.list_events = [item];}
+					if (!findartwork) this.list_events = res_list;
+				})
+			})
+		},
+		events_list: function (image) {
+			if (this.modal_openimage) this.modal_openimage.modal('open')
+			this.artwork_apply = image
 			$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
 				let findartwork = false;
-				//for (var item of res_list) if (item.artwork == this.artwork_apply.artwork) {findartwork = true; this.list_events = [item];}
+
+				//for (var item of res_list) if (item.artwork == image.artwork) {findartwork = true; this.list_events = [item];}
+
 				if (!findartwork) this.list_events = res_list;
+
+
+
 			})
-		})
-	},
-	events_list: function (image) {
-		if (this.modal_openimage) this.modal_openimage.modal('open')
-		this.artwork_apply = image
-		$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
-			let findartwork = false;
 
-			//for (var item of res_list) if (item.artwork == image.artwork) {findartwork = true; this.list_events = [item];}
+		},
+		dateCheck: function(from,to,check) {
+			let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
+			return (cDate <= lDate && cDate >= fDate);
+		},
 
-			if (!findartwork) this.list_events = res_list;
+		onfinish: function (data) {
+			<?php if ($access_account): ?>
+			$.post('<?= base_url() ?>/services/artworks/recover',{account: '<?= $_SESSION['access']['account'] ?>'}, (res) => {
+				this.list_img = res;
+			})
+			<?php endif; ?>
 
+		}
 
-
-		})
-
-	},
-	dateCheck: function(from,to,check) {
-		let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
-		return (cDate <= lDate && cDate >= fDate);
-	},
-
-	onfinish: function (data) {
-		<?php if ($access_account): ?>
-		$.post('<?= base_url() ?>/services/artworks/recover',{account: '<?= $_SESSION['access']['account'] ?>'}, (res) => {
-			this.list_img = res;
-		})
-		<?php endif; ?>
 
 	}
-
-
-}
 }
 
 </script>

@@ -1,6 +1,27 @@
 
 <link rel="stylesheet" href="<?= base_url() ?>/css/home.css?v=1">
-
+<style media="screen">
+	#app-home-news-gallery{
+		display: flex;
+		width: 100%;
+	}
+	#app-home-gallery-container{
+		width: calc(100% - 360px);
+	}
+	#app-home-news{
+		padding: 0 1rem;
+		width: 360px;
+		min-height: 600px;
+	}
+	#app-home-news img{
+		width: 100%;
+		border-radius: 10px 10px 0 0;
+	}
+	#app-artwork-top-author{
+		color: black;
+		text-decoration: underline;
+	}
+</style>
 <?php module_start()?>
 <div>
 
@@ -68,11 +89,42 @@
 
 </div>
 <article class="adsenseblock"></article>
+<div id="app-home-news-gallery" style="position: relative">
+	<section id="app-home-news" style="position: relative; top:0px;">
+		<div ref="styky_aside" style="position: relative; top:0px;">
+			<h3 class="title-4 py-4 primary"> <i class="mdi mdi-apps"></i> TOP ARTWORK</h3>
+			<div id="app-artwork-top">
+				<div class="card">
+					<a id="app-artwork-top-picture" href="<?= base_url()."/artwork/view/$artwork_top[artwork]" ?>"><img src="<?= base_url()."/images/artworks/$artwork_top[artwork].$artwork_top[extension]" ?>" alt="<?= $artwork_top['name'] ?>"></a>
+					<div class="p-4 f-b">
+						<a class="f-c white-text cover" style="height: 50px; width: 50px; border-radius: 50%; background-color: var(--primary); background-image: url(<?= account_avatar($artwork_top['user_avatar']) ?>)">
+							<?php if (!has_account_avatar($artwork_top['user_avatar'])): ?>
+								<?= $artwork_top['nickname'][0] ?>
+							<?php endif; ?>
+						</a>
+						<div style="flex: 1" class="pl-4">
+							<h4><?= $artwork_top['name'] ?></h4>
+							<h5>por <a id="app-artwork-top-author" href="<?= base_url()."/$artwork_top[account]" ?>"><?= $artwork_top['nickname'] ?></a></h5>
+						</div>
 
-<h3 class="title-4 p-4 primary"> <i class="mdi mdi-apps"></i> GALLERIA</h3>
-<div id="wrap_grid_gallery">
-	<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
+					</div>
+				</div>
+
+			</div>
+
+
+		</div>
+
+	</section>
+	<div id="app-home-gallery-container">
+		<h3 class="title-4 p-4 primary"> <i class="mdi mdi-apps"></i> GALLERIA</h3>
+		<div id="wrap_grid_gallery">
+			<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
+		</div>
+	</div>
+
 </div>
+
 <article class="adsenseblock"></article>
 <footer style="background: #09061b;" class="f-c f-b white-text footer">
 	<div class="f-c">
@@ -182,7 +234,7 @@ Vue.component('slider-feed-nartwork',{
 	}
 })
 
-const $_module = {
+$_module = {
 	data: function () {
 		return {
 			list_img: list_images_pre,
@@ -209,10 +261,14 @@ const $_module = {
 		}
 	},
 	mounted: function () {
+		new Sticksy(this.$refs.styky_aside, true)
+
+		//$(this.$refs.styky_aside).sticky({topSpacing:0});
 		if ($('#modal1')) {
 			this.modal = $('#modal1').modal()
 			this.modal.modal('open')
 		}
+
 	}
 }
 

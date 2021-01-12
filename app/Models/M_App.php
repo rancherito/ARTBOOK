@@ -31,6 +31,11 @@ class M_App
 		$sql = "EXEC app.sp_like_artwork_save @artwork = ?, @account = ?";
 		return query_database($sql, [$artwork, $account]);
 	}
+	public static function qry_most_liked_artwork($top = 1)
+	{
+		$sql = "EXEC app.most_liked_artwork @top = ?";
+		return query_database($sql, [$top]);
+	}
 }
 
  ?>
