@@ -63,7 +63,7 @@
 	text-align: center;
 }
 </style>
-<?php template_start() ?>
+<?php module_start() ?>
 	<div id="user_header">
 		<div id="user_header_bg"></div>
 		<div id="user_header_bg_content">
@@ -83,9 +83,7 @@
 			</p>
 		</div>
 	</div>
-<?php $template = template_end() ?>
+<?php module_end() ?>
 <script>
-	$_module = {
-		template: `<?= $template ?>`
-	}
+	$_module = {}
 </script>
