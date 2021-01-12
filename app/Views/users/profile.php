@@ -305,11 +305,9 @@ body{
 						</div>
 						<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
 							<adsense-ins class="adsbygoogle"
-						     style="display:block"
-						     data-ad-client="ca-pub-1355252812560688"
-						     data-ad-slot="5744606495"
-						     data-ad-format="auto"
-						     data-full-width-responsive="true"></adsense-ins>
+							style="display:inline-block;width:260px;height:260px"
+							data-ad-client="ca-pub-1355252812560688"
+							data-ad-slot="5744606495"></adsense-ins>
 						 <?php endif; ?>
 					</div>
 				</div>
