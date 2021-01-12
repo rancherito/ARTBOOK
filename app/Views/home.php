@@ -17,7 +17,7 @@
 		width: 100%;
 		border-radius: 10px 10px 0 0;
 	}
-	#app-artwork-top-author{
+	.app-artwork-top-author{
 		color: black;
 		text-decoration: underline;
 	}
@@ -94,21 +94,28 @@
 		<div ref="styky_aside" style="position: relative; top:0px;">
 			<h3 class="title-4 py-4 primary"> <i class="mdi mdi-apps"></i> TOP ARTWORK</h3>
 			<div id="app-artwork-top">
-				<div class="card">
-					<a id="app-artwork-top-picture" href="<?= base_url()."/artwork/view/$artwork_top[artwork]" ?>"><img src="<?= base_url()."/images/artworks/$artwork_top[artwork].$artwork_top[extension]" ?>" alt="<?= $artwork_top['name'] ?>"></a>
-					<div class="p-4 f-b">
-						<a class="f-c white-text cover" style="height: 50px; width: 50px; border-radius: 50%; background-color: var(--primary); background-image: url(<?= account_avatar($artwork_top['user_avatar']) ?>)">
-							<?php if (!has_account_avatar($artwork_top['user_avatar'])): ?>
-								<?= $artwork_top['nickname'][0] ?>
-							<?php endif; ?>
-						</a>
-						<div style="flex: 1" class="pl-4">
-							<h4><?= $artwork_top['name'] ?></h4>
-							<h5>por <a id="app-artwork-top-author" href="<?= base_url()."/$artwork_top[account]" ?>"><?= $artwork_top['nickname'] ?></a></h5>
-						</div>
+				<?php foreach ([$artwork_top[0]] as $key => $artwork): ?>
+					<div class="card">
+						<a class="app-artwork-top-picture" href="<?= base_url()."/artwork/view/$artwork[artwork]" ?>"><img src="<?= base_url()."/images/artworks/$artwork[artwork].$artwork[extension]" ?>" alt="<?= $artwork['name'] ?>"></a>
+						<div class="p-4 f-b">
+							<a class="f-c white-text cover" style="height: 50px; width: 50px; border-radius: 50%; background-color: var(--primary); background-image: url(<?= account_avatar($artwork['user_avatar']) ?>)">
+								<?php if (!has_account_avatar($artwork['user_avatar'])): ?>
+									<?= $artwork['nickname'][0] ?>
+								<?php endif; ?>
+							</a>
+							<div style="flex: 1" class="pl-4">
+								<h4><?= $artwork['name'] ?></h4>
+								<h5>por <a class="app-artwork-top-author" href="<?= base_url()."/$artwork[account]" ?>"><?= $artwork['nickname'] ?></a></h5>
+							</div>
 
+						</div>
 					</div>
-				</div>
+				<?php endforeach; ?>
+				<?php foreach ([$artwork_top[1],$artwork_top[2],$artwork_top[3]] as $key => $artwork): ?>
+					<a class="app-artwork-top-picture" href="<?= base_url()."/artwork/view/$artwork[artwork]" ?>">
+						<img src="<?= base_url()."/images/artworks_lite/$artwork[artwork].$artwork[extension]" ?>" alt="<?= $artwork['name'] ?>" style="width: 32%; border-radius: 10px;">
+					</a>
+				<?php endforeach; ?>
 
 			</div>
 

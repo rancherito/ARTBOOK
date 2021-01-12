@@ -30,8 +30,8 @@ class Home extends BaseController
 			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true); return $artwork;
 		},M_App::qry_images_new_list(user_account()));
 
-		$artwork_top = M_App::qry_most_liked_artwork();
-		if (count($artwork_top)) $artwork_top = $artwork_top[0];
+		$artwork_top = M_App::qry_most_liked_artwork(4);
+		//if (count($artwork_top)) $artwork_top = $artwork_top[0];
 		return $this->layout_view('publicv2','home',['images_feed' => $new_images,'images_list' => $images, 'artwork_top' => $artwork_top, 'agent' => $agent, 'current_events' => $current_events]);
 	}
 	public function artwork_recover($artwork)
