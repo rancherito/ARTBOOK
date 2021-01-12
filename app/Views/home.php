@@ -24,6 +24,12 @@
 	.app-artwork-top-picture{
 		position: relative;
 	}
+	.slider-feed-nartwork-date{
+		position: absolute;
+		left: 1rem;
+		bottom: .5rem;
+		font-size: .8rem;
+	}
 	@media (max-width: 992px) {
 		#app-home-news-gallery{
 			flex-direction: column;
@@ -240,6 +246,8 @@ Vue.component('slider-feed-nartwork',{
 		<div class="slider-feed-nartwork-heart" :class="{'feed-heart-active': data.heart}" @click="trigger_heart(data)">
 			<i class="mdi" :class="data.heart ? 'mdi-heart' : 'mdi-heart-outline'"></i>
 		</div>
+		<time class="slider-feed-nartwork-date">{{(new Date(data.uploaded_date)).toLocaleDateString()}}</time>
+
 		<a :href="base_url + '/artwork/view/' + data.accessname">
 			<img :src="base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name">
 		</a>
