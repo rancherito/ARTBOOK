@@ -154,17 +154,17 @@
 				<?php endforeach; ?>
 
 			</div>
-			<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
-				<adsense-ins class="adsbygoogle"
-			     style="display:block"
-			     data-ad-client="ca-pub-1355252812560688"
-			     data-ad-slot="6102208452"
-			     data-ad-format="auto"
-			     data-full-width-responsive="true"></adsense-ins>
 
-			<?php endif; ?>
+
 		</div>
-
+		<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
+			<adsense-ins class="adsbygoogle"
+			 style="display:block"
+			 data-ad-client="ca-pub-1355252812560688"
+			 data-ad-slot="6102208452"
+			 data-ad-format="auto"
+			 data-full-width-responsive="true"></adsense-ins>
+		<?php endif; ?>
 	</section>
 	<div id="app-home-gallery-container">
 		<h3 class="title-4 p-4 primary"> <i class="mdi mdi-apps"></i> GALLERIA</h3>
