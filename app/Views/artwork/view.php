@@ -183,6 +183,15 @@
 					</div>
 				<?php endforeach; ?>
 			</div>
+			<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
+			<adsense-ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-client="ca-pub-1355252812560688"
+			     data-ad-slot="6521651482"
+			     data-ad-format="auto"
+			     data-full-width-responsive="true"></adsense-ins>
+			<?php endif; ?>
+
 		</div>
 
 

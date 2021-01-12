@@ -113,7 +113,17 @@
 		</section>
 
 </div>
-<article class="adsenseblock"></article>
+<article class="adsenseblock">
+	<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
+		<adsense-ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-1355252812560688"
+		     data-ad-slot="2474595260"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></adsense-ins>
+
+	<?php endif; ?>
+</article>
 <div id="app-home-news-gallery" style="position: relative">
 	<section id="app-home-news" style="position: relative; top:0px;">
 		<div ref="styky_aside" style="position: relative; top:0px;">
@@ -144,8 +154,15 @@
 				<?php endforeach; ?>
 
 			</div>
+			<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
+				<adsense-ins class="adsbygoogle"
+			     style="display:block"
+			     data-ad-client="ca-pub-1355252812560688"
+			     data-ad-slot="6102208452"
+			     data-ad-format="auto"
+			     data-full-width-responsive="true"></adsense-ins>
 
-
+			<?php endif; ?>
 		</div>
 
 	</section>
@@ -158,7 +175,17 @@
 
 </div>
 
-<article class="adsenseblock"></article>
+<article class="adsenseblock">
+	<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
+		<adsense-ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-1355252812560688"
+		     data-ad-slot="4621428211"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></adsense-ins>
+
+	<?php endif; ?>
+</article>
 <footer style="background: #09061b;" class="f-c f-b white-text footer">
 	<div class="f-c">
 		<div class="container">
@@ -209,7 +236,7 @@
 
 <script>
 let list_images_pre = <?= json_encode($images_list) ?>;
-//list_images_pre.insert(4, {adsense: true, id: 'adsense-01'});
+//list_images_pre.adsense-insert(4, {adsense: true, id: 'adsense-01'});
 Vue.component('slider-feed-nartwork-container', {
 	template: `<div class="slider-feed-nartwork-container" :style="{'min-height': 'calc(2rem + ' + size + 'px)'}">
 		<div ref="wrap" :style="{'min-height': size + 'px'}">

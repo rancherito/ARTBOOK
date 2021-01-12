@@ -67,7 +67,12 @@
 	</div>
 	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
 	<script type="text/javascript">
-
+	Vue.component('adsense-ins',{
+		template: `<ins></ins>`,
+		mounted: function () {
+			(adsbygoogle = window.adsbygoogle || []).push({})
+		}
+	})
 	new Vue({
 		el: '#app-body',
 		data: function () {
@@ -96,7 +101,6 @@
 			}
 		},
 		mounted: function () {
-			(adsbygoogle = window.adsbygoogle || []).push({});
 
 			$('.fixed-action-btn').floatingActionButton();
 			let drop = $('.dropdown-trigger').dropdown({constrainWidth: false});
