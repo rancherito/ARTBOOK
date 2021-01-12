@@ -115,13 +115,13 @@
 </div>
 <article class="adsenseblock">
 	<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
-		<adsense-ins class="adsbygoogle"
+		<!--<adsense-ins class="adsbygoogle"
 		     style="display:block"
 		     data-ad-client="ca-pub-1355252812560688"
 		     data-ad-slot="2474595260"
 		     data-ad-format="auto"
 		     data-full-width-responsive="true"></adsense-ins>
-
+	-->
 	<?php endif; ?>
 </article>
 <div id="app-home-news-gallery" style="position: relative">
@@ -180,7 +180,7 @@
 		<adsense-ins class="adsbygoogle"
 		     style="display:block"
 		     data-ad-client="ca-pub-1355252812560688"
-		     data-ad-slot="4621428211"
+		     data-ad-slot="2474595260"
 		     data-ad-format="auto"
 		     data-full-width-responsive="true"></adsense-ins>
 
