@@ -4,6 +4,7 @@
 	#app-home-news-gallery{
 		display: flex;
 		width: 100%;
+
 	}
 	#app-home-gallery-container{
 		width: calc(100% - 360px);
@@ -11,7 +12,6 @@
 	#app-home-news{
 		padding: 0 1rem;
 		width: 360px;
-		min-height: 600px;
 	}
 	#app-home-news img{
 		width: 100%;
@@ -23,6 +23,22 @@
 	}
 	.app-artwork-top-picture{
 		position: relative;
+	}
+	@media (max-width: 992px) {
+		#app-home-news-gallery{
+			flex-direction: column;
+		}
+		#app-home-gallery-container, #app-home-news{
+			width: 100%;
+		}
+		#app-home-news{
+			display: none;
+		}
+	}
+	@media (max-width: 600px) {
+		#app-home-news{
+			display: block;
+		}
 	}
 </style>
 <?php module_start()?>
@@ -97,8 +113,9 @@
 		<div ref="styky_aside" style="position: relative; top:0px;">
 			<h3 class="title-4 py-4 primary"> <i class="mdi mdi-apps"></i> TOP ARTWORK</h3>
 			<div id="app-artwork-top">
-				<?php foreach ([$artwork_top[0]] as $key => $artwork): ?>
-					<div class="card">
+				<?php $artwork = $artwork_top[0] ?>
+
+					<div class="card" id="app-artwork-top-one">
 						<a class="app-artwork-top-picture" href="<?= base_url()."/artwork/view/$artwork[artwork]" ?>"><img src="<?= base_url()."/images/artworks/$artwork[artwork].$artwork[extension]" ?>" alt="<?= $artwork['name'] ?>"></a>
 						<div class="p-4 f-b">
 							<a class="f-c white-text cover" style="height: 50px; width: 50px; border-radius: 50%; background-color: var(--primary); background-image: url(<?= account_avatar($artwork['user_avatar']) ?>)">
@@ -113,7 +130,6 @@
 
 						</div>
 					</div>
-				<?php endforeach; ?>
 				<?php foreach ([$artwork_top[1],$artwork_top[2],$artwork_top[3]] as $key => $artwork): ?>
 					<a class="app-artwork-top-picture" href="<?= base_url()."/artwork/view/$artwork[artwork]" ?>">
 						<img src="<?= base_url()."/images/artworks_lite/$artwork[artwork].$artwork[extension]" ?>" alt="<?= $artwork['name'] ?>" style="width: 32%; border-radius: 10px;">
