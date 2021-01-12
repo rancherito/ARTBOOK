@@ -98,7 +98,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 300px;
+	width: 280px;
 	height: 400px;
 	padding: .5rem 1rem;
 	border-radius: 10px;
@@ -139,6 +139,7 @@
 	align-items: center;
 	justify-content: space-around;
 	flex: 1;
+	padding-top: 6rem;
 }
 #app-home-events{
 	display: flex;
@@ -147,84 +148,55 @@
 	width: 40px;
 }
 #app-home-navbar{
-	background-color: var(--alter);
-	padding: .5rem 1rem;
+	padding: 1rem;
+	height: 60px;
+	position: relative;
+	z-index: 4;
+}
+#app-home-description h3:nth-child(2){
+	display: none;
 }
 #app-home-presentation{
+	margin-top: -60px;
 	background-color: var(--alter);
 	color: white;
 	position: relative;
-	min-height: calc(100vh - 52px);
+	min-height: 100vh;
 	display: flex;
 	justify-content: space-between;
 	flex-direction: column;
 	overflow: hidden;
+	background-image: url('<?= base_url() ?>/images/bg_008.jpg');
+	background-size: cover;
+	background-position: left center;
 }
 #app-home-start-info{
-	padding: 2rem 0;
+	height: 60%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 #app-home-title{
 	display: flex;
+}
+#app-home-title img{
+	height: 50px;
+	padding-bottom: .125rem
 }
 #app-home-feedworks-container{
 	padding: 1rem 0;
 	overflow: hidden;
 	height: auto;
+	position: relative;
 }
-@media (max-width: 1200px) {
-	.event-anunces{
-		width: 270px;
-	}
+#app-home-icon{
+	background: var(--primary);
+	height: 60px;
+	width: 60px;
+	border-radius: 20%;
 }
-@media (max-width: 992px) {
-	#app-home-presentation{
-		height: auto;
-	}
 
-	#app-home-title{
-		flex-direction: column;
-	}
-	#app-home-events{
-		width: 100%;
-	}
-	#app-home-start{
-		align-items: center;
-		flex-direction: column;
-		height: auto;
-	}
-	#app-home-start-info{
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-		text-align: center;
-	}
-	.event-anunces{
-		height: 180px;
-		width: auto;
-		flex: 1
-	}
-}
-@media (max-width: 600px) {
-	#app-home-navbar img{
-		width: 30px;
-	}
-	#app-home-events{
-		flex-direction: column;
-	}
-	#wrap_grid_gallery{
-		padding: 0;
-	}
-	#app-home-start{
-		padding-top: 1rem;
-	}
-	.cg-countdown{
-		font-size: 1.4rem;
-	}
-}
-@media (max-width: 320px) {
-
-}
 slider-feed-nartwork-container{
 	display: flex;
 	overflow: hidden;
@@ -273,6 +245,106 @@ slider-feed-nartwork, .slider-feed-nartwork{
 .slider-feed-nartwork-heart.feed-heart-active{
 	color: #e91e63;
 }
+.bg-special{
+	position: absolute;
+	height: 10px;
+	width: 10px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.bg-special::before{
+	content: '';
+	display: block;
+	height: 4000px;
+	width: 3000px;
+	background: radial-gradient(circle, rgba(1,2,8,0.0) 0%, #0b0024 35%);
+	background-repeat: no-repeat;
+	transform: translate(-50%, -50%);
+	background-position: -400px -180px;
+}
+@media (max-width: 1200px) {
+	.event-anunces{
+		width: 380px;
+		height: auto;
+	}
+	#app-home-events{
+		flex-direction: column;
+	}
+}
+@media (max-width: 992px) {
+	#app-home-presentation{
+		height: auto;
+	}
+	#app-home-icon{
+		display: none;
+	}
+	#app-home-title{
+		flex-direction: column;
+	}
+	#app-home-events{
+		width: 100%;
+		flex-direction: row;
+	}
+	#app-home-start{
+		align-items: center;
+		flex-direction: column;
+		height: auto;
+	}
+	#app-home-start-info{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		text-align: center;
+	}
+	.event-anunces{
+		height: 180px;
+		width: auto;
+		flex: 1
+	}
+}
+@media (max-width: 600px) {
+	#app-home-title img{
+		height: auto;
+		width: 140px;
+		padding: 2rem 0;
+	}
+
+	#app-home-description h3:nth-child(2){
+		display: block;
+	}
+	#app-home-description h3:nth-child(1){
+		display: none;
+	}
+	#app-home-start-info{
+		padding: 3rem 0 1rem 0;
+	}
+
+	#app-home-navbar img{
+		width: 30px;
+	}
+	#app-home-events{
+		flex-direction: column;
+	}
+	#wrap_grid_gallery{
+		padding: 0;
+	}
+	#app-home-start{
+		padding-top: 1rem;
+	}
+	.cg-countdown{
+		font-size: 1.4rem;
+	}
+	.bg-special::before{
+		background: radial-gradient(circle, rgba(1,2,8,0.0) 0%, #0b0024 20%);
+		background-position: -100px -180px;
+	}
+
+}
+@media (max-width: 320px) {
+
+}
 </style>
 
 <?php module_start()?>
@@ -280,38 +352,31 @@ slider-feed-nartwork, .slider-feed-nartwork{
 
 	<div id="app-home-navbar" class="f-b">
 
-		<img src="<?= base_url() ?>/images/icon_white.svg" alt="logo">
-		<?php if (is_access()): ?>
-			<a class="btn" href="<?= $_SESSION['access']['account_site']?>">
-				<i class="mdi mdi-account mdi-18px right"></i>
-				<span><?= $_SESSION['access']['nickname'] ?></span>
-			</a>
-		<?php else: ?>
-			<div>
-				<a class="btn bg-secondary" href="<?= base_url() ?>/user/login?register=true">
-					<span>REGISTRASE</span>
-				</a>
-				<a class="btn" href="<?= base_url() ?>/user/login">
-					<span>ACCEDER</span>
-				</a>
-			</div>
-
-		<?php endif; ?>
 
 	</div>
 	<div id="app-home-presentation">
-		<?= bg_animate() ?>
+		<div class="bg-special">
+		</div>
 		<section id="app-home-start">
 			<div id="app-home-start-info">
 				<div id="app-home-title">
-					<img src="<?= base_url() ?>/images/namepage_primary.svg" alt="ARTSBOOK" id="app-title">
-					<div style="overflow: hidden; height: 0;"><h1>ARTSBOOK</h1></div>
+					<div id="app-home-icon" class="f-c mr-5">
+						<img src="<?= base_url() ?>/images/icon_white.svg" alt="logo" style="width: 40px;">
+					</div>
+					<img src="<?= base_url() ?>/images/namepage_white.svg" alt="ARTSBOOK" id="app-title" style="">
+					<div style="overflow: hidden; height: 0; width: 0;"><h1>ARTSBOOK</h1></div>
+				</div>
+				<div>
+					<h2 style="font-family: fantasy;" class="title-3">
+						COMUNIDAD DE DIBUJATES
+					</h2>
+					<div id="app-home-description">
+						<h3 class="pt-4 title-4" style="max-width: 500px">Somos una comunidad de artistas y dibujantes hispanohablantes. Ven, descubre y comparte trabajos artísticos en tradicional o digital, además de otras muchas cosas más.</h3>
+						<h3 class="title-4 py-4">Ven, descubre y comparte</h3>
+					</div>
 
 				</div>
-				<h2 style="font-family: sans-serif;" class="pt-2 title-4">
-					COMUNIDAD DE DIBUJATES
-				</h2>
-				<h3 class="pt-4 title-5" style="max-width: 420px">Somos una comunidad de artistas y dibujantes hispanohablantes. Ven, descubre y comparte trabajos artísticos en tradicional o digital, además de otras muchas cosas más.</h3>
+
 			</div>
 			<div id="app-home-events">
 				<?php foreach ($current_events as $key => $event): ?>
@@ -337,7 +402,7 @@ slider-feed-nartwork, .slider-feed-nartwork{
 			</div>
 		</section>
 		<section id="app-home-feedworks-container">
-			<h3 class="title-4 p-4 white-text"><i class="mdi mdi-new-box"></i> NUEVOS</h3>
+			<h3 class="title-4 pt-4 pl-4 pr-4 white-text"><i class="mdi mdi-new-box"></i> NUEVOS</h3>
 			<slider-feed-nartwork-container class="p-4" :data="images_feed">
 				<?php foreach ($images_feed as $key => $artwork): ?>
 					<div class="slider-feed-nartwork">

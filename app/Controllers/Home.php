@@ -32,7 +32,7 @@ class Home extends BaseController
 
 
 		$feed = General::qry_feedpage();
-		return $this->layout_view('public','home',['images_feed' => $new_images,'images_list' => $images, 'feed' => $feed, 'agent' => $agent, 'current_events' => $current_events]);
+		return $this->layout_view('publicv2','home',['images_feed' => $new_images,'images_list' => $images, 'feed' => $feed, 'agent' => $agent, 'current_events' => $current_events]);
 	}
 	public function artwork_recover($artwork)
 	{

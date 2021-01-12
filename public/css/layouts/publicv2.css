@@ -134,7 +134,7 @@ font-size: 1.2rem;
 		right: 1rem;
 	}
 	aside {
-		z-index: 2;
+		z-index: 3;
 		transform: translateX(-100%);
 		width: 60px;
 	}

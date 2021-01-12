@@ -1,5 +1,5 @@
 :root {
-	--alter: #070d23;
+
 	--primary: #5e24dc;
 	--primary-dark: #563ca5;
 	--secondary: #00BCD4;
@@ -9,6 +9,7 @@
     --blue: #5c74eb;
     --purple: #5c74eb;
     --turkey: #45bcd4;
+	--alter: var(--primary);
     --bg-primary: var(--primary);
     --bg-secondary: var(--secondary);
     --bg-alert: linear-gradient(45deg, #d65d54, #e01f54) ;
