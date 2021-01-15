@@ -14,7 +14,7 @@
 		.sticky:after {
 		content: '';
 		display: table;
-	}	
+	}
 	</style>
 	<?= $body ?>
 	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
@@ -36,7 +36,7 @@
 					<a href="<?= user_site() ?>" class="access-btn"><i class="mdi mdi-account"></i> <span>MI PERFIL</span></a>
 					<a @click="open_editor" class="access-btn"><i class="mdi mdi-upload"></i> <span>SUBIR ARTWORK</span></a>
 					<?php if ($_SESSION['access']['accesstype'] == 'ADMINISTRADOR'): ?>
-						<a href="<?= base_url().'/c/users' ?>" class="access-btn"><i class="mdi mdi-account-box"></i> <span>ADMINISTRAR</span></a>
+						<a href="<?= base_url().'/c/events' ?>" class="access-btn"><i class="mdi mdi-account-box"></i> <span>ADMINISTRAR</span></a>
 					<?php endif; ?>
 				<?php else: ?>
 					<a href="<?= base_url() ?>/user/login" class="access-btn"><i class="mdi mdi-account"></i> <span>ACCEDER</span></a>

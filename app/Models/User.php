@@ -59,4 +59,9 @@ class User
 		$sql = "SELECT nickname, account, pass, [user], [state] FROM users.tb_users";
 		return query_database($sql);
 	}
+	public function qry_socialnetwork_save($type_socialnetwork, $url, $account)
+	{
+		$sql = "EXEC users.sp_socialnetwork_save @type_socialnetwork = ?, @url = ?, @account= ?";
+		return query_database($sql, [$type_socialnetwork, $url, $account]);
+	}
 }

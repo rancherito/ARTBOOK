@@ -60,6 +60,7 @@ if (isset($_SESSION['access'])) {
 		$routes->post('c/users', 'C_Controll::users_access');
 		$routes->get('c/users', 'C_Controll::users');
 		$routes->add('c/versus/results', 'C_Controll::versus_results');
+		$routes->add('c/versus/participients', 'C_Controll::versus_participients');
 		$routes->get('/services/artwork/list', 'Services::artwork_list');
 
 	}

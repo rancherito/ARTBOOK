@@ -16,6 +16,23 @@ class C_Controll extends BaseController
 		$users = User::qry_users_list();
 		return $this->layout_view('controll','controll/users',['users' => $users]);
 	}
+	public function versus_participients()
+	{
+		if (!empty($_GET['tag'])) {
+			$participients = M_Events::qry_event_vs_participients($_GET['tag']);
+			$event = M_Events::qry_events('2', $_GET['tag']);
+			if (count($event)) $event = $event[0];
+			$versus = [];
+			foreach ($participients as $key => $participient) {
+				if (empty($versus[$participient['versus']])) $versus[$participient['versus']] = [];
+				$versus[$participient['versus']][] = $participient;
+			}
+			return $this->layout_view('controll','controll/versus_participients', ['versus' => $versus, 'event' => $event]);
+		}
+		else {
+			return  "NO SELECCIONO NINGUN TAG DE EVENTO VALIDO";
+		}
+	}
 	public function versus_results()
 	{	$results = [];
 		$list = [];

@@ -49,11 +49,6 @@
 </style>
 <?php module_start()?>
 <div>
-
-	<div id="app-home-navbar" class="f-b">
-
-
-	</div>
 	<div id="app-home-presentation" style="background-image: url('<?= base_url() ?>/images/bg_008.jpg');">
 		<div class="bg-special">
 		</div>

@@ -3,49 +3,19 @@
 #app-body{
 	height: 100vh;
 }
-#settings-bg-content,#settings{
+#settings{
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
 	position: relative;
 }
-#settings-bg-content{
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	transform: scale(1.2);
-}
-#settings-bg-content img{
-	object-fit: cover;
-	height: 100%;
-	width: 100%;
-	filter: blur(10px);
-}
-#settings-bg-content::after{
-	content: '';
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-	background: var(--primary);
-	opacity: .4
-}
-#settings-content{
-	position: absolute;
-	left: 0;
-	background: white;
-	max-width: 500px;
-	width: 100%;
-	height: 100%;
-	padding: 1rem;
-}
+
 #settings-avatar-content{
-	height: 240px;
+	padding: 2rem;
+	padding-top: 4rem;
 }
 #settings-field-content{
 	border-radius: 1rem;
-	background: white;
 }
 #settings-avatar-img{
 	background-color: #0000001a;
@@ -102,10 +72,11 @@
 	cursor: pointer;
 }
 #settings-cropper{
-	max-width: 500px;
-	width: 100%;
-	height: 100%;
-	position: relative;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: fixed;
 	background-color: white;
 }
 #settings-cropper-avatar{
@@ -118,8 +89,23 @@
 #app-module{
 	height: 100%;
 }
+#modal_avatar{
+	max-width: 400px;
+	width: 100%;
+	max-height: 400px;
+	height: 100%;
+}
 @media (max-width: 600px) {
-
+	#modal_avatar{
+		position: fixed;
+		top: 0 !important;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		transform: translateY(0) !important;
+		height: auto;
+		max-height: inherit;
+	}
 }
 canvas{
 	image-rendering: optimizeSpeed;             /* Older versions of FF          */
@@ -132,17 +118,31 @@ canvas{
 </style>
 <?= module_start() ?>
 	<div id="settings">
-		<div id="settings-decorations" class="f-c">
-			<div id="settings-bg-content">
-				<img src="<?= base_url() ?>/images/bg_003.jpg" alt="">
+		<div id="modal_avatar" ref="modal_avatar" class="modal" style="">
+
+			<div id="settings-cropper" class="p-4">
+				<div id="settings-cropper-avatar" class="f-c p-4">
+					<cropper
+					ref="cropper"
+					:default-size="defaultSize"
+					:stencil-props="{handlers: {},movable: false,scalable: false, aspectRatio: 1}"
+					default-boundaries="fill"
+					:src="img" @change="change_image" image-restriction="stencil" stencil-component="circle-stencil"></cropper>
+					<div class="pt-4 w100">
+						<input type="range" v-model="zoom" min="0" max="99">
+					</div>
+				</div>
+				<div id="settings-cropper-buttons">
+					<button class="btn" @click="sendimage" :disabled="image_send == null">ACEPTAR</button>
+					<a class="modal-close btn-flat">CANCELAR</a>
+				</div>
 			</div>
-			<img src="<?= base_url() ?>/images/logo_white.svg" class="animated zoomInLeft">
+
 		</div>
 
-		<div id="settings-content"  class="f-c">
+		<div class="f-c">
 			<a id="settings-back-account" href="<?= user_site() ?>" class="btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
 			<div id="settings-avatar-content" class="f-c">
-				<h5 class="pb-4">Modificar mi cuenta</h5>
 				<div id="settings-avatar-img" class="f-c">
 					<span style="display: none" v-show="avatar_image == null"><?= user_nickname()[0] ?></span>
 					<img style="display: none" v-show="avatar_image" :src="avatar_image">
@@ -154,6 +154,13 @@ canvas{
 
 			</div>
 			<div id="settings-field-content" class="f-c w100">
+				<!--<form @submit.prevent="submitinsta" class="f-b">
+					<i class="mdi mdi-instagram mdi-24px"></i>
+					<cg-field :watchisvalid.sync="instagram_url.isvalid" required empty v-model="instagram_url.val" placeholder="ingrese la url de su Instagram" sizechars="15-60" label="Instagram url" style="flex: 1;" class="mx-4 mt-5"></cg-field>
+					<button type="submit" class="btn">
+						<i class="mdi mdi-content-save mdi-18px"></i>
+					</button>
+				</form>-->
 				<form id="tatat" @submit.prevent="submit" autocomplete="off">
 					<cg-field required label="Nickname" name="<?= rand() ?>" placeholder="ignrese nickname" v-model="nickname.val" sizechars="4-16" :watchisvalid.sync="nickname.isvalid"></cg-field>
 					<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="new_password.val" sizechars="4-20" :empty="!isNewPassword" :watchisvalid.sync="new_password.isvalid" v-show="isNewPassword" label="Nueva contraseña" placeholder="ignrese Contraseña"></cg-field>
@@ -169,29 +176,15 @@ canvas{
 
 			</div>
 		</div>
-		<div id="settings-cropper"  style="display: none" v-show="isOpeneditor">
-			<div id="settings-cropper-avatar" class="f-c p-4">
-				<cropper
-				ref="cropper"
-				:default-size="defaultSize"
-				:stencil-props="{handlers: {},movable: false,scalable: false, aspectRatio: 1}"
-				default-boundaries="fill"
-				:src="img" @change="change_image" image-restriction="stencil" stencil-component="circle-stencil"></cropper>
-				<div class="pt-4 w100">
-					<input type="range" v-model="zoom" min="0" max="99">
-				</div>
-			</div>
-			<div id="settings-cropper-buttons">
-				<button class="btn" @click="sendimage" :disabled="image_send == null">ACEPTAR</button>
-				<a class="btn-flat" @click="isOpeneditor = false">CANCELAR</a>
-			</div>
-		</div>
+
 	</div>
 <?php module_end() ?>
 <script type="text/javascript">
 $_module = {
 	data: function() {
 		return {
+			instagram_url: {val: '', isvalid: false},
+			modal_avatar: null,
 			isNewPassword: false,
 			showpass: false,
 			old_password: {val: '', isvalid: false},
@@ -242,11 +235,14 @@ $_module = {
 		upload_avatar: function (e) {
 			if (e.target.files[0]) this.loadFile(e.target.files[0])
 			this.isOpeneditor = true;
+			if (this.modal_avatar) {
+				this.modal_avatar.modal('open')
+			}
 		},
 		loadFile: function (file) {
 			this.img = null
 			const reader = new FileReader();
-			this.isLoadImage = false
+
 			reader.addEventListener("load", e => {
 				this.img = reader.result
 			}, false);
@@ -263,6 +259,7 @@ $_module = {
 				if (res.path_image) {
 					M.toast({html: 'Exito al guardar imagen', classes: 'rounded'})
 					this.isOpeneditor = false
+					this.modal_avatar.modal('close')
 					this.avatar_image = res.path_image
 				}
 
@@ -285,7 +282,8 @@ $_module = {
 		}
 	},
 	mounted: function () {
-
+		this.modal_avatar = $(this.$refs.modal_avatar).modal();
+		//modal.modal('open');
 	}
 }
 </script>
