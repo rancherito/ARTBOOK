@@ -15,13 +15,25 @@
 		background-color: var(--light-gray);
 		border-radius: 10px;
 	}
+	#app-title a{
+		transform: scale(.8);
+    	transform-origin: center left;
+	}
 </style>
 <?php module_start() ?>
 <div class="">
-	<h4 class="py-4">VERSUS: <?= $event['name'] ?></h4>
+	<div class="py-4" id="app-title">
+		<a href="<?= base_url() ?>/c/events" class="btn-flat mr-4">
+			<i class="mdi mdi-arrow-left"></i>
+		</a>
+		<span class="title-4">
+			VERSUS: <?= $event['name'] ?>
+		</span>
+	</div>
 
-	<p><?= $event['description'] ?></p>
+	<div><?= $event['description'] ?></div>
 	<i>FIN: <?= $event['event_end'] ?></i>
+	<br><br>
 	<?php foreach ($versus as $key => $list): ?>
 		<section class="card-panel">
 			<h4><i class="mdi mdi-code-greater-than"></i> <?= $list[0]['versus_name'] ?></h4>
