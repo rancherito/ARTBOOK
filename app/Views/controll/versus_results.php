@@ -34,7 +34,7 @@
 		<?php foreach ($versus_list as $key => $versus): ?>
 			<article class="card-panel">
 				<?php foreach ($versus as $key => $participient): ?>
-					<section class="versus-participient">
+					<section class="versus-participient " >
 						<div class="versus-participient-artwork">
 							<img src="<?= base_url()."/images/artworks_lite/$participient[artwork].$participient[extension]" ?>" alt="">
 						</div>
