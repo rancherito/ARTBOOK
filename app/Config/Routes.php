@@ -49,6 +49,8 @@ if (isset($_SESSION['access'])) {
 	$routes->post('service/events/artworks_candidates', 'Services::artworks_candidates');
 	$routes->post('service/artwork/like_save', 'Services::like_save');
 	$routes->get('service/events/apply_list', 'Services::events_apply_list');
+	$routes->post('service/user/sn_insta/save', 'Services::user_instagram_save');
+	$routes->post('service/user/nickname/save', 'Services::nickname_save');
 
 	$routes->add('user/settings', 'C_Users::settings');
 	$routes->add('user/editinfo', 'C_Users::account_editinfo');

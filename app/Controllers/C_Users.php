@@ -60,13 +60,12 @@ class C_Users extends BaseController
 	}
 	public function account_editinfo()
 	{
-		if (!empty($_SESSION['access']) && !empty($_POST['old']) && !empty($_POST['nickname']) && isset($_POST['is_new'])) {
+		if (!empty($_SESSION['access']) && !empty($_POST['old']) && !empty($_POST['account']) && isset($_POST['is_new']) && $_POST['account'] == user_account()) {
 			$user = $_SESSION['access'];
 			$newpass = md5($_POST['new']);
 			$verifypass = md5($_POST['old']);
-			$message = User::account_edit($user['user_access'], $verifypass, $_POST['nickname'], $newpass, $_POST['is_new']);
+			$message = User::account_edit($user['user_access'], $verifypass, $newpass, $_POST['is_new']);
 			if ($message[0]['change'] == 'OK') C_Users::login_validate_internal($user['user_access'], ($_POST['is_new'] == '0' ? $verifypass : $newpass));
-
 			return $this->response->setJSON($message[0]);
 
 		}
@@ -108,8 +107,9 @@ class C_Users extends BaseController
 	{
 		$user = md5($_SESSION['access']['user_access']);
 		$partial_path = "images/avatars/avatar_$user.jpg";
+		$social = User::qry_socialnetwork_list(user_account());
 		$path = file_exists($partial_path) ? "'".base_url()."/$partial_path?v=".rand()."'" : 'null';
-		return $this->layout_view('publicv2','users/settings', ['path_image' => $path]);
+		return $this->layout_view('publicv2','users/settings', ['path_image' => $path, 'social' => $social]);
 	}
 	public function login_fb()
 	{

@@ -304,10 +304,10 @@ body{
 
 						</div>
 						<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
-							<adsense-ins class="adsbygoogle"
+							<!--<adsense-ins class="adsbygoogle"
 							style="display:inline-block;width:260px;height:260px"
 							data-ad-client="ca-pub-1355252812560688"
-							data-ad-slot="5744606495"></adsense-ins>
+							data-ad-slot="5744606495"></adsense-ins>-->
 						 <?php endif; ?>
 					</div>
 				</div>

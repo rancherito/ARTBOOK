@@ -150,12 +150,12 @@
 
 			</div>
 			<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
-				<adsense-ins class="adsbygoogle"
+				<!--<adsense-ins class="adsbygoogle"
 			     style="display:block"
 			     data-ad-client="ca-pub-1355252812560688"
 			     data-ad-slot="6102208452"
 			     data-ad-format="auto"
-			     data-full-width-responsive="true"></adsense-ins>
+			     data-full-width-responsive="true"></adsense-ins>-->
 
 			<?php endif; ?>
 		</div>
@@ -172,12 +172,12 @@
 
 <article class="adsenseblock">
 	<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
-		<adsense-ins class="adsbygoogle"
+		<!--<adsense-ins class="adsbygoogle"
 		     style="display:block"
 		     data-ad-client="ca-pub-1355252812560688"
 		     data-ad-slot="2474595260"
 		     data-ad-format="auto"
-		     data-full-width-responsive="true"></adsense-ins>
+		     data-full-width-responsive="true"></adsense-ins>-->
 
 	<?php endif; ?>
 </article>
@@ -231,7 +231,7 @@
 
 <script>
 let list_images_pre = <?= json_encode($images_list) ?>;
-//list_images_pre.adsense-insert(4, {adsense: true, id: 'adsense-01'});
+
 Vue.component('slider-feed-nartwork-container', {
 	template: `<div class="slider-feed-nartwork-container" :style="{'min-height': 'calc(2rem + ' + size + 'px)'}">
 		<div ref="wrap" :style="{'min-height': size + 'px'}">

@@ -1,3 +1,9 @@
+<?php
+	$instagram = '';
+	foreach ($social as $key => $url) {
+		if ($url['type_socialnetwork'] == 'INSTA') $instagram = $url['url'];
+	}
+ ?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
 <style media="screen">
 #app-body{
@@ -11,8 +17,7 @@
 }
 
 #settings-avatar-content{
-	padding: 2rem;
-	padding-top: 4rem;
+	padding: 2rem 2rem 1rem 2rem;
 }
 #settings-field-content{
 	border-radius: 1rem;
@@ -42,7 +47,7 @@
 	position: relative;
 }
 #settings-field-content{
-	padding: 2rem;
+	padding: 1rem 2rem;
 }
 #settings-field-content form{
 	max-width: 360px;
@@ -51,7 +56,7 @@
 #settings-field-actions{
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-end;
 }
 #settings-back-account{
 	position: absolute;
@@ -140,9 +145,10 @@ canvas{
 
 		</div>
 
-		<div class="f-c">
+		<div>
 			<a id="settings-back-account" href="<?= user_site() ?>" class="btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
-			<div id="settings-avatar-content" class="f-c">
+			<div id="settings-avatar-content">
+				<h3 class="pb-4">Perfil de usuario</h3>
 				<div id="settings-avatar-img" class="f-c">
 					<span style="display: none" v-show="avatar_image == null"><?= user_nickname()[0] ?></span>
 					<img style="display: none" v-show="avatar_image" :src="avatar_image">
@@ -153,24 +159,34 @@ canvas{
 				</div>
 
 			</div>
-			<div id="settings-field-content" class="f-c w100">
-				<!--<form @submit.prevent="submitinsta" class="f-b">
-					<i class="mdi mdi-instagram mdi-24px"></i>
-					<cg-field :watchisvalid.sync="instagram_url.isvalid" required empty v-model="instagram_url.val" placeholder="ingrese la url de su Instagram" sizechars="15-60" label="Instagram url" style="flex: 1;" class="mx-4 mt-5"></cg-field>
-					<button type="submit" class="btn">
+			<div id="settings-field-content" class="w100">
+				<form @submit.prevent="submit_perfil" class="f-b">
+					<i class="mdi mdi-account mdi-24px"></i>
+					<cg-field name="<?= rand() ?>" :watchisvalid.sync="nickname.isvalid" required v-model="nickname.val" placeholder="ingrese nombre de usuario" sizechars="4-30" label="Nombre de usuario" style="flex: 1;" class="mx-4 mt-5"></cg-field>
+					<button type="submit" class="btn" :disabled="!isValidAccount">
 						<i class="mdi mdi-content-save mdi-18px"></i>
 					</button>
-				</form>-->
-				<form id="tatat" @submit.prevent="submit" autocomplete="off">
-					<cg-field required label="Nickname" name="<?= rand() ?>" placeholder="ignrese nickname" v-model="nickname.val" sizechars="4-16" :watchisvalid.sync="nickname.isvalid"></cg-field>
+				</form>
+				<form @submit.prevent="submitinsta" class="f-b">
+					<i class="mdi mdi-instagram mdi-24px"></i>
+					<cg-field name="<?= rand() ?>" :watchisvalid.sync="instagram_url.isvalid" required v-model="instagram_url.val" placeholder="ingrese la el nombre de usuario de su Instagram" sizechars="4-60" label="Nombre de usuario Instagram " style="flex: 1;" class="mx-4 mt-5"></cg-field>
+					<button type="submit" class="btn" :disabled="!isValidaInsta">
+						<i class="mdi mdi-content-save mdi-18px"></i>
+					</button>
+				</form>
+
+				<br>
+				<br>
+				<label class="w100">
+					<input type="checkbox" class="filled-in" v-model="isNewPassword" >
+					<span>Editar contraseña</span>
+				</label>
+				<form id="tatat" @submit.prevent="submit" autocomplete="off" style="display: none" v-show="isNewPassword">
+					<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="old_password.val" sizechars="4-20" :watchisvalid.sync="old_password.isvalid"  label="Contraseña actual" v-show="isNewPassword" placeholder="ignrese Contraseña"></cg-field>
 					<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="new_password.val" sizechars="4-20" :empty="!isNewPassword" :watchisvalid.sync="new_password.isvalid" v-show="isNewPassword" label="Nueva contraseña" placeholder="ignrese Contraseña"></cg-field>
-					<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="old_password.val" sizechars="4-20" :watchisvalid.sync="old_password.isvalid"  label="Ingrese contraseña para validar" placeholder="ignrese Contraseña"></cg-field>
+
 					<div id="settings-field-actions">
-						<label>
-							<input type="checkbox" class="filled-in" v-model="isNewPassword" >
-							<span>Editar clave</span>
-						</label>
-						<button type="submit" class="btn" :disabled="!isValid">SALVAR</button>
+						<button type="submit" class="btn" :disabled="!isValid"><i class="mdi mdi-content-save mdi-18px right"></i> <span>SALVAR</span> </button>
 					</div>
 				</form>
 
@@ -183,23 +199,30 @@ canvas{
 $_module = {
 	data: function() {
 		return {
-			instagram_url: {val: '', isvalid: false},
+			instagram_url: {val: '<?= $instagram ?>', isvalid: false},
+			nickname: {val: '<?= user_nickname() ?>', isvalid: false},
 			modal_avatar: null,
 			isNewPassword: false,
 			showpass: false,
 			old_password: {val: '', isvalid: false},
 			new_password: {val: '', isvalid: false},
-			nickname: {val: '<?= user_nickname() ?>', isvalid: false},
 			img: null,
 			isOpeneditor: false,
 			image_send: null,
 			avatar_image: <?= $path_image ?>,
-			zoom: 0
+			zoom: 0,
+			reg_insta: new RegExp(/^(?!.*\.\.)(?!.*\.$)[^\W][\w.]{0,29}$/, 'igm')
 		}
 	},
 	computed: {
 		isValid: function () {
-			return this.old_password.isvalid && this.new_password.isvalid && this.nickname.isvalid
+			return this.old_password.isvalid && this.new_password.isvalid
+		},
+		isValidaInsta: function () {
+			return this.instagram_url.isvalid && this.instagram_url.val.match(this.reg_insta) != null
+		},
+		isValidAccount: function () {
+			return this.nickname.isvalid
 		}
 	},
 	watch: {
@@ -225,7 +248,29 @@ $_module = {
 		}
 	},
 	methods: {
-
+		submit_perfil: function () {
+			const send = {account: '<?= user_account() ?>', nickname: this.nickname.val}
+			$.post('<?= base_url() ?>/service/user/nickname/save', send, (req) => {
+				if (req.message != undefined) {
+					switch (req.message) {
+						case 'OK': M.toast({html: 'Usuario GUARDADO', classes: 'rounded'}); break;
+						case 'EXISTS': M.toast({html: 'Usuario ya existe o usado', classes: 'rounded'}); break;
+						case 'CHARS_NOT_VALID': M.toast({html: 'Caracteres no validos', classes: 'rounded'}); break;
+						case 'ERROR_DATA': M.toast({html: 'ERROR ingrese más tarde', classes: 'rounded'}); break;
+					}
+				}
+				else M.toast({html: 'ERROR ingrese más tarde', classes: 'bg-alert rounded'})
+			})
+		},
+		submitinsta: function () {
+			if (this.isValidaInsta) {
+				const send = {account: '<?= user_account() ?>', url: this.instagram_url.val};
+				$.post('<?= base_url() ?>/service/user/sn_insta/save', send, (req) => {
+					if (req.message != undefined) M.toast({html: 'Usuario de instagram GUARDADO', classes: 'rounded'})
+					else M.toast({html: 'ERROR INTENTELO MÁS TARDE', classes: 'bg-alert'})
+				})
+			}
+		},
 		defaultSize({ imageSize }) {
 		  return {
 			width: Math.min(imageSize.height, imageSize.width),
@@ -271,7 +316,7 @@ $_module = {
 					old: this.old_password.val,
 					new: this.new_password.val,
 					is_new: this.isNewPassword ? 1 : 0,
-					nickname: this.nickname.val
+					account: '<?= user_account() ?>'
 				}
 				$.post('<?=  base_url() ?>/user/editinfo', data, (data) => {
 					M.toast({html: (data.change != 'OK' ? 'ERROR: virifique contraseña' : 'Exito al Modificar'), classes: 'rounded'+ (data.change != 'OK' ? ' bg-alert' : '')})

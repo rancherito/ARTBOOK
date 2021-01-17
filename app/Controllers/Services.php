@@ -127,8 +127,8 @@ class Services extends BaseController
 	public function event_versuslist_Save()
 	{
 		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['tag'])) {
-			$regtitle = "/^[ \-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ,:.]+$/i";
-			$regdescription = "/^[ ()\-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ,:.\n]+$/i";
+			$regtitle = "/^[ \-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ,:.\/]+$/i";
+			$regdescription = "/^[ \(\)\-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ,:.\/\n]+$/i";
 
 			$description = trim(preg_replace('/\s\s+/',"\n", $_POST['description']));
 			$title = trim($_POST['title']);
@@ -199,4 +199,28 @@ class Services extends BaseController
 			return $this->response->setJSON($res);
 		}
 	}
+	public function user_instagram_save()
+	{
+		if (!empty($_POST['account'])  && !empty($_POST['url']) && $_POST['account'] == user_account()) {
+			$message = User::qry_socialnetwork_save('INSTA', $_POST['url'], user_account());
+			if (count($message)) $message = $message[0];
+			return $this->response->setJSON($message);
+		}
+
+	}
+	public function nickname_save()
+	{
+		if (!empty($_POST['nickname']) && !empty($_POST['account']) && $_POST['account'] == user_account()) {
+			$nickname = trim($_POST['nickname']);
+			if (preg_match("/^[\w ]{4,30}$/i", $nickname)) {
+				$message = User::qry_nickname_save($nickname, user_account());
+				if (count($message)) $message = $message[0];
+				if (!empty($message['message']) && $message['message'] == 'OK') $_SESSION['access']['nickname'] = $nickname;
+				return $this->response->setJSON($message);
+			}
+			else return $this->response->setJSON(['message' => 'CHARS_NOT_VALID']);
+		}
+		else return $this->response->setJSON(['message' => 'ERROR_DATA']);
+	}
+
 }

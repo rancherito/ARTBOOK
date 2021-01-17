@@ -1,17 +1,16 @@
 <?php namespace App\Models;
 class User
 {
-	public static function account_edit($account, $pass_verify, $nickname_new, $pass_new, $is_newpass)
+	public static function account_edit($account, $pass_verify, $pass_new, $is_newpass)
 	{
 		$sql = "
 		EXEC app.sp_account_edit
 		@user = ?,
 		@pass_verify = ?,
-		@nickname_new = ?,
 		@pass_new = ?,
 		@is_newpass = ?
 		";
-		return query_database($sql,[$account, $pass_verify, $nickname_new, $pass_new, $is_newpass]);
+		return query_database($sql,[$account, $pass_verify, $pass_new, $is_newpass]);
 	}
 	public static function account_create($user, $email, $pass)
 	{
@@ -59,9 +58,19 @@ class User
 		$sql = "SELECT nickname, account, pass, [user], [state] FROM users.tb_users";
 		return query_database($sql);
 	}
-	public function qry_socialnetwork_save($type_socialnetwork, $url, $account)
+	public static function qry_socialnetwork_save($type_socialnetwork, $url, $account)
 	{
 		$sql = "EXEC users.sp_socialnetwork_save @type_socialnetwork = ?, @url = ?, @account= ?";
 		return query_database($sql, [$type_socialnetwork, $url, $account]);
+	}
+	public static function qry_socialnetwork_list($account)
+	{
+		$sql = "SELECT * FROM users.tb_socialnetwork WHERE id_user = (SELECT id_user FROM users.tb_users WHERE account = ?)";
+		return query_database($sql, [$account]);
+	}
+	public static function qry_nickname_save($nickname, $account)
+	{
+		$sql = "EXEC users.[sp_nickname_save] @nickname = ?, @account = ?";
+		return query_database($sql, [$nickname, $account]);
 	}
 }
