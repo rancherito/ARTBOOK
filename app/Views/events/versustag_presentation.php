@@ -3,7 +3,7 @@
  ?>
 
 <style media="screen">
-	#app-module-content{
+	#app-module{
 		background: var(--primary);
 		color: white;
 	}

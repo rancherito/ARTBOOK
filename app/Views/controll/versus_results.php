@@ -21,6 +21,9 @@
 		border-radius: 10px;
 		margin-right: 1rem;
 	}
+	frame-winner, .frame-winner{
+		width: 200px;
+	}
 </style>
 <?php module_start() ?>
 	<div id="app-events">
@@ -33,6 +36,15 @@
 		</div>
 		<?php foreach ($versus_list as $key => $versus): ?>
 			<article class="card-panel">
+				<?php foreach ($versus as $key => $participient): ?>
+					<?php if ($participient['ranking'] == '1'): ?>
+						<section class="versus-participient col s12 m6 l4" >
+							<frame-winner versus="<?= $participient['versus_name'] ?>" artwork="<?= base_url()."/images/artworks_lite/$participient[artwork].$participient[extension]" ?>"></frame-winner>
+							<div>ARTISTA: <?= $participient['nickname'] ?></div>
+						</section>
+					<?php endif; ?>
+
+				<?php endforeach; ?>
 				<div class="row m-0">
 					<?php foreach ($versus as $key => $participient): ?>
 						<section class="versus-participient col s12 m6 l4" >
@@ -116,11 +128,65 @@ ARTBOOK LINK:
 
 	</div>
 <?php module_end() ?>
-
+<?php
+$path = 'images/frame.png';
+$type = pathinfo($path, PATHINFO_EXTENSION);
+$data = file_get_contents($path);
+$base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+?>
 <script type="text/javascript">
+	Vue.component('frame-winner',{
+		template: `
+			<canvas class="frame-winner" ref="canvas" style="background: gray" height="432" width="432"></canvas>
+		`,
+		data: function () {
+			return {
+				frame: '<?= $base64 ?>',
+				cc: 0
+			}
+		},
+		props: ['artwork', 'versus'],
+		methods: {
+			draw: function (ctx, artwork, image) {
+				ctx.drawImage(artwork, 16, 16)
+				ctx.drawImage(image, 0, 0)
+
+				/*ctx.beginPath();
+				ctx.moveTo(52,380);
+				ctx.lineTo(220,380);
+				ctx.lineWidth = 36;
+				ctx.strokeStyle = '#1c1c1c';
+				ctx.lineCap = 'round';
+				ctx.stroke();*/
+				ctx.font = "18px Calibri";
+				ctx.fillStyle = 'white';
+				ctx.fillText(this.versus.toLocaleUpperCase(), 66, 389);
+			}
+		},
+		mounted: function () {
+			const canvas = this.$refs.canvas;
+			const ctx = canvas.getContext('2d');
+			let image = new Image();
+			let artwork = new Image();
+			artwork.src = this.artwork
+			image.src = this.frame
+
+			artwork.onload = () => {
+				this.cc++
+				if (this.cc == 2) this.draw(ctx, artwork, image)
+			}
+			image.onload = () => {
+				this.cc++
+				if (this.cc == 2) this.draw(ctx, artwork, image)
+			}
+
+
+
+		}
+	});
 	$_module = {
 		mounted: function () {
-			console.log('hola');
+
 		}
 	}
 </script>
