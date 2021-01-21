@@ -1,12 +1,12 @@
 <?php
-$version = 'beta_0.097';
+$version = 'beta_0.0981';
 $GLOBALS['version'] = $version;
 ?>
 <?php
 	$pre_metas = [
 		'img' => base_url()."/images/meta.png",
 		'title' => 'ARTS BOOK - Comunidad de artistas',
-		'description' => 'Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art\'s Book 😁'
+		'description' => 'Somos una comunidad de artistas y dibujantes hispanohablantes. Ven, descubre y comparte trabajos artísticos en tradicional o digital, además de otras muchas cosas más.'
 	];
 
 	$metas = array_merge($pre_metas, empty($metas) ? [] : $metas);
@@ -30,27 +30,18 @@ $GLOBALS['version'] = $version;
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="icon" type="image/png" href="<?= base_url() ?>/images/icon.png">
 <link rel="stylesheet" href="<?= base_url() ?>/font/RobotoCondensed/RobotoCondensed.css">
-<link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/materialdesignicons.min.css">
 
 <link rel="stylesheet" href="<?= base_url() ?>/libs/materialize/css/materialize.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>/css/helpers.css?v=<?= $version ?>">
-<link rel="stylesheet" href="<?= base_url() ?>/libs/animate/animate.min.css">
+
 <link rel="stylesheet" href="<?= base_url() ?>/css/custom_materialize.css?v=<?= $version ?>">
 <script src="<?= base_url() ?>/js/script.js?v=<?= $version ?>"></script>
 <script src="<?= base_url() ?>/js/jquery-3.4.1.min.js"></script>
-<script src="<?= base_url() ?>/libs/materialize/js/materialize.min.js"></script>
-<?php if ($_ENV['CI_ENVIRONMENT'] == 'development'): ?>
-	<script src="<?= base_url() ?>/libs/vue/vue.js"></script>
-<?php else: ?>
-	<script src="<?= base_url() ?>/libs/vue/vue.min.js"></script>
-<?php endif; ?>
+
+
 <link rel="stylesheet" href="<?= base_url() ?>/libs/cgVue/cg.components.vue.css?v=<?= $version ?>">
-<script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js?v=<?= $version ?>"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/css/main.css?v=<?= $version ?>">
 <link rel="stylesheet" href="<?= base_url() ?>/css/colors.css?v=<?= $version ?>">
 <link rel="stylesheet" href="<?= base_url() ?>/css/components.vue.css?v=<?= $version ?>">
-<script src="<?= base_url() ?>/js/components.vue.js?v=<?= $version ?>"></script>
-<script src="<?= base_url() ?>/libs/simplebar/simplebar.min.js"></script>
-<script src="<?= base_url() ?>/libs/simplebar/simplebar.vue.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/libs/simplebar/simplebar.css">
-<script data-ad-client="ca-pub-1355252812560688" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!--<script data-ad-client="ca-pub-1355252812560688" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->

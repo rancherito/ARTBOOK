@@ -162,7 +162,7 @@
 
 	</section>
 	<div id="app-home-gallery-container">
-		<h3 class="title-4 p-4 primary"> <i class="mdi mdi-apps"></i> GALLERIA</h3>
+		<h3 class="title-4 py-4 primary"> <i class="mdi mdi-apps"></i> GALLERIA</h3>
 		<div id="wrap_grid_gallery">
 			<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
 		</div>

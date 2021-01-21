@@ -277,38 +277,7 @@ function getPathImage($artwork)
 <?php module_start() ?>
 <div class="">
 	<?= bg_animate_001() ?>
-	<?php if (false): ?>
-		<div id="versustag-wall-pics" class="fixed-full">
-			<?php foreach ($p_1 as $key => $groups): ?>
-				<?php
-				$random_x = rand(0, 20);
-				$random_y = rand(0, 100);
-				$img_size = rand(260, 320);
-				$rot_x = (rand(0, 60) - 30).'deg';
-				$rot_y = (rand(0, 60) - 30).'deg';
-				$rot_z = (rand(0, 60) - 30).'deg';
-				$opacity = rand(50, 100) / 100;
-				?>
-				<div class="versustag-pics animated fadeIn" style="<?= "top: $random_y%; left: $random_x%;"?>">
-					<img style='opacity: <?= $opacity ?>;height: <?= $img_size ?>px; transform: <?= "rotateX($rot_x) rotateY($rot_y) rotateZ($rot_z) translate(-50%, -50%)" ?>' src="<?= base_url().'/images/artworks/'.$groups['accessname'].'.jpg' ?>">
-				</div>
-			<?php endforeach; ?>
-			<?php foreach ($p_2 as $key => $groups): ?>
-				<?php
-				$random_x = rand(80, 100);
-				$random_y = rand(0, 100);
-				$img_size = rand(260, 320);
-				$rot_x = (rand(0, 60) - 30).'deg';
-				$rot_y = (rand(0, 60) - 30).'deg';
-				$rot_z = (rand(0, 60) - 30).'deg';
-				$opacity = rand(50, 100) / 100;
-				?>
-				<div class="versustag-pics animated fadeIn" style="<?= "top: $random_y%; left: $random_x%;"?>">
-					<img style='opacity: <?= $opacity ?>;height: <?= $img_size ?>px; transform: <?= "rotateX($rot_x) rotateY($rot_y) rotateZ($rot_z) translate(-50%, -50%)" ?>' src="<?= base_url().'/images/artworks/'.$groups['accessname'].'.jpg' ?>">
-				</div>
-			<?php endforeach; ?>
-		</div>
-	<?php endif; ?>
+
 	<div id="versustag-content" :class="{'versustag-onchoise': on_choise}">
 		<div id="versustag-presentation">
 			<div class="f-c" id="versustag-presentation-header">

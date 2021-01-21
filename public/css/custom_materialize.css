@@ -424,6 +424,7 @@ select:focus {
     transform: translateY(-50%) !important;
     max-height: 100vh;
     background-color: #fff;
+	border-radius: 10px;
 }
 .modal img {
     width: 100%;

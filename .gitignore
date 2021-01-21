@@ -45,10 +45,13 @@ $RECYCLE.BIN/
 .vagrant
 Vagrantfile.dist
 public/images/artworks/*.jpg
+public/images/artworks/*.png
+public/images/artworks_small/*.jpg
+public/images/artworks_small/*.png
 public/images/artworks_lite/*.jpg
 public/images/artworks_lite/*.png
 public/images/avatars/*.jpg
-public/images/artworks/*.png
+
 #-------------------------
 # Temporary Files
 #-------------------------

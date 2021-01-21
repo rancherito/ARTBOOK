@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
-	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
+
 	<link rel="stylesheet" href="<?= base_url() ?>/css/layouts/publicv2.css?v=<?= $version ?>">
 	<style media="screen">
 	.sticky {
@@ -16,8 +16,7 @@
 		display: table;
 	}
 	</style>
-	<?= $body ?>
-	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
+
 </head>
 <body>
 	<div id="app-body">
@@ -29,9 +28,6 @@
 			<div id="app-aside-nav-toggle" class="bg-primary" @click="toggle_nav = !toggle_nav"><i class="mdi mdi-menu"></i></div>
 			<div class="f-c w100">
 				<a href="<?= base_url() ?>" id="app-aside-decorator" class="f-c"><img src="<?= base_url() ?>/images/icon_white.svg"></a>
-			</div>
-			<div class="w100 f-c">
-
 				<?php if (is_access()): ?>
 					<a href="<?= user_site() ?>" class="access-btn"><i class="mdi mdi-account"></i> <span>MI PERFIL</span></a>
 					<a @click="open_editor" class="access-btn"><i class="mdi mdi-upload"></i> <span>SUBIR ARTWORK</span></a>
@@ -41,6 +37,10 @@
 				<?php else: ?>
 					<a href="<?= base_url() ?>/user/login" class="access-btn"><i class="mdi mdi-account"></i> <span>ACCEDER</span></a>
 				<?php endif; ?>
+			</div>
+			<div class="w100 f-c">
+
+
 			</div>
 			<div class="w100 f-c">
 				<a href="<?= base_url() ?>" class="f-c access-btn-bottom"><i class="mdi mdi-home"></i></a>
@@ -78,6 +78,9 @@
 
 	</div>
 	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
+	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=<?= $version ?>" ></script>
+	<?= $body ?>
+	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
 	<script type="text/javascript">
 	Vue.component('adsense-ins',{
 		template: `<ins></ins>`,
@@ -89,7 +92,9 @@
 		el: '#app-body',
 		data: function () {
 			return {
-				toggle_nav: false
+				toggle_nav: false,
+				base_url: '<?= base_url() ?>',
+				current_account: '<?= user_account() ?>'
 			}
 		},
 		methods: {
