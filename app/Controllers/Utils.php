@@ -18,12 +18,14 @@ class Utils extends BaseController
 	}
 	public function resizeimage()
 	{
+
 		foreach (scandir('./images/artworks') as $key => $value) {
 			if (!is_dir($value) && $value != ".gitkeep") {
 				$image = new ImageResize("images/artworks/$value");
-				$image->resizeToShortSide(400);
-				$image->crop(400, 400, true, ImageResize::CROPCENTER);
-				$image->save("images/artworks_lite/$value");
+				ini_set('memory_limit', '300M');
+				$image->resizeToWidth(400);
+				$image->save("images/artworks_small/$value");
+
 			}
 		}
 		echo "finish!";

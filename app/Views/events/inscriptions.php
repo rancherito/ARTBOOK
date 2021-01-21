@@ -373,15 +373,15 @@ Vue.component('dashbox',{
 	<div class="pb-4">
 	<?php if (is_access()): ?>
 	<template v-if="calcule_participation(data.applicants)">
-	<span disabled class="btn">PARTICIPANDO</span>
+		<span disabled class="btn">PARTICIPANDO</span>
 	</template>
 	<template v-else>
-	<template v-if="data.state_inscription == 'P' || data.account_promoter == $root.current_account">
-	<span class="btn" @click="versus_apply">RETAR</span>
-	</template>
-	<template v-else>
-	<span class="btn" disabled >PRIVADO</span>
-	</template>
+		<template v-if="data.state_inscription == 'P' || data.account_promoter == $root.current_account">
+			<span class="btn" @click="versus_apply">RETAR</span>
+		</template>
+		<template v-else>
+			<span class="btn" disabled >PRIVADO</span>
+		</template>
 	</template>
 
 	<?php endif; ?>

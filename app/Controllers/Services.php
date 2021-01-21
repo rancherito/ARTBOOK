@@ -87,6 +87,9 @@ class Services extends BaseController
 			$image->crop(400, 400, true, ImageResize::CROPCENTER);
 			$image->save("images/artworks_lite/$namefile.jpg");
 
+			$image2 = new ImageResize($file);
+			$image2->resizeToWidth(400);
+			$image2->save("images/artworks_small/$namefile.jpg");
 
 			General::qry_images_salvar($key_value, $namefile, $ext, $alto, $ancho, $author, $author, $name,$description);
 

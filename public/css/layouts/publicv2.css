@@ -2,7 +2,7 @@
 	--navaside_width: 80px;
 }
 body{
-	background-color: #f9f9f9;
+	background-color: var(--grey);
 }
 #app-body {
 
@@ -53,13 +53,13 @@ aside{
 }
 #app-module{
 	margin-left: var(--navaside_width);
-	background-color: #f9f9f9;
+	background-color: var(--grey);
 }
 #app-module-content{
 	position: relative;
 	height: 100%;
 	width: 100%;
-	background: #f9f9f9;
+	background: var(--grey);
 }
 .access-btn {
 display: flex;

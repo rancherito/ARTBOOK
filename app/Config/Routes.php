@@ -26,7 +26,8 @@ $routes->post('services/events/challenges/votes_save', 'C_Events');
 $routes->post('services/events/versus/votes_save', 'Services::vs_artwork_choise');
 $routes->post('services/getaccess', 'Services::login_validate');
 $routes->post('services/account/create', 'Services::account_create');
-$routes->get('test/sms', 'Home::test_sms');
+$routes->get('c/resize', 'Utils::resizeimage');
+//$routes->get('test/sms', 'Home::test_sms');
 
 $routes->add('user/revocar',  function ()
 {

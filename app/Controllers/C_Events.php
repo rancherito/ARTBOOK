@@ -43,7 +43,7 @@ class C_Events extends BaseController
 				if (!empty($_GET['id']) && $i['versus'] == $_GET['id']){
 					$GLOBALS['vs_invitation'] =  $i;
 					$title = 'VERSUS: '.$i['name'];
-					$description = 'Hola te invito a participar de un versus de dibujantes, el cual consiste en '."\n".$i['description'];
+					$description = 'Enlace de invitación, descripcion del versus: '."\n".$i['description'];
 					$GLOBALS['metas'] = ['title' => $title, 'description' => $description];
 				}
 				return $i;
