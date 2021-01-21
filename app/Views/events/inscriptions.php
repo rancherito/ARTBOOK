@@ -366,7 +366,7 @@ Vue.component('dashbox',{
 	<div class="dashbox-info-promoter">
 	<b>Inscritos ({{data.participients}})</b>
 	<div>
-	<a :href="$root.base_url + applicant.account" v-for="applicant of data.applicants">{{applicant.nickname}}</a>
+	<a :href="$root.base_url + '/' + applicant.account" v-for="applicant of data.applicants">{{applicant.nickname}}</a>
 	</div>
 	</div>
 	</div>
