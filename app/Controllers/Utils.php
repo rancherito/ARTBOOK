@@ -22,7 +22,7 @@ class Utils extends BaseController
 		foreach (scandir('./images/artworks') as $key => $value) {
 			if (!is_dir($value) && $value != ".gitkeep") {
 				$image = new ImageResize("images/artworks/$value");
-				ini_set('memory_limit', '300M');
+				ini_set('memory_limit', '2000M');
 				$image->resizeToWidth(400);
 				$image->save("images/artworks_small/$value");
 
