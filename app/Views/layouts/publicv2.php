@@ -89,7 +89,9 @@
 		el: '#app-body',
 		data: function () {
 			return {
-				toggle_nav: false
+				toggle_nav: false,
+				base_url: '<?= base_url() ?>',
+				current_account: '<?= user_account() ?>'
 			}
 		},
 		methods: {

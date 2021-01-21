@@ -101,7 +101,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding-top: 5rem;
+	padding: 1rem;
 }
 #versus-apply-content > div {
 	max-width: 320px;
@@ -246,15 +246,23 @@ article h1{
 		<form @submit.prevent="submit">
 			<div id="versus-apply-content">
 				<div class="w100">
-					<div class="c pb-4">
+					<div class="c py-5">
 						<div class="title-3 combo-text-title">Registrar un versus</div>
 						<span>Cree un versus y espere a un retador</span>
 					</div>
 
-						<cg-field required sizechars="4-20" :watchisvalid.sync="title.isvalid" v-model="title.val" label="Titulo versus" placeholder="elija un titulo para su versus"></cg-field>
-						<cg-textbox required sizechars="10-100" :watchisvalid.sync="description.isvalid" v-model="description.val" label="Detalles" placeholder="describa las caracteristicas de su versus"></cg-textbox>
-
-
+					<cg-field required sizechars="4-20" :watchisvalid.sync="title.isvalid" v-model="title.val" label="Titulo versus" placeholder="elija un titulo para su versus"></cg-field>
+					<cg-textbox required sizechars="10-200" :watchisvalid.sync="description.isvalid" v-model="description.val" label="Detalles" placeholder="describa las caracteristicas de su versus"></cg-textbox>
+					<div class="py-4">
+						<label >
+							<input v-model="versus_isPublic" type="checkbox" class="filled-in" checked="checked" />
+							<span>{{
+								versus_isPublic ?
+								'Este versus es publico para otros participantes'	:
+								'Este versus requiere el LINK de INVITACIÓN para otros participantes'
+							}}</span>
+						</label>
+					</div>
 					<div class="pt-4 grey-text c" style="font-size: .9rem">#{{current_register_event.event_tag}}</div>
 				</div>
 			</div>
@@ -281,7 +289,7 @@ article h1{
 			</a>
 		<?php endif; ?>
 		<div class="container">
-			<div class="c py-6">
+			<div class="c py-5">
 				<div class="combo-text-title title-1">Art's Book Versus</div>
 				<span>Encuentra un contrincante o inscribe tu versus :D</span>
 			</div>
@@ -331,42 +339,8 @@ article h1{
 						</div>
 					</div>
 					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in participients[versus.event_tag]">
-						<div class="dashbox">
-
-							<div class="dashbox-promoter-mark">
-								<a v-if="item.account_promoter == active_user" class="px-1 mdi mdi-flag"></a>
-								<a style="cursor: pointer" class="px-1 mdi mdi-share-variant" @click="generatelinkshare(item)"></a>
-							</div>
-							<i class="mdi mdi-fire"></i>
-							<div class="dashbox-info w100 c">
-								<div class="dashbox-info-description ">
-									<h3 class="dashbox-title">{{item.name}}</h3>
-									<div class="dashbox-description" v-html="jumplinereplace(item.description)"></div>
-								</div>
-								<div class="dashbox-info-promoter">
-									<b>Inscritos ({{item.participients}})</b>
-									<div>
-										<a :href="'<?= base_url() ?>/'+applicant.account" v-for="applicant of item.applicants">{{applicant.nickname}}</a>
-									</div>
-								</div>
-							</div>
-							<div class="pb-4">
-								<?php if (is_access()): ?>
-									<template v-if="calcule_participation(item.applicants)">
-										<button disabled class="btn">PARTICIPANDO</button>
-									</template>
-									<template v-else>
-										<span class="btn" @click="versus_apply(item)">RETAR</span>
-									</template>
-
-								<?php endif; ?>
-
-							</div>
-
-						</div>
-
+						<dashbox :data="item"></dashbox>
 					</div>
-
 				</div>
 			</div>
 			<div style="height: 4rem;"></div>
@@ -376,6 +350,70 @@ article h1{
 
 <?php module_end() ?>
 <script type="text/javascript">
+Vue.component('dashbox',{
+	template : `
+	<div class="dashbox">
+	<div class="dashbox-promoter-mark">
+	<a v-if="data.account_promoter == $root.current_account" class="px-1 mdi mdi-flag"></a>
+	<a v-if="data.state_inscription == 'P' || data.account_promoter == $root.current_account" style="cursor: pointer" class="px-1 mdi mdi-share-variant" @click="generatelinkshare"></a>
+	</div>
+	<i class="mdi mdi-fire"></i>
+	<div class="dashbox-info w100 c">
+	<div class="dashbox-info-description ">
+	<h3 class="dashbox-title">{{data.name}}</h3>
+	<div class="dashbox-description" v-html="jumplinereplace(data.description)"></div>
+	</div>
+	<div class="dashbox-info-promoter">
+	<b>Inscritos ({{data.participients}})</b>
+	<div>
+	<a :href="$root.base_url + applicant.account" v-for="applicant of data.applicants">{{applicant.nickname}}</a>
+	</div>
+	</div>
+	</div>
+	<div class="pb-4">
+	<?php if (is_access()): ?>
+	<template v-if="calcule_participation(data.applicants)">
+	<span disabled class="btn">PARTICIPANDO</span>
+	</template>
+	<template v-else>
+	<template v-if="data.state_inscription == 'P' || data.account_promoter == $root.current_account">
+	<span class="btn" @click="versus_apply">RETAR</span>
+	</template>
+	<template v-else>
+	<span class="btn" disabled >PRIVADO</span>
+	</template>
+	</template>
+
+	<?php endif; ?>
+
+	</div>
+	</div>
+	`,
+	data: function () {
+		return {
+		}
+	},
+	props: ['data'],
+	methods: {
+		generatelinkshare: function () {
+			copyStringToClipboard(this.$root.base_url + `/events/versus?id=${this.data.versus}`);
+			M.toast({html: 'Link de ' + this.data.name +' copiado con exito', classes: 'rounded bg-primary'});
+		},
+		jumplinereplace: function (text) {
+			if (text != undefined) return text.replace(/\n/g,'<br>')
+			return '';
+		},
+		calcule_participation: function (applicants) {
+			let active = false;
+			for (var applicant of applicants) active |= applicant.account == this.$root.current_account
+			return active
+		},
+		versus_apply: function () {
+			this.$parent.current_versus_apply = this.data
+			this.$parent.modal_confirmar.modal('open')
+		},
+	}
+})
 $_module = {
 	data: function () {
 		return {
@@ -383,6 +421,7 @@ $_module = {
 			participients: <?= json_encode($list_participients) ?>,
 			title: {val: '', isvalid: false},
 			description: {val: '', isvalid: false},
+			versus_isPublic: true,
 			current_register_event: {},
 			current_versus_apply: {},
 			is_send: false,
@@ -390,7 +429,6 @@ $_module = {
 			modal_confirmar: null,
 			modal_versus_add: null,
 			modal_confirmar_invitation: null,
-			active_user: '<?= is_access() ? user_account() : ''  ?>',
 			vs_invitation: <?= json_encode($invitation) ?>,
 			is_acepted_invitation: false
 		}
@@ -404,70 +442,77 @@ $_module = {
 
 		/*$.post('<?= base_url() ?>/service/events/artworks_candidates',{versus: 26}, res => {
 
-		})*/
-    	this.modal_confirmar = $(this.$refs.modal_confirmar).modal();
-		this.modal_versus_add = $(this.$refs.modal_versus_add).modal();
-		this.modal_confirmar_invitation = $(this.$refs.modal_confirmar_invitation).modal();
-		if (this.vs_invitation.versus != undefined) {
-			this.is_acepted_invitation = this.calcule_participation(this.vs_invitation.applicants)
-			this.modal_confirmar_invitation.modal('open')
-		}
+	})*/
+	this.modal_confirmar = $(this.$refs.modal_confirmar).modal();
+	this.modal_versus_add = $(this.$refs.modal_versus_add).modal();
+	this.modal_confirmar_invitation = $(this.$refs.modal_confirmar_invitation).modal();
+	if (this.vs_invitation.versus != undefined) {
+		this.is_acepted_invitation = this.calcule_participation(this.vs_invitation.applicants)
+		this.modal_confirmar_invitation.modal('open')
+	}
+},
+methods: {
+	confirm_invitation: function () {
+		this.current_versus_apply = this.vs_invitation
+		this.confirm_apply();
 	},
-	methods: {
-		confirm_invitation: function () {
-			this.current_versus_apply = this.vs_invitation
-			this.confirm_apply();
-		},
-		generatelinkshare: function (info) {
-			copyStringToClipboard(`<?= base_url() ?>/events/versus?id=${info.versus}`);
-			M.toast({html: 'Link de ' + info.name +' copiado con exito', classes: 'rounded bg-primary'});
-			//console.log();
-		},
-		calcule_participation: function (applicants) {
-			let active = false;
-			for (var applicant of applicants) active |= applicant.account == this.active_user
-			return active
-		},
-		clear: function () {
-			this.title.val = ''
-			this.description.val = ''
-			this.current_register_event = {}
-		},
-		jumplinereplace: function (text) {
-			if (text != undefined) return text.replace(/\n/g,'<br>')
-			return '';
-		},
-		formatdate: function (date) {
-			var event = new Date(date);
-			var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-			return event.toLocaleDateString('es-ES', options).toUpperCase()
-		},
-		versus_apply: function (apply) {
-			this.current_versus_apply = apply
-			this.modal_confirmar.modal('open')
-		},
-		confirm_apply: function () {
-			const data = {versus: this.current_versus_apply.versus}
-			this.is_send_apply = true
-			$.post('<?= base_url() ?>/service/events/apply_versus', data, (res) => {
-				M.toast({html: res.message, classes: 'rounded'});
-				this.modal_confirmar.modal('close')
-				this.modal_confirmar_invitation.modal('close');
-				this.is_send_apply = false
-				const dataupdate = {tag: this.current_versus_apply.tag}
-				$.post('<?= base_url() ?>/service/events/versuslist', dataupdate, (res) => {
-					this.participients[dataupdate.tag] = res
-				})
-			}).fail(() => {
-		        M.toast({html: 'ERROR EN LA PAGINA, VUELVA MÁS TARDE', classes: 'rounded bg-alert'});
-				this.is_send_apply = false
-		    });
-		},
-		submit: function () {
-			if (this.isvalid) {
-				const data = {title: this.title.val, description: this.description.val, tag: this.current_register_event.event_tag}
-				this.is_send = true
-				$.post('<?= base_url() ?>/service/events/versuslist_save', data, (res) => {
+	generatelinkshare: function (info) {
+		copyStringToClipboard(this.$root.base_url + `/events/versus?id=${info.versus}`);
+		M.toast({html: 'Link de ' + info.name +' copiado con exito', classes: 'rounded bg-primary'});
+		//console.log();
+	},
+	calcule_participation: function (applicants) {
+		let active = false;
+		for (var applicant of applicants) active |= applicant.account == this.$root.current_account
+		return active
+	},
+	clear: function () {
+		this.title.val = ''
+		this.description.val = ''
+		this.current_register_event = {}
+	},
+	jumplinereplace: function (text) {
+		if (text != undefined) return text.replace(/\n/g,'<br>')
+		return '';
+	},
+	formatdate: function (date) {
+		var event = new Date(date);
+		var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+		return event.toLocaleDateString('es-ES', options).toUpperCase()
+	},
+	versus_apply: function (apply) {
+		this.current_versus_apply = apply
+		this.modal_confirmar.modal('open')
+	},
+	confirm_apply: function () {
+		const data = {versus: this.current_versus_apply.versus}
+		this.is_send_apply = true
+		$.post('<?= base_url() ?>/service/events/apply_versus', data, (res) => {
+			M.toast({html: res.message, classes: 'rounded'});
+			this.modal_confirmar.modal('close')
+			this.modal_confirmar_invitation.modal('close');
+			this.is_send_apply = false
+			const dataupdate = {tag: this.current_versus_apply.tag}
+			$.post('<?= base_url() ?>/service/events/versuslist', dataupdate, (res) => {
+				this.participients[dataupdate.tag] = res
+			})
+		}).fail(() => {
+			M.toast({html: 'ERROR EN LA PAGINA, VUELVA MÁS TARDE', classes: 'rounded bg-alert'});
+			this.is_send_apply = false
+		});
+	},
+	submit: function () {
+		if (this.isvalid) {
+			const data = {
+				title: this.title.val,
+				description: this.description.val,
+				tag: this.current_register_event.event_tag,
+				account: this.$root.current_account,
+				is_public: this.versus_isPublic ? 1 : 0
+			}
+			this.is_send = true
+			$.post('<?= base_url() ?>/service/events/versuslist_save', data, (res) => {
+				if (res.message != undefined) {
 					if (res.message == 'REGISTRO EXITOSO') {
 						this.modal_versus_add.modal('close')
 						const dataupdate = {tag: this.current_register_event.event_tag}
@@ -477,19 +522,23 @@ $_module = {
 						})
 					}
 					M.toast({html: res.message, classes: 'rounded'});
-					this.is_send = false
-				}).fail(() => {
-			        this.is_send = false
+				}
+				else {
 					M.toast({html: 'ERROR EN LA PAGINA, VUELVA MÁS TARDE', classes: 'rounded bg-alert'});
-			    });
+				}
+				this.is_send = false
+			}).fail(() => {
+				this.is_send = false
+				M.toast({html: 'ERROR EN LA PAGINA, VUELVA MÁS TARDE', classes: 'rounded bg-alert'});
+			});
 
-			}
-		},
-		add_versus: function (versus) {
-			this.clear()
-			this.current_register_event = versus
-			this.modal_versus_add.modal('open')
 		}
+	},
+	add_versus: function (versus) {
+		this.clear()
+		this.current_register_event = versus
+		this.modal_versus_add.modal('open')
 	}
+}
 }
 </script>

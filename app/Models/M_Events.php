@@ -30,7 +30,7 @@ class M_Events
 		$sql = "SELECT TOP 1 name,event_start,event_end,[description],event_tag FROM events.tb_events";
 		return query_database($sql);
 	}
-	public static function qry_versus_register( $id_versus, $event_tag, $promoter_user, $name, $description)
+	public static function qry_versus_register( $id_versus, $event_tag, $promoter_user, $name, $description,$state_inscription)
 	{
 		$sql = "
 		EXEC events.sp_versus_save
@@ -38,8 +38,9 @@ class M_Events
 		@event_tag = ?,
 		@promoter_user = ?,
 		@name = ?,
-		@description = ?;";
-		return query_database($sql, [$id_versus, $event_tag, $promoter_user, $name, $description]);
+		@description = ?,
+		@state_inscription = ?;";
+		return query_database($sql, [$id_versus, $event_tag, $promoter_user, $name, $description, $state_inscription]);
 	}
 
 	public static function qry_versus_apply($user, $id_versus, $image_accessname)

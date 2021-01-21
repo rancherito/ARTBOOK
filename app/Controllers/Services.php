@@ -126,10 +126,19 @@ class Services extends BaseController
 	}
 	public function event_versuslist_Save()
 	{
-		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['tag'])) {
+
+		if (
+			!empty($_POST['title']) &&
+			!empty($_POST['description']) &&
+			!empty($_POST['tag']) &&
+			!empty($_POST['account']) &&
+			isset($_POST['is_public']) &&
+			$_POST['account'] == user_account()
+		) {
 			$regtitle = "/^[ \-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ,:.\/]+$/i";
 			$regdescription = "/^[ \(\)\-0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙñÑ,:.\/\n]+$/i";
 
+			$is_puplic = $_POST['is_public'] == '0' ? 'L' : 'P';
 			$description = trim(preg_replace('/\s\s+/',"\n", $_POST['description']));
 			$title = trim($_POST['title']);
 			$tag = htmlspecialchars($_POST['tag'], ENT_QUOTES);
@@ -137,9 +146,11 @@ class Services extends BaseController
 			if (preg_match($regtitle,$title) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales en el titulo']);
 			if (preg_match($regdescription, $description) == 0) return $this->response->setJSON(['message' => 'No usar letras especiales en la descripción']);
 
-			$res = M_Events::qry_versus_register('0', $tag, $_SESSION['access']['user_access'], $title, $description);
+			$res = M_Events::qry_versus_register('0', $tag, $_SESSION['access']['user_access'], $title, substr($description, 0, 200), $is_puplic);
 			if (count($res)) $res = $res[0];
 			return $this->response->setJSON($res);
+
+
 		}
 
 	}

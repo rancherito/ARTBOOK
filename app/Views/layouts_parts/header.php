@@ -6,7 +6,7 @@ $GLOBALS['version'] = $version;
 	$pre_metas = [
 		'img' => base_url()."/images/meta.png",
 		'title' => 'ARTS BOOK - Comunidad de artistas',
-		'description' => 'Se bienvenid@ a nuestra comunidad de artistas y dibujantes Art\'s Book 😁'
+		'description' => 'Somos una comunidad de artistas y dibujantes hispanohablantes. Ven, descubre y comparte trabajos artísticos en tradicional o digital, además de otras muchas cosas más.'
 	];
 
 	$metas = array_merge($pre_metas, empty($metas) ? [] : $metas);
@@ -53,4 +53,4 @@ $GLOBALS['version'] = $version;
 <script src="<?= base_url() ?>/libs/simplebar/simplebar.min.js"></script>
 <script src="<?= base_url() ?>/libs/simplebar/simplebar.vue.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/libs/simplebar/simplebar.css">
-<script data-ad-client="ca-pub-1355252812560688" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!--<script data-ad-client="ca-pub-1355252812560688" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
