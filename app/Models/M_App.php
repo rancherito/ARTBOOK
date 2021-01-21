@@ -13,6 +13,17 @@ class M_App
 		return query_database($sql, [$current_account, $account]);
     }
 
+	public static function qry_artwork_recover($artwork, $current_account = '')
+    {
+    	$sql = "SELECT i.[description], i.accessname, i.extension,
+		(SELECT COUNT(heart) FROM app.tb_artwork_favorites f WHERE f.id_artwork = i.id_image AND heart = 1) heart_count,
+		ISNULL((SELECT heart FROM app.tb_artwork_favorites f, users.tb_users uu  WHERE uu.account = ? AND f.id_artwork = i.id_image AND uu.id_user = f.id_user), 0) heart,
+		i.height, i.width, i.uploaded_date, i.name, u.nickname, u.account, SUBSTRING(master.dbo.fn_varbintohexstr(HashBytes('MD5', u.[user])), 3, 32) user_avatar
+		FROM app.tb_images i, [users].tb_users u
+		WHERE i.autor = u.id_user AND i.accessname = ? AND i.[state] = 'A';";
+
+		return query_database($sql, [$current_account, $artwork]);
+    }
 
 	public static function qry_images_new_list($current_account = '$$')
     {

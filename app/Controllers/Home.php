@@ -36,7 +36,7 @@ class Home extends BaseController
 	}
 	public function artwork_recover($artwork)
 	{
-		$res = General::qry_artwork_recover($artwork);
+		$res = M_App::qry_artwork_recover($artwork, user_account());
 		if (count($res)) {
 			$res = $res[0];
 			$top_nine = General::qry_top9_artworks_list($res['account']);

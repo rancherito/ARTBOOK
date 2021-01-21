@@ -107,7 +107,10 @@
 				<?php if (is_access()): ?>
 				info.heart = info.heart ? 0 : 1;
 				$.post("<?= base_url() ?>/service/artwork/like_save", {artwork: info.accessname}, (d) => {
-					if (d.state != undefined) info.heart = d.state
+					if (d.state != undefined) {
+						info.heart = d.state;
+						if (info.heart_count != undefined) info.heart_count += d.state == 1 ? +1 : -1;
+					}
 				}).fail(function() {
 					info.heart = info.heart ? 0 : 1;
 					alert('INICIAR SESION PRIMERO');

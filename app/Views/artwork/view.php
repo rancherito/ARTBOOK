@@ -20,14 +20,14 @@
 }
 #app-artwork-image{
 	width: auto;
-	max-height: 90vh;
+	max-height: calc(100vh - 190px);
 	max-width: 100%;
 	display: block;
 	margin: 0 auto;
 	box-shadow: 0 17px 20px 6px rgba(0,0,0,.3);
 }
 #app-artwork-image-description{
-	padding: 3rem 0;
+	padding: 1rem 0 2rem;
 	display: flex;
 
 }
@@ -38,7 +38,6 @@
 .author-avatar{
 	height: 50px;
 	width: 50px;
-	border-radius: 50%;
 	background-color: var(--primary);
 	font-size: 2rem;
 	font-family: Calibri;
@@ -48,15 +47,18 @@
 .author-avatar-info{
 	width: calc(100% - 50px);
 	padding-left: 1rem;
+	display: flex;
+	justify-content: space-around;
+	flex-direction: column;
 }
 .author-avatar-info h1{
 	font-size: 1.5rem;
 	margin: 0;
+	text-transform: uppercase;
 }
 .author-avatar-info h2{
 	font-size: 1rem;
 	margin: 0;
-	color: black;
 }
 .author-link a:hover h2{
 	text-decoration: underline !important;
@@ -70,32 +72,21 @@
 .image-simple-grid{
 	overflow: hidden;
 	height: auto;
+	display: block;
 	position: relative;
 	width: calc(33.333%);
 	float: left;
 }
-.image-simple-grid canvas{
-	height: auto;
+.image-simple-grid img{
 	display: block;
 	width: 100%;
-}
-.image-simple-grid a{
-	position: absolute;
-	display: block;
-	height: 100%;
-	width: 100%;
-	left: 0;
-	top: 0;
-	background-size: contain;
 }
 .image-simple-grid-content{
 	overflow: hidden;
 	padding: 1rem;
 }
 #app-author{
-	padding: 1rem;
 	display: flex;
-	padding-top: 2rem;
 }
 @media (max-width: 1200px) {
 	#app-artwork{
@@ -127,10 +118,27 @@
 	}
 	#app-artwork-image{
 		max-width: 100%;
+		max-height: inherit;
 	}
 	#app-artwork-image-content{
 		padding: 0;
 	}
+}
+.artwork-actions{
+	display: flex;
+	align-items: center;
+	cursor: default;
+	padding-left: 1.5rem;
+}
+.artwork-like {
+	cursor: pointer;
+}
+.artwork-like i{
+	transition: linear all .2s;
+}
+
+.artwork-like:hover i, .artwork-like-count i, .artwork-like.artwork-like-active i{
+	color: var(--red);
 }
 </style>
 <?php module_start() ?>
@@ -138,9 +146,27 @@
 	<div id="app-artwork-image-content">
 		<img id="app-artwork-image"  src="<?= base_url() ?>/images/artworks/<?= $artwork['accessname'].'.'.$artwork['extension'] ?>" alt="<?= $artwork['accessname'] ?>">
 		<div id="app-artwork-image-description" class="container">
-			<div class="app-artwork-author">
+			<div class="app-artwork-author white-text">
+				<div class="pb-4 r" style="display: flex; align-items: center; justify-content: flex-end">
+					<div class="artwork-actions artwork-like-count">
+						<i class="mdi mdi-heart-multiple mdi-24px"></i><span class="pl-2">{{artwork.heart_count}}</span>
+					</div>
+					<div class="artwork-actions artwork-like" :class="{'artwork-like-active': artwork.heart}" @click="trigger_heart">
+						<i class="mdi mdi-24px" :class="artwork.heart ? 'mdi-heart' : 'mdi-heart-outline'"></i><span class="pl-2">ME GUSTA</span>
+					</div>
+				</div>
+				<div id="app-author" class="white-text">
+					<div class="author-avatar cover f-c"><?= $artwork['nickname'][0] ?></div>
+					<div class="author-avatar-info">
+						<h1><?= $artwork['name'] ?></h1>
+						<div class="author-link">
+							<span>por</span> <a class="white-text" href="<?= base_url().'/'.$artwork['account'] ?>"><h2>@<?= $artwork['nickname'] ?></h2></a>
+						</div>
+
+					</div>
+				</div>
 				<div class="pt-4 pb-4 white-text">
-					<h3 class="title-3 m-0 pb-4">Detalles</h3>
+					<h3 class="title-4 m-0 py-4"> <i class="mdi mdi-book-information-variant"></i> Descripción de la obra</h3>
 					<?= strlen($artwork['description']) == 0 ? 'No hay detalles sobre la obra' : $artwork['description'] ?>
 				</div>
 
@@ -159,28 +185,18 @@
 		</div>
 	</div>
 	<div id="app-artwork-more">
-		<div ref="stiky" class="sticky">
-			<div id="app-author">
-				<div class="author-avatar cover f-c"><?= $artwork['nickname'][0] ?></div>
-				<div class="author-avatar-info">
-					<h1><?= $artwork['name'] ?></h1>
-					<div class="author-link">
-						<span>por</span> <a href="<?= base_url().'/'.$artwork['account'] ?>"><h2><?= $artwork['nickname'] ?></h2></a>
-					</div>
+		<div ref="sticky" class="sticky">
 
-				</div>
-			</div>
 			<h4 class="title-4 p-4 m-0">Otros trabajos del autor</h4>
 			<div  class="image-simple-grid-content" >
 				<?php foreach ($others_artworks as $key => $other_artwork): ?>
-					<div class="image-simple-grid">
-						<canvas width="160" height="160"></canvas>
 						<?php
 						$path = base_url().'/images/artworks_lite/'.$other_artwork['accessname'].'.'.$other_artwork['extension'];
 						$path_url = base_url().'/artwork/view/'.$other_artwork['accessname']
 						?>
-						<a href="<?= $path_url ?>" class="cover" style="background-image: url('<?= $path ?>')"></a>
-					</div>
+						<a class="image-simple-grid" href="<?= $path_url ?>">
+							<img src="<?= $path ?>" alt="">
+						</a>
 				<?php endforeach; ?>
 			</div>
 			<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
@@ -214,8 +230,19 @@
 
 
 $_module = {
+	data: function () {
+		return {
+			artwork: <?= json_encode($artwork) ?>
+		}
+	},
+	methods: {
+		trigger_heart: function () {
+			if (this.$root.trigger_like != undefined) this.$root.trigger_like(this.artwork)
+			else console.log('FUNCTION LIKE NO FOUND');
+		}
+	},
 	mounted: function () {
-		new Stickyfill.Sticky(this.$refs.styky);
+		new Stickyfill.Sticky(this.$refs.sticky);
 	}
 }
 
