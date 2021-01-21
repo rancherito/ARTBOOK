@@ -1,5 +1,5 @@
 <?php
-$version = 'beta_0.098';
+$version = 'beta_0.0981';
 $GLOBALS['version'] = $version;
 ?>
 <?php

@@ -347,7 +347,7 @@ Vue.component('cg-grid-image', {
 			if (this.info.category_main == 'R18') {
 				return `images/artworks_lite/${this.info.accessname}.${this.info.extension}`;
 			}
-			return `images/artworks/${this.info.accessname}.${this.info.extension}`;
+			return `images/artworks_small/${this.info.accessname}.${this.info.extension}`;
 		},
 
 		redirect: function () {
