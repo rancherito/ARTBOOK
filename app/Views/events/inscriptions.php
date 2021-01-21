@@ -251,7 +251,7 @@ article h1{
 						<span>Cree un versus y espere a un retador</span>
 					</div>
 
-					<cg-field required sizechars="4-20" :watchisvalid.sync="title.isvalid" v-model="title.val" label="Titulo versus" placeholder="elija un titulo para su versus"></cg-field>
+					<cg-field required sizechars="4-26" :watchisvalid.sync="title.isvalid" v-model="title.val" label="Titulo versus" placeholder="elija un titulo para su versus"></cg-field>
 					<cg-textbox required sizechars="10-200" :watchisvalid.sync="description.isvalid" v-model="description.val" label="Detalles" placeholder="describa las caracteristicas de su versus"></cg-textbox>
 					<div class="py-4">
 						<label >
