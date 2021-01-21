@@ -39,18 +39,13 @@ $GLOBALS['version'] = $version;
 <script src="<?= base_url() ?>/js/script.js?v=<?= $version ?>"></script>
 <script src="<?= base_url() ?>/js/jquery-3.4.1.min.js"></script>
 <script src="<?= base_url() ?>/libs/materialize/js/materialize.min.js"></script>
-<?php if ($_ENV['CI_ENVIRONMENT'] == 'development'): ?>
-	<script src="<?= base_url() ?>/libs/vue/vue.js"></script>
-<?php else: ?>
-	<script src="<?= base_url() ?>/libs/vue/vue.min.js"></script>
-<?php endif; ?>
+
+
+
+
 <link rel="stylesheet" href="<?= base_url() ?>/libs/cgVue/cg.components.vue.css?v=<?= $version ?>">
-<script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js?v=<?= $version ?>"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/css/main.css?v=<?= $version ?>">
 <link rel="stylesheet" href="<?= base_url() ?>/css/colors.css?v=<?= $version ?>">
 <link rel="stylesheet" href="<?= base_url() ?>/css/components.vue.css?v=<?= $version ?>">
-<script src="<?= base_url() ?>/js/components.vue.js?v=<?= $version ?>"></script>
-<script src="<?= base_url() ?>/libs/simplebar/simplebar.min.js"></script>
-<script src="<?= base_url() ?>/libs/simplebar/simplebar.vue.js"></script>
 <link rel="stylesheet" href="<?= base_url() ?>/libs/simplebar/simplebar.css">
 <!--<script data-ad-client="ca-pub-1355252812560688" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
