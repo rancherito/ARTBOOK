@@ -7,7 +7,8 @@
 
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 	<link rel="stylesheet" href="<?= base_url() ?>/css/layouts/controll.css">
-
+	<?= $body ?>
+	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
 </head>
 <body>
 
@@ -70,8 +71,7 @@
 	</div>
 
 	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
-	<?= $body ?>
-	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
+
 	<script type="text/javascript">
 
 	new Vue({

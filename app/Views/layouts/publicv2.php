@@ -16,7 +16,9 @@
 		display: table;
 	}
 	</style>
-
+	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=<?= $version ?>" ></script>
+	<?= $body ?>
+	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
 </head>
 <body>
 	<div id="app-body">
@@ -78,9 +80,7 @@
 
 	</div>
 	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
-	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=<?= $version ?>" ></script>
-	<?= $body ?>
-	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
+
 	<script type="text/javascript">
 	Vue.component('adsense-ins',{
 		template: `<ins></ins>`,
