@@ -161,14 +161,14 @@ body{
 .app-profile-social{
 	display: flex;
 	justify-content: center;
-	margin-top: -.5rem;
+	margin-top: .5rem;
 }
 .app-profile-social a{
 	display: flex;
 	align-items: center;
 }
 .app-profile-social a i{
-	padding-left: .5rem;
+	padding-right: .5rem;
 }
 @media (max-width: 1200px) {
 	.artwork-title{
@@ -282,19 +282,19 @@ body{
 							<img src="<?= $path_image ?>" id="user-avatar-img">
 						<?php endif; ?>
 					</div>
-					<div id="app-profile-nickname"><?= $info['nickname'] ?></div>
+					<h1 class="title-4" id="app-profile-nickname"><?= $info['nickname'] ?></h1>
 
 				</div>
 			</div>
 			<div class="app-profile-social">
 				<?php if ($access_account): ?>
 					<?php if ($instagram == ''): ?>
-						<a href="<?= base_url() ?>/user/settings" class="grey-text">Instagram <i class="mdi mdi-instagram mdi-24px"></i></a>
+						<a href="<?= base_url() ?>/user/settings" class="grey-text"><i class="mdi mdi-instagram mdi-18px"></i>Instagram</a>
 					<?php else: ?>
-						<a href="https://www.instagram.com/<?= $instagram ?>" target="_blank" class="primary">Instagram <i class="mdi mdi-instagram mdi-24px"></i></a>
+						<a href="https://www.instagram.com/<?= $instagram ?>" target="_blank" class="primary"><i class="mdi mdi-instagram mdi-18px"></i><?= $instagram ?></a>
 					<?php endif; ?>
-				<?php elseif($instagram == ''): ?>
-					<a href="https://www.instagram.com/<?= $instagram ?>" target="_blank" class="primary">Instagram <i class="mdi mdi-instagram mdi-24px"></i></a>
+				<?php elseif($instagram != ''): ?>
+					<a href="https://www.instagram.com/<?= $instagram ?>" target="_blank" class="primary"><i class="mdi mdi-instagram mdi-18px"></i><?= $instagram ?></a>
 				<?php endif; ?>
 			</div>
 			<div id="app-profile-decorator" >
