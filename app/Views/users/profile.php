@@ -1,5 +1,9 @@
 <?php
 $access_account = is_self_account($info['account']);
+$instagram = '';
+foreach ($social as $key => $url) {
+	if ($url['type_socialnetwork'] == 'INSTA') $instagram = $url['url'];
+}
 
 ?>
 <script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=3" ></script>
@@ -154,6 +158,18 @@ body{
 	display: flex;
 	justify-content: center;
 }
+.app-profile-social{
+	display: flex;
+	justify-content: center;
+	margin-top: -.5rem;
+}
+.app-profile-social a{
+	display: flex;
+	align-items: center;
+}
+.app-profile-social a i{
+	padding-left: .5rem;
+}
 @media (max-width: 1200px) {
 	.artwork-title{
 		padding: 0;
@@ -269,6 +285,17 @@ body{
 					<div id="app-profile-nickname"><?= $info['nickname'] ?></div>
 
 				</div>
+			</div>
+			<div class="app-profile-social">
+				<?php if ($access_account): ?>
+					<?php if ($instagram == ''): ?>
+						<a href="<?= base_url() ?>/user/settings" class="grey-text">Instagram <i class="mdi mdi-instagram mdi-24px"></i></a>
+					<?php else: ?>
+						<a href="https://www.instagram.com/<?= $instagram ?>" target="_blank" class="primary">Instagram <i class="mdi mdi-instagram mdi-24px"></i></a>
+					<?php endif; ?>
+				<?php elseif($instagram == ''): ?>
+					<a href="https://www.instagram.com/<?= $instagram ?>" target="_blank" class="primary">Instagram <i class="mdi mdi-instagram mdi-24px"></i></a>
+				<?php endif; ?>
 			</div>
 			<div id="app-profile-decorator" >
 				<div id="user_header">

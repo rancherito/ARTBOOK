@@ -17,13 +17,15 @@
 }
 
 #settings-avatar-content{
-	padding: 2rem 2rem 1rem 2rem;
+	padding: 0 2rem;
+	margin: 0 auto;
+	position: relative;
 }
 #settings-field-content{
 	border-radius: 1rem;
 }
 #settings-avatar-img{
-	background-color: #0000001a;
+	background-color: rgba(0,0,0,0.2);
 	height: 110px;
 	width: 110px;
 	border-radius: 50%;
@@ -31,6 +33,7 @@
 	text-transform: uppercase;
 	color: gray;
 	position: relative;
+	margin: 0 auto;
 }
 #settings-avatar-img img{
 	width: 100%;
@@ -146,51 +149,59 @@ canvas{
 		</div>
 
 		<div>
-			<a id="settings-back-account" href="<?= user_site() ?>" class="btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
-			<div id="settings-avatar-content">
-				<h3 class="pb-4">Perfil de usuario</h3>
-				<div id="settings-avatar-img" class="f-c">
-					<span style="display: none" v-show="avatar_image == null"><?= user_nickname()[0] ?></span>
-					<img style="display: none" v-show="avatar_image" :src="avatar_image">
-					<label id="settings-take-newavatar" class="f-c">
-						<input type="file" style="display: none" @change="upload_avatar" accept="image/x-png,image/jpeg">
-						<i class="mdi mdi-camera f-c"></i>
-					</label>
-				</div>
+			<h3 class="p-6">PERFIL DE USUARIO</h3>
+			<div class="" style="max-width: 400px; width: 100%">
+				<div id="settings-avatar-content">
 
-			</div>
-			<div id="settings-field-content" class="w100">
-				<form @submit.prevent="submit_perfil" class="f-b">
-					<i class="mdi mdi-account mdi-24px"></i>
-					<cg-field name="<?= rand() ?>" :watchisvalid.sync="nickname.isvalid" required v-model="nickname.val" placeholder="ingrese nombre de usuario" sizechars="4-30" label="Nombre de usuario" style="flex: 1;" class="mx-4 mt-5"></cg-field>
-					<button type="submit" class="btn" :disabled="!isValidAccount">
-						<i class="mdi mdi-content-save mdi-18px"></i>
-					</button>
-				</form>
-				<form @submit.prevent="submitinsta" class="f-b">
-					<i class="mdi mdi-instagram mdi-24px"></i>
-					<cg-field name="<?= rand() ?>" :watchisvalid.sync="instagram_url.isvalid" required v-model="instagram_url.val" placeholder="ingrese la el nombre de usuario de su Instagram" sizechars="4-60" label="Nombre de usuario Instagram " style="flex: 1;" class="mx-4 mt-5"></cg-field>
-					<button type="submit" class="btn" :disabled="!isValidaInsta">
-						<i class="mdi mdi-content-save mdi-18px"></i>
-					</button>
-				</form>
-
-				<br>
-				<br>
-				<label class="w100">
-					<input type="checkbox" class="filled-in" v-model="isNewPassword" >
-					<span>Editar contraseña</span>
-				</label>
-				<form id="tatat" @submit.prevent="submit" autocomplete="off" style="display: none" v-show="isNewPassword">
-					<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="old_password.val" sizechars="4-20" :watchisvalid.sync="old_password.isvalid"  label="Contraseña actual" v-show="isNewPassword" placeholder="ignrese Contraseña"></cg-field>
-					<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="new_password.val" sizechars="4-20" :empty="!isNewPassword" :watchisvalid.sync="new_password.isvalid" v-show="isNewPassword" label="Nueva contraseña" placeholder="ignrese Contraseña"></cg-field>
-
-					<div id="settings-field-actions">
-						<button type="submit" class="btn" :disabled="!isValid"><i class="mdi mdi-content-save mdi-18px right"></i> <span>SALVAR</span> </button>
+					<div id="settings-avatar-img" class="f-c">
+						<span style="display: none" v-show="avatar_image == null"><?= user_nickname()[0] ?></span>
+						<img style="display: none" v-show="avatar_image" :src="avatar_image">
+						<label id="settings-take-newavatar" class="f-c">
+							<input type="file" style="display: none" @change="upload_avatar" accept="image/x-png,image/jpeg">
+							<i class="mdi mdi-camera f-c"></i>
+						</label>
 					</div>
-				</form>
 
+				</div>
+				<div id="settings-field-content" class="w100">
+					<form @submit.prevent="submit_perfil" class="f-b">
+						<i class="mdi mdi-account mdi-24px"></i>
+						<cg-field name="<?= rand() ?>" :watchisvalid.sync="nickname.isvalid" required v-model="nickname.val" placeholder="ingrese nombre de usuario" sizechars="4-30" label="Nombre de usuario" style="flex: 1;" class="mx-4 mt-5"></cg-field>
+						<button type="submit" class="btn" :disabled="!isValidAccount">
+							<i class="mdi mdi-content-save mdi-18px"></i>
+						</button>
+					</form>
+					<form @submit.prevent="submitinsta" class="f-b">
+						<i class="mdi mdi-instagram mdi-24px"></i>
+						<cg-field name="<?= rand() ?>" :watchisvalid.sync="instagram_url.isvalid" required v-model="instagram_url.val" placeholder="ingrese la el nombre de usuario de su Instagram" sizechars="4-60" label="Nombre de usuario Instagram " style="flex: 1;" class="mx-4 mt-5"></cg-field>
+						<button type="submit" class="btn" :disabled="!isValidaInsta">
+							<i class="mdi mdi-content-save mdi-18px"></i>
+						</button>
+					</form>
+
+					<br>
+					<br>
+					<label class="w100">
+						<input type="checkbox" class="filled-in" v-model="isNewPassword" >
+						<span>Editar contraseña</span>
+					</label>
+					<form id="tatat" @submit.prevent="submit" autocomplete="off" style="display: none" v-show="isNewPassword">
+						<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="old_password.val" sizechars="4-20" :watchisvalid.sync="old_password.isvalid"  label="Contraseña actual" v-show="isNewPassword" placeholder="ignrese Contraseña"></cg-field>
+						<cg-field autocomplete="off" type="password" name="<?= rand() ?>" required v-model="new_password.val" sizechars="4-20" :empty="!isNewPassword" :watchisvalid.sync="new_password.isvalid" v-show="isNewPassword" label="Nueva contraseña" placeholder="ignrese Contraseña"></cg-field>
+
+						<div id="settings-field-actions">
+							<button type="submit" class="btn" :disabled="!isValid"><i class="mdi mdi-content-save mdi-18px right"></i> <span>SALVAR</span> </button>
+						</div>
+					</form>
+					<br>
+					<br>
+					<div class="w100 r">
+						<a href="<?= user_site() ?>" class="btn">TERMINAR</a>
+					</div>
+
+				</div>
 			</div>
+
 		</div>
 
 	</div>

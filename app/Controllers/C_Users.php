@@ -21,11 +21,12 @@ class C_Users extends BaseController
 			$path = file_exists($partial_path) ? base_url()."/$partial_path?v=".date("Ymd") : '';
 			unset($account['user']);
 			$images = M_App::qry_images_recover($user, user_account());
+			$social = User::qry_socialnetwork_list($user);
 			$title = strtoupper($account['nickname']).' - ARTS BOOK';
 
 			$metaimage = $path == '' ?  base_url().'/images/meta.png' : $path;
 			$metas = ['img' => $metaimage, 'title' => $title];
-			echo $this->layout_view('publicv2','users/profile',['current_events' => $current_events, 'path_image' => $path, 'images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
+			echo $this->layout_view('publicv2','users/profile',['social' => $social, 'current_events' => $current_events, 'path_image' => $path, 'images_list' => $images, 'info' => $account, 'metas'=> $metas, 'agent' => $agent]);
 
 		}
 		else if (count($account) && $account['validate'] == 0) {
