@@ -310,7 +310,7 @@ body{
 							<?php if ($access_account): ?>
 								<?php foreach ($current_events as $key => $event): ?>
 									<?php if ($event['is_voting'] == 0): ?>
-										<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus">
+										<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>">
 											<div class="box-events w100">
 												<div class="combo-text-title"><?= $event['name'] ?></div>
 												<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['event_end'] ?>"></cg-countdown> </span>
