@@ -34,6 +34,7 @@ $links = [];
 	</div>
 	<?= $body ?>
 	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
+	<?php if (!empty($GLOBALS['script'])) echo $GLOBALS['script']; ?>
 	<script type="text/javascript">
 
 	new Vue({

@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-
+use Carbon\Carbon;
 /**
  * Class BaseController
  *
@@ -29,9 +29,16 @@ class BaseController extends Controller
 	public function initController(\CodeIgniter\HTTP\RequestInterface $request, \CodeIgniter\HTTP\ResponseInterface $response, \Psr\Log\LoggerInterface $logger)
 	{
 		// Do Not Edit This Line
-		parent::initController($request, $response, $logger);
+		Carbon::setLocale('es');
+		session();
 		helper('tdatabase');
 		helper('utils');
+		parent::initController($request, $response, $logger);
+		if (empty($_SESSION['current_date'])) $_SESSION['current_date'] = date('mdy');
+		if ($_SESSION['current_date'] != date('mdy') || empty($_SESSION['user_time_zone'])) {
+			$_SESSION['user_time_zone'] = getLocationInfoByIp();
+			$_SESSION['user_min_diff_timezone'] = minuteDifferenceTimeZone();
+		}
 		//--------------------------------------------------------------------
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------

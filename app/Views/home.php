@@ -1,52 +1,6 @@
-
-<link rel="stylesheet" href="<?= base_url() ?>/css/home.css?v=1">
-<style media="screen">
-	#app-home-news-gallery{
-		display: flex;
-		width: 100%;
-
-	}
-	#app-home-gallery-container{
-		width: calc(100% - 360px);
-	}
-	#app-home-news{
-		padding: 0 1rem;
-		width: 360px;
-	}
-	#app-home-news img{
-		width: 100%;
-		border-radius: 10px 10px 0 0;
-	}
-	.app-artwork-top-author{
-		color: black;
-		text-decoration: underline;
-	}
-	.app-artwork-top-picture{
-		position: relative;
-	}
-	.slider-feed-nartwork-date{
-		position: absolute;
-		left: 1rem;
-		bottom: .5rem;
-		font-size: .8rem;
-	}
-	@media (max-width: 992px) {
-		#app-home-news-gallery{
-			flex-direction: column;
-		}
-		#app-home-gallery-container, #app-home-news{
-			width: 100%;
-		}
-		#app-home-news{
-			display: none;
-		}
-	}
-	@media (max-width: 600px) {
-		#app-home-news{
-			display: block;
-		}
-	}
-</style>
+<?php style_start()?>
+	<link rel="stylesheet" href="<?= base_url() ?>/css/home.css?v=<?= $_ENV['version'] ?>">
+<?php style_end()?>
 <?php module_start()?>
 <div>
 	<div id="app-home-presentation" style="background-image: url('<?= base_url() ?>/images/bg_008.jpg');">
@@ -73,27 +27,8 @@
 				</div>
 
 			</div>
-			<div id="app-home-events">
-				<?php foreach ($current_events as $key => $event): ?>
-					<?php if ($event['is_voting'] == 0): ?>
+			<div class="">
 
-						<div class="event-anunces">
-							<?php if ($event['type_event'] != 1): ?>
-								<?= bg_animate_001() ?>
-							<?php else: ?>
-								<?= bg_animate_002() ?>
-							<?php endif; ?>
-
-							<div class="context">
-								<div class="title-4"><?= $event['name'] ?></div>
-								<cg-countdown class="title-3 c" datestring="<?= $event['voting'] ?>"></cg-countdown>
-								<span class="white-text" style="font-size: .9rem; margin-top: -.2rem; display: block">Una vez finalizada la cuenta regresiva <b>inician las votaciones</b></span>
-								<a href="<?= base_url() ?>/events/versus">PARTICIPA AQUI!</a>
-							</div>
-
-						</div>
-					<?php endif; ?>
-				<?php endforeach; ?>
 			</div>
 		</section>
 		<section id="app-home-feedworks-container">
@@ -164,7 +99,7 @@
 	<div id="app-home-gallery-container">
 		<h3 class="title-4 py-4 primary"> <i class="mdi mdi-apps"></i> GALLERIA</h3>
 		<div id="wrap_grid_gallery">
-			<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>" @sizewrapper="sizewrapper"></cg-grid>
+			<cg-grid :images="list_img" :stack_size="stack" base_url="<?= base_url() ?>"></cg-grid>
 		</div>
 	</div>
 
@@ -227,78 +162,15 @@
 
 <?php module_end()?>
 
-
-
+<?php script_start()?>
 <script>
-let list_images_pre = <?= json_encode($images_list) ?>;
-
-Vue.component('slider-feed-nartwork-container', {
-	template: `<div class="slider-feed-nartwork-container" :style="{'min-height': 'calc(2rem + ' + size + 'px)'}">
-		<div ref="wrap" :style="{'min-height': size + 'px'}">
-			<slider-feed-nartwork v-for="artwork of data" :data='artwork' base_url="<?= base_url() ?>"></slider-feed-nartwork>
-		</div>
-	</div>`,
-	data: function () {
-		return {
-			size_stack: <?= $agent->isMobile() ? 100 : 200 ?>,
-			size: <?= $agent->isMobile() ? 100 : 200 ?>
-		}
-	},
-	props: ['data'],
-	methods: {
-		calcule_width: function () {
-			const items_in_row = parseInt(this.$refs.wrap.offsetWidth/this.size_stack);
-			const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row)
-			this.size = items_new_width
-			for (var child of this.$children) child.size = items_new_width;
-		}
-	},
-	mounted: function () {
-		new ResizeSensor(this.$refs.wrap, () => {this.calcule_width()});
-		this.calcule_width();
-
-	},
-	created: function () {
-
-	}
-})
-Vue.component('slider-feed-nartwork',{
-	template: `
-	<div class="slider-feed-nartwork" :style="{'min-width': size + 'px', 'min-height': size + 'px', 'width': size + 'px', 'height': size + 'px'}">
-		<div class="slider-feed-nartwork-heart" :class="{'feed-heart-active': data.heart}" @click="trigger_heart(data)">
-			<i class="mdi" :class="data.heart ? 'mdi-heart' : 'mdi-heart-outline'"></i>
-		</div>
-		<time class="slider-feed-nartwork-date">{{(new Date(data.uploaded_date)).toLocaleDateString()}}</time>
-
-		<a :href="base_url + '/artwork/view/' + data.accessname">
-			<img :src="base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name">
-		</a>
-	</div>
-	`,
-	data: function () {
-		return {
-			size: 200
-		}
-	},
-	props: ['data','base_url'],
-	methods: {
-		trigger_heart: function (info) {
-			if (this.$root.trigger_like != undefined) this.$root.trigger_like(info)
-			else console.log('FUNCTION LIKE NO FOUND');
-		}
-	},
-	mounted: function () {
-	}
-})
-
 $_module = {
 	data: function () {
 		return {
-			list_img: list_images_pre,
+			list_img: <?= json_encode($images_list) ?>,
 			images_feed: <?= json_encode($images_feed) ?>,
 			stack: $(window).width() > 1200 ? 320 : <?= $agent->isMobile() ? 170 : 280 ?>,
-			modal: null,
-			test: <?= json_encode($current_events) ?>
+			modal: null
 		}
 	},
 
@@ -310,9 +182,7 @@ $_module = {
 
 			return event.toLocaleDateString('es-ES', options).toUpperCase() + ' a las ' + event.toLocaleTimeString('es-ES', ophour)
 		},
-		sizewrapper: function (size) {
-			$('.content_feed_and_gallery').width(size)
-		},
+
 		goevent: function () {
 			window.location.href = '<?= base_url() ?>/events/challenges'
 		}
@@ -331,3 +201,4 @@ $_module = {
 }
 
 </script>
+<?php script_end()?>

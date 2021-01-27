@@ -4,6 +4,9 @@
 		--cg-error-dark: #bf1212;
 		--cg-error-light: #ffe7e7;
 	}
+	input{
+		outline: inherit;
+	}
 	cg-select + cg-select, cg-select + cg-field, cg-field + cg-select, cg-field + cg-field,
 	.cg-select + .cg-select, .cg-select + .cg-field, .cg-field + .cg-select, .cg-field + .cg-field{
 		margin-top: .5rem;

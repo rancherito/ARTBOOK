@@ -1,6 +1,4 @@
 <?php
-$version = 'beta_0.099';
-$GLOBALS['version'] = $version;
 ?>
 <?php
 	$pre_metas = [
@@ -32,25 +30,25 @@ $GLOBALS['version'] = $version;
 <link rel="stylesheet" href="<?= base_url() ?>/font/RobotoCondensed/RobotoCondensed.css">
 
 <link rel="stylesheet" href="<?= base_url() ?>/libs/materialize/css/materialize.min.css">
-<link rel="stylesheet" href="<?= base_url() ?>/css/helpers.css?v=<?= $version ?>">
+<link rel="stylesheet" href="<?= base_url() ?>/css/helpers.css?v=<?= $_ENV['version'] ?>">
 
-<link rel="stylesheet" href="<?= base_url() ?>/css/custom_materialize.css?v=<?= $version ?>">
-<script src="<?= base_url() ?>/js/script.js?v=<?= $version ?>"></script>
+<link rel="stylesheet" href="<?= base_url() ?>/css/custom_materialize.css?v=<?= $_ENV['version'] ?>">
+<script src="<?= base_url() ?>/js/script.js?v=<?= $_ENV['version'] ?>"></script>
 <script src="<?= base_url() ?>/js/jquery-3.4.1.min.js"></script>
 
 
-<link rel="stylesheet" href="<?= base_url() ?>/libs/cgVue/cg.components.vue.css?v=<?= $version ?>">
-<link rel="stylesheet" href="<?= base_url() ?>/css/main.css?v=<?= $version ?>">
-<link rel="stylesheet" href="<?= base_url() ?>/css/colors.css?v=<?= $version ?>">
-<link rel="stylesheet" href="<?= base_url() ?>/css/components.vue.css?v=<?= $version ?>">
+<link rel="stylesheet" href="<?= base_url() ?>/libs/cgVue/cg.components.vue.css?v=<?= $_ENV['version'] ?>">
+<link rel="stylesheet" href="<?= base_url() ?>/css/main.css?v=<?= $_ENV['version'] ?>">
+<link rel="stylesheet" href="<?= base_url() ?>/css/colors.css?v=<?= $_ENV['version'] ?>">
+<link rel="stylesheet" href="<?= base_url() ?>/css/components.vue.css?v=<?= $_ENV['version'] ?>">
 <link rel="stylesheet" href="<?= base_url() ?>/libs/simplebar/simplebar.css">
 
 <link rel="stylesheet" href="<?= base_url() ?>/libs/animate/animate.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>/font/mdi/css/materialdesignicons.min.css">
 <script src="<?= base_url() ?>/libs/materialize/js/materialize.min.js"></script>
 <script src="<?= base_url() ?>/libs/vue/vue<?= $_ENV['CI_ENVIRONMENT'] != 'development' ? '.min' : '' ?>.js"></script>
-<script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js?v=<?= $version ?>"></script>
+<script src="<?= base_url() ?>/libs/cgVue/cg.components.vue.js?v=<?= $_ENV['version'] ?>"></script>
 <script src="<?= base_url() ?>/libs/simplebar/simplebar.min.js"></script>
-<script src="<?= base_url() ?>/js/components.vue.js?v=<?= $version ?>"></script>
+<script src="<?= base_url() ?>/js/components.vue.js?v=<?= $_ENV['version'] ?>"></script>
 <script src="<?= base_url() ?>/libs/simplebar/simplebar.vue.js"></script>
 <!--<script data-ad-client="ca-pub-1355252812560688" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->

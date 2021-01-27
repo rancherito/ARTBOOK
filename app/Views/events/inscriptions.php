@@ -4,30 +4,30 @@
 	background: white;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	min-height: 120px;
-	color: gray;
+	justify-content: space-between;
 	width: 100%;
 	border-radius: 10px;
 	height: 100%;
 	position: relative;
-	overflow: hidden;
 }
-.dashbox > i {
-	padding: 1rem 0;
-	font-size: 2rem;
+
+.dashbox-info {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	height: 40px;
+	padding: 0 1rem;
+	margin: .5rem 0;
+
 	color: var(--primary);
 }
-.dashbox-info {
-	overflow: hidden;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: column;
-	flex: 1;
+.dashbox-info > i{
+	font-size: 1.5rem;
+	color: var(--primary);
+	padding-right: .5rem;
 }
 .dashbox-info-description{
-	padding: 1rem;
-	padding-top: 0;
+	flex: 1;
 }
 .dashbox-promoter-mark{
 	position: absolute;
@@ -49,29 +49,27 @@
 .dashbox-info-promoter{
 	padding: 1rem;
 	padding-top: 0;
+	width: 100%;
 	font-size: .8rem;
-}
-.dashbox-info-promoter > div{
 	display: flex;
-	justify-content: center;
 	flex-wrap: nowrap;
 }
-.dashbox-info-promoter > div *{
+.dashbox-info-promoter a{
 	padding: .25rem .5rem;
 	border-radius: 20px;
-	border: 1px solid var(--primary);
+	background-color: var(--gray);
 	margin: 2px;
-}
-.dashbox-info-promoter a{
+	max-width: 33%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 	color: gray;
 }
 .dashbox-info-promoter a:hover{
 	text-decoration: underline;
 }
 .dashbox-title{
-	font-size: 1.5rem;
-	margin: 0;
-	margin-bottom: .5rem;
+	font-size: 1.2rem;
 	text-transform: uppercase;
 }
 .dashbox-description{
@@ -80,9 +78,7 @@
 	text-overflow: ellipsis;
 	padding-bottom: .5rem;
 }
-#versus{
-	height: 100%; width: 100%
-}
+
 #versus-content-off, #versus-list{
 	overflow-y: auto;
 }
@@ -204,30 +200,20 @@ article h1{
 		</div>
 	</div>
 	<div ref="modal_confirmar_invitation" class="modal" style="max-width: 400px">
-		<div class="modal-content" >
+		<div class="modal-content f-c">
 
-
-
-			<a class="dashbox">
-				<i class="mdi mdi-fire"></i>
-				<div class="dashbox-info w100 c">
-					<div class="dashbox-info-description ">
-						<h3 class="dashbox-title">TEMA: {{vs_invitation.name}}</h3>
-						<div class="py-4 dashbox-description" v-if="is_acepted_invitation">
-							YA ESTAS INSCRITO EN ESTE VERSUS <br>
-							😊
-						</div>
-						<div v-else class="dashbox-description" v-html="jumplinereplace(vs_invitation.description)"></div>
-					</div>
-					<div class="dashbox-info-promoter p-0">
-						<b>Inscritos ({{vs_invitation.participients}})</b>
-						<div>
-							<span v-for="applicant of vs_invitation.applicants">{{applicant.nickname}}</span>
-						</div>
-					</div>
+				<i class="mdi mdi-fire primary pt-4" style="font-size: 2rem;"></i>
+				<h4 class="pb-4">{{vs_invitation.name}}</h4>
+				<div class="py-4 c" v-if="is_acepted_invitation">
+					YA ESTAS INSCRITO EN ESTE VERSUS <br>
+					😊
 				</div>
+				<div v-else v-html="jumplinereplace(vs_invitation.description)"></div>
 
-			</a>
+				<b>Inscritos ({{vs_invitation.participients}})</b>
+				<div class="dashbox-info-promoter w100">
+					<a v-for="applicant of vs_invitation.applicants">{{applicant.nickname}}</a>
+				</div>
 
 		</div>
 		<div class="modal-footer">
@@ -236,7 +222,7 @@ article h1{
 					<span class="btn" @click="confirm_invitation" :disabled="is_send_apply">ACEPTAR VERSUS</span>
 				</template>
 			<?php else: ?>
-				<a href="<?= base_url() ?>/user/login?fromurl=<?= base64_encode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]")?>" class="btn">LOGUEAR</a>
+				<a href="<?= base_url() ?>/user/login?fromurl=<?= base64_encode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]")?>" class="btn">INICIAR SESION</a>
 			<?php endif; ?>
 			<a class="modal-close waves-effect" :class="is_acepted_invitation ? 'btn' : 'btn-flat'">{{is_acepted_invitation ? 'ACEPTAR' : 'CERRAR'}}</a>
 
@@ -263,7 +249,6 @@ article h1{
 							}}</span>
 						</label>
 					</div>
-					<div class="pt-4 grey-text c" style="font-size: .9rem">#{{current_register_event.event_tag}}</div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -273,79 +258,41 @@ article h1{
 		</form>
 	</div>
 
-	<?=  count($list_versus) ? '' : bg_default()?>
-	<div id="versus-content-off" class="f-c" style="display: <?= count($list_versus) ? 'none' : 'flex' ?>">
-		<img src="<?= base_url() ?>/images/vs_logo.png">
-		<article>
-			<h1>Versus cerrado</h1>
-			<span>Evento promovido por la comunidad de artistas de <b>Art's Book</b>.</span>
 
-		</article>
-	</div>
-	<div id="versus-list" style="display: <?= count($list_versus) == 0 ? 'none' : 'block' ?>">
-		<?php if (empty($_SESSION['access'])): ?>
-			<a href="<?= base_url() ?>/user/login?fromurl=<?= base64_encode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") ?>" id="versus-access-account-movil">
-				ACCEDE AQUI Y PARTICIPA
-			</a>
-		<?php endif; ?>
 		<div class="container">
-			<div class="c py-5">
-				<div class="combo-text-title title-1">Art's Book Versus</div>
+			<div class="f-c py-5">
+				<div class="combo-text-title title-1"><?= $list_versus['name'] ?></div>
 				<span>Encuentra un contrincante o inscribe tu versus :D</span>
+				<h4 class="f-b">
+					<span class="pr-2"> Votaciones en </span>
+					<cg-countdown :datestring="versus.voting"></cg-countdown>
+
+				</h4>
+				<?php if (is_access()): ?>
+					<button class="btn mt-4" @click="add_versus">CREAR UN VERSUS</button>
+				<?php else: ?>
+					<a href="<?= base_url() ?>/user/login?fromurl=<?= base64_encode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") ?>" class="btn mt-4">
+						ACCEDE Y PARTICIPA
+					</a>
+				<?php endif; ?>
 			</div>
-			<div class="" v-for="versus of list_versus">
-				<div class="row">
-					<div class="col s12">
-						<div class="versus-info">
-							<div>
-								<div class="title-4 combo-text-title">{{versus.name}}</div>
-								<span><cg-countdown :datestring="versus.voting"></cg-countdown> PARA LA VOTACIONES</span>
-							</div>
-						</div>
-
-					</div>
-				</div>
 				<div id="versus-list-container" class="row">
-					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in 1 + (3 - (participients[versus.event_tag].length > 3 ? 3 : participients[versus.event_tag].length))">
-						<div class="dashbox">
-
-							<i class="mdi mdi-plus"></i>
-							<div class="dashbox-info w100 c">
-								<div class="dashbox-info-description ">
-									<h3 class="dashbox-title">Nuevo Versus</h3>
-									<div class="dashbox-description">
-										Registra un versus,<br> maximo de 3 versus por persona.
-									</div>
-								</div>
-								<div class="dashbox-info-promoter">
-									<b></b>
-									<div>
-										<span v-for="applicant in item.applicants"></span>
-									</div>
-								</div>
-							</div>
-							<div class="pb-4">
-								<?php if (!empty($_SESSION['access'])): ?>
-									<a class="btn bg-secondary" @click="add_versus(versus)">
-										<i class="mdi mdi-fire left mdi-18px"></i>
-										<span>Nuevo</span>
-									</a>
-								<?php else: ?>
-									<a id="versus-access-account" class="btn" href="<?= base_url() ?>/user/login?fromurl=<?= base64_encode("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") ?>">
-										<span>PRIMERO LOGUEAR</span>
-									</a>
-								<?php endif; ?>
-							</div>
-						</div>
+					<div class="col s12 py-4" v-if="my_participations.length > 0">
+						<i class="mdi mdi-account primary pr-2"></i>
+						MIS PARTICIPACIONES
 					</div>
-					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in participients[versus.event_tag]">
+					<div class="col s12 m6 l4 xl3 mb-4" v-for="item in my_participations">
+						<dashbox :data="item"></dashbox>
+					</div>
+					<div class="col s12 py-4">
+						<i class="mdi mdi-apps primary pr-2"></i>
+						LISTA DE VERSUS
+					</div>
+					<div class="col s12 m6 l4 xl3 mb-4" v-if="!calcule_participation(item.applicants)" v-for="item in participients">
 						<dashbox :data="item"></dashbox>
 					</div>
 				</div>
-			</div>
-			<div style="height: 4rem;"></div>
 		</div>
-	</div>
 </div>
 
 <?php module_end() ?>
@@ -353,40 +300,36 @@ article h1{
 Vue.component('dashbox',{
 	template : `
 	<div class="dashbox">
-	<div class="dashbox-promoter-mark">
-	<a v-if="data.account_promoter == $root.current_account" class="px-1 mdi mdi-flag"></a>
-	<a v-if="data.state_inscription == 'P' || data.account_promoter == $root.current_account" style="cursor: pointer" class="px-1 mdi mdi-share-variant" @click="generatelinkshare"></a>
-	</div>
-	<i class="mdi mdi-fire"></i>
-	<div class="dashbox-info w100 c">
-	<div class="dashbox-info-description ">
-	<h3 class="dashbox-title">{{data.name}}</h3>
-	<div class="dashbox-description" v-html="jumplinereplace(data.description)"></div>
-	</div>
-	<div class="dashbox-info-promoter">
-	<b>Inscritos ({{data.participients}})</b>
-	<div>
-	<a :href="$root.base_url + '/' + applicant.account" v-for="applicant of data.applicants">{{applicant.nickname}}</a>
-	</div>
-	</div>
-	</div>
-	<div class="pb-4">
-	<?php if (is_access()): ?>
-	<template v-if="calcule_participation(data.applicants)">
-		<span disabled class="btn">PARTICIPANDO</span>
-	</template>
-	<template v-else>
-		<template v-if="data.state_inscription == 'P' || data.account_promoter == $root.current_account">
-			<span class="btn" @click="versus_apply">RETAR</span>
-		</template>
-		<template v-else>
-			<span class="btn" disabled >PRIVADO</span>
-		</template>
-	</template>
 
-	<?php endif; ?>
+		<div>
+			<div class="dashbox-info">
+				<div class="dashbox-info-description">
+					<h3 class="dashbox-title">{{data.name}}</h3>
+				</div>
+			</div>
+			<div v-if="false" class="dashbox-description" v-html="jumplinereplace(data.description)"></div>
+			<div class="dashbox-info-promoter">
+				<template v-if="data.applicants.length > 0">
+					<a :href="$root.base_url + '/' + applicant.account" v-for="applicant of data.applicants">{{applicant.nickname}}</a>
+				</template>
+				<span v-else>NO HAY REGISTRADOS</span>
+			</div>
+		</div>
+		<div class="pb-4 px-4 f-b w100">
+			<div>
+				<a class="btn-icon bg-secondary white-text" v-if="data.state_inscription == 'P' || data.account_promoter == $root.current_account" style="cursor: pointer" @click="generatelinkshare">
+					<i class="px-1 mdi mdi-share-variant"></i>
+				</a>
+			</div>
+		<?php if (is_access()): ?>
+			<span v-if="calcule_participation(data.applicants)" disabled class="btn btn-small">ESTAS AQUI</span>
+			<template v-else>
+				<span v-if="data.state_inscription == 'P' || data.account_promoter == $root.current_account" class="btn btn-small" @click="versus_apply">RETAR</span>
+				<span v-else class="btn btn-small" disabled >PRIVADO</span>
+			</template>
+		<?php endif; ?>
 
-	</div>
+		</div>
 	</div>
 	`,
 	data: function () {
@@ -396,7 +339,7 @@ Vue.component('dashbox',{
 	props: ['data'],
 	methods: {
 		generatelinkshare: function () {
-			copyStringToClipboard(this.$root.base_url + `/events/versus?id=${this.data.versus}`);
+			copyStringToClipboard(this.$root.base_url + `/events/versus/${this.data.tag}?id=${this.data.versus}`);
 			M.toast({html: 'Link de ' + this.data.name +' copiado con exito', classes: 'rounded bg-primary'});
 		},
 		jumplinereplace: function (text) {
@@ -417,12 +360,11 @@ Vue.component('dashbox',{
 $_module = {
 	data: function () {
 		return {
-			list_versus: <?= json_encode($list_versus) ?>,
+			versus: <?= json_encode($list_versus) ?>,
 			participients: <?= json_encode($list_participients) ?>,
 			title: {val: '', isvalid: false},
 			description: {val: '', isvalid: false},
 			versus_isPublic: true,
-			current_register_event: {},
 			current_versus_apply: {},
 			is_send: false,
 			is_send_apply: false,
@@ -434,8 +376,13 @@ $_module = {
 		}
 	},
 	computed: {
+		my_participations: function () {
+			let list = [];
+				for (var versus of this.participients) if (this.calcule_participation(versus.applicants)) list.push(versus);
+			return list;
+		},
 		isvalid: function () {
-			return this.title.isvalid && this.description.isvalid && this.current_register_event.event_tag != undefined
+			return this.title.isvalid && this.description.isvalid && this.versus.event_tag != undefined
 		}
 	},
 	mounted: function () {
@@ -456,11 +403,6 @@ methods: {
 		this.current_versus_apply = this.vs_invitation
 		this.confirm_apply();
 	},
-	generatelinkshare: function (info) {
-		copyStringToClipboard(this.$root.base_url + `/events/versus?id=${info.versus}`);
-		M.toast({html: 'Link de ' + info.name +' copiado con exito', classes: 'rounded bg-primary'});
-		//console.log();
-	},
 	calcule_participation: function (applicants) {
 		let active = false;
 		for (var applicant of applicants) active |= applicant.account == this.$root.current_account
@@ -469,7 +411,6 @@ methods: {
 	clear: function () {
 		this.title.val = ''
 		this.description.val = ''
-		this.current_register_event = {}
 	},
 	jumplinereplace: function (text) {
 		if (text != undefined) return text.replace(/\n/g,'<br>')
@@ -494,7 +435,7 @@ methods: {
 			this.is_send_apply = false
 			const dataupdate = {tag: this.current_versus_apply.tag}
 			$.post('<?= base_url() ?>/service/events/versuslist', dataupdate, (res) => {
-				this.participients[dataupdate.tag] = res
+				this.participients = res
 			})
 		}).fail(() => {
 			M.toast({html: 'ERROR EN LA PAGINA, VUELVA MÁS TARDE', classes: 'rounded bg-alert'});
@@ -506,7 +447,7 @@ methods: {
 			const data = {
 				title: this.title.val,
 				description: this.description.val,
-				tag: this.current_register_event.event_tag,
+				tag: this.versus.event_tag,
 				account: this.$root.current_account,
 				is_public: this.versus_isPublic ? 1 : 0
 			}
@@ -515,10 +456,10 @@ methods: {
 				if (res.message != undefined) {
 					if (res.message == 'REGISTRO EXITOSO') {
 						this.modal_versus_add.modal('close')
-						const dataupdate = {tag: this.current_register_event.event_tag}
+						const dataupdate = {tag: this.versus.event_tag}
 						this.clear()
 						$.post('<?= base_url() ?>/service/events/versuslist', dataupdate, (res) => {
-							this.participients[dataupdate.tag] = res
+							this.participients = res
 						})
 					}
 					M.toast({html: res.message, classes: 'rounded'});
@@ -534,9 +475,8 @@ methods: {
 
 		}
 	},
-	add_versus: function (versus) {
+	add_versus: function () {
 		this.clear()
-		this.current_register_event = versus
 		this.modal_versus_add.modal('open')
 	}
 }

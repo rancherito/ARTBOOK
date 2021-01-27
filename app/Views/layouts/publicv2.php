@@ -3,7 +3,7 @@
 <head>
 	<?php include APPPATH.'Views/layouts_parts/header.php' ?>
 
-	<link rel="stylesheet" href="<?= base_url() ?>/css/layouts/publicv2.css?v=<?= $version ?>">
+	<link rel="stylesheet" href="<?= base_url() ?>/css/layouts/publicv2.css?v=<?= $_ENV['version'] ?>">
 	<style media="screen">
 	.sticky {
 		position: -webkit-sticky;
@@ -16,7 +16,7 @@
 		display: table;
 	}
 	</style>
-	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=<?= $version ?>" ></script>
+	<script src="<?= base_url() ?>/libs/vueadvancedcropper/cropper.js?v=<?= $_ENV['version'] ?>" ></script>
 	<?= $body ?>
 	<?php if (!empty($GLOBALS['style'])) echo $GLOBALS['style']; ?>
 </head>
@@ -80,7 +80,7 @@
 
 	</div>
 	<?php include APPPATH.'Views/layouts_parts/footer.php' ?>
-
+	<?php if (!empty($GLOBALS['script'])) echo $GLOBALS['script']; ?>
 	<script type="text/javascript">
 	Vue.component('adsense-ins',{
 		template: `<ins></ins>`,
@@ -94,7 +94,8 @@
 			return {
 				toggle_nav: false,
 				base_url: '<?= base_url() ?>',
-				current_account: '<?= user_account() ?>'
+				current_account: '<?= user_account() ?>',
+				is_mobile: <?= isMovil() ? 'true' : 'false' ?>
 			}
 		},
 		methods: {

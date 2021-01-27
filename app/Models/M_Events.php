@@ -53,14 +53,14 @@ class M_Events
 		";
 		return query_database($sql, [$user, $id_versus, $image_accessname]);
 	}
-	public static function qry_versus_current()
+	public static function qry_versus_current($tag = '%')
 	{
 		$sql = "
 		SELECT name, event_start,event_end,[description],event_tag, DATEADD(DD,-1,event_end) voting
 		FROM events.tb_events
-		WHERE type_event = 2 AND GETDATE() BETWEEN event_start AND DATEADD(DD,-1,event_end);
+		WHERE type_event = 2 AND GETDATE() BETWEEN event_start AND DATEADD(DD,-1,event_end) AND event_tag LIKE ?;
 		";
-		return query_database($sql);
+		return query_database($sql,[$tag]);
 	}
 	public static function qry_events_current()
 	{
@@ -89,7 +89,7 @@ class M_Events
 	}
 	public static function qry_versus_recover($tag)
 	{
-		$sql = "SELECT name,event_start,event_end,[description], creation_date, IIF(event_end < GETDATE(),'E',IIF(DATEADD(DAY, -1, event_end) < GETDATE(),'S','N')) event_voting_state, IIF(event_end < GETDATE(),'END VOTING',IIF(DATEADD(DAY, -1, event_end) < GETDATE(),'START VOTING','NO VOTING STARTER')) event_voting_state_details FROM events.tb_events WHERE type_event = 2 AND event_tag = ?;";
+		$sql = "SELECT event_tag, name, DATEADD(DAY, -1, event_end) voting,event_start,event_end,[description], creation_date, IIF(event_end < GETDATE(),'E',IIF(DATEADD(DAY, -1, event_end) < GETDATE(),'S','N')) event_voting_state, IIF(event_end < GETDATE(),'END VOTING',IIF(DATEADD(DAY, -1, event_end) < GETDATE(),'START VOTING','NO VOTING STARTER')) event_voting_state_details FROM events.tb_events WHERE type_event = 2 AND event_tag = ?;";
 		return query_database($sql, [$tag]);
 	}
 	public static function qry_vs_artwork_choise($nickname_or_ip,  $artwork, $versus)

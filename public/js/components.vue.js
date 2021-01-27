@@ -1,3 +1,61 @@
+Vue.component('slider-feed-nartwork',{
+	template: `
+	<div class="slider-feed-nartwork" :style="{'min-width': size + 'px', 'min-height': size + 'px', 'width': size + 'px', 'height': size + 'px'}">
+		<div class="slider-feed-nartwork-heart" :class="{'feed-heart-active': data.heart}" @click="trigger_heart(data)">
+			<i class="mdi" :class="data.heart ? 'mdi-heart' : 'mdi-heart-outline'"></i>
+		</div>
+		<time class="slider-feed-nartwork-date">{{(new Date(data.uploaded_date)).toLocaleDateString()}}</time>
+
+		<a :href="$root.base_url + '/artwork/view/' + data.accessname">
+			<img :src="$root.base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name">
+		</a>
+	</div>
+	`,
+	data: function () {
+		return {
+			size: 200
+		}
+	},
+	props: ['data'],
+	methods: {
+		trigger_heart: function (info) {
+			if (this.$root.trigger_like != undefined) this.$root.trigger_like(info)
+			else console.log('FUNCTION LIKE NO FOUND');
+		}
+	},
+	mounted: function () {
+	}
+})
+Vue.component('slider-feed-nartwork-container', {
+	template: `<div class="slider-feed-nartwork-container">
+		<div ref="wrap" :style="{'min-height': 'calc(' + size + 'px - 2px)'}">
+			<slider-feed-nartwork v-for="artwork of data" :data='artwork'></slider-feed-nartwork>
+		</div>
+	</div>`,
+	data: function () {
+		return {
+			size_stack: this.$root.is_mobile ? 100 : 200,
+			size: this.$root.is_mobile ? 100 : 200,
+		}
+	},
+	props: ['data'],
+	methods: {
+		calcule_width: function () {
+			const items_in_row = parseInt(this.$refs.wrap.offsetWidth/this.size_stack);
+			const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row)
+			this.size = items_new_width
+			for (var child of this.$children) child.size = items_new_width;
+		}
+	},
+	mounted: function () {
+		new ResizeSensor(this.$refs.wrap, () => {this.calcule_width()});
+		this.calcule_width();
+
+	},
+	created: function () {
+
+	}
+})
 Vue.component('event-list', {
 	template: `<div class="w100">
 		<div>
@@ -316,15 +374,15 @@ Vue.component('cg-grid-image', {
 				</a>
 			</div>
 			<a class="cg-grid-artwork-curtain f-c" :href="site_image">
-				<i class="mdi mdi-eye mdi-24px white-text"></i>
+				<i class="mdi mdi-image-filter-none mdi-24px white-text"></i>
 			</a>
 		</div>
 	</div>
 	`,
 	data: function () {
 		return {
-			base64: null,
-			is_mobile: (Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) < 992) || mobiledetector()
+			is_mobile: (Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) < 992) || mobiledetector(),
+			base_url: this.$root.base_url
 		}
 	},
 	computed: {
@@ -377,8 +435,7 @@ Vue.component('cg-grid-image', {
 	props: {
 		info: Object,
 		is_on_account:  Boolean,
-		is_on_profile: Boolean,
-		base_url: String
+		is_on_profile: Boolean
 	},
 
 	mounted: function () {
@@ -388,17 +445,33 @@ Vue.component('cg-grid-image', {
 Vue.component('cg-grid',{
 	template: `
 	<div class="cg-grid-wrapper" ref="wrap">
-		<div ref="menu" class="cg-grid">
-			<div v-for="img of images" class="cg-grid-wrapper-img" :style="{ width: stack_size + 'px', height: (img.adsense ? stack_size + 'px' : 'auto')}">
-				<cg-grid-image :base_url="base_url" v-if="!img.adsense" @changeimage="$emit('changeimage', $event)" @events="$emit('events_list', $event)" :info="img" :is_on_profile="is_on_profile" :is_on_account="is_on_account"></cg-grid-image>
-				<div class="cg-grid-adsense" v-else style="height: 100%; width: 100%" :id="img.id"></div>
+		<div ref="menu" class="cg-grid" :style="{height: 'calc(' + wrap_height + 'px - 4px)'}">
+			<div
+				v-for="(img,i) of images" class="cg-grid-wrapper-img"
+				:class="{'cg-grid-image-end-stack' : img.end_stack, 'cg-grid-image-hide-info': img.hide_info}"
+				:style="{
+					width: stack_size_adaptative + 'px',
+					height: img.height_adatable + 'px',
+					transform: 'translate(' + img.left + 'px,' + img.top + 'px)'
+				}">
+				<cg-grid-image
+					v-if="!img.adsense"
+					@changeimage="$emit('changeimage', $event)"
+					@events="$emit('events_list', $event)"
+					:info="img"
+					:is_on_profile="is_on_profile"
+					:is_on_account="is_on_account">
+				</cg-grid-image>
 			</div>
 		</div>
 	</div>
 	`,
 	data: function () {
 		return {
-			current_stacks: 0
+			current_stacks: 0,
+			stack_size_adaptative: 200,
+			count_stack: 0,
+			wrap_height: 0
 		}
 	},
 	props: {
@@ -409,64 +482,39 @@ Vue.component('cg-grid',{
 		base_url: String
 	},
 	updated: function () {
-	  this.$nextTick(function () {
-		setTimeout(() => { this.calcule(true)}, 500)
-	  })
-	},
-	watch: {
-		images: {
-			deep: true,
-			handler: function () {
-
-			}
-		}
+	  this.$nextTick(this.calcule)
 	},
 	methods: {
-		calcule: function (option) {
-
-			var top_height = 0;
-			var count_stack = parseInt(this.$el.clientWidth / this.stack_size);
-
-
-			if (count_stack !== this.current_stacks || typeof option != 'undefined') {
-
-				let stacks = Array(count_stack).fill(0);
-				let elementEndStack = Array(count_stack).fill(null);
-				this.$refs.menu.style.width = (count_stack * this.stack_size) + 'px'
-				this.$emit('sizewrapper', count_stack * this.stack_size)
-				for (var el of this.$el.querySelectorAll('.cg-grid-wrapper-img')) {
-					el.classList.remove("cg-grid-image-end-stack");
-					el.classList.remove("cg-grid-image-hide-info");
-					el.style.height = 'auto'
-					var near_index = stacks.findIndex(a => a == Math.min.apply(null, stacks));
-					var img_height = el.offsetHeight;
-					el.style.top = stacks[near_index] + 'px'
-					el.style.left = (near_index * this.stack_size) + 'px'
-					elementEndStack[near_index] = el
-					stacks[near_index] += img_height;
-					if (top_height < img_height) top_height = img_height
-				}
-
-
-				this.$refs.menu.style.height =  (this.is_on_profile ? Math.max.apply(null, stacks) : Math.min.apply(null, stacks)) + 'px'
-				if (!this.is_on_profile) {
+		calcule: function () {
+			this.count_stack = parseInt((this.$el.clientWidth + 4) / this.stack_size);
+			this.stack_size_adaptative = ((this.$el.clientWidth + 4) / this.count_stack)
+			let stacks = Array(this.count_stack).fill(0);
+			let elementEndStack = Array(this.count_stack).fill(null);
+			for (var el of this.images) {
+				el.end_stack = false;
+				el.hide_info = false;
+				var near_index = stacks.findIndex(a => a == Math.min.apply(null, stacks));
+				let is_r18 = el.category_main == 'R18';
+				var img_height = ((this.stack_size_adaptative * (is_r18 ? 400 : el.height)) / (is_r18 ? 400 : el.width));
+				el.height_adatable = img_height;
+				el.top = stacks[near_index]
+				el.left = (near_index * this.stack_size_adaptative)
+				elementEndStack[near_index] = el
+				stacks[near_index] += img_height;
+			}
+			this.wrap_height =  (this.is_on_profile ? Math.max.apply(null, stacks) : Math.min.apply(null, stacks))
+			if (!this.is_on_profile) {
 					for (var el of elementEndStack) {
-						const limit_el = parseInt(el.style.top.replace('px',''));
-						const limit = this.$refs.menu.offsetHeight
+						const limit_el = el.top;
+						const limit = this.wrap_height
 						const ideal_height_el = limit - limit_el;
-						el.style.height = ideal_height_el + 'px'
-						el.classList.add("cg-grid-image-end-stack");
-						if (el.offsetHeight < 70) el.classList.add("cg-grid-image-hide-info");
+						el.height_adatable = ideal_height_el
+						el.end_stack = true
+						if (el.height_adatable < 70) el.hide_info = true
 					}
 				}
 
-			}
-			const scale = this.$el.clientWidth / this.$refs.menu.clientWidth;
-			const wrap_height = this.$refs.menu.offsetHeight * scale;
-			document.documentElement.style.setProperty('--dropeditor', `scale(${2 - scale})`);
-			this.$refs.menu.style['transform'] = `scale(${scale})`;
-			this.$el.style.height = wrap_height + 'px';
-			this.current_stacks = count_stack;
+
 		}
 	},
 	mounted: function () {

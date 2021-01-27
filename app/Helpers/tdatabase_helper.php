@@ -64,4 +64,12 @@
 	{
 		ob_start();
 	}
+	function script_end()
+	{
+		$GLOBALS['script'] = ob_get_clean();
+	}
+	function script_start()
+	{
+		ob_start();
+	}
 ?>
