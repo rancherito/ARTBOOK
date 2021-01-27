@@ -23,6 +23,14 @@
 		padding: .125rem .5rem;
 		border-radius: 2px 0 0 2px;
 	}
+	@media (max-width: 992px) {
+		#app-dashboard-user-extra{
+			display: none;
+		}
+		#app-dashboard-user-general-gallery{
+			width: 100%;
+		}
+	}
 </style>
 <?php style_end() ?>
 <?php module_start() ?>
