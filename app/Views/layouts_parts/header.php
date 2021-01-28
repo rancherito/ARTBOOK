@@ -51,4 +51,5 @@
 <script src="<?= base_url() ?>/libs/simplebar/simplebar.min.js"></script>
 <script src="<?= base_url() ?>/js/components.vue.js?v=<?= $_ENV['version'] ?>"></script>
 <script src="<?= base_url() ?>/libs/simplebar/simplebar.vue.js"></script>
+<script src="<?= base_url() ?>/libs/hammer/hammer.min.js"></script>
 <!--<script data-ad-client="ca-pub-1355252812560688" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->

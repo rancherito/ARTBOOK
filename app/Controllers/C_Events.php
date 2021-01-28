@@ -83,21 +83,7 @@ class C_Events extends BaseController
 					return $i;
 				},$list_participients);
 
-
 				return $this->layout_view('publicv2', 'events/inscriptions',['metas'=> $GLOBALS['metas'], 'list_versus' => $res, 'list_participients' => $list_participients, 'invitation' => $GLOBALS['vs_invitation']]);
-
-
-
-
-
-
-
-
-
-
-
-
-
 			}
 		}
 		else {

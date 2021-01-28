@@ -1,19 +1,18 @@
 Vue.component('slider-feed-nartwork',{
 	template: `
-	<div class="slider-feed-nartwork" :style="{'min-width': size + 'px', 'min-height': size + 'px', 'width': size + 'px', 'height': size + 'px'}">
+	<div class="slider-feed-nartwork">
 		<div class="slider-feed-nartwork-heart" :class="{'feed-heart-active': data.heart}" @click="trigger_heart(data)">
 			<i class="mdi" :class="data.heart ? 'mdi-heart' : 'mdi-heart-outline'"></i>
 		</div>
 		<time class="slider-feed-nartwork-date">{{data.diffHuman}}</time>
 
-		<a :href="$root.base_url + '/artwork/view/' + data.accessname">
+		<a ref="anchor">
 			<img :src="$root.base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name">
 		</a>
 	</div>
 	`,
 	data: function () {
 		return {
-			size: 200
 		}
 	},
 	props: ['data'],
@@ -24,32 +23,47 @@ Vue.component('slider-feed-nartwork',{
 		}
 	},
 	mounted: function () {
+		this.$refs.anchor.addEventListener('click', (e) => {
+			window.location = this.$root.base_url + '/artwork/view/' + this.data.accessname
+		})
 	}
 })
 Vue.component('slider-feed-nartwork-container', {
-	template: `<div class="slider-feed-nartwork-container">
-		<div ref="wrap" :style="{'min-height': 'calc(' + size + 'px - 2px)'}">
+	template: `<div ref="wrapper" class="slider-feed-nartwork-container">
+		<div ref="container" :style="{'min-width': width + 'px'}">
 			<slider-feed-nartwork v-for="artwork of data" :data='artwork'></slider-feed-nartwork>
 		</div>
 	</div>`,
 	data: function () {
 		return {
-			size_stack: this.$root.is_mobile ? 100 : 200,
-			size: this.$root.is_mobile ? 100 : 200,
+			width: 3000
 		}
 	},
 	props: ['data'],
 	methods: {
 		calcule_width: function () {
-			const items_in_row = parseInt(this.$refs.wrap.offsetWidth/this.size_stack);
-			const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row)
-			this.size = items_new_width
-			for (var child of this.$children) child.size = items_new_width;
+
+			//const items_in_row = parseInt(this.$refs.wrap.offsetWidth/this.size_stack);
+			//const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row)
+			//this.size = items_new_width
+			//for (var child of this.$children) child.size = items_new_width;
+			this.width = this.$children.length * (this.size_stack)
 		}
 	},
 	mounted: function () {
-		new ResizeSensor(this.$refs.wrap, () => {this.calcule_width()});
+		new ResizeSensor(this.$refs.wrapper, () => {this.calcule_width()});
 		this.calcule_width();
+
+		/*var mc = new Hammer(this.$refs.wrapper);
+
+		mc.on("panleft panright", (ev) => {
+			console.log(ev);
+			//$(this.$refs.wrapper).animatescroll();
+			if (ev.isFinal) {
+				this.$refs.wrapper.scrollLeft += ev.distance * (ev.type =='panleft' ? 1 : -1)
+			}
+
+		});*/
 
 	},
 	created: function () {

@@ -99,7 +99,7 @@ class M_Events
 	}
 	public static function qry_vs_participients($vs)
 	{
-		$sql = "SELECT u.account, u.nickname FROM events.tb_versus_inscription i, users.tb_users u WHERE id_versus = ? AND u.id_user = i.id_user";
+		$sql = "SELECT u.account, u.nickname,IIF(i.id_image IS NULL, 0,1) is_artwork_uploaded  FROM events.tb_versus_inscription i, users.tb_users u WHERE id_versus = ? AND u.id_user = i.id_user";
 		return query_database($sql, [$vs]);
 	}
 	public static function qry_vs_artworks_candidates($id_versus, $user)
