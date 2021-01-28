@@ -27,7 +27,7 @@
 		<?php endif; ?>
 
 		<aside :class="{'app-aside-nav-close': toggle_nav}">
-			<div id="app-aside-nav-toggle" class="bg-primary" @click="toggle_nav = !toggle_nav"><i class="mdi mdi-menu"></i></div>
+			<div id="app-aside-nav-toggle" class="white primary" @click="toggle_nav = !toggle_nav"><i class="mdi mdi-text"></i></div>
 			<div class="f-c w100">
 				<a href="<?= base_url() ?>" id="app-aside-decorator" class="f-c"><img src="<?= base_url() ?>/images/icon_white.svg"></a>
 				<?php if (is_access()): ?>

@@ -18,7 +18,9 @@ a {
     border: 0;
     background: var(--bg-primary);
 }
-
+.row .col{
+	padding: 0 .5rem;
+}
 .btn,
 .btn-large {
     background-color: var(--bg-primary);

@@ -24,8 +24,16 @@
 		border-radius: 2px 0 0 2px;
 	}
 	@media (max-width: 992px) {
-		#app-dashboard-user-extra{
+		.card-event-content{
 			display: none;
+		}
+		#app-dashboard-user{
+			flex-direction: column;
+		}
+
+		#app-dashboard-user-extra{
+			width: 100%;
+			padding-top: 3rem;
 		}
 		#app-dashboard-user-general-gallery{
 			width: 100%;
@@ -37,39 +45,43 @@
 	<div id="app-dashboard-user">
 		<div id="app-dashboard-user-extra" style="background: #2d2d2d">
 			<h4 class="white-text pt-4 px-4 c"><i class="mdi mdi-fire"></i> EVENTOS</h4>
-			<div class="p-4 sticky">
+			<div class="p-4 sticky row m-0">
 
 				<?php foreach ($current_events as $key => $event): ?>
-					<div class="card-panel card-event">
-						<div class="card-event-type <?= $event['type_event'] == 1 ? 'bg-primary' : 'bg-secondary' ?>">
-							<?= $event['type_event'] == 1 ? 'RETO' : 'V S' ?>
-						</div>
-						<h5 class="c"><?= $event['name'] ?></h5>
-						<div class="py-4">
-							<div class="f-b">
-								<div><i class="secondary mdi mdi-plex mdi-18px mr-2"></i> Inicio</div>
-								 <?= dateFormatDefault($event['event_start'])?>
+					<div class="col s6 m4 l12">
+						<a style="display: block" href="<?= base_url()."/events".'/'.($event['type_event'] == 1 ? "challenge" : 'versus').'/'.$event['event_tag'] ?>" class="card-panel card-event w100">
+							<div class="card-event-type <?= $event['type_event'] == 1 ? 'bg-primary' : 'bg-secondary' ?>">
+								<?= $event['type_event'] == 1 ? 'RETO' : 'V S' ?>
 							</div>
-							<div class="f-b">
-								<div>
-									<i class="secondary mdi mdi-vote  mdi-18px mr-2"></i> Votación
+							<h5 class="c"><?= $event['name'] ?></h5>
+							<div class="card-event-content">
+								<div class="py-4">
+									<div class="f-b">
+										<div><i class="secondary mdi mdi-plex mdi-18px mr-2"></i> Inicio</div>
+										 <?= dateFormatDefault($event['event_start'])?>
+									</div>
+									<div class="f-b">
+										<div>
+											<i class="secondary mdi mdi-vote  mdi-18px mr-2"></i> Votación
+										</div>
+										<?= dateFormatDefault($event['voting'])?>
+									</div>
+									<div class="f-b">
+										<div class="">
+											<i class="secondary mdi mdi-flag  mdi-18px mr-2"></i> Fin
+										</div>
+										<?= dateFormatDefault($event['event_end'])?>
+									</div>
 								</div>
-								<?= dateFormatDefault($event['voting'])?>
-							</div>
-							<div class="f-b">
-								<div class="">
-									<i class="secondary mdi mdi-flag  mdi-18px mr-2"></i> Fin
+								<div class="c">
+									<span class="btn btn-small">IR AL EVENTO</span>
 								</div>
-								<?= dateFormatDefault($event['event_end'])?>
 							</div>
-						</div>
-						<div class="c">
-							<a href="<?= base_url()."/events".'/'.($event['type_event'] == 1 ? "challenge" : 'versus').'/'.$event['event_tag'] ?>" class="btn btn-small">
-								IR AL EVENTO
-							</a>
-						</div>
 
+
+						</a>
 					</div>
+
 				<?php endforeach; ?>
 
 			</div>
