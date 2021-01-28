@@ -95,10 +95,17 @@
 				toggle_nav: false,
 				base_url: '<?= base_url() ?>',
 				current_account: '<?= user_account() ?>',
-				is_mobile: <?= isMovil() ? 'true' : 'false' ?>
+				is_mobile: <?= isMovil() ? 'true' : 'false' ?>,
+				event_vs_register_user: [],
+				event_vs_artwork_apply_user: {},
 			}
 		},
 		methods: {
+			load_event_vs_register_user (){
+				$.get(this.base_url + '/service/events/apply_list', (res_list) => {
+					this.event_vs_register_user = res_list;
+				})
+			},
 			open_editor: function () {
 				if (this.$refs.upload_artwork) {
 					this.$refs.upload_artwork.open()
@@ -122,7 +129,6 @@
 			}
 		},
 		mounted: function () {
-
 			$('.fixed-action-btn').floatingActionButton();
 			let drop = $('.dropdown-trigger').dropdown({constrainWidth: false});
 			window.addEventListener('resize', function (e) {

@@ -119,12 +119,6 @@ body{
 .modal-image-preview img{
 	width: 100%;
 	height: 100%;
-}
-.modal-image-preview img:nth-child(1){
-	object-fit: cover;
-	opacity: .4
-}
-.modal-image-preview img:nth-child(2){
 	object-fit: contain;
 	position: absolute;
 	top: 0;
@@ -245,22 +239,24 @@ body{
 <div id="app-profile">
 	<?php if ($access_account): ?>
 		<div id="modal_image" ref="modal_openimage" class="modal">
-			<a id="settings-back-account" class="modal-close btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
-			<div>
-				<div class="modal-image-preview">
-					<template v-if="artwork_apply != null">
-						<img :src="artwork_apply.path" alt="image fill">
-						<img :src="artwork_apply.path" alt="image preview">
-					</template>
-				</div>
-				<div class="modal-image-info-content">
-					<div class="title-4 combo-text-title artwork-title">TITULO</div>
-					<div v-if="artwork_apply != null" style="position: relative">{{artwork_apply.name}}</div>
-					<br>
-					<event-list base_url="<?= base_url() ?>" :artwork_apply="artwork_apply"></event-list>
-				</div>
+			<template v-if="artwork_apply.artwork != undefined">
+				<a id="settings-back-account" class="modal-close btn-icon btn-light"><i class="mdi mdi-close mdi-18px"></i></a>
+				<div>
+					<div class="modal-image-preview">
+						<template>
+							<img :src="$root.base_url + '/images/artworks_small/' + artwork_apply.artwork + '.' + artwork_apply.extension " alt="image preview">
+						</template>
+					</div>
+					<div class="modal-image-info-content">
+						<div class="title-4 combo-text-title artwork-title">TITULO</div>
+						<div style="position: relative">{{artwork_apply.name}}</div>
+						<br>
+						<event-list></event-list>
+					</div>
 
-			</div>
+				</div>
+			</template>
+
 
 		</div>
 
@@ -343,65 +339,38 @@ body{
 
 	</div>
 
-	<cg-grid id="user_grid" style="min-height: 100vh;" base_url="<?= base_url() ?>" ref='grid' @events_list="events_list" :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
+	<cg-grid id="user_grid" style="min-height: 100vh;" ref='grid' :images="list_img" :stack_size="stack" is_on_profile <?= $access_account ? 'is_on_account' : '' ?>></cg-grid>
 
 </div>
 <?php module_end()?>
 <script>
 
 
-const $_module = {
+$_module = {
 	mounted: function () {
 		new Stickyfill.Sticky(this.$refs.styky);
 		<?php
 		if ($access_account) {
-			echo "this.autoraccess.push({id_user: 'current', nickname: 'current'});";
-			echo "this.modal = $(this.\$refs['modal-events']).modal();";
 			echo "this.modal_openimage = $(this.\$refs['modal_openimage']).modal();";
 		}
 
 		?>
 
 	},
+	computed: {
+		artwork_apply: function(){
+			return this.$root.event_vs_artwork_apply_user
+		}
+	},
 	data: function () {
 		return {
 			list_img: <?= json_encode($images_list) ?>,
-			autoraccess: [],
 			stack: 260,
-			modal: null,
 			modal_openimage: null,
-			list_events: null,
-			artwork_apply: {},
 			toggle_nav: false
 		}
 	},
 	methods: {
-		apply_artwork: function (event_info) {
-			const data = {versus: event_info.versus, artwork: this.artwork_apply.artwork}
-
-			$.post('<?= base_url() ?>/service/events/apply_versus', data, (res) => {
-				$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
-					let findartwork = false;
-					//for (var item of res_list) if (item.artwork == this.artwork_apply.artwork) {findartwork = true; this.list_events = [item];}
-					if (!findartwork) this.list_events = res_list;
-				})
-			})
-		},
-		events_list: function (image) {
-			if (this.modal_openimage) this.modal_openimage.modal('open')
-			this.artwork_apply = image
-			$.get('<?= base_url() ?>/service/events/apply_list', (res_list) => {
-				let findartwork = false;
-
-				//for (var item of res_list) if (item.artwork == image.artwork) {findartwork = true; this.list_events = [item];}
-
-				if (!findartwork) this.list_events = res_list;
-
-
-
-			})
-
-		},
 		dateCheck: function(from,to,check) {
 			let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
 			return (cDate <= lDate && cDate >= fDate);

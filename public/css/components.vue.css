@@ -44,7 +44,8 @@
 }
 .cg-grid-img {
 	width: 100%;
-	height: auto;
+	height: 100%;
+	object-fit: cover;
 	display: block;
 	transition: linear all .2s;
 	background: rgba(0,0,0,0.1);
@@ -419,6 +420,8 @@ slider-feed-nartwork, .slider-feed-nartwork{
 }
 .cg-grid-artwork-content{
 	position: relative;
+	overflow: hidden;
+	height: inherit;
 }
 .cg-grid-artwork-curtain{
 	position: absolute;
@@ -464,15 +467,10 @@ slider-feed-nartwork, .slider-feed-nartwork{
 	transition-delay: .3s;
 	transform: scale(1);
 }
-.cg-grid-artwork-content{
-	overflow: hidden;
-}
 .cg-grid-artwork-content img{
 	transition: linear all .2s
 }
-.cg-grid-image:hover .cg-grid-artwork-content img{
 
-}
 .cg-grid-artwork-interaction{
 	position: absolute;
 	bottom: 1rem;

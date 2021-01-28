@@ -86,11 +86,15 @@ Vue.component('event-list', {
 	</div>`,
 	data: function () {
 		return {
-			list_events: {}
 		};
 	},
-	props: {'artwork_apply': Object, base_url: String},
 	computed: {
+		artwork_apply(){
+			return this.$root.event_vs_artwork_apply_user;
+		},
+		list_events(){
+			return this.$root.event_vs_register_user
+		},
 		is_registered: function () {
 			if (this.artwork_apply.artwork != undefined) {
 				for (var ev of this.list_events) if (ev.artwork == this.artwork_apply.artwork) return true;
@@ -99,8 +103,11 @@ Vue.component('event-list', {
 		}
 	},
 	methods: {
+		load_data (){
+			this.$root.load_event_vs_register_user();
+		},
 		calcule_artwok_path: function (e_item) {
-			return  `url('${this.base_url}/images/artworks_lite/${e_item.artwork}.${e_item.extension}')`
+			return  `url('${this.$root.base_url}/images/artworks_lite/${e_item.artwork}.${e_item.extension}')`
 		},
 		dateCheck: function(from,to,check) {
 			let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
@@ -109,18 +116,14 @@ Vue.component('event-list', {
 		apply_artwork: function (event_info) {
 			const data = {versus: event_info.versus, artwork: this.artwork_apply.artwork}
 
-			$.post(this.base_url + '/service/events/apply_versus', data, (res) => {
-				$.get(this.base_url + '/service/events/apply_list', (res_list) => {
-					this.list_events = res_list;
-				})
+			$.post(this.$root.base_url + '/service/events/apply_versus', data, (res) => {
+				this.load_data();
 			})
 		},
 	},
 	mounted: function () {
-		$.get(this.base_url + '/service/events/apply_list', (res_list) => {
-			//for (var item of res_list) if (item.artwork == image.artwork) {findartwork = true; this.list_events = [item];}
-			this.list_events = res_list;
-		})
+
+		this.load_data();
 	}
 })
 
@@ -200,11 +203,11 @@ Vue.component('upload-editor',{
 					</div>
 				</form>
 				<div class="p-4 upload-editor-after-finish f-c" v-show="steps == 3">
-					<event-list :base_url="base_url" :artwork_apply="artwork_apply"></event-list>
+					<event-list></event-list>
 					<i class="mdi mdi-check right" style="font-size: 4rem; color: var(--primary)"></i>
 					<div class="p-4 c" style=" margin-top: -2rem;">SU TRABAJO A SIDO SUBIDO CON EXITO</div>
 					<div class="c" style="padding-bottom: 2rem;">
-						<a class="btn-flat" :href="base_url + '/' + author">
+						<a class="btn-flat" :href="$root.base_url + '/' + author">
 							<span>MI MURAL</span>
 						</a>
 						<a class="btn" @click="close">
@@ -218,7 +221,6 @@ Vue.component('upload-editor',{
 	`,
 	data: function () {
 		return {
-			artwork_apply: {},
 			loading_artwork_text: 'CARGANDO ARTWORK..',
 			img: null,
 			name: '',
@@ -277,7 +279,7 @@ Vue.component('upload-editor',{
 			}).then (res => {
 				this.$emit('onfinish', res.data)
 				this.steps = 3
-				this.artwork_apply = res.data.artwork_info
+				this.$root.event_vs_artwork_apply_user = res.data.artwork_info
 				this.load.isUploading = false
 			})
 		},
@@ -287,7 +289,6 @@ Vue.component('upload-editor',{
 
 			this.steps = 1
 			this.isLoadImage = true
-				//this.$refs.cropper.setCoordinates((coordinates, imageSize) => ({width: imageSize.width,height: imageSize.height}))
 
 		},
 		onUploadFile: function (e) {
@@ -331,7 +332,6 @@ Vue.component('upload-editor',{
 			this.img = null
 			this.isLoadImage = false
 			this.upload_finish = true
-			location.reload();
 		},
 		open: function () {
 			this.description = ''
@@ -351,15 +351,15 @@ Vue.component('upload-editor',{
 Vue.component('cg-grid-image', {
 	template: `
 	<div class="cg-grid-image" :class="{'cg-grid-img-restricted': info.category_main == 'R18', 'cg-grid-image-mobile' : is_mobile}">
-		<a @click="send_events" v-show="is_on_account" class="cg-grid-image-options btn-icon btn-dark waves waves-effect waves-light">
-			<i class="mdi-24px mdi mdi-cog"></i>
+		<a @click="artwork_action" v-show="$parent.is_on_account" class="cg-grid-image-options btn-icon btn-dark waves waves-effect waves-light">
+			<i class="mdi-24px mdi mdi-fire"></i>
 		</a>
 		<div class="cg-grid-artwork-content">
 			<div class="cg-grid-img-restricted-indicator f-c w100 c p-4" v-if="info.category_main == 'R18'">CONTENIDO MADURO</div>
 
-			<img ref="image" loading="lazy" class="cg-grid-img" :height="info.category_main == 'R18' ? 400 : info.height" :width="info.category_main == 'R18' ? 400 : info.width" :src="calculeimage()">
+			<img ref="image" loading="lazy" class="cg-grid-img" :src="calculeimage()">
 			<div class="cg-grid-artwork-name">
-				<div class="cg-grid-info"  v-if="!is_on_profile">
+				<div class="cg-grid-info"  v-if="!$parent.is_on_profile">
 					<a v-if="info.has_avatar" class="cg-grid-avatar cover" :href="site" :style="calcule_avatar()"></a>
 					<a v-else class="cg-grid-avatar cover" :href="site" >{{info.nickname[0]}}</a>
 					<div class="cg-grid-autor">
@@ -382,10 +382,12 @@ Vue.component('cg-grid-image', {
 	data: function () {
 		return {
 			is_mobile: (Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0) < 992) || mobiledetector(),
-			base_url: this.$root.base_url
+			base_url: this.$root.base_url,
+			module_user: null
 		}
 	},
 	computed: {
+		
 		site: function () {
 			return this.base_url + '/' + this.info.account
 		},
@@ -394,6 +396,13 @@ Vue.component('cg-grid-image', {
 		}
 	},
 	methods: {
+		artwork_action: function () {
+			if (this.module_user.modal_openimage) {
+				this.info.artwork = this.info.accessname
+				this.$root.event_vs_artwork_apply_user = this.info
+				this.module_user.modal_openimage.modal('open')
+			}
+		},
 		trigger_like: function (info) {
 			if (this.$root.trigger_like != undefined) this.$root.trigger_like(info)
 			else console.log('FUNCTION LIKE NO FOUND');
@@ -402,12 +411,9 @@ Vue.component('cg-grid-image', {
 			return {'background-image': 'url("' + this.base_url + '/images/avatars/avatar_'+ this.info.user_avatar + '.jpg")'}
 		},
 		calculeimage: function () {
-			if (this.info.category_main == 'R18') {
-				return `images/artworks_lite/${this.info.accessname}.${this.info.extension}`;
-			}
+			if (this.info.category_main == 'R18') return `images/artworks_lite/${this.info.accessname}.${this.info.extension}`;
 			return `images/artworks_small/${this.info.accessname}.${this.info.extension}`;
 		},
-
 		redirect: function () {
 			window.location.href = this.info.account
 		},
@@ -419,27 +425,13 @@ Vue.component('cg-grid-image', {
 				uploaded_date: this.info.uploaded_date
 			}
 			this.$emit('events', info)
-		},
-		send: function () {
-			const info = {
-				description: this.info.description,
-				name: this.info.name,
-				id_image: this.info.id_image,
-				img: this.$refs.image.src,
-				extension: this.info.extension
-			}
-			this.$emit('changeimage', info)
-
 		}
 	},
 	props: {
-		info: Object,
-		is_on_account:  Boolean,
-		is_on_profile: Boolean
+		info: Object
 	},
-
 	mounted: function () {
-		//M.Dropdown.init(this.$refs.drop,{constrainWidth: false, alignment: 'left'});
+		for (let compo of this.$root.$children) if (compo.$options._componentTag == 'module') {this.module_user = compo; break;}
 	}
 })
 Vue.component('cg-grid',{
@@ -455,9 +447,6 @@ Vue.component('cg-grid',{
 					transform: 'translate(' + img.left + 'px,' + img.top + 'px)'
 				}">
 				<cg-grid-image
-					v-if="!img.adsense"
-					@changeimage="$emit('changeimage', $event)"
-					@events="$emit('events_list', $event)"
 					:info="img"
 					:is_on_profile="is_on_profile"
 					:is_on_account="is_on_account">
@@ -471,7 +460,8 @@ Vue.component('cg-grid',{
 			current_stacks: 0,
 			stack_size_adaptative: 200,
 			count_stack: 0,
-			wrap_height: 0
+			wrap_height: 0,
+			base_url: this.$root.base_url
 		}
 	},
 	props: {
@@ -479,7 +469,6 @@ Vue.component('cg-grid',{
 		stack_size: { type: Number, default: 200},
 		is_on_account: Boolean,
 		is_on_profile: Boolean,
-		base_url: String
 	},
 	updated: function () {
 	  this.$nextTick(this.calcule)

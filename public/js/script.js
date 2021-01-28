@@ -23,19 +23,15 @@ function downScaleCanvas(cv, scale) {
 	var tw = Math.floor(sw * scale); // target image width
 	var th = Math.floor(sh * scale); // target image height
 	var sx = 0, sy = 0, sIndex = 0; // source x,y, index within source array
-	var tx = 0, ty = 0, yIndex = 0, tIndex = 0; // target x,y, x,y index within target array
-	var tX = 0, tY = 0; // rounded tx, ty
-	var w = 0, nw = 0, wx = 0, nwx = 0, wy = 0, nwy = 0; // weight / next weight x / y
-	// weight is weight of current source point within target.
-	// next weight is weight of current source point within next target's point.
+	var tx = 0, ty = 0, yIndex = 0, tIndex = 0;
+	var tX = 0, tY = 0;
+	var w = 0, nw = 0, wx = 0, nwx = 0, wy = 0, nwy = 0;
 	var crossX = false; // does scaled px cross its current px right border ?
 	var crossY = false; // does scaled px cross its current px bottom border ?
 	var sBuffer = cv.getContext('2d').
 	getImageData(0, 0, sw, sh).data; // source buffer 8 bit rgba
 	var tBuffer = new Float32Array(3 * tw * th); // target buffer Float32 rgb
-	var sR = 0, sG = 0,  sB = 0; // source's current point r,g,b
-	/* untested !
-	var sA = 0;  //source alpha  */
+	var sR = 0, sG = 0,  sB = 0;
 
 	for (sy = 0; sy < sh; sy++) {
 		ty = sy * scale; // y src position within target
@@ -58,16 +54,6 @@ function downScaleCanvas(cv, scale) {
 			sR = sBuffer[sIndex    ];   // retrieving r,g,b for curr src px.
 			sG = sBuffer[sIndex + 1];
 			sB = sBuffer[sIndex + 2];
-
-			/* !! untested : handling alpha !!
-			sA = sBuffer[sIndex + 3];
-			if (!sA) continue;
-			if (sA != 0xFF) {
-			sR = (sR * sA) >> 8;  // or use /256 instead ??
-			sG = (sG * sA) >> 8;
-			sB = (sB * sA) >> 8;
-		}
-		*/
 		if (!crossX && !crossY) { // pixel does not cross
 			// just add components weighted by squared scale.
 			tBuffer[tIndex    ] += sR * sqScale;

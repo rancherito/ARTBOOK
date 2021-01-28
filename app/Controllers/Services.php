@@ -182,7 +182,7 @@ class Services extends BaseController
 	}
 	public function events_apply_list()
 	{
-		$user = $_SESSION['access']['user_access'];
+		$user = user();
 		$res = M_Events::qry_events_apply_list($user);
 		return $this->response->setJSON($res);
 	}
