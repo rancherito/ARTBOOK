@@ -111,6 +111,11 @@
 		flex-direction: column;
 	}
 }
+@media (max-width: 992px){
+	#app-artwork-image{
+		box-shadow: none;
+	}
+}
 @media (max-width: 600px){
 
 	.image-simple-grid-content, #app-artwork-more{

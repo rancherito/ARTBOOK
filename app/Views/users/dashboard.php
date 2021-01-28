@@ -39,6 +39,14 @@
 			width: 100%;
 		}
 	}
+	.auto-panel{
+		padding: 1rem;
+	}
+	@media (max-width: 992px) {
+		.auto-panel{
+			padding: 1rem 0;
+		}
+	}
 </style>
 <?php style_end() ?>
 <?php module_start() ?>
@@ -102,7 +110,7 @@
 
 			</div>
 			<h3 class="title-4 px-4"><i class="mdi mdi-apps"></i> EXPLORAR</h3>
-			<div class="p-4">
+			<div class="auto-panel">
 				<cg-grid :images="list_img" :stack_size="stack" :base_url="$root.base_url"></cg-grid>
 			</div>
 		</div>
@@ -119,7 +127,7 @@
 			return {
 				list_img: <?= json_encode($images_list) ?>,
 				images_feed: <?= json_encode($images_feed) ?>,
-				stack: this.$root.is_mobile ? 170 : 260
+				stack: this.$root.is_mobile ? 130 : 260
 			}
 		}
 	}

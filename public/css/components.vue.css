@@ -197,6 +197,7 @@ slider-feed-nartwork, .slider-feed-nartwork{
 	width: 240px;
 	padding: 2px;
 	position: relative;
+	color: white;
 }
 .slider-feed-nartwork img{
 	width: 100%;
@@ -230,6 +231,9 @@ slider-feed-nartwork, .slider-feed-nartwork{
 	left: 1rem;
 	bottom: .5rem;
 	font-size: .8rem;
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 10px;
+	padding: .125rem .5rem;
 }
 
 
@@ -247,13 +251,12 @@ slider-feed-nartwork, .slider-feed-nartwork{
 }
 
 .upload-editor form{
-	padding: 3rem 0;
+	padding: 2rem;
 	width: 100%;
 	background: white;
 }
 .upload-editor form > div{
 	width: 100%;
-	padding: 2rem;
 }
 .upload-editor-wrapper-description{
 	position: fixed;
@@ -375,7 +378,6 @@ slider-feed-nartwork, .slider-feed-nartwork{
 	flex-direction: column;
 	justify-content: space-between;
 	background: white;
-	border-radius: 10px;
 	overflow: hidden;
 	position: relative;
 }
@@ -508,7 +510,6 @@ slider-feed-nartwork, .slider-feed-nartwork{
 	.upload-editor form{
 		height: auto;
 		width: auto;
-		padding: 4rem;
 	}
 }
 @media (max-width: 600px) {

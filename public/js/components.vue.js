@@ -4,7 +4,7 @@ Vue.component('slider-feed-nartwork',{
 		<div class="slider-feed-nartwork-heart" :class="{'feed-heart-active': data.heart}" @click="trigger_heart(data)">
 			<i class="mdi" :class="data.heart ? 'mdi-heart' : 'mdi-heart-outline'"></i>
 		</div>
-		<time class="slider-feed-nartwork-date">{{(new Date(data.uploaded_date)).toLocaleDateString()}}</time>
+		<time class="slider-feed-nartwork-date">{{data.diffHuman}}</time>
 
 		<a :href="$root.base_url + '/artwork/view/' + data.accessname">
 			<img :src="$root.base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name">
@@ -57,10 +57,14 @@ Vue.component('slider-feed-nartwork-container', {
 	}
 })
 Vue.component('event-list', {
-	template: `<div class="w100">
-		<div>
-			<div class="combo-text-title">LISTA DE EVENTOS</div>
+	template: `
+	<div class="w100 event-list">
+		<div v-if="exists_events">
+			<div class="combo-text-title"> <i class="mdi mdi-apps mdi-18px pr-2"></i> LISTA DE EVENTOS</div>
 			<span>Adjunte su artwork a uno de los eventos pendientes que tiene</span>
+		</div>
+		<div v-else class="card-panel grey white-text">
+			NO HAY EVENTOS DISPONIBLES PARA INSCRIBIR ESTE ARTWORK
 		</div>
 		<template v-if="dateCheck(event.event_start, event.voting, artwork_apply.uploaded_date)" v-for="event of list_events">
 			<div class="app-events-list">
@@ -100,7 +104,12 @@ Vue.component('event-list', {
 				for (var ev of this.list_events) if (ev.artwork == this.artwork_apply.artwork) return true;
 			}
 			return false
-		}
+		},
+		exists_events: function () {
+			let exists = false;
+			for (let evt of this.list_events) exists |= this.dateCheck(evt.event_start, evt.voting, this.artwork_apply.uploaded_date);
+			return exists;
+		},
 	},
 	methods: {
 		load_data (){
@@ -113,6 +122,7 @@ Vue.component('event-list', {
 			let [fDate,lDate,cDate] = [Date.parse(from), Date.parse(to), Date.parse(check)]
 			return (cDate <= lDate && cDate >= fDate);
 		},
+
 		apply_artwork: function (event_info) {
 			const data = {versus: event_info.versus, artwork: this.artwork_apply.artwork}
 
@@ -163,7 +173,6 @@ Vue.component('lateral-modal',{
 Vue.component('upload-editor',{
 	template: `
 	<div class="upload-editor" v-show="isOpen" :class="{'upload-description-add': steps >= 2}">
-		<a class="btn btn-floating upload-editor-close" @click="close"> <i class="mdi-18px mdi mdi-close"></i> </a>
 		<div class="upload-editor-file">
 			<div class="upload-editor-wrapper-file">
 				<span class="upload-editor-text">Recorte y vista previa</span>
@@ -203,16 +212,26 @@ Vue.component('upload-editor',{
 					</div>
 				</form>
 				<div class="p-4 upload-editor-after-finish f-c" v-show="steps == 3">
-					<event-list></event-list>
-					<i class="mdi mdi-check right" style="font-size: 4rem; color: var(--primary)"></i>
-					<div class="p-4 c" style=" margin-top: -2rem;">SU TRABAJO A SIDO SUBIDO CON EXITO</div>
-					<div class="c" style="padding-bottom: 2rem;">
-						<a class="btn-flat" :href="$root.base_url + '/' + author">
+					<div style="max-height: 360px; overflow-y: auto" class="w100">
+						<event-list ></event-list>
+					</div>
+					<div class="c py-4">
+						<a class="btn" @click="steps = 4">
+							<span>SIGUINENTE</span>
+						</a>
+					</div>
+				</div>
+				<div class="p-4 upload-editor-after-finish f-c" v-show="steps == 4">
+					<h3>TODO LISTO</h3>
+					<i class="mdi mdi-check py-5 primary" style="font-size: 3.5rem;"></i>
+					<div class="c py-4">
+						<a class="btn-flat" @click="steps = 3">
+							<i class="mdi mdi-arrow-left"></i>
+						</a>
+						<a class="btn" :href="$root.base_url + '/' + author">
 							<span>MI MURAL</span>
 						</a>
-						<a class="btn" @click="close">
-							<span>ACEPTAR</span>
-						</a>
+
 					</div>
 				</div>
 			</div>
@@ -387,7 +406,7 @@ Vue.component('cg-grid-image', {
 		}
 	},
 	computed: {
-		
+
 		site: function () {
 			return this.base_url + '/' + this.info.account
 		},

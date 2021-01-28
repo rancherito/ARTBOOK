@@ -23,11 +23,14 @@ class Home extends BaseController
 		$current_events = M_Events::qry_events_current();
 		$agent = $this->request->getUserAgent();
 		$images = array_map(function ($artwork) {
-			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true);return $artwork;
+			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true);
+			return $artwork;
 		},M_App::qry_images_list(user_account()));
 
 		$new_images = array_map(function ($artwork) {
-			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true); return $artwork;
+			$artwork['diffHuman'] = dateFormatDefault($artwork['uploaded_date']);
+			$artwork['has_avatar'] = has_user_avatar($artwork['user_avatar'], true);
+			return $artwork;
 		},M_App::qry_images_new_list(user_account()));
 
 		$artwork_top = M_App::qry_most_liked_artwork(4);
