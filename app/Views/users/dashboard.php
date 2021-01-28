@@ -127,7 +127,7 @@
 			return {
 				list_img: <?= json_encode($images_list) ?>,
 				images_feed: <?= json_encode($images_feed) ?>,
-				stack: this.$root.is_mobile ? 130 : 260
+				stack: this.$root.is_mobile ? 160 : 260
 			}
 		}
 	}

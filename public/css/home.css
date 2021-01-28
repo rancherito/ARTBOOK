@@ -223,7 +223,7 @@
 }
 @media (max-width: 992px) {
 	#app-home-presentation{
-		height: auto;
+		min-height: inherit;
 	}
 	#app-home-icon{
 		display: none;
@@ -276,7 +276,7 @@
 		display: none;
 	}
 	#app-home-start-info{
-		padding: 3rem 0 1rem 0;
+		padding: 3rem 0;
 	}
 
 	#app-home-navbar img{
@@ -289,7 +289,6 @@
 		padding: 0;
 	}
 	#app-home-start{
-		padding-top: 1rem;
 	}
 	.cg-countdown{
 		font-size: 1.4rem;
