@@ -302,29 +302,27 @@ body{
 							Espero que disfrutes tu estadia en mi perfil de trabajos, subo contenido regularmente
 
 						</p>
+
 						<div class="row">
 							<?php if ($access_account): ?>
-								<?php foreach ($current_events as $key => $event): ?>
-									<?php if ($event['is_voting'] == 0): ?>
-										<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>">
-											<div class="box-events w100">
-												<div class="combo-text-title"><?= $event['name'] ?></div>
-												<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['event_end'] ?>"></cg-countdown> </span>
+								<template v-if="vs_register.length" v-for="vs of vs_register">
+									<div class="col s12 m6 xl12">
+										<div class="w100 p-4" style="background-color: var(--light-gray)">
+											<div class="W100 f-b">
+												<img v-if="vs.is_artwork_register == 1" width="46" :src="$root.base_url + '/images/artworks_lite/' + vs.artwork + '.' + vs.extension" class="pr-2">
+												<div class="l" style="flex: 1">
+													<div class="combo-text-title">{{vs.name}}</div>
+													<span>{{vs.name_event}}</span>
+												</div>
 											</div>
-										</a>
-									<?php else: ?>
-										<a class="col s12 m6 xl12" href="<?= base_url() ?>/events/versus/<?= $event['event_tag'] ?>">
-											<div class="box-events w100">
-												<div class="combo-text-title"><?= $event['name'] ?></div>
-												<span> <div>Fin en: </div><cg-countdown datestring="<?= $event['voting'] ?>"></cg-countdown> </span>
+											<div class="pt-1 w100 f-b" style="font-size: .7rem">
+												<span>{{vs.is_artwork_register == 1? 'artwork ok': 'artwork pendiente'}}</span>
+												<span>{{vs.type_event}}</span>
 											</div>
-										</a>
-									<?php endif; ?>
-
-
-								<?php endforeach; ?>
+										</div>
+									</div>
+								</template>
 							<?php endif; ?>
-
 						</div>
 						<?php if ($_ENV['CI_ENVIRONMENT'] != 'development'): ?>
 							<!--<adsense-ins class="adsbygoogle"
@@ -360,12 +358,15 @@ $_module = {
 	computed: {
 		artwork_apply: function(){
 			return this.$root.event_vs_artwork_apply_user
+		},
+		vs_register(){
+			return this.$root.event_vs_register_user;
 		}
 	},
 	data: function () {
 		return {
 			list_img: <?= json_encode($images_list) ?>,
-			stack: 260,
+			stack: this.$root.is_mobile ? 160 : 260,
 			modal_openimage: null,
 			toggle_nav: false
 		}

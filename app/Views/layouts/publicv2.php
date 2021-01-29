@@ -128,7 +128,11 @@
 				<?php endif; ?>
 			}
 		},
+		created(){
+			this.load_event_vs_register_user();
+		},
 		mounted: function () {
+
 			$('.fixed-action-btn').floatingActionButton();
 			let drop = $('.dropdown-trigger').dropdown({constrainWidth: false});
 			window.addEventListener('resize', function (e) {

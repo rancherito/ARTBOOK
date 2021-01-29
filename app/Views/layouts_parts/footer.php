@@ -3,4 +3,3 @@
 <script src="<?= base_url() ?>/libs/axios/axios.min.js"></script>
 <script src="<?= base_url() ?>/libs/animate/animateCSS.js"></script>
 <script src="<?= base_url() ?>/libs/sticksy/stickyfill.min.js"></script>
-<script src="<?= base_url() ?>/libs/owlcarousel/owl.carousel.min.js"></script>
