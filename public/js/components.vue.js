@@ -6,13 +6,14 @@ Vue.component('slider-feed-nartwork',{
 		</div>
 		<time class="slider-feed-nartwork-date">{{data.diffHuman}}</time>
 
-		<a ref="anchor">
+		<a :href="$root.base_url + '/artwork/view/' + data.accessname">
 			<img :src="$root.base_url+'/images/artworks_lite/'+data.accessname+'.'+data.extension" :alt="data.name">
 		</a>
 	</div>
 	`,
 	data: function () {
 		return {
+			size: 200
 		}
 	},
 	props: ['data'],
@@ -23,47 +24,41 @@ Vue.component('slider-feed-nartwork',{
 		}
 	},
 	mounted: function () {
-		this.$refs.anchor.addEventListener('click', (e) => {
-			window.location = this.$root.base_url + '/artwork/view/' + this.data.accessname
-		})
 	}
 })
 Vue.component('slider-feed-nartwork-container', {
-	template: `<div ref="wrapper" class="slider-feed-nartwork-container">
-		<div ref="container" :style="{'min-width': width + 'px'}">
-			<slider-feed-nartwork v-for="artwork of data" :data='artwork'></slider-feed-nartwork>
+	template: `
+	<div style="overflow: hidden" :style="{'max-height': 'calc(' + size_stack + 'px - 2px)'}">
+		<div ref="container" class="slider-feed-nartwork-container">
+			<div ref="wrap" :style="{'min-height': 'calc(' + size_stack + 'px - 2px)', 'min-width': width + 'px'}">
+				<slider-feed-nartwork v-for="artwork of data" :data='artwork'></slider-feed-nartwork>
+			</div>
 		</div>
-	</div>`,
+	</div>
+	`,
 	data: function () {
 		return {
+			size_stack: 200,
 			width: 3000
 		}
 	},
 	props: ['data'],
 	methods: {
 		calcule_width: function () {
-
 			//const items_in_row = parseInt(this.$refs.wrap.offsetWidth/this.size_stack);
 			//const items_new_width = Math.round(this.$refs.wrap.offsetWidth/items_in_row)
 			//this.size = items_new_width
 			//for (var child of this.$children) child.size = items_new_width;
+			this.size_stack = this.$children[0].$el.offsetWidth;
 			this.width = this.$children.length * (this.size_stack)
 		}
 	},
 	mounted: function () {
-		new ResizeSensor(this.$refs.wrapper, () => {this.calcule_width()});
-		this.calcule_width();
-
-		/*var mc = new Hammer(this.$refs.wrapper);
-
-		mc.on("panleft panright", (ev) => {
-			console.log(ev);
-			//$(this.$refs.wrapper).animatescroll();
-			if (ev.isFinal) {
-				this.$refs.wrapper.scrollLeft += ev.distance * (ev.type =='panleft' ? 1 : -1)
-			}
-
-		});*/
+		if (this.$children[0].$el != undefined) {
+			new ResizeSensor(this.$children[0].$el, () => {this.calcule_width()});
+			this.calcule_width();
+		}
+		this.$refs.container.style['overflow-x'] = 'auto';
 
 	},
 	created: function () {
