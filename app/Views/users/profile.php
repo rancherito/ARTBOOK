@@ -306,7 +306,7 @@ body{
 						<div class="row">
 							<?php if ($access_account): ?>
 								<template v-if="vs_register.length" v-for="vs of vs_register">
-									<div class="col s12 m6 xl12">
+									<div class="col s12 m6 xl12 mb-2">
 										<div class="w100 p-4" style="background-color: var(--light-gray)">
 											<div class="W100 f-b">
 												<img v-if="vs.is_artwork_register == 1" width="46" :src="$root.base_url + '/images/artworks_lite/' + vs.artwork + '.' + vs.extension" class="pr-2">
