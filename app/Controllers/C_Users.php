@@ -184,7 +184,7 @@ class C_Users extends BaseController
 		if (count($res)) {
 			$pass = $res[0]['pass'];
 			$account = $res[0]['account'];
-			$access = C_Users::login_validate_internal("FB_$id", $pass);
+			$access = C_Users::login_validate_internal($account, $pass);
 			if($access['access'] == 1){
 				if (!empty($_SESSION['redirect_access'])) return redirect()->to($_SESSION['redirect_access']);
 				return redirect()->to(base_url().'/'.$account);
