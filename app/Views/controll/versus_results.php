@@ -39,7 +39,7 @@
 				<?php foreach ($versus as $key => $participient): ?>
 					<?php if ($participient['ranking'] == '1'): ?>
 						<section class="versus-participient col s12 m6 l4" >
-							<frame-winner versus="<?= $participient['versus_name'] ?>" artwork="<?= base_url()."/images/artworks_lite/$participient[artwork].$participient[extension]" ?>"></frame-winner>
+
 							<div>ARTISTA: <?= $participient['nickname'] ?></div>
 						</section>
 					<?php endif; ?>
@@ -92,24 +92,33 @@
 ⋆◦⋅⍣⋅◦⋆ ⋆◦⋅⍣⋅◦⋆ ⋆◦⋅⍣⋅◦⋆
 </pre>
 			<?php foreach ($winners as $key => $versus): ?>
+
+
+				<?php foreach ($versus as $key => $winner): ?>
+
+					<frame-winner versus="<?= $winner['versus_name'] ?>" artwork="<?= base_url()."/images/artworks_lite/$winner[artwork].$winner[extension]" ?>"></frame-winner>
 <pre>
-🎖️ VERSUS 🎖️
-✨ <?= '*'.$versus[0]['versus_name']."*" ?> ✨
+🎖️ GANADOR: <?= '*'.$winner['versus_name']."*" ?>
 
 </pre>
-				<?php foreach ($versus as $key => $winner): ?>
 <pre>
 
-<?= '*'.$winner['nickname']."*\n" ?>
+🖌️ <?= '*'.$winner['nickname']."*\n" ?>
 <?php if ($winner['total_participients'] == 1): ?>
-_Ganador por default_
+▪️ _Ganador por default_
 <?php else: ?>
-Ganador con <?= $winner['votes'] ?> votos
+▪️ Ganador con <?= $winner['votes'] ?> votos
 <?php endif; ?>
 
-ARTBOOK LINK:
+🌐 *ARTBOOK LINK:*
 ▪️<?= base_url().'/'.$winner['account']."\n" ?>
+<?php if ($winner['instagram']): ?>
+
+🖼️ *INSTAGRAM:*
+▪️<?= 'https://www.instagram.com/'.$winner['instagram']."\n" ?>
+<?php endif; ?>
 </pre>
+
 				<?php endforeach; ?>
 <pre>
 
