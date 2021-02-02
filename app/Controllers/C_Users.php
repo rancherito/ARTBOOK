@@ -181,15 +181,17 @@ class C_Users extends BaseController
 		$nickname = explode(' ', $user['name'])[0];
 
 		$res = User::accountfb_create($id, $nickname, $account);
+		print_r($res);
 		if (count($res)) {
 			$pass = $res[0]['pass'];
+			$user = $res[0]['user'];
 			$account = $res[0]['account'];
 
-			$access = C_Users::login_validate_internal($account, $pass);
-			echo $access == 1 ? 'acceso' : 'no';
+			$access = C_Users::login_validate_internal($user, $pass);
+			
 			if($access['access'] == 1){
-				/*if (!empty($_SESSION['redirect_access'])) return redirect()->to($_SESSION['redirect_access']);
-				return redirect()->to(base_url().'/'.$account);*/
+				if (!empty($_SESSION['redirect_access'])) return redirect()->to($_SESSION['redirect_access']);
+				return redirect()->to(base_url().'/'.$account);
 			}
 		}
 
