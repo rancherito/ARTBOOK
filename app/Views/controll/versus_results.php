@@ -47,7 +47,7 @@
 				<?php endforeach; ?>
 				<div class="row m-0">
 					<?php foreach ($versus as $key => $participient): ?>
-						<section class="versus-participient col s12 m6 l4" >
+						<section class="versus-participient col s12 m3" >
 							<div class="versus-participient-artwork">
 								<img src="<?= base_url()."/images/artworks_lite/$participient[artwork].$participient[extension]" ?>" alt="">
 							</div>
